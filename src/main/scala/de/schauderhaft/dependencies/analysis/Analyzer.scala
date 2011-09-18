@@ -23,44 +23,37 @@ class Analyzer {
             if (shouldPrint(from) && shouldPrint(to))
                 println("%s: %s --> %s".format(text, from.getName, to.getName))
         }
-        val loader = new TransientClassfileLoader()
-        val factory = new NodeFactory()
-        val visitor = new CodeDependencyCollector(factory)
-        loader.addLoadListener(new LoadListenerVisitorAdapter(visitor))
-        loader.load(Collections.singleton(sourceFolder))
 
-        val classes : scala.collection.mutable.Map[String, ClassNode] = factory.getClasses
+        def getRootClasses = {
+            val loader = new TransientClassfileLoader()
+            val factory = new NodeFactory()
+            val visitor = new CodeDependencyCollector(factory)
+            loader.addLoadListener(new LoadListenerVisitorAdapter(visitor))
+            loader.load(Collections.singleton(sourceFolder))
+            factory.getClasses
+        }
+
+        val classes : scala.collection.mutable.Map[String, ClassNode] = getRootClasses
 
         val g = new Graph()
+
+        val featureOutboundClass = (c : ClassNode) => for (
+            f <- c.getFeatures();
+            od @ (dummy : FeatureNode) <- f.getOutboundDependencies().toTraversable
+        ) yield od.getClassNode()
         // different ways to find classes a class depends on.
         val navigations = List(
-            (c : ClassNode) => c.getParents(), // finds superclasses
-            (c : ClassNode) => c.getOutboundDependencies()) // finds classes of fields
+            (c : ClassNode) => c.getParents().toTraversable, // finds superclasses
+            (c : ClassNode) => c.getOutboundDependencies().toTraversable, // finds classes of fields
+            featureOutboundClass)
 
         for ((_, c) <- classes) {
             g.add(c)
 
             for (
                 nav <- navigations;
-                n <- nav(c).toTraversable
-            )  g.connect(c, n)
-
-
-            // finds members including constructors
-            val features : Traversable[FeatureNode] = c.getFeatures()
-            features.foreach { f =>
-                {
-                    val dependencies : Traversable[Node] = f.getOutboundDependencies()
-                    dependencies.foreach { d =>
-                        g.connect(c, d)
-                        d match {
-                            case f2 : FeatureNode => g.connect(c, f2.getClassNode())
-                            case _                =>
-                        }
-                    }
-
-                }
-            }
+                n <- nav(c)
+            ) g.connect(c, n)
         }
         return g
     }
