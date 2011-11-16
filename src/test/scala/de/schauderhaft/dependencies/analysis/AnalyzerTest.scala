@@ -11,7 +11,7 @@ import de.schauderhaft.dependencies.graph.Graph
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite with ShouldMatchers {
     private val testClassFolder = "./bin"
-    private val graph = new Analyzer().analyze(testClassFolder)
+    private val graph = Analyzer.analyze(testClassFolder)
     def stringNodes = graph.topNodes.map(_.toString)
     def nodeByString(name : String) = graph.topNodes.find(_.toString == name)
 
@@ -30,10 +30,18 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
     test("Dependency from class to annotation") {
     	graph should connect("de.schauderhaft.dependencies.examples.UsesAnnotation" -> "org.junit.runner.RunWith")
     }
+    
     test("Dependency from class to class used in annotation") {
     	graph should connect("de.schauderhaft.dependencies.examples.UsesAnnotation" -> "de.schauderhaft.dependencies.examples.MyRunner")
     }
 
+    test("No self references"){
+        for (n <- graph.topNodes;
+        n2 <- graph.connectionsOf(n))
+            n should not be  n2
+    }
+    
+    
     private def connect(connection : (String, String)) = {
         val (from, to) = connection
         new Matcher[Graph] {

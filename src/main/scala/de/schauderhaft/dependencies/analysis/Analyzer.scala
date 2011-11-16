@@ -1,20 +1,19 @@
 package de.schauderhaft.dependencies.analysis
 import java.util.Collections
-
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.collection.JavaConversions.mapAsScalaMap
-
 import com.jeantessier.classreader.LoadListenerVisitorAdapter
 import com.jeantessier.classreader.TransientClassfileLoader
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.CodeDependencyCollector
-import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.Node
 import com.jeantessier.dependency.NodeFactory
-
+import de.schauderhaft.dependencies.categorizer.InternalClassCategorizer
+import de.schauderhaft.dependencies.categorizer.MultiCategorizer
 import de.schauderhaft.dependencies.graph.Graph
+import com.jeantessier.dependency.FeatureNode
 
-class Analyzer {
+object Analyzer {
     def analyze(sourceFolder : String) : Graph = {
         def debug(text : String, from : Node, to : Node) {
             val prefix = List("de.schauderhaft.dependencies.example", "org.junit")
@@ -35,7 +34,7 @@ class Analyzer {
 
         val classes : scala.collection.mutable.Map[String, ClassNode] = getRootClasses
 
-        val g = new Graph()
+        val g = new Graph( InternalClassCategorizer)
 
         val featureOutboundClass = (c : ClassNode) => for (
             f <- c.getFeatures();
