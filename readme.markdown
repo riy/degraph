@@ -12,3 +12,5 @@ If do a hierarchic layout in yed you can easily see which classes you can move t
 The current version of the project is able to create graphs and do the bundling of classes into subgraphs. You currently have to hard code the classpath you want to analyse in the application and it doesn't do any of the fancy stuff you might envision like different colors of different types of nodes. 
 
 So in the version it is right now **I** can use it for the purposes I have in mind and therefore it probably won't see much progress. But if you are interested in this kind of tool, let me know. I might just implement it, or help you implementing it.   
+
+Also this is not thoroughly tested. I'm not at all sure that it will find all dependencies. But it should be fairly easy to add stuff that is missing once somebody identifies it.
