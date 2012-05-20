@@ -1,11 +1,11 @@
 **Dependency Manager** is a little tool for visualizing dependencies in JVM applications.
 
-It analyses class files using DependencyFinder and spits out a graphml files which then can be rendered using yed.
+It analyses class files using DependencyFinder and spits out a graphml files which then can be rendered using [yed](http://www.yworks.com/en/products_yed_about.html).
 
 What makes Dependency Manager different from other tools (I know) is that it supports nested graphs. I.e. you can define rule like a class is contained in it's package, 
 a package is part of a module and this fact gets visualized in the resulting graph. 
 
-If do a hierarchic layout in yed you can easily see which classes you can move to different packages, layer or modules without creating circles on these levels or which you have to move in order to break cycles. A feature I haven't seen in any other package dealing with dependencies so far.
+If you do a hierarchic layout in yed you can easily see which classes you can move to different packages, layer or modules without creating circles on these levels or which you have to move in order to break cycles. A feature I haven't seen in any other package dealing with dependencies so far.
 
 **State of this project**
 
