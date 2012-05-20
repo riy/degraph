@@ -10,12 +10,10 @@ import scala.xml.XML
 object DependencyManager {
 
     def main(args : Array[String]) : Unit = {
-        val g = Analyzer.analyze("./bin")
+        val g = Analyzer.analyze("./lib/junit-4.8.2.jar")
 
-        val file = new File("example.graphml");
-        val writer =  new FileWriter(file)
         val xml = (new Writer()).toXml(g)
-        XML.save("exampleX.graphml",xml,"UTF8", true, null)
+        XML.save("exampleX.graphml", xml, "UTF8", true, null)
     }
 
 }
