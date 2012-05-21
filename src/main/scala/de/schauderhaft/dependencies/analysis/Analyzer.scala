@@ -1,9 +1,7 @@
 package de.schauderhaft.dependencies.analysis
 import java.util.Collections
-
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.collection.JavaConversions.mapAsScalaMap
-
 import com.jeantessier.classreader.LoadListenerVisitorAdapter
 import com.jeantessier.classreader.TransientClassfileLoader
 import com.jeantessier.dependency.ClassNode
@@ -11,8 +9,8 @@ import com.jeantessier.dependency.CodeDependencyCollector
 import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.Node
 import com.jeantessier.dependency.NodeFactory
-
 import de.schauderhaft.dependencies.graph.Graph
+import de.schauderhaft.dependencies.filter.NoSelfReference
 
 object Analyzer {
     def analyze(sourceFolder : String, categorizer : AnyRef => AnyRef, filter : AnyRef => Boolean) : Graph = {
@@ -28,7 +26,7 @@ object Analyzer {
 
         val classes : scala.collection.mutable.Map[String, ClassNode] = getRootClasses
 
-        val g = new Graph(categorizer, filter)
+        val g = new Graph(categorizer, filter, new NoSelfReference(categorizer))
 
         val featureOutboundClass = (c : ClassNode) => for (
             f <- c.getFeatures();

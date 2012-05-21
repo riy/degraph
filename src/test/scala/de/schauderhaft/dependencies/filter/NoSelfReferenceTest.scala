@@ -10,11 +10,32 @@ class NoSelfReferenceTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._
 
     test("returns true for unrelated objects") {
-        NoSelfReference("a", "b") should be(true)
+        new NoSelfReference()("a", "b") should be(true)
     }
 
     test("returns false for identical objects") {
-        NoSelfReference("a", "a") should be(false)
+        new NoSelfReference()("a", "a") should be(false)
+    }
+
+    test("returns false if second object is contained in Categories of first instance") {
+        new NoSelfReference(new ListCategory(List("a", "b", "c", "d")))("a", "c") should be(false)
+    }
+    test("returns false if first object is contained in Categories of second instance") {
+        new NoSelfReference(new ListCategory(List("a", "b", "c", "d")))("c", "a") should be(false)
+    }
+
+    test("returns true for unrelated objects with categories") {
+        new NoSelfReference(new ListCategory(List("a", "b", "c", "d")))("a", "x") should be(true)
+    }
+
+    class ListCategory(list : List[AnyRef]) extends (AnyRef => AnyRef) {
+        def apply(v : AnyRef) = {
+            val i = list.indexOf(v)
+            if (i >= 0 && i < list.size - 1)
+                list(i + 1)
+            else
+                v
+        }
     }
 
 }

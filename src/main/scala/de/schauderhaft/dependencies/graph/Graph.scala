@@ -6,7 +6,8 @@ package de.schauderhaft.dependencies.graph
  * Argument is a category which is by default the identity. A category is a function that returns an outer node for any node and the node itself if no out node is available
  */
 class Graph(category : AnyRef => AnyRef = (x) => x,
-            filter : AnyRef => Boolean = _ => true) {
+            filter : AnyRef => Boolean = _ => true,
+            edgeFilter : ((AnyRef, AnyRef)) => Boolean = _ => true) {
 
     def topNodes : Set[AnyRef] = _topNodes
     def contentsOf(group : AnyRef) : Set[AnyRef] = _contents.getOrElse(group, Set())
@@ -35,7 +36,7 @@ class Graph(category : AnyRef => AnyRef = (x) => x,
     private var _edges = Map[AnyRef, Set[AnyRef]]()
 
     private def addEdge(a : AnyRef, b : AnyRef) {
-        if (filter(a) && filter(b))
+        if (filter(a) && filter(b) && edgeFilter(a, b))
             _edges += ((a, connectionsOf(a) + b))
     }
 
