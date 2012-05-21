@@ -11,7 +11,7 @@ import de.schauderhaft.dependencies.graph.Graph
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite with ShouldMatchers {
     private val testClassFolder = "./bin"
-    private val graph = Analyzer.analyze(testClassFolder, (x) => x)
+    private val graph = Analyzer.analyze(testClassFolder, (x) => x, _ => true)
     def stringNodes = graph.topNodes.map(_.toString)
     def nodeByString(name : String) = graph.topNodes.find(_.toString == name)
 

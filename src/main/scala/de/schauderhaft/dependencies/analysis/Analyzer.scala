@@ -12,7 +12,7 @@ import de.schauderhaft.dependencies.graph.Graph
 import com.jeantessier.dependency.FeatureNode
 
 object Analyzer {
-    def analyze(sourceFolder : String, categorizer : Function1[AnyRef, AnyRef]) : Graph = {
+    def analyze(sourceFolder : String, categorizer : AnyRef => AnyRef, filter : AnyRef => Boolean) : Graph = {
 
         def getRootClasses = {
             val loader = new TransientClassfileLoader()
@@ -25,7 +25,7 @@ object Analyzer {
 
         val classes : scala.collection.mutable.Map[String, ClassNode] = getRootClasses
 
-        val g = new Graph(categorizer)
+        val g = new Graph(categorizer, filter)
 
         val featureOutboundClass = (c : ClassNode) => for (
             f <- c.getFeatures();
