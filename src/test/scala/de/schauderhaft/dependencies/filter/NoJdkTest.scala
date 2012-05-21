@@ -18,12 +18,24 @@ class NoJdkTest extends FunSuite {
 
     test("returns false for packages from java") {
         val packageNode = new PackageNode("java.test", true)
+
+        NoJdk(packageNode) should be(false)
+    }
+
+    test("returns false for packages from javax") {
+        val packageNode = new PackageNode("javax.test", true)
+
+        NoJdk(packageNode) should be(false)
+    }
+
+    test("returns false for classes from java") {
+        val packageNode = new PackageNode("java.test", true)
         val classNode = new ClassNode(packageNode, "Class", true)
 
         NoJdk(classNode) should be(false)
     }
 
-    test("returns false for packages from javax") {
+    test("returns false for classes from javax") {
         val packageNode = new PackageNode("javax.test", true)
         val classNode = new ClassNode(packageNode, "Class", true)
 

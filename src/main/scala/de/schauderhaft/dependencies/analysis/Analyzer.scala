@@ -1,15 +1,18 @@
 package de.schauderhaft.dependencies.analysis
 import java.util.Collections
+
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.collection.JavaConversions.mapAsScalaMap
+
 import com.jeantessier.classreader.LoadListenerVisitorAdapter
 import com.jeantessier.classreader.TransientClassfileLoader
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.CodeDependencyCollector
+import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.Node
 import com.jeantessier.dependency.NodeFactory
+
 import de.schauderhaft.dependencies.graph.Graph
-import com.jeantessier.dependency.FeatureNode
 
 object Analyzer {
     def analyze(sourceFolder : String, categorizer : AnyRef => AnyRef, filter : AnyRef => Boolean) : Graph = {
