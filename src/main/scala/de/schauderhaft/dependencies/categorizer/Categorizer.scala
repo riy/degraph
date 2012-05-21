@@ -2,6 +2,15 @@ package de.schauderhaft.dependencies.categorizer
 import scala.util.matching.Regex
 import com.jeantessier.dependency.ClassNode
 
+object PackageCategorizer extends Function1[AnyRef, AnyRef] {
+    def apply(value : AnyRef) = {
+        value match {
+            case cn : ClassNode => cn.getPackageNode()
+            case _              => value
+        }
+    }
+}
+
 object PackageRegexpCategorizer {
     def pattern(pattern : Regex) : AnyRef => AnyRef = {
         x =>

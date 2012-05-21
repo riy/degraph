@@ -6,11 +6,12 @@ import java.io.BufferedWriter
 import java.io.FileWriter
 import writer.WriterTest
 import scala.xml.XML
-
+import de.schauderhaft.dependencies.categorizer.InternalClassCategorizer
+import de.schauderhaft.dependencies.categorizer.MultiCategorizer.combine
 object DependencyManager {
 
     def main(args : Array[String]) : Unit = {
-        val g = Analyzer.analyze("./lib/junit-4.8.2.jar")
+        val g = Analyzer.analyze("./lib/junit-4.8.2.jar", InternalClassCategorizer)
 
         val xml = (new Writer()).toXml(g)
         XML.save("exampleX.graphml", xml, "UTF8", true, null)

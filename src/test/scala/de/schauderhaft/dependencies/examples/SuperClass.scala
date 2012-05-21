@@ -3,20 +3,19 @@ import org.junit.runner.RunWith
 import org.junit.runner.Runner
 
 /**
- * just a file with different dependencies for us in tests
+ * just a file with different dependencies for use in tests
  */
 
 class Token
 
-class SuperClass 
+class SuperClass
 class SubClass extends SuperClass
 
-
-class User{
+class User {
     new Token
 }
 
-class OtherUser{
+class OtherUser {
     val value = new Token
 }
 

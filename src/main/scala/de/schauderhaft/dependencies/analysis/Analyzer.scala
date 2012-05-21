@@ -8,20 +8,11 @@ import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.CodeDependencyCollector
 import com.jeantessier.dependency.Node
 import com.jeantessier.dependency.NodeFactory
-import de.schauderhaft.dependencies.categorizer.InternalClassCategorizer
-import de.schauderhaft.dependencies.categorizer.MultiCategorizer
 import de.schauderhaft.dependencies.graph.Graph
 import com.jeantessier.dependency.FeatureNode
 
 object Analyzer {
-    def analyze(sourceFolder : String) : Graph = {
-        def debug(text : String, from : Node, to : Node) {
-            val prefix = List("de.schauderhaft.dependencies.example", "org.junit")
-            def shouldPrint(node : Node) =
-                prefix.exists(node.getName.startsWith(_))
-            if (shouldPrint(from) && shouldPrint(to))
-                println("%s: %s --> %s".format(text, from.getName, to.getName))
-        }
+    def analyze(sourceFolder : String, categorizer : Function1[AnyRef, AnyRef]) : Graph = {
 
         def getRootClasses = {
             val loader = new TransientClassfileLoader()
@@ -34,7 +25,7 @@ object Analyzer {
 
         val classes : scala.collection.mutable.Map[String, ClassNode] = getRootClasses
 
-        val g = new Graph( InternalClassCategorizer)
+        val g = new Graph(categorizer)
 
         val featureOutboundClass = (c : ClassNode) => for (
             f <- c.getFeatures();
