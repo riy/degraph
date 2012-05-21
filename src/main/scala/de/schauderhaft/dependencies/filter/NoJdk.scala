@@ -1,11 +1,10 @@
-package de.schauderhaft.dependencies
+package de.schauderhaft.dependencies.filter
 
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 
 object NoJdk extends (AnyRef => Boolean) {
     def apply(value : AnyRef) = {
-        println(value)
         value match {
             case cn : ClassNode   => !isJdk(cn.getPackageNode())
             case pn : PackageNode => !isJdk(pn)
