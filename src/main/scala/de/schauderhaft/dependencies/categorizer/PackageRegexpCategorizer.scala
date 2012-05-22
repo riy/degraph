@@ -1,7 +1,9 @@
 package de.schauderhaft.dependencies.categorizer
 import scala.util.matching.Regex
 import com.jeantessier.dependency.ClassNode
-
+/**
+ * categorizes classes with their respective packages
+ */
 object PackageRegexpCategorizer {
     def pattern(pattern : Regex) : AnyRef => AnyRef = {
         x =>

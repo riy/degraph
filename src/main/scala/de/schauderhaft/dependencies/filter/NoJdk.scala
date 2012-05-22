@@ -3,6 +3,9 @@ package de.schauderhaft.dependencies.filter
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 
+/**
+ * filters out all jdk classes
+ */
 object NoJdk extends (AnyRef => Boolean) {
     def apply(value : AnyRef) = {
         value match {

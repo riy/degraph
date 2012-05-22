@@ -9,6 +9,9 @@ object Writer {
     val defaultWriter = {}
 }
 
+/**
+ * writes a graph to an graphml xml structure which can be displayed by yed in a usable form
+ */
 class Writer(
         nodeWriter : (AnyRef, Graph) => Node,
         edgeWriter : (AnyRef, AnyRef) => Node) {

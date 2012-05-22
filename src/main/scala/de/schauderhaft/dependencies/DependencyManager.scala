@@ -10,6 +10,10 @@ import de.schauderhaft.dependencies.categorizer.InternalClassCategorizer
 import de.schauderhaft.dependencies.categorizer.PackageCategorizer
 import de.schauderhaft.dependencies.categorizer.MultiCategorizer.combine
 import de.schauderhaft.dependencies.filter.NoJdk
+
+/**
+ * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
+ */
 object DependencyManager {
 
     def main(args : Array[String]) : Unit = {

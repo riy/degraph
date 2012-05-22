@@ -12,6 +12,9 @@ import com.jeantessier.dependency.NodeFactory
 import de.schauderhaft.dependencies.graph.Graph
 import de.schauderhaft.dependencies.filter.NoSelfReference
 
+/**
+ * analyzes whaterver it finds in the sourceFolder using the Dependency Finder library and returns a Graph instance which captures the relevant dependency information
+ */
 object Analyzer {
     def analyze(sourceFolder : String, categorizer : AnyRef => AnyRef, filter : AnyRef => Boolean) : Graph = {
 

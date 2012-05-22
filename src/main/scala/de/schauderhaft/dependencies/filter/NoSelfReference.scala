@@ -1,5 +1,8 @@
 package de.schauderhaft.dependencies.filter
 
+/**
+ * a filter that prevents dependencies from an entity to itself
+ */
 class NoSelfReference(category : AnyRef => AnyRef = x => x) extends (((AnyRef, AnyRef)) => Boolean) {
     def apply(t : (AnyRef, AnyRef)) : Boolean = {
         !(
