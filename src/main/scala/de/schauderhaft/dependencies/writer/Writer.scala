@@ -43,7 +43,7 @@ class Writer(
                 }
                 {
                     for {
-                        node <- g.topNodes;
+                        node <- g.allNodes;
                         to <- g.connectionsOf(node)
                     } yield edgeWriter(node, to)
                 }

@@ -31,6 +31,16 @@ class Graph(category : AnyRef => AnyRef = (x) => x,
         add(b)
     }
 
+    def allNodes : Set[AnyRef] = content(_topNodes)
+
+    private def content(nodes : Set[AnyRef]) : Set[AnyRef] = {
+        val ns = nodes.flatMap(contentsOf(_))
+        if (ns.isEmpty)
+            nodes
+        else
+            (nodes ++ ns) ++ content(ns)
+    }
+
     private var _topNodes = Set[AnyRef]()
     private var _contents = Map[AnyRef, Set[AnyRef]]()
     private var _edges = Map[AnyRef, Set[AnyRef]]()

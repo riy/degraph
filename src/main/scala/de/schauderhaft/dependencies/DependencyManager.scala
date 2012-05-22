@@ -18,9 +18,7 @@ object DependencyManager {
 
     def main(args : Array[String]) : Unit = {
         val g = Analyzer.analyze("./lib/junit-4.8.2.jar",
-            //combine(
-            //PackageCategorizer, 
-            InternalClassCategorizer, //)
+            combine(InternalClassCategorizer, PackageCategorizer),
             NoJdk)
 
         val xml = (new Writer()).toXml(g)

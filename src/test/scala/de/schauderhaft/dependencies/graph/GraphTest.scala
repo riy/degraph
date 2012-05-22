@@ -4,6 +4,9 @@ import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
+import de.schauderhaft.dependencies.categorizer.MultiCategorizer.combine
+import de.schauderhaft.dependencies.filter.ListCategory
+
 @RunWith(classOf[JUnitRunner])
 class GraphTest extends FunSuite with ShouldMatchers {
     test("a new graph contains no top nodes") {
@@ -28,7 +31,7 @@ class GraphTest extends FunSuite with ShouldMatchers {
     test("if an added node is contained in a category, that category gets added") {
         val category = new AnyRef()
         val node = new AnyRef()
-        val g = new Graph(_ => category, _ => true)
+        val g = new Graph(_ => category)
         g.add(node)
         g.topNodes should contain(category)
     }
@@ -71,5 +74,24 @@ class GraphTest extends FunSuite with ShouldMatchers {
         g.add(a)
 
         g.connectionsOf(a) should be(Set())
+    }
+
+    test("allNodes of an empty graph is the empty Set") {
+        val g = new Graph()
+        g.allNodes should be(Set())
+    }
+
+    test("allNodes of a graph without categories are the topNodes") {
+        val g = new Graph()
+        g.add("a")
+        g.add("23")
+        g.allNodes should be(g.topNodes)
+    }
+
+    test("allNodes of a graph with categories contains the topNodes and all categories") {
+        val g = new Graph(combine(ListCategory("a", "b", "c"), ListCategory("23", "42", "c")))
+        g.add("a")
+        g.add("23")
+        g.allNodes should be(Set("a", "b", "c", "23", "42"))
     }
 }

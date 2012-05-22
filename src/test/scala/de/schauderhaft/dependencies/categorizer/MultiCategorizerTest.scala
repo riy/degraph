@@ -12,13 +12,11 @@ class MultiCategorizerTest extends FunSuite with ShouldMatchers {
         combine(identity)("x") should be("x")
     }
     test("combine of a single function returns function value of the argument") {
-        combine(list("a", "b", "c"))("b") should be("c")
+        combine(ListCategory("a", "b", "c"))("b") should be("c")
     }
 
     test("combine of two functions returns the result of the first function if it is not equal to the argument") {
-        combine(list("a", "b"), list("b", "c"))("b") should be("c")
+        combine(ListCategory("a", "b"), ListCategory("b", "c"))("b") should be("c")
     }
-
-    private def list(args : AnyRef*) = new ListCategory(args.toList)
 
 }
