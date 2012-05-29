@@ -4,7 +4,6 @@ import de.schauderhaft.dependencies.writer.Writer
 import java.io.File
 import java.io.BufferedWriter
 import java.io.FileWriter
-import writer.WriterTest
 import scala.xml.XML
 import de.schauderhaft.dependencies.categorizer.InternalClassCategorizer
 import de.schauderhaft.dependencies.categorizer.PackageCategorizer
