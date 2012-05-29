@@ -1,4 +1,5 @@
 bin/
 lib/
+build/
 example*.graphml
 .*
