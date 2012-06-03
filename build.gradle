@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 
 repositories {
     mavenCentral()
-	mavenCentral name: 'jboss deprecated', urls: "https://repository.jboss.org/nexus/content/repositories/deprecated"
+	mavenCentral name: 'jboss deprecated', artifactUrls: ["https://repository.jboss.org/nexus/content/repositories/deprecated"]
 	add(new org.apache.ivy.plugins.resolver.URLResolver()) {
             name = 'Schauderhaft'
 			m2compatible=true
@@ -23,6 +23,7 @@ dependencies {
 	compile 'apache-oro:jakarta-oro:2.0.8'
 	compile 'com.google.guava:guava:12.0'
 	compile 'log4j:log4j:1.2.16'
+	compile 'org.rogach:scallop_2.9.2:0.4.0'
             
             
 	
