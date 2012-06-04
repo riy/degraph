@@ -3,6 +3,7 @@ package de.schauderhaft.dependencies
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import org.rogach.scallop.exceptions.UnknownOption
 
 @RunWith(classOf[JUnitRunner])
 class CommandLineParserTest extends FunSuite {
@@ -10,47 +11,50 @@ class CommandLineParserTest extends FunSuite {
 
     test("default outputfile is 'output.graphml'") {
         val config = CommandLineParser.parse(Array[String]())
-        config.fileName() should be("output.graphml")
+        config.output() should be("output.graphml")
     }
 
     test("the string after -o is considered the output file name") {
         val config = CommandLineParser.parse(Array[String]("-o", "ExampleFile"))
-        config.fileName() should be("ExampleFile")
+        config.output() should be("ExampleFile")
     }
 
     test("default input is empty") {
         val config = CommandLineParser.parse(Array[String]())
-        config.input() should be("")
+        config.classpath() should be(".")
     }
 
-    test("the string after -i is considered the input classpath") {
-        val config = CommandLineParser.parse(Array[String]("-i", "input;blah.jar"))
-        config.input() should be("input;blah.jar")
+    test("the string after -c is considered the input classpath") {
+        val config = CommandLineParser.parse(Array[String]("-c", "input;blah.jar"))
+        config.classpath() should be("input;blah.jar")
     }
 
-    test("default filter is empty") {
+    test("default exclude filter is empty") {
         val config = CommandLineParser.parse(Array[String]())
-        config.filter() should be("")
+        config.excludeFilter() should be("")
     }
-    test("the strings after -f s are considered the filter") {
-        val config = CommandLineParser.parse(Array[String]("-f", "filter"))
-        config.filter() should be("filter")
+    test("the strings after -e s are considered the exclude filter") {
+        val config = CommandLineParser.parse(Array[String]("-e", "filter"))
+        config.excludeFilter() should be("filter")
+    }
+
+    test("default include filter is empty") {
+        val config = CommandLineParser.parse(Array[String]())
+        config.includeFilter() should be("")
+    }
+    test("the strings after -i s are considered the exclude filter") {
+        val config = CommandLineParser.parse(Array[String]("-i", "filter"))
+        config.includeFilter() should be("filter")
+    }
+
+    test("default groupings are empty") {
+        val config = CommandLineParser.parse(Array[String]())
+        config.groupings() should be('empty)
     }
 
     test("the strings after -g s are considered the groupings") {
-        pending
-    }
-
-    test("no parameter results in an help message") {
-        pending
-    }
-
-    test("any undefined parameter results in an help message") {
-        pending
-    }
-
-    test("any undefined parameter results in an help message, even when correct parameters are present") {
-        pending
+        val config = CommandLineParser.parse(Array[String]("-g", "alpha", "beta", "gamma"))
+        config.groupings() should be(List("alpha", "beta", "gamma"))
     }
 
 }
