@@ -31,20 +31,20 @@ class CommandLineParserTest extends FunSuite {
 
     test("default exclude filter is empty") {
         val config = CommandLineParser.parse(Array[String]())
-        config.excludeFilter() should be("")
+        config.excludeFilter() should be(List())
     }
     test("the strings after -e s are considered the exclude filter") {
         val config = CommandLineParser.parse(Array[String]("-e", "filter"))
-        config.excludeFilter() should be("filter")
+        config.excludeFilter() should be(List("filter"))
     }
 
     test("default include filter is empty") {
         val config = CommandLineParser.parse(Array[String]())
-        config.includeFilter() should be("")
+        config.includeFilter() should be(List())
     }
     test("the strings after -i s are considered the exclude filter") {
         val config = CommandLineParser.parse(Array[String]("-i", "filter"))
-        config.includeFilter() should be("filter")
+        config.includeFilter() should be(List("filter"))
     }
 
     test("default groupings are empty") {

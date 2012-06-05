@@ -11,6 +11,8 @@ import de.schauderhaft.dependencies.categorizer.MultiCategorizer.combine
 import de.schauderhaft.dependencies.filter.NoJdk
 import de.schauderhaft.dependencies.categorizer.PackageRegexpCategorizer.pattern
 import scala.util.matching.Regex
+import de.schauderhaft.dependencies.filter.IncludeExcludeFilter
+import de.schauderhaft.dependencies.filter.RegExpFilter
 
 /**
  * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
@@ -21,7 +23,7 @@ object Degraph {
         val config = CommandLineParser.parse(args)
         val g = Analyzer.analyze(config.classpath(),
             buildCategorizer(config.groupings()),
-            NoJdk)
+            buildFilter(config.includeFilter(), config.excludeFilter()))
 
         val xml = (new Writer()).toXml(g)
         XML.save(config.output(), xml, "UTF8", true, null)
@@ -33,4 +35,9 @@ object Degraph {
         combine(categorizers : _*)
     }
 
+    private def buildFilter(includes : List[String], excludes : List[String]) = {
+        new IncludeExcludeFilter(
+            includes.map((x : String) => RegExpFilter.filter(x.r)).toSet,
+            excludes.map((x : String) => RegExpFilter.filter(x.r)).toSet)
+    }
 }

@@ -21,4 +21,5 @@ It doesn't get much easier
 
 **How to run**
 
-I'm currently add command line arguments, so stuff is changing around. Just wait a couple of days or look into the source code. Its not much.
+I'm currently add command line arguments, so stuff is changing around. 
+Just wait a couple of days or look into the source code. Its not much.
