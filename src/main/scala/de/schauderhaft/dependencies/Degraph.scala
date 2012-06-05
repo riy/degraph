@@ -15,7 +15,7 @@ import scala.util.matching.Regex
 /**
  * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
  */
-object DependencyManager {
+object Degraph {
 
     def main(args : Array[String]) : Unit = {
         val config = CommandLineParser.parse(args)
