@@ -1,5 +1,17 @@
 apply plugin: 'scala'
 apply plugin: 'eclipse'
+apply plugin: 'executable-jar'
+
+mainClass = 'de.schauderhaft.dependencies.Degraph'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:master-REL-6'
+    }
+}
 
 repositories {
     mavenCentral()
