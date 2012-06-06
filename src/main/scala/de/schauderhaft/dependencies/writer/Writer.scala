@@ -56,12 +56,12 @@ object NodeWriter extends ((AnyRef, Graph) => Node) {
     private def id(n : AnyRef) = n.toString
     private def label(n : AnyRef) = n.toString
 
-    def apply(n : AnyRef, g : Graph) = <node id={ id(n) } yfiles.foldertype="group">
+    def apply(n : AnyRef, g : Graph) = <node id={ id(n) } yfiles.foldertype="folder">
                                            <data key="d4"/>
                                            <data key="d5"/>
                                            <data key="d6">
                                                <y:ProxyAutoBoundsNode>
-                                                   <y:Realizers active="0">
+                                                   <y:Realizers active="1">
                                                        <y:GroupNode>
                                                            <y:Fill color="#F2F0D8" transparent="false"/>
                                                            <y:BorderStyle color="#000000" type="line" width="1.0"/>
@@ -78,7 +78,7 @@ object NodeWriter extends ((AnyRef, Graph) => Node) {
                                                            <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#B7B69E" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" modelName="internal" modelPosition="t" textColor="#000000" visible="true" x="0.0" y="0.0">{ label(n) }</y:NodeLabel>
                                                            <y:Shape type="rectangle"/>
                                                            <y:DropShadow color="#D2D2D2" offsetX="4" offsetY="4"/>
-                                                           <y:State closed="false" innerGraphDisplayEnabled="false"/>
+                                                           <y:State closed="true" innerGraphDisplayEnabled="false"/>
                                                            <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
                                                            <y:BorderInsets bottom="0" bottomF="0.0" left="0" leftF="0.0" right="0" rightF="0.0" top="0" topF="0.0"/>
                                                        </y:GroupNode>
