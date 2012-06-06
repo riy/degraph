@@ -1,4 +1,5 @@
-* make stuff configurable via command line (http://rogach-scala.blogspot.co.uk/2012/04/better-cli-option-parsing-in-scala.html)
+* closed groups
+* hollow groups (all internals removed and references targeting the parent node)
 * take care of licensing
 * make stuff configurable via control file
 * rename to something fancy. Maybe degraph
