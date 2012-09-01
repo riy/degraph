@@ -17,10 +17,10 @@ import de.schauderhaft.degraph.filter.NoSelfReference
 import de.schauderhaft.degraph.graph.Graph
 
 /**
- * analyzes whaterver it finds in the sourceFolder using the Dependency Finder library and returns a Graph instance which captures the relevant dependency information
+ * analyzes whatever it finds in the sourceFolder using the Dependency Finder library and returns a Graph instance which captures the relevant dependency information
  */
 object Analyzer {
-    def analyze(sourceFolder : String, categorizer : AnyRef => AnyRef, filter : AnyRef => Boolean) : Graph = {
+    def analyze(sourceFolder: String, categorizer: AnyRef => AnyRef, filter: AnyRef => Boolean): Graph = {
 
         def getRootClasses = {
             val loader = new TransientClassfileLoader()
@@ -31,18 +31,18 @@ object Analyzer {
             factory.getClasses
         }
 
-        val classes : scala.collection.mutable.Map[String, ClassNode] = getRootClasses
+        val classes: scala.collection.mutable.Map[String, ClassNode] = getRootClasses
 
         val g = new Graph(categorizer, filter, new NoSelfReference(categorizer))
 
-        val featureOutboundClass = (c : ClassNode) => for (
+        val featureOutboundClass = (c: ClassNode) => for (
             f <- c.getFeatures();
-            od @ (dummy : FeatureNode) <- f.getOutboundDependencies().toTraversable
+            od @ (dummy: FeatureNode) <- f.getOutboundDependencies().toTraversable
         ) yield od.getClassNode()
         // different ways to find classes a class depends on.
         val navigations = List(
-            (c : ClassNode) => c.getParents().toTraversable, // finds superclasses
-            (c : ClassNode) => c.getOutboundDependencies().toTraversable, // finds classes of fields
+            (c: ClassNode) => c.getParents().toTraversable, // finds superclasses
+            (c: ClassNode) => c.getOutboundDependencies().toTraversable, // finds classes of fields
             featureOutboundClass)
 
         for ((_, c) <- classes) {
