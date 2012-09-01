@@ -1,8 +1,8 @@
 apply plugin: 'scala'
 apply plugin: 'eclipse'
-apply plugin: 'executable-jar'
+apply plugin: 'application'
 
-mainClass = 'de.schauderhaft.dependencies.Degraph'
+mainClassName = 'de.schauderhaft.dependencies.Degraph'
 
 buildscript {
     repositories {
