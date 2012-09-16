@@ -1,3 +1,4 @@
+
 * closed groups
 * hollow groups (all internals removed and references targeting the parent node)
 * take care of licensing
@@ -8,3 +9,4 @@
 * have a feedback button (user voice)
 * make dependency finder available for maven/gradle/ivy
 * http://arborjs.org/introduction
+* https://gephi.org/
