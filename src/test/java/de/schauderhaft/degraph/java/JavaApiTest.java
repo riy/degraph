@@ -46,7 +46,7 @@ public class JavaApiTest {
 
 	@Test
 	public void writeGraphMlFromGraphExample() {
-		JavaGraph graph = new JavaGraph();
+		JavaGraph graph = new JavaGraph(new ChessCategory());
 		graph.connect("King", "Queen");
 		graph.connect("Queen", "Rook");
 		graph.connect("Rook", "Bishop");
@@ -57,12 +57,19 @@ public class JavaApiTest {
 		graph.save("chess.graphml");
 	}
 
-	//
-	// @Test
-	// public void aSimpleNodeHasNoContenten() {
-	// JavaGraph graph = new JavaGraph();
-	// Object node = new Object();
-	// graph.add(node);
-	// assertEquals(new HashSet<>(), graph.contentsOf(node));
-	// }
+	@Test
+	public void aSimpleNodeHasNoContenten() {
+		JavaGraph graph = new JavaGraph();
+		Object node = new Object();
+		graph.add(node);
+		assertEquals(new HashSet<>(), graph.contentsOf(node));
+	}
+
+	@Test
+	public void categorizerGetsApplied() {
+		JavaGraph graph = new JavaGraph(new ConstantCategorizer("x"));
+		Object node = new Object();
+		graph.add(node);
+		assertEquals(new HashSet<>(asList(node)), graph.contentsOf("x"));
+	}
 }

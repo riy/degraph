@@ -9,8 +9,10 @@ import de.schauderhaft.degraph.writer.Writer
 /**
  * a class intendent to use with a java, so it skips on all the fancy Scala stuff.
  */
-class JavaGraph {
-    val graph = new Graph()
+class JavaGraph(graph: Graph) {
+    def this() = this(new Graph)
+
+    def this(categorizer: Categorizer) = this(new Graph(categorizer.categoryOf _))
 
     def topNodes(): java.util.Set[Object] = graph.topNodes.asJava
 
@@ -22,5 +24,6 @@ class JavaGraph {
     def save(fileName: String) {
         XML.save(fileName, (new Writer()).toXml(graph), "UTF-8", true, null)
     }
+    def contentsOf(node: Object): java.util.Set[Object] = graph.contentsOf(node).asJava
 }
 
