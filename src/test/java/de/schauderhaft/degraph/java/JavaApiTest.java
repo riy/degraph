@@ -42,7 +42,19 @@ public class JavaApiTest {
 		graph.connect(a, b);
 
 		assertEquals(new HashSet<>(asList(b)), graph.connectionsOf(a));
+	}
 
+	@Test
+	public void writeGraphMlFromGraphExample() {
+		JavaGraph graph = new JavaGraph();
+		graph.connect("King", "Queen");
+		graph.connect("Queen", "Rook");
+		graph.connect("Rook", "Bishop");
+		graph.connect("Rook", "Knight");
+		graph.connect("Knight", "Pawn");
+		graph.connect("Bishop", "Pawn");
+
+		graph.save("chess.graphml");
 	}
 
 	//

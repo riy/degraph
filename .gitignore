@@ -1,6 +1,5 @@
 bin/
 lib/
 build/
-example*.graphml
-output.graphml
+*.graphml
 .*
