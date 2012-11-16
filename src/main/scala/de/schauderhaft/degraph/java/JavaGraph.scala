@@ -7,7 +7,10 @@ import scala.xml.XML
 import de.schauderhaft.degraph.writer.Writer
 
 /**
- * a class intendent to use with a java, so it skips on all the fancy Scala stuff.
+ * a class intendent to use with  java, so it skips on all the fancy Scala stuff.
+ *
+ *
+ *  See JavaApiTest#writeGraphMlFromGraphExampl for example usage.
  */
 class JavaGraph(graph: Graph) {
     def this() = this(new Graph)
