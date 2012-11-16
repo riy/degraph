@@ -4,6 +4,10 @@ apply plugin: 'application'
 
 mainClassName = 'de.schauderhaft.degraph.Degraph'
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.2'
+}
+
 buildscript {
     repositories {
         mavenCentral()
