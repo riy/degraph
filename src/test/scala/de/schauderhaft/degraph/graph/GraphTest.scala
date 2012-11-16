@@ -8,6 +8,7 @@ import de.schauderhaft.degraph.categorizer.MultiCategorizer._
 import de.schauderhaft.degraph.filter.ListCategory
 @RunWith(classOf[JUnitRunner])
 class GraphTest extends FunSuite with ShouldMatchers {
+
     test("a new graph contains no top nodes") {
         val g = new Graph()
         g.topNodes should be('empty)
