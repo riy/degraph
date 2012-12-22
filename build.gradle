@@ -8,6 +8,10 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.2'
 }
 
+targetCompatibility = 1.7
+sourceCompatibility = 1.7
+
+
 buildscript {
     repositories {
         mavenCentral()
