@@ -27,7 +27,7 @@ object Analyzer {
             val factory = new NodeFactory()
             val visitor = new CodeDependencyCollector(factory)
             loader.addLoadListener(new LoadListenerVisitorAdapter(visitor))
-            loader.load(sourceFolder.split(";").toSet.asJava)
+            loader.load(sourceFolder.split(System.getProperty("path.separator")).toSet.asJava)
             factory.getClasses
         }
 
