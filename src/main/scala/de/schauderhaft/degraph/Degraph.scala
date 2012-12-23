@@ -1,7 +1,6 @@
 package de.schauderhaft.degraph
 
 import scala.xml.XML
-
 import de.schauderhaft.degraph.analysis.Analyzer
 import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
 import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
@@ -10,6 +9,8 @@ import de.schauderhaft.degraph.categorizer.PackageRegexpCategorizer.pattern
 import de.schauderhaft.degraph.filter.IncludeExcludeFilter
 import de.schauderhaft.degraph.filter.RegExpFilter
 import de.schauderhaft.degraph.writer.Writer
+import org.rogach.scallop.exceptions.UnknownOption
+import org.rogach.scallop.exceptions.ScallopException
 
 /**
  * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
