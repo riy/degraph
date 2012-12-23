@@ -7,7 +7,7 @@ import org.rogach.scallop.exceptions.Help
 
 object CommandLineParser {
 
-    class Conf(args: Seq[String]) extends ScallopConf(args) {
+    class Conf(args: Seq[String]) extends LazyScallopConf(args) {
 
         version("Degraph prerelease. Use at own risk.")
         banner("""Degraph analyses class and jar files and creates graphml documents out of it
@@ -27,15 +27,7 @@ See https://github.com/schauder/Dependency-Manager for details""")
             default = Some(List()),
             descr = "if this argument is given, only those nodes get included in the resulting graph, that match the given regular expression.")
         val groupings = opt[List[String]]("groupings", default = Some(List()))
-        verify
 
-        override protected def onError(e: Throwable): Unit = e match {
-            case Version =>
-                builder.vers.foreach(println)
-            case _ =>
-                builder.printHelp
-        }
-        //        System.exit(1)
     }
 
     def parse(args: Array[String]) = {

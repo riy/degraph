@@ -11,6 +11,7 @@ import de.schauderhaft.degraph.filter.RegExpFilter
 import de.schauderhaft.degraph.writer.Writer
 import org.rogach.scallop.exceptions.UnknownOption
 import org.rogach.scallop.exceptions.ScallopException
+import org.rogach.scallop.exceptions.Version
 
 /**
  * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
@@ -19,13 +20,21 @@ object Degraph {
 
     def main(args: Array[String]): Unit = {
         val config = CommandLineParser.parse(args)
-        val cat = buildCategorizer(config.groupings())
-        val g = Analyzer.analyze(config.classpath(),
-            cat,
-            buildFilter(config.includeFilter(), config.excludeFilter()))
+        try {
+            config.initialize {
+                case ScallopException(message) =>
+                    println(message)
+                    config.printHelp
+                    System.exit(1)
+            }
+            val cat = buildCategorizer(config.groupings())
+            val g = Analyzer.analyze(config.classpath(),
+                cat,
+                buildFilter(config.includeFilter(), config.excludeFilter()))
 
-        val xml = (new Writer()).toXml(g)
-        XML.save(config.output(), xml, "UTF8", true, null)
+            val xml = (new Writer()).toXml(g)
+            XML.save(config.output(), xml, "UTF8", true, null)
+        }
     }
 
     private def buildCategorizer(groupings: List[String]) = {
