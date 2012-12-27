@@ -1,25 +1,47 @@
 **Degraph** is a little tool for visualizing dependencies in JVM applications.
 
-It analyses class files using DependencyFinder and spits out a graphml file which then can be rendered using [yed](http://www.yworks.com/en/products_yed_about.html).
+It analyses class files using [DependencyFinder](http://depfind.sourceforge.net/) and spits out a graphml file which then can be rendered using [yed](http://www.yworks.com/en/products_yed_about.html).
 
-What makes Dependency Manager different from other tools (that I know of) is that it 
-supports nested graphs. I.e. you can define rule like a class is contained in it's package, 
-a package is part of a module and this fact gets visualized in the resulting graph. 
+What makes Degraph different from other tools (that I know of) is that it 
+supports nested graphs. Inner classes are visualy contained in there containing class. 
+
+Classes are contained in their packages, and you can specify rules how to group packages into modules. 
 
 If you do a hierarchic layout in yed you can easily see which classes you can move 
 to different packages, layer or modules without creating circular dependencies or 
 which you have to move in order to break cycles. 
 A feature I haven't seen in any other package dealing with dependencies so far.
 
-**How to build**
-
-Degraph uses gradle as a build tool. So you need a gradle installation, get a copy of all the sources, and enter
-
-    gradle build
-    
-It doesn't get much easier
 
 **How to run**
 
-I'm currently add command line arguments, so stuff is changing around. 
-Just wait a couple of days or look into the source code. Its not much.
+Currentyl Degraph is just a simple command line tool. Just download the binary distribution (I'll add a link ASAP. I promise) 
+and execute *degraph* or *degraph.bat* depending on the operating system you are on.
+
+You'll at least provide a class path to analyze. These are the Command Line Arguments available right now:
+
+*-c* <directoryOrFileNameList> This is the classpath to be analyzed. It can be a jar file or a directory or a list of those. If you use a list you have to use the Operating System specifc classpath seperator.
+
+*-i* <regexp> This is a regulare expression to limit the classes to be inlcuded in the graph. Note that the regular expression only has to match part of the name. So a value of 'Test' (without the quotes) will match all classes containing the part 'Test' in their name. If not provided all classes wil make it into the graph by default.
+
+*-e* <regexp> everything matched by this regular expression will be excluded from the graph.
+
+*-o* <filename> The name for the outputfile. Defaults to output.graphml
+
+*-g* <list of groups> This is a list of regulare Expressions that define the module structure of the application. The idea is that the first match of the regular expression becomes the name of the category/module. Note: This one is even more experimental then everything else. 
+
+**How to build**
+
+I'm highly interested in contributions, so if you are interested, drop me a message and until I respond have a look at the source code.
+
+Degraph uses gradle as a build tool. Since gradle is awesome you actually don't have to install gradle, you just need a working JDK installation.
+
+Just get the sourcecode and run one of the following commands:
+
+For executing all the tests:
+
+    gradlew test 
+
+For creating a directory that looks like you just installed Degraph:
+
+    gradlew installApp
