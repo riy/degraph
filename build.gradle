@@ -17,6 +17,10 @@ tasks.withType(ScalaCompile) {
     scalaCompileOptions.useAnt = false
 }
 
+applicationDistribution.from(['license.txt','readme.markdown']) {
+    into "/"
+}
+
 targetCompatibility = 1.7
 sourceCompatibility = 1.7
 
