@@ -15,7 +15,7 @@ A feature I haven't seen in any other package dealing with dependencies so far.
 
 **How to run**
 
-Currentyl Degraph is just a simple command line tool. Just download the binary distribution (I'll add a link ASAP. I promise) 
+Currentyl Degraph is just a simple command line tool. Just download the **[binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2012/12/degraph-0.0.1.zip)**
 and execute *degraph* or *degraph.bat* depending on the operating system you are on.
 
 You'll at least provide a class path to analyze. These are the Command Line Arguments available right now:
