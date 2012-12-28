@@ -21,6 +21,7 @@ object PackageRegexpCategorizer {
         case pn: PackageNode => {
             optionMatch(pn.getName(), pattern).getOrElse(pn)
         }
+        case s: String => optionMatch(s, pattern).getOrElse(s)
         case _ => x
     }
 

@@ -32,4 +32,9 @@ class PackageRegexpCategorizerTest extends FunSuite with ShouldMatchers {
         val classNode = new PackageNode("de.schauderhaft.module.test", true)
         cat(classNode) should be("module")
     }
+
+    test("Pattern categorizer categorizes  matching String with the matchgroup") {
+        val classNode = "de.schauderhaft.module.test"
+        cat(classNode) should be("module")
+    }
 }
