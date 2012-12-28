@@ -2,6 +2,11 @@ apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 
+
+version = '0.0.1-SNAPSHOT'
+description= 'Degraph is a library for producing dependency graphs for visual inspection'
+
+
 mainClassName = 'de.schauderhaft.degraph.Degraph'
 
 task wrapper(type: Wrapper) {
