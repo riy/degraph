@@ -94,4 +94,10 @@ class GraphTest extends FunSuite with ShouldMatchers {
         g.add("23")
         g.allNodes should be(Set("a", "b", "c", "23", "42"))
     }
+
+    test("categories don't get filtert") {
+        val g = new Graph(ListCategory("a", "b"), _ == "a")
+        g.add("a")
+        g.topNodes should be(Set("b"))
+    }
 }
