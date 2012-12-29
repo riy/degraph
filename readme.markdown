@@ -45,3 +45,7 @@ For executing all the tests:
 For creating a directory that looks like you just installed Degraph:
 
     gradlew installApp
+
+**Download**
+
+[Binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2012/12/degraph-0.0.1.zip)
