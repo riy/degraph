@@ -1,4 +1,4 @@
-**Degraph** is a little tool for visualizing dependencies in JVM applications.
+**Degraph** is a tool for visualizing dependencies in JVM applications.
 
 It analyses class files using [DependencyFinder](http://depfind.sourceforge.net/) and spits out a graphml file which then can be rendered using [yed](http://www.yworks.com/en/products_yed_about.html).
 
@@ -51,3 +51,9 @@ For creating a directory that looks like you just installed Degraph:
 **Download**
 
 [Binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2012/12/degraph-0.0.1.zip)
+
+**Feedback**
+
+Please use [the github issue feature](https://github.com/schauder/degraph/issues) for questions, bug reports or improvement requests. 
+
+If you like Degraph just say so on twitter, facebook or wherever you like. 
