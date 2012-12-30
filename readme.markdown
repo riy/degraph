@@ -28,7 +28,9 @@ You'll at least provide a class path to analyze. These are the Command Line Argu
 
 *-o* <filename> The name for the outputfile. Defaults to output.graphml
 
-*-g* <list of groups> This is a list of regulare Expressions that define the module structure of the application. The idea is that the first match of the regular expression becomes the name of the category/module. For example the argument '-g (.*)\..*' will cause each upper level package to group its contained packages. Doesn't make sense? Try it with and without the argument, I think you'll understand the difference. Note: This one is even more experimental then everything else and will probably soon be replaced by some more powerfull configuration file.
+*-g* <list of groups> This is a list of regulare Expressions that define the module structure of the application. The idea is that the first match of the regular expression becomes the name of the category/module. For example the argument '-g (.*)\..*' will cause each upper level package to group its contained packages (Note: you might have to escape parts of the regexp to make it work). Doesn't make sense? Try it with and without the argument, I think you'll understand the difference. Note: This one is even more experimental then everything else and will probably soon be replaced by some more powerfull configuration file.
+
+[There is a page with examples in the wiki](https://github.com/schauder/degraph/wiki/Examples).
 
 **How to build**
 
