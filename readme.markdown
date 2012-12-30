@@ -1,4 +1,4 @@
-**Degraph** is a little tool for visualizing dependencies in JVM applications.
+**Degraph** is a tool for visualizing dependencies in JVM applications.
 
 It analyses class files using [DependencyFinder](http://depfind.sourceforge.net/) and spits out a graphml file which then can be rendered using [yed](http://www.yworks.com/en/products_yed_about.html).
 
@@ -28,7 +28,9 @@ You'll at least provide a class path to analyze. These are the Command Line Argu
 
 *-o* <filename> The name for the outputfile. Defaults to output.graphml
 
-*-g* <list of groups> This is a list of regulare Expressions that define the module structure of the application. The idea is that the first match of the regular expression becomes the name of the category/module. For example the argument '-g (.*)\..*' will cause each upper level package to group its contained packages. Doesn't make sense? Try it with and without the argument, I think you'll understand the difference. Note: This one is even more experimental then everything else and will probably soon be replaced by some more powerfull configuration file.
+*-g* <list of groups> This is a list of regulare Expressions that define the module structure of the application. The idea is that the first match of the regular expression becomes the name of the category/module. For example the argument '-g (.*)\..*' will cause each upper level package to group its contained packages (Note: you might have to escape parts of the regexp to make it work). Doesn't make sense? Try it with and without the argument, I think you'll understand the difference. Note: This one is even more experimental then everything else and will probably soon be replaced by some more powerfull configuration file.
+
+[There is a page with examples in the wiki](https://github.com/schauder/degraph/wiki/Examples).
 
 **How to build**
 
@@ -49,3 +51,9 @@ For creating a directory that looks like you just installed Degraph:
 **Download**
 
 [Binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2012/12/degraph-0.0.1.zip)
+
+**Feedback**
+
+Please use [the github issue feature](https://github.com/schauder/degraph/issues) for questions, bug reports or improvement requests. 
+
+If you like Degraph just say so on twitter, facebook or wherever you like. 
