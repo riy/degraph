@@ -4,10 +4,6 @@ import scala.xml.Elem
 import scala.xml.Node
 import de.schauderhaft.degraph.graph.Graph
 
-object Writer {
-    val defaultWriter = {}
-}
-
 /**
  * writes a graph to an graphml xml structure which can be displayed by yed in a usable form
  */
@@ -52,6 +48,14 @@ class Writer(
 }
 
 object NodeWriter extends ((AnyRef, Graph) => Node) {
+    def apply(n: AnyRef, g: Graph) =
+        if (g.contentsOf(n).isEmpty)
+            LeafNodeWriter(n, g)
+        else
+            GroupNodeWriter(n, g)
+}
+
+object GroupNodeWriter extends ((AnyRef, Graph) => Node) {
     private def id(n: AnyRef) = n.toString
     private def label(n: AnyRef) = n.toString
 
@@ -86,9 +90,26 @@ object NodeWriter extends ((AnyRef, Graph) => Node) {
                                          </data>
                                          <graph edgedefault="directed" id={ "G:" + id(n) }>
                                              {
-                                                 g.contentsOf(n).map(apply(_, g))
+                                                 g.contentsOf(n).map(NodeWriter(_, g))
                                              }
                                          </graph>
+                                     </node>
+}
+
+object LeafNodeWriter extends ((AnyRef, Graph) => Node) {
+    private def id(n: AnyRef) = n.toString
+    private def label(n: AnyRef) = n.toString
+
+    def apply(n: AnyRef, g: Graph) = <node id={ id(n) }>
+                                         <data key="d5"/>
+                                         <data key="d6">
+                                             <y:ShapeNode>
+                                                 <y:Fill color="#FFCC00" transparent="false"/>
+                                                 <y:BorderStyle color="#000000" type="line" width="1.0"/>
+                                                 <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" modelName="internal" modelPosition="c" textColor="#000000" visible="true" x="-33.359375" y="5.6494140625">{ label(n) }</y:NodeLabel>
+                                                 <y:Shape type="rectangle"/>
+                                             </y:ShapeNode>
+                                         </data>
                                      </node>
 }
 
