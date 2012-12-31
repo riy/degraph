@@ -52,72 +52,71 @@ object NodeWriter extends ((AnyRef, Graph) => Node) {
     def colorScheme(level: Int) = colors(level % colors.size)
     val titleBarColor = "#F7F774"
 
-    def apply(n: AnyRef, g: Graph) = apply(n, g, 0): Node
-    def apply(n: AnyRef, g: Graph, level: Int): Node =
+    def apply(n: AnyRef, g: Graph) = apply(n, g, 0, None): Node
+    def apply(n: AnyRef, g: Graph, level: Int, parent: Option[AnyRef]): Node =
         if (g.contentsOf(n).isEmpty)
-            LeafNodeWriter(n, g, level)
+            LeafNodeWriter(n, g, level, parent)
         else
-            GroupNodeWriter(n, g, level)
+            GroupNodeWriter(n, g, level, parent)
 }
 
 object GroupNodeWriter {
     import NodeWriter._
     private def id(n: AnyRef) = n.toString
-    private def label(n: AnyRef) = n.toString
 
-    def apply(n: AnyRef, g: Graph, level: Int) = <node id={ id(n) } yfiles.foldertype="folder">
-                                                     <data key="d4"/>
-                                                     <data key="d5"/>
-                                                     <data key="d6">
-                                                         <y:ProxyAutoBoundsNode>
-                                                             <y:Realizers active="1">
-                                                                 <y:GroupNode>
-                                                                     <y:Fill color={ colorScheme(level) } transparent="false"/>
-                                                                     <y:BorderStyle color="#000000" type="line" width="1.0"/>
-                                                                     <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor={ titleBarColor } borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" modelName="internal" modelPosition="t" textColor="#000000" visible="true" x="0.0" y="0.0">{ label(n) }</y:NodeLabel>
-                                                                     <y:Shape type="rectangle"/>
-                                                                     <y:DropShadow color="#D2D2D2" offsetX="4" offsetY="4"/>
-                                                                     <y:State closed="false" innerGraphDisplayEnabled="false"/>
-                                                                     <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
-                                                                     <y:BorderInsets bottom="14" bottomF="14.0" left="51" leftF="50.5" right="49" rightF="48.9443359375" top="5" topF="4.7470703125"/>
-                                                                 </y:GroupNode>
-                                                                 <y:GroupNode>
-                                                                     <y:Fill color={ colorScheme(level) } transparent="false"/>
-                                                                     <y:BorderStyle color="#000000" type="line" width="1.0"/>
-                                                                     <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor={ titleBarColor } borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" modelName="internal" modelPosition="t" textColor="#000000" visible="true" x="0.0" y="0.0">{ label(n) }</y:NodeLabel>
-                                                                     <y:Shape type="rectangle"/>
-                                                                     <y:DropShadow color="#D2D2D2" offsetX="4" offsetY="4"/>
-                                                                     <y:State closed="true" innerGraphDisplayEnabled="false"/>
-                                                                     <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
-                                                                     <y:BorderInsets bottom="0" bottomF="0.0" left="0" leftF="0.0" right="0" rightF="0.0" top="0" topF="0.0"/>
-                                                                 </y:GroupNode>
-                                                             </y:Realizers>
-                                                         </y:ProxyAutoBoundsNode>
-                                                     </data>
-                                                     <graph edgedefault="directed" id={ "G:" + id(n) }>
-                                                         {
-                                                             g.contentsOf(n).map(NodeWriter(_, g, level + 1))
-                                                         }
-                                                     </graph>
-                                                 </node>
+    def apply(n: AnyRef, g: Graph, level: Int, parent: Option[AnyRef]) =
+        <node id={ id(n) } yfiles.foldertype="folder">
+            <data key="d4"/>
+            <data key="d5"/>
+            <data key="d6">
+                <y:ProxyAutoBoundsNode>
+                    <y:Realizers active="1">
+                        <y:GroupNode>
+                            <y:Fill color={ colorScheme(level) } transparent="false"/>
+                            <y:BorderStyle color="#000000" type="line" width="1.0"/>
+                            <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor={ titleBarColor } borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" modelName="internal" modelPosition="t" textColor="#000000" visible="true" x="0.0" y="0.0">{ Labeling(n, parent) }</y:NodeLabel>
+                            <y:Shape type="rectangle"/>
+                            <y:DropShadow color="#D2D2D2" offsetX="4" offsetY="4"/>
+                            <y:State closed="false" innerGraphDisplayEnabled="false"/>
+                            <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
+                            <y:BorderInsets bottom="14" bottomF="14.0" left="51" leftF="50.5" right="49" rightF="48.9443359375" top="5" topF="4.7470703125"/>
+                        </y:GroupNode>
+                        <y:GroupNode>
+                            <y:Fill color={ colorScheme(level) } transparent="false"/>
+                            <y:BorderStyle color="#000000" type="line" width="1.0"/>
+                            <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor={ titleBarColor } borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" modelName="internal" modelPosition="t" textColor="#000000" visible="true" x="0.0" y="0.0">{ Labeling(n, parent) }</y:NodeLabel>
+                            <y:Shape type="rectangle"/>
+                            <y:DropShadow color="#D2D2D2" offsetX="4" offsetY="4"/>
+                            <y:State closed="true" innerGraphDisplayEnabled="false"/>
+                            <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
+                            <y:BorderInsets bottom="0" bottomF="0.0" left="0" leftF="0.0" right="0" rightF="0.0" top="0" topF="0.0"/>
+                        </y:GroupNode>
+                    </y:Realizers>
+                </y:ProxyAutoBoundsNode>
+            </data>
+            <graph edgedefault="directed" id={ "G:" + id(n) }>
+                {
+                    g.contentsOf(n).map(NodeWriter(_, g, level + 1, Some(n)))
+                }
+            </graph>
+        </node>
 }
 
 object LeafNodeWriter {
     import NodeWriter.colorScheme
     private def id(n: AnyRef) = n.toString
-    private def label(n: AnyRef) = n.toString
 
-    def apply(n: AnyRef, g: Graph, level: Int) = <node id={ id(n) }>
-                                                     <data key="d5"/>
-                                                     <data key="d6">
-                                                         <y:ShapeNode>
-                                                             <y:Fill color={ colorScheme(level) } transparent="false"/>
-                                                             <y:BorderStyle color="#000000" type="line" width="1.0"/>
-                                                             <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" modelName="internal" modelPosition="c" textColor="#000000" visible="true" x="-33.359375" y="5.6494140625">{ label(n) }</y:NodeLabel>
-                                                             <y:Shape type="rectangle"/>
-                                                         </y:ShapeNode>
-                                                     </data>
-                                                 </node>
+    def apply(n: AnyRef, g: Graph, level: Int, parent: Option[AnyRef]) = <node id={ id(n) }>
+                                                                             <data key="d5"/>
+                                                                             <data key="d6">
+                                                                                 <y:ShapeNode>
+                                                                                     <y:Fill color={ colorScheme(level) } transparent="false"/>
+                                                                                     <y:BorderStyle color="#000000" type="line" width="1.0"/>
+                                                                                     <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" modelName="internal" modelPosition="c" textColor="#000000" visible="true" x="-33.359375" y="5.6494140625">{ Labeling(n, parent) }</y:NodeLabel>
+                                                                                     <y:Shape type="rectangle"/>
+                                                                                 </y:ShapeNode>
+                                                                             </data>
+                                                                         </node>
 }
 
 object EdgeWriter extends ((AnyRef, AnyRef) => Node) {
