@@ -1,5 +1,11 @@
 package de.schauderhaft.degraph.graph
 
+import scalax.collection.{ Graph => SGraph }
+import scalax.collection.GraphPredef._
+import scalax.collection.GraphEdge._
+import scalax.collection.edge.Implicits._
+import scalax.collection.edge.LkDiEdge
+
 /**
  * a special graph for gathering and organizing dependencies in a hirachical fashion.
  *
@@ -8,6 +14,8 @@ package de.schauderhaft.degraph.graph
 class Graph(category: AnyRef => AnyRef = (x) => x,
     filter: AnyRef => Boolean = _ => true,
     edgeFilter: ((AnyRef, AnyRef)) => Boolean = _ => true) {
+
+    var internalGraph = SGraph[AnyRef, LkDiEdge]()
 
     def topNodes: Set[AnyRef] = _topNodes
     def contentsOf(group: AnyRef): Set[AnyRef] = _contents.getOrElse(group, Set())
@@ -19,9 +27,10 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     private def unfilteredAdd(node: AnyRef) {
         val cat = category(node)
-        if (cat == node)
+        if (cat == node) {
             _topNodes = topNodes + node
-        else {
+            internalGraph += node
+        } else {
             addNodeToCategory(node, cat)
             unfilteredAdd(cat)
         }
@@ -33,26 +42,21 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
         add(b)
     }
 
-    def allNodes: Set[AnyRef] = content(_topNodes)
-
-    private def content(nodes: Set[AnyRef]): Set[AnyRef] = {
-        val ns = nodes.flatMap(contentsOf(_))
-        if (ns.isEmpty)
-            nodes
-        else
-            (nodes ++ ns) ++ content(ns)
-    }
+    def allNodes: Set[AnyRef] = internalGraph.nodes.toSet
 
     private var _topNodes = Set[AnyRef]()
     private var _contents = Map[AnyRef, Set[AnyRef]]()
     private var _edges = Map[AnyRef, Set[AnyRef]]()
 
     private def addEdge(a: AnyRef, b: AnyRef) {
-        if (filter(a) && filter(b) && edgeFilter(a, b))
+        if (filter(a) && filter(b) && edgeFilter(a, b)) {
+            internalGraph += (a ~> b)
             _edges += ((a, connectionsOf(a) + b))
+        }
     }
 
     private def addNodeToCategory(node: AnyRef, cat: AnyRef) = {
+        internalGraph += (cat ~+#> node)("contains")
         _contents += ((cat, contentsOf(cat) + node))
     }
 }
