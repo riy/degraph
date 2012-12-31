@@ -51,13 +51,14 @@ dependencies {
 
     // Libraries needed for scala api
     compile 'org.scala-lang:scala-library:2.9.2'
+	
 	compile 'com.jeantessier:dependencyfinder:1.2.1-beta4'
 	compile 'apache-oro:jakarta-oro:2.0.8'
 	compile 'com.google.guava:guava:12.0'
 	compile 'log4j:log4j:1.2.16'
 	compile 'org.rogach:scallop_2.9.2:0.6.2'
             
-            
+    compile 'com.assembla.scala-incubator:graph-core_2.9.2:1.5.1'        
 	
 	testCompile 'junit:junit:4.10'
 	testCompile 'org.scalatest:scalatest_2.9.2:1.8'
