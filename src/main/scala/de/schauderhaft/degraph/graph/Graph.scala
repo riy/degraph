@@ -1,6 +1,6 @@
 package de.schauderhaft.degraph.graph
 
-import scalax.collection.{ Graph => SGraph }
+import scalax.collection.mutable.{ Graph => SGraph }
 import scalax.collection.GraphPredef._
 import scalax.collection.GraphEdge._
 import scalax.collection.edge.Implicits._
@@ -15,9 +15,12 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     filter: AnyRef => Boolean = _ => true,
     edgeFilter: ((AnyRef, AnyRef)) => Boolean = _ => true) {
 
-    var internalGraph = SGraph[AnyRef, LkDiEdge]()
+    val internalGraph = SGraph[AnyRef, LkDiEdge]()
 
-    def topNodes: Set[AnyRef] = _topNodes
+    def topNodes: Set[AnyRef] = {
+        val g = internalGraph
+        g.nodes.filter(_.incoming.forall(_.label != "contains")).map(_.value).toSet
+    }
     def contentsOf(group: AnyRef): Set[AnyRef] = _contents.getOrElse(group, Set())
     def connectionsOf(node: AnyRef): Set[AnyRef] = _edges.getOrElse(node, Set())
 
@@ -28,7 +31,6 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     private def unfilteredAdd(node: AnyRef) {
         val cat = category(node)
         if (cat == node) {
-            _topNodes = topNodes + node
             internalGraph += node
         } else {
             addNodeToCategory(node, cat)
@@ -44,19 +46,20 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     def allNodes: Set[AnyRef] = internalGraph.nodes.toSet
 
-    private var _topNodes = Set[AnyRef]()
     private var _contents = Map[AnyRef, Set[AnyRef]]()
     private var _edges = Map[AnyRef, Set[AnyRef]]()
 
     private def addEdge(a: AnyRef, b: AnyRef) {
+        implicit val factory = scalax.collection.edge.LkDiEdge
         if (filter(a) && filter(b) && edgeFilter(a, b)) {
-            internalGraph += (a ~> b)
+            internalGraph.addLEdge(a, b)("references")
             _edges += ((a, connectionsOf(a) + b))
         }
     }
 
     private def addNodeToCategory(node: AnyRef, cat: AnyRef) = {
-        internalGraph += (cat ~+#> node)("contains")
+        implicit val factory = scalax.collection.edge.LkDiEdge
+        internalGraph.addLEdge(cat, node)("contains")
         _contents += ((cat, contentsOf(cat) + node))
     }
 }
