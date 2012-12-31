@@ -27,9 +27,6 @@ object Degraph {
                     config.printHelp
                     System.exit(1)
             }
-            println(config.includeFilter)
-            println(config.excludeFilter)
-            println(config.groupings)
             val cat = buildCategorizer(config.groupings())
             val g = Analyzer.analyze(config.classpath(),
                 cat,
