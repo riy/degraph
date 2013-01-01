@@ -21,14 +21,19 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
         val g = internalGraph
         g.nodes.filter(_.incoming.forall(_.label != "contains")).map(_.value).toSet
     }
-    def contentsOf(group: AnyRef): Set[AnyRef] = _contents.getOrElse(group, Set())
-    def connectionsOf(node: AnyRef): Set[AnyRef] = {
+    def contentsOf(group: AnyRef): Set[AnyRef] =
+        for {
+            n <- internalGraph.find(group).toSet[internalGraph.NodeT]
+            e <- n.outgoing
+            if (e.label == "contains")
+        } yield e._2.value
+
+    def connectionsOf(node: AnyRef): Set[AnyRef] =
         for {
             n <- internalGraph.find(node).toSet[internalGraph.NodeT]
             e <- n.outgoing
             if (e.label == "references")
         } yield e._2.value
-    }
 
     def add(node: AnyRef) {
         if (filter(node)) unfilteredAdd(node)
