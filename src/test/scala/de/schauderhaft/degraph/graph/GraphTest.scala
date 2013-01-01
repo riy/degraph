@@ -68,6 +68,17 @@ class GraphTest extends FunSuite with ShouldMatchers {
         g.topNodes should be(Set(a, b))
     }
 
+    test("connectionsOf returns all connected nodes") {
+        val g = new Graph()
+        val a = new AnyRef()
+        val b = new AnyRef()
+        val c = new AnyRef()
+        g.connect(a, b)
+        g.connect(a, c)
+        g.connectionsOf(a) should be(Set(b, c))
+        g.topNodes should be(Set(a, b, c))
+    }
+
     test("simple nodes don't have connections") {
         val g = new Graph()
         val a = new AnyRef()
@@ -86,6 +97,7 @@ class GraphTest extends FunSuite with ShouldMatchers {
         g.add("a")
         g.add("23")
         g.allNodes should be(g.topNodes)
+        g.allNodes should be(Set("a", "23"))
     }
 
     test("allNodes of a graph with categories contains the topNodes and all categories") {

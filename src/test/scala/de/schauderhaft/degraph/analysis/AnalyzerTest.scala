@@ -12,9 +12,18 @@ import de.schauderhaft.degraph.graph.Graph
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite with ShouldMatchers {
     private val testClassFolder = System.getProperty("java.class.path")
+    println(testClassFolder)
     private val graph = Analyzer.analyze(testClassFolder, (x) => x, _ => true)
     def stringNodes = graph.topNodes.map(_.toString)
     def nodeByString(name: String) = graph.topNodes.find(_.toString == name)
+
+    test("Selftest: nodeByString works") {
+        nodeByString("java.lang.String").get.toString should be("java.lang.String")
+    }
+
+    test("Selftest: example classes got analyzed") {
+        nodeByString("de.schauderhaft.degraph.examples.SubClass") should not be (None)
+    }
 
     test("Dependency from cub to superclass is found") {
         graph should connect("de.schauderhaft.degraph.examples.SubClass" -> "de.schauderhaft.degraph.examples.SuperClass")
