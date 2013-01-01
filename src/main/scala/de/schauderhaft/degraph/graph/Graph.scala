@@ -17,23 +17,22 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     private val internalGraph = SGraph[AnyRef, LkDiEdge]()
 
-    def topNodes: Set[AnyRef] = {
-        val g = internalGraph
-        g.nodes.filter(_.incoming.forall(_.label != "contains")).map(_.value).toSet
-    }
-    def contentsOf(group: AnyRef): Set[AnyRef] =
+    def topNodes: Set[AnyRef] =
         for {
-            n <- internalGraph.find(group).toSet[internalGraph.NodeT]
-            e <- n.outgoing
-            if (e.label == "contains")
-        } yield e._2.value
+            n <- internalGraph.nodes.toSet
+            if (n.incoming.forall(_.label != "contains")) // only the nodes not contained inside another one
+        } yield n.value
 
-    def connectionsOf(node: AnyRef): Set[AnyRef] =
+    private def connectedNodes(node: AnyRef, connectionType: String): Set[AnyRef] =
         for {
             n <- internalGraph.find(node).toSet[internalGraph.NodeT]
             e <- n.outgoing
-            if (e.label == "references")
+            if (e.label == connectionType)
         } yield e._2.value
+
+    def contentsOf(group: AnyRef): Set[AnyRef] = connectedNodes(group, "contains")
+
+    def connectionsOf(node: AnyRef): Set[AnyRef] = connectedNodes(node, "references")
 
     def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
 
