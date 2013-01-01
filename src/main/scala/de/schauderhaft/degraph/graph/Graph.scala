@@ -53,14 +53,11 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     def allNodes: Set[AnyRef] = internalGraph.nodes.map(_.value).toSet
 
     private var _contents = Map[AnyRef, Set[AnyRef]]()
-    private var _edges = Map[AnyRef, Set[AnyRef]]()
 
     private def addEdge(a: AnyRef, b: AnyRef) {
         implicit val factory = scalax.collection.edge.LkDiEdge
-        if (filter(a) && filter(b) && edgeFilter(a, b)) {
+        if (filter(a) && filter(b) && edgeFilter(a, b))
             internalGraph.addLEdge(a, b)("references")
-            _edges += ((a, connectionsOf(a) + b))
-        }
     }
 
     private def addNodeToCategory(node: AnyRef, cat: AnyRef) = {
