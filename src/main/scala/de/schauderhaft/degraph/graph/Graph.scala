@@ -15,7 +15,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     filter: AnyRef => Boolean = _ => true,
     edgeFilter: ((AnyRef, AnyRef)) => Boolean = _ => true) {
 
-    val internalGraph = SGraph[AnyRef, LkDiEdge]()
+    private val internalGraph = SGraph[AnyRef, LkDiEdge]()
 
     def topNodes: Set[AnyRef] = {
         val g = internalGraph
@@ -35,9 +35,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
             if (e.label == "references")
         } yield e._2.value
 
-    def add(node: AnyRef) {
-        if (filter(node)) unfilteredAdd(node)
-    }
+    def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
 
     private def unfilteredAdd(node: AnyRef) {
         val cat = category(node)
@@ -57,8 +55,6 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     def allNodes: Set[AnyRef] = internalGraph.nodes.map(_.value).toSet
 
-    private var _contents = Map[AnyRef, Set[AnyRef]]()
-
     private def addEdge(a: AnyRef, b: AnyRef) {
         implicit val factory = scalax.collection.edge.LkDiEdge
         if (filter(a) && filter(b) && edgeFilter(a, b))
@@ -68,6 +64,5 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     private def addNodeToCategory(node: AnyRef, cat: AnyRef) = {
         implicit val factory = scalax.collection.edge.LkDiEdge
         internalGraph.addLEdge(cat, node)("contains")
-        _contents += ((cat, contentsOf(cat) + node))
     }
 }
