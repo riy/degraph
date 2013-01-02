@@ -12,6 +12,10 @@
 * Dependency Finder
 * JDepend
 
+**Layout Algorithms**
+http://www.graphviz.org/Documentation/TSE93.pdf
+
 **Other Resources and Stuff**
 * http://stackoverflow.com/questions/4421882/how-to-unit-test-package-dependencies-in-scala
 * Spanning Tree as Basis for Layout of cyclic directed graphs
+
