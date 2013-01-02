@@ -15,6 +15,7 @@
 **Layout Algorithms**
 * http://www.graphviz.org/Documentation/TSE93.pdf
 * http://en.wikipedia.org/wiki/Coffman%E2%80%93Graham_algorithm
+* http://en.wikipedia.org/wiki/Layered_graph_drawing especially first bullet point
 
 **Other Resources and Stuff**
 * http://stackoverflow.com/questions/4421882/how-to-unit-test-package-dependencies-in-scala
