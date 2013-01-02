@@ -1,9 +1,16 @@
 * make a website
 * have a domain
-* have a feedback button (user voice)
 * make dependency finder available for maven/gradle/ivy
 * http://arborjs.org/introduction
 * https://gephi.org/
 * https://github.com/jgraph/jgraphx
 * https://www.assembla.com/spaces/scala-graph/wiki
 * http://jung.sourceforge.net/
+
+**Other Dependency Analysis Tools** 
+* http://classycle.sourceforge.net/
+* Dependency Finder
+* JDepend
+
+**Other Resources and Stuff**
+* http://stackoverflow.com/questions/4421882/how-to-unit-test-package-dependencies-in-scala
