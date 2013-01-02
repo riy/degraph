@@ -13,7 +13,8 @@
 * JDepend
 
 **Layout Algorithms**
-http://www.graphviz.org/Documentation/TSE93.pdf
+* http://www.graphviz.org/Documentation/TSE93.pdf
+* http://en.wikipedia.org/wiki/Coffman%E2%80%93Graham_algorithm
 
 **Other Resources and Stuff**
 * http://stackoverflow.com/questions/4421882/how-to-unit-test-package-dependencies-in-scala
