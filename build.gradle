@@ -1,7 +1,7 @@
 apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'application'
-apply from: "https://launchpad.net/gradle-release/trunk/1.0/+download/apply.groovy"
+//apply from: "https://launchpad.net/gradle-release/trunk/1.0/+download/apply.groovy"
 
 description= 'Degraph is a library for producing dependency graphs for visual inspection'
 

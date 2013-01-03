@@ -1,5 +1,5 @@
 package de.schauderhaft.degraph.analysis
 
 case class Node(
-    nodetype: String,
+    nodeType: String,
     name: String)
