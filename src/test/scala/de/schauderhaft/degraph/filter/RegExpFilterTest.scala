@@ -47,11 +47,11 @@ class RegExpFilterTest extends FunSuite {
     }
 
     test("returns true when package name matches") {
-        filter(Convert(clazz("in.someTest.package", "Blah"))) should be(true)
+        filter(Node("Class", "in.someTest.package.Blah")) should be(true)
     }
 
     test("returns true when package and class name matches together") {
-        filter(Convert(clazz("in.some.package", "BlahTest"))) should be(true)
+        filter(Node("Class", "in.some.package.BlahTest")) should be(true)
     }
 
     test("returns true when passed a matching package") {

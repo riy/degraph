@@ -17,8 +17,8 @@ class ConverterTest extends FunSuite with ShouldMatchers {
         Convert(clazz("", "Classname")) should be(Node("Class", "Classname"))
     }
 
-    test("class in other package get converted to class with full name") {
-        Convert(clazz("other", "Classname")) should be(Node("Class", "other.Classname"))
+    test("class in other package ignores the package, since the ClassNode contains the full name") {
+        Convert(clazz("other", "some.Classname")) should be(Node("Class", "some.Classname"))
     }
 
     test("package gets converted to package name") {

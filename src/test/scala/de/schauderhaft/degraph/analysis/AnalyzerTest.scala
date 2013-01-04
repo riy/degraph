@@ -15,10 +15,14 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
     println(testClassFolder)
     private val graph = Analyzer.analyze(testClassFolder, (x) => x, _ => true)
     def stringNodes = graph.topNodes.map(_.toString)
-    def nodeByString(name: String) = graph.topNodes.find(_.toString == name)
+    def nodeByString(name: String) = graph.topNodes.find(
+        x => x match {
+            case n: Node => n.name == name
+            case _ => false
+        })
 
     test("Selftest: nodeByString works") {
-        nodeByString("java.lang.String").get.toString should be("java.lang.String")
+        nodeByString("java.lang.String").get should be(Node("Class", "java.lang.String"))
     }
 
     test("Selftest: example classes got analyzed") {

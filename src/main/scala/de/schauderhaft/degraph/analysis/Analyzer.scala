@@ -1,7 +1,6 @@
 package de.schauderhaft.degraph.analysis
 
 import java.util.Collections
-
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.collection.JavaConversions.mapAsScalaMap
 import scala.collection.JavaConverters._
@@ -10,11 +9,10 @@ import com.jeantessier.classreader.TransientClassfileLoader
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.CodeDependencyCollector
 import com.jeantessier.dependency.FeatureNode
-import com.jeantessier.dependency.Node
 import com.jeantessier.dependency.NodeFactory
-
 import de.schauderhaft.degraph.filter.NoSelfReference
 import de.schauderhaft.degraph.graph.Graph
+import de.schauderhaft.degraph.analysis.dependencyFinder.Convert
 
 /**
  * analyzes whatever it finds in the sourceFolder using the Dependency Finder library and returns a Graph instance which captures the relevant dependency information
@@ -46,12 +44,13 @@ object Analyzer {
             featureOutboundClass)
 
         for ((_, c) <- classes) {
-            g.add(c)
+            val classNode = Convert(c)
+            g.add(classNode)
 
             for (
                 nav <- navigations;
                 n <- nav(c)
-            ) g.connect(c, n)
+            ) g.connect(classNode, Convert(n))
         }
         return g
     }
