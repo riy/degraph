@@ -7,6 +7,7 @@ import org.scalatest.junit.JUnitRunner
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.analysis.Node._
 
 @RunWith(classOf[JUnitRunner])
 class ConverterTest extends FunSuite with ShouldMatchers {
@@ -14,15 +15,15 @@ class ConverterTest extends FunSuite with ShouldMatchers {
     def clazz(packName: String, name: String) = new ClassNode(pack(packName), name, true)
 
     test("class in default package get converted to class with name only") {
-        Convert(clazz("", "Classname")) should be(Node("Class", "Classname"))
+        Convert(clazz("", "Classname")) should be(classNode("Classname"))
     }
 
     test("class in other package ignores the package, since the ClassNode contains the full name") {
-        Convert(clazz("other", "some.Classname")) should be(Node("Class", "some.Classname"))
+        Convert(clazz("other", "some.Classname")) should be(classNode("some.Classname"))
     }
 
     test("package gets converted to package name") {
-        Convert(pack("package")) should be(Node("Package", "package"))
+        Convert(pack("package")) should be(packageNode("package"))
     }
 
 }

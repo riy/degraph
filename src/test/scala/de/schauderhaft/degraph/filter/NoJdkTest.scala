@@ -9,17 +9,11 @@ import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.analysis.dependencyFinder.Convert
 import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.analysis.Node._
 
 @RunWith(classOf[JUnitRunner])
 class NoJdkTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._
-
-    test("returns true for packages not from java(x) (dependencyFinder)") {
-        val packageNode = new PackageNode("de.blah.test", true)
-        val classNode = new ClassNode(packageNode, "Class", true)
-
-        NoJdk(classNode) should be(true)
-    }
 
     test("returns false for packages from java (dependencyFinder)") {
         val packageNode = new PackageNode("java.test", true)
@@ -31,27 +25,6 @@ class NoJdkTest extends FunSuite {
         val packageNode = new PackageNode("javax.test", true)
 
         NoJdk(packageNode) should be(false)
-    }
-
-    test("returns false for classes from java (dependencyFinder)") {
-        val packageNode = new PackageNode("java.test", true)
-        val classNode = new ClassNode(packageNode, "Class", true)
-
-        NoJdk(classNode) should be(false)
-    }
-
-    test("returns false for classes from javax (dependencyFinder)") {
-        val packageNode = new PackageNode("javax.test", true)
-        val classNode = new ClassNode(packageNode, "Class", true)
-
-        NoJdk(classNode) should be(false)
-    }
-
-    test("returns true for packages not from java(x)") {
-        val packageNode = new PackageNode("de.blah.test", true)
-        val classNode = Convert(new ClassNode(packageNode, "Class", true))
-
-        NoJdk(classNode) should be(true)
     }
 
     test("returns false for packages from java") {
@@ -67,11 +40,11 @@ class NoJdkTest extends FunSuite {
     }
 
     test("returns false for classes from java") {
-        NoJdk(Node("Class", "java.test.Class")) should be(false)
+        NoJdk(classNode("java.test.Class")) should be(false)
     }
 
     test("returns false for classes from javax") {
-        NoJdk(Node("Class", "javax.test.Class")) should be(false)
+        NoJdk(classNode("javax.test.Class")) should be(false)
     }
 
     test("returns true for none class nodes named like a java package") {

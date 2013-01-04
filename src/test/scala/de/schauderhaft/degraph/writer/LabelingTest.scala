@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.analysis.Node._
 
 @RunWith(classOf[JUnitRunner])
 class LabelingTest extends FunSuite with ShouldMatchers {
@@ -22,7 +23,7 @@ class LabelingTest extends FunSuite with ShouldMatchers {
     }
 
     test("the label of a Node is the name of the node") {
-        Labeling(Node("Class", "some.Class")) should be("some.Class")
+        Labeling(classNode("some.Class")) should be("some.Class")
     }
 
     class DummyObject(override val toString: String)

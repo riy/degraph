@@ -8,6 +8,7 @@ import org.scalatest.matchers.ShouldMatchers.convertToAnyRefShouldWrapper
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.analysis.Node._
 
 @RunWith(classOf[JUnitRunner])
 class PackageCategorizerTest extends FunSuite {
@@ -22,8 +23,6 @@ class PackageCategorizerTest extends FunSuite {
     }
 
     test("the category of a class node is its package node") {
-        val packageNode = new PackageNode("de.blah.test", true)
-        val classNode = new ClassNode(packageNode, "Class", true)
-        PackageCategorizer(Node("Class", "some.package.Class")) should be(Node("Package", "some.package"))
+        PackageCategorizer(classNode("some.package.Class")) should be(packageNode("some.package"))
     }
 }

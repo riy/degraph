@@ -9,6 +9,8 @@ import org.scalatest.matchers.ShouldMatchers
 
 import de.schauderhaft.degraph.graph.Graph
 
+import Node._
+
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite with ShouldMatchers {
     private val testClassFolder = System.getProperty("java.class.path")
@@ -22,7 +24,7 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
         })
 
     test("Selftest: nodeByString works") {
-        nodeByString("java.lang.String").get should be(Node("Class", "java.lang.String"))
+        nodeByString("java.lang.String").get should be(classNode("java.lang.String"))
     }
 
     test("Selftest: example classes got analyzed") {

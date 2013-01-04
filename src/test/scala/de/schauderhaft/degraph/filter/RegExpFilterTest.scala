@@ -9,6 +9,7 @@ import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.analysis.dependencyFinder.Convert
 import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.analysis.Node._
 
 @RunWith(classOf[JUnitRunner])
 class RegExpFilterTest extends FunSuite {
@@ -18,44 +19,24 @@ class RegExpFilterTest extends FunSuite {
     def pack(name: String) = new PackageNode(name, true)
     def clazz(packName: String, name: String) = new ClassNode(pack(packName), name, true)
 
-    test("returns false when nothing matches (dependencyFinder)") {
-        filter(clazz("in.a.package", "TridentTest")) should be(false)
-    }
-
-    test("returns true when class name matches (dependencyFinder)") {
-        filter(clazz("in.a.package", "TrisomeTest")) should be(true)
-    }
-
-    test("returns true when package name matches (dependencyFinder)") {
-        filter(clazz("in.someTest.package", "Blah")) should be(true)
-    }
-
-    test("returns true when package and class name matches together (dependencyFinder)") {
-        filter(clazz("in.some.package", "BlahTest")) should be(true)
-    }
-
-    test("returns true when passed a matching package (dependencyFinder)") {
-        filter(pack("in.some.packageTest")) should be(true)
-    }
-
     test("returns false when nothing matches") {
-        filter(Convert(clazz("in.a.package", "TridentTest"))) should be(false)
+        filter(classNode("in.a.package.TridentTest")) should be(false)
     }
 
     test("returns true when class name matches") {
-        filter(Convert(clazz("in.a.package", "TrisomeTest"))) should be(true)
+        filter(classNode("in.a.package.TrisomeTest")) should be(true)
     }
 
     test("returns true when package name matches") {
-        filter(Node("Class", "in.someTest.package.Blah")) should be(true)
+        filter(classNode("in.someTest.package.Blah")) should be(true)
     }
 
     test("returns true when package and class name matches together") {
-        filter(Node("Class", "in.some.package.BlahTest")) should be(true)
+        filter(classNode("in.some.package.BlahTest")) should be(true)
     }
 
     test("returns true when passed a matching package") {
-        filter(Convert(pack("in.some.packageTest"))) should be(true)
+        filter(packageNode("in.some.packageTest")) should be(true)
     }
 
     test("does not match on the node Type") {
