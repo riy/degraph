@@ -1,9 +1,10 @@
 package de.schauderhaft.degraph.writer
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FunSuite
 import org.junit.runner.RunWith
+import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
+import de.schauderhaft.degraph.analysis.Node
 
 @RunWith(classOf[JUnitRunner])
 class LabelingTest extends FunSuite with ShouldMatchers {
@@ -18,6 +19,10 @@ class LabelingTest extends FunSuite with ShouldMatchers {
 
     test("when the parent + . is the prefix of the node it gets exluded from the label") {
         Labeling("prefix.suffix", Some("prefix")) should be("suffix")
+    }
+
+    test("the label of a Node is the name of the node") {
+        Labeling(Node("Class", "some.Class")) should be("some.Class")
     }
 
     class DummyObject(override val toString: String)
