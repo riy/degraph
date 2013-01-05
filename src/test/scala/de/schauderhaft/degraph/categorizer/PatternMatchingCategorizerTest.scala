@@ -46,14 +46,23 @@ class PatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
         categorizer(classNode("some.pack.age.Class")) should be(classNode("some.pack.age.Class"))
     }
 
-    test("dots match only dots positive") {
+    test("dots match dots") {
         val categorizer = new PatternMatchingCategorizer("type", "some.pack.age.Class")
         categorizer(classNode("some.pack.age.Class")) should be(Node("type", "some.pack.age.Class"))
     }
 
-    test("dots match only dots negative") {
+    test("dots don't match anything but dots") {
         val categorizer = new PatternMatchingCategorizer("type", "some.pack.age.Class")
-        categorizer(classNode("some.package.Class")) should be(classNode("some.package.Class"))
+        categorizer(classNode("some.packxage.Class")) should be(classNode("some.packxage.Class"))
     }
 
+    test("** matches single package level") {
+        val categorizer = new PatternMatchingCategorizer("type", "some.(**).Class")
+        categorizer(classNode("some.package.Class")) should be(Node("type", "package"))
+    }
+
+    test("** matches multiple package levels") {
+        val categorizer = new PatternMatchingCategorizer("type", "some.(**).Class")
+        categorizer(classNode("some.pack.age.Class")) should be(Node("type", "pack.age"))
+    }
 }
