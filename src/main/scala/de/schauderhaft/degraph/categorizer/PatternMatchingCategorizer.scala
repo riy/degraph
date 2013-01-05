@@ -18,8 +18,8 @@ class PatternMatchingCategorizer(targetType: String, pattern: String) {
     }
 
     private[this] def escapeStars(p: String) = {
-        val doubleStarPlaceHolder = "|"
-        val singleStarPlaceHolder = "ง"
+        val doubleStarPlaceHolder = "&"
+        val singleStarPlaceHolder = "ยง"
         p.
             replace("**", doubleStarPlaceHolder).
             replace("*", singleStarPlaceHolder).
