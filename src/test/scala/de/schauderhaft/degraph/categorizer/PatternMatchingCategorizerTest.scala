@@ -65,4 +65,14 @@ class PatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
         val categorizer = new PatternMatchingCategorizer("type", "some.(**).Class")
         categorizer(classNode("some.pack.age.Class")) should be(Node("type", "pack.age"))
     }
+
+    test("*** throws an exception") {
+        new PatternMatchingCategorizer("type", "invalid***pattern")
+        pending
+    }
+
+    test("can handle weird characters in the pattern") {
+        pending
+        new PatternMatchingCategorizer("type", """[^&|!"§$%&/()=?""")
+    }
 }
