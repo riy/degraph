@@ -12,6 +12,7 @@ import de.schauderhaft.degraph.writer.Writer
 import org.rogach.scallop.exceptions.UnknownOption
 import org.rogach.scallop.exceptions.ScallopException
 import org.rogach.scallop.exceptions.Version
+import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
 
 /**
  * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
@@ -38,7 +39,7 @@ object Degraph {
     }
 
     private def buildCategorizer(groupings: List[String]) = {
-        val groupingCats = groupings.map((s: String) => pattern(s.r))
+        val groupingCats = groupings.map(new PatternMatchingCategorizer("x", _))
         val categorizers = List(InternalClassCategorizer, PackageCategorizer) ++ groupingCats
         combine(categorizers: _*)
     }

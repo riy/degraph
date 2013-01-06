@@ -2,10 +2,11 @@ package de.schauderhaft.degraph.categorizer
 
 import de.schauderhaft.degraph.analysis.Node
 
-class PatternMatchingCategorizer(targetType: String, pattern: String) {
+class PatternMatchingCategorizer(targetType: String, pattern: String)
+    extends (AnyRef => AnyRef) {
     private[this] val Pattern = ensureParens(escapeStars(escapeDots(pattern))).r
 
-    def apply(x: AnyRef): AnyRef = x match {
+    override def apply(x: AnyRef): AnyRef = x match {
         case n: Node => matches(n.name).map(Node(targetType, _)).getOrElse(n)
         case _ => x
     }
