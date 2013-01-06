@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.categorizer.MultiCategorizer._
-import de.schauderhaft.degraph.filter.ListCategory
+import de.schauderhaft.degraph.categorizer.ListCategory
 @RunWith(classOf[JUnitRunner])
 class GraphTest extends FunSuite with ShouldMatchers {
 

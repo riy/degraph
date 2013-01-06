@@ -3,8 +3,8 @@ package de.schauderhaft.degraph.filter
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-
 import de.schauderhaft.degraph.categorizer.MultiCategorizer._
+import de.schauderhaft.degraph.categorizer.ListCategory
 
 @RunWith(classOf[JUnitRunner])
 class NoSelfReferenceTest extends FunSuite {

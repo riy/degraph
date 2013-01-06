@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph
 
 import scala.xml.XML
-import de.schauderhaft.degraph.analysis.Analyzer
+import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
 import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
 import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
 import de.schauderhaft.degraph.categorizer.PackageCategorizer
@@ -12,6 +12,7 @@ import org.rogach.scallop.exceptions.UnknownOption
 import org.rogach.scallop.exceptions.ScallopException
 import org.rogach.scallop.exceptions.Version
 import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
+import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
 
 /**
  * The main class of Degraph, plugging everything together,

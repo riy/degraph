@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.analysis
+package de.schauderhaft.degraph.analysis.dependencyFinder
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
@@ -6,10 +6,11 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.MatchResult
 import org.scalatest.matchers.Matcher
 import org.scalatest.matchers.ShouldMatchers
-
 import de.schauderhaft.degraph.graph.Graph
-
-import Node._
+import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.analysis.Node._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite with ShouldMatchers {

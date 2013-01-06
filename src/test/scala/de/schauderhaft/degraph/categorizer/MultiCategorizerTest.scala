@@ -6,7 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import MultiCategorizer.combine
 import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
-import de.schauderhaft.degraph.filter.ListCategory
+import de.schauderhaft.degraph.categorizer.ListCategory
 
 @RunWith(classOf[JUnitRunner])
 class MultiCategorizerTest extends FunSuite with ShouldMatchers {

@@ -1,6 +1,4 @@
-package de.schauderhaft.degraph.analysis
-
-import java.util.Collections
+package de.schauderhaft.degraph.analysis.dependencyFinder
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.collection.JavaConversions.mapAsScalaMap
 import scala.collection.JavaConverters._
@@ -12,7 +10,6 @@ import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.NodeFactory
 import de.schauderhaft.degraph.filter.NoSelfReference
 import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.analysis.dependencyFinder.Convert
 
 /**
  * analyzes whatever it finds in the sourceFolder using

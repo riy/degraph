@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.filter
+package de.schauderhaft.degraph.categorizer
 
 class ListCategory(list : List[AnyRef]) extends (AnyRef => AnyRef) {
     def apply(v : AnyRef) = {
