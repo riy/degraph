@@ -12,8 +12,6 @@ object RegExpFilter {
     def filter(pattern: Regex): AnyRef => Boolean =
         x => x match {
             case n: Node => pattern.findFirstMatchIn(n.name).isDefined
-            case cn: ClassNode => pattern.findFirstMatchIn(cn.getPackageNode.getName + "." + cn.getName).isDefined
-            case pn: PackageNode => pattern.findFirstMatchIn(pn.getName).isDefined
             case _ => pattern.findFirstMatchIn(x.toString).isDefined
         }
 
