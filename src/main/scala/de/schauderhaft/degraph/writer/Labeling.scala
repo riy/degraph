@@ -2,6 +2,11 @@ package de.schauderhaft.degraph.writer
 
 import de.schauderhaft.degraph.analysis.Node
 
+/**
+ * creates a labels from an arbitrary node. It starts with the name of actual Nodes and to String if anything else ends up in the Graph.
+ *
+ * It then removes the part of the name that is identically with the label of the parent node if present.
+ */
 object Labeling {
     def apply(node: AnyRef, parent: Option[AnyRef] = None): String = parent match {
         case Some(p) =>

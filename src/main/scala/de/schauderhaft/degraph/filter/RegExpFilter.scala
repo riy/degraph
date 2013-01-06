@@ -5,6 +5,9 @@ import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.analysis.Node
 
+/**
+ * filters nodes based on regular expression
+ */
 object RegExpFilter {
     def filter(pattern: Regex): AnyRef => Boolean =
         x => x match {
