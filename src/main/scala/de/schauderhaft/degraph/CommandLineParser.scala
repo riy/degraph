@@ -5,6 +5,9 @@ import org.rogach.scallop.exceptions.ScallopException
 import org.rogach.scallop.exceptions.Version
 import org.rogach.scallop.exceptions.Help
 
+/**
+ * parses the command line arguments for Degraph
+ */
 object CommandLineParser {
 
     def parse(args: Array[String]) = {

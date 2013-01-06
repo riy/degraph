@@ -1,5 +1,9 @@
 package de.schauderhaft.degraph.filter
 
+/**
+ * returns true if the include set is empty or at least one element returns true,
+ * and all of the exclude elements returns false.
+ */
 class IncludeExcludeFilter(
     include: Set[AnyRef => Boolean],
     exclude: Set[AnyRef => Boolean])

@@ -5,7 +5,6 @@ import de.schauderhaft.degraph.analysis.Analyzer
 import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
 import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
 import de.schauderhaft.degraph.categorizer.PackageCategorizer
-import de.schauderhaft.degraph.categorizer.PackageRegexpCategorizer.pattern
 import de.schauderhaft.degraph.filter.IncludeExcludeFilter
 import de.schauderhaft.degraph.filter.RegExpFilter
 import de.schauderhaft.degraph.writer.Writer
@@ -15,7 +14,8 @@ import org.rogach.scallop.exceptions.Version
 import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
 
 /**
- * the main class of the DependencyManager, plugging everything together, starting the analysis process and writing the result to an XML file
+ * The main class of Degraph, plugging everything together,
+ * starting the analysis process and writing the result to an XML file
  */
 object Degraph {
 

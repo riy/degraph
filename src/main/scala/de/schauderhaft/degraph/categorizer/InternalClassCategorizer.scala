@@ -3,6 +3,9 @@ import com.jeantessier.dependency.ClassNode
 import de.schauderhaft.degraph.analysis.Node
 import de.schauderhaft.degraph.analysis.Node._
 
+/**
+ * categorizes an Inner class as content of its outer class
+ */
 object InternalClassCategorizer extends Function1[AnyRef, AnyRef] {
     override def apply(any: AnyRef): AnyRef = {
         any match {

@@ -3,6 +3,9 @@ import com.jeantessier.dependency.ClassNode
 import de.schauderhaft.degraph.analysis.Node
 import de.schauderhaft.degraph.analysis.Node._
 
+/**
+ * categorizes a java node as member of the matching package node
+ */
 object PackageCategorizer extends Function1[AnyRef, AnyRef] {
     def apply(value: AnyRef) = {
         value match {
