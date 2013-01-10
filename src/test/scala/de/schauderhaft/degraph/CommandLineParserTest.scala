@@ -6,6 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers.be
 import org.scalatest.matchers.ShouldMatchers.convertToListShouldWrapper
 import org.scalatest.matchers.ShouldMatchers.convertToStringShouldWrapper
+import de.schauderhaft.degraph.configuration.CommandLineParser
 @RunWith(classOf[JUnitRunner])
 class CommandLineParserTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._

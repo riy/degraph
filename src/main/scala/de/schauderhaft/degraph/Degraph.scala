@@ -13,6 +13,7 @@ import org.rogach.scallop.exceptions.ScallopException
 import org.rogach.scallop.exceptions.Version
 import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
 import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
+import de.schauderhaft.degraph.configuration.CommandLineParser
 
 /**
  * The main class of Degraph, plugging everything together,

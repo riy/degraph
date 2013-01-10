@@ -1,9 +1,5 @@
-package de.schauderhaft.degraph
+package de.schauderhaft.degraph.configuration
 import org.rogach.scallop._
-import org.rogach.scallop.exceptions.UnknownOption
-import org.rogach.scallop.exceptions.ScallopException
-import org.rogach.scallop.exceptions.Version
-import org.rogach.scallop.exceptions.Help
 
 /**
  * parses the command line arguments for Degraph
