@@ -6,7 +6,7 @@ import org.rogach.scallop._
  */
 object CommandLineParser {
 
-    def parse(args: Array[String]) = {
+    def parse(args: Seq[String]) = {
         new LazyScallopConf(args) {
 
             version("Degraph prerelease. Use at own risk.")

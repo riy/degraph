@@ -19,5 +19,4 @@ class MultiCategorizerTest extends FunSuite with ShouldMatchers {
     test("combine of two functions returns the result of the first function if it is not equal to the argument") {
         combine(ListCategory("a", "b"), ListCategory("b", "c"))("b") should be("c")
     }
-
 }

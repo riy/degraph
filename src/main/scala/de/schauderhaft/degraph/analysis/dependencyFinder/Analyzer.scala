@@ -17,7 +17,7 @@ import de.schauderhaft.degraph.graph.Graph
  * which captures the relevant dependency information
  *
  */
-object Analyzer {
+object Analyzer extends AnalyzerLike {
     def analyze(sourceFolder: String, categorizer: AnyRef => AnyRef, filter: AnyRef => Boolean): Graph = {
 
         def getRootClasses = {

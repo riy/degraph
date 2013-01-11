@@ -1,12 +1,13 @@
-package de.schauderhaft.degraph
+package de.schauderhaft.degraph.configuration
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.matchers.ShouldMatchers.be
 import org.scalatest.matchers.ShouldMatchers.convertToListShouldWrapper
 import org.scalatest.matchers.ShouldMatchers.convertToStringShouldWrapper
-import de.schauderhaft.degraph.configuration.CommandLineParser
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
 @RunWith(classOf[JUnitRunner])
 class CommandLineParserTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._
@@ -18,7 +19,7 @@ class CommandLineParserTest extends FunSuite {
     }
 
     test("the string after -o is considered the output file name") {
-        val config = CommandLineParser.parse(Array[String]("-o", "ExampleFile"))
+        val config = CommandLineParser.parse(Array("-o", "ExampleFile"))
         config.initialize { case e => }
         config.output() should be("ExampleFile")
     }
@@ -30,7 +31,7 @@ class CommandLineParserTest extends FunSuite {
     }
 
     test("the string after -c is considered the input classpath") {
-        val config = CommandLineParser.parse(Array[String]("-c", "input;blah.jar"))
+        val config = CommandLineParser.parse(Array("-c", "input;blah.jar"))
         config.initialize { case e => }
         config.classpath() should be("input;blah.jar")
     }
@@ -41,7 +42,7 @@ class CommandLineParserTest extends FunSuite {
         config.excludeFilter() should be(List())
     }
     test("the strings after -e s are considered the exclude filter") {
-        val config = CommandLineParser.parse(Array[String]("-e", "filter"))
+        val config = CommandLineParser.parse(Array("-e", "filter"))
         config.initialize { case e => }
         config.excludeFilter() should be(List("filter"))
     }

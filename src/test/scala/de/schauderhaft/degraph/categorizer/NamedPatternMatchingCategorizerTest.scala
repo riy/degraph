@@ -10,7 +10,7 @@ import de.schauderhaft.degraph.analysis.Node
 @RunWith(classOf[JUnitRunner])
 class NamedPatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
 
-    test("returns Node of type with name on match") {
+    test("returns Node of type with name of match") {
         val categorizer = new NamedPatternMatchingCategorizer("type", "(some.package.Class)", "name")
         categorizer(classNode("some.package.Class")) should be(Node("type", "name"))
     }
