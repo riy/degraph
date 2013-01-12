@@ -17,11 +17,12 @@ object Configuration {
         commandLine.initialize { case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help) }
         errorMessage match {
             case Some(m) => Left(m)
-            case _ => Right(Configuration(
+            case _ => Right((Configuration(
                 classpath = commandLine.classpath(),
                 includes = commandLine.includeFilter(),
                 excludes = commandLine.excludeFilter(),
-                categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_)))))
+                output = commandLine.output(),
+                categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_))))))
         }
     }
 }
@@ -30,7 +31,8 @@ case class Configuration(
     classpath: String,
     includes: Seq[String],
     excludes: Seq[String],
-    categories: Map[String, Seq[Pattern]]) {
+    categories: Map[String, Seq[Pattern]],
+    output: String) {
 
     def createGraph(analyzer: AnalyzerLike) =
         analyzer.analyze(classpath, buildCategorizer(categories), buildFilter(includes, excludes))

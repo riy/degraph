@@ -14,6 +14,7 @@ import org.rogach.scallop.exceptions.Version
 import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
 import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
 import de.schauderhaft.degraph.configuration.CommandLineParser
+import de.schauderhaft.degraph.configuration.Configuration
 
 /**
  * The main class of Degraph, plugging everything together,
@@ -22,21 +23,12 @@ import de.schauderhaft.degraph.configuration.CommandLineParser
 object Degraph {
 
     def main(args: Array[String]): Unit = {
-        val config = CommandLineParser.parse(args)
-        try {
-            config.initialize {
-                case ScallopException(message) =>
-                    println(message)
-                    config.printHelp
-                    System.exit(1)
-            }
-            val cat = buildCategorizer(config.groupings())
-            val g = Analyzer.analyze(config.classpath(),
-                cat,
-                buildFilter(config.includeFilter(), config.excludeFilter()))
-
-            val xml = (new Writer()).toXml(g)
-            XML.save(config.output(), xml, "UTF8", true, null)
+        Configuration(args) match {
+            case Left(m) => println(m)
+            case Right(c) =>
+                val g = c.createGraph(Analyzer)
+                val xml = (new Writer()).toXml(g)
+                XML.save(c.output, xml, "UTF8", true, null)
         }
     }
 
