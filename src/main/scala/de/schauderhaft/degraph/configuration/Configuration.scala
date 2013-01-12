@@ -12,13 +12,17 @@ import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
+        var errorMessage: Option[String] = None
         val commandLine = CommandLineParser.parse(args)
-        commandLine.initialize { case e => println(e) }
-        Right(Configuration(
-            classpath = commandLine.classpath(),
-            includes = commandLine.includeFilter(),
-            excludes = commandLine.excludeFilter(),
-            categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_)))))
+        commandLine.initialize { case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help) }
+        errorMessage match {
+            case Some(m) => Left(m)
+            case _ => Right(Configuration(
+                classpath = commandLine.classpath(),
+                includes = commandLine.includeFilter(),
+                excludes = commandLine.excludeFilter(),
+                categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_)))))
+        }
     }
 }
 

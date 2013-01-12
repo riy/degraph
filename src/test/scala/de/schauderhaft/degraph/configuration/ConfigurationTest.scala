@@ -44,9 +44,9 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
     }
 
     test("invalid configuration returns a Left(message)") {
-        pending
         val message = Configuration(Array("garbage")).left.get
-        //        message should include("Degraph")
+        message should include("garbage")
+        message should include("Degraph")
     }
 
     class SpyAnalyze() extends AnalyzerLike {
