@@ -10,6 +10,7 @@ class ConfigurationParserTest extends ConfigurationParser with FunSuite with Sho
     test("empty file creates empty configuration") {
         parse("") should be(Configuration(None, Seq(), Seq(), Map(), None))
     }
+
     test("output configures outputfile configuration") {
         (pending)
         parse("output=example.file") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))

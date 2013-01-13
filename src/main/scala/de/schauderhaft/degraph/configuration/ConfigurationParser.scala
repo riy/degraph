@@ -2,10 +2,14 @@ package de.schauderhaft.degraph.configuration
 
 import scala.util.parsing.combinator.RegexParsers
 
+object ConfigurationParser
+
 class ConfigurationParser extends RegexParsers {
     def parse(input: String): Configuration = {
-        Configuration(None, Seq(), Seq(), Map(), None)
+        parseAll(output, input).map((output: String) =>
+            Configuration(None, Seq(), Seq(), Map(), Some(output))).getOrElse(
+            Configuration(None, Seq(), Seq(), Map(), None))
     }
 
-    def output: Parser[Any] = "output=" ~> ".*".r
+    protected def output: Parser[String] = "output=" ~> ".*".r
 }
