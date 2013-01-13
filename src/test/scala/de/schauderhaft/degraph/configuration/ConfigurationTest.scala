@@ -49,6 +49,33 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
         message should include("Degraph")
     }
 
+    test("a configuration with out classpath to analyze is not valid") {
+        Configuration(
+            None,
+            Seq(),
+            Seq(),
+            Map(),
+            Some("output")) should not be ('valid)
+    }
+
+    test("a configuration with out output to analyze is not valid") {
+        Configuration(
+            Some("."),
+            Seq(),
+            Seq(),
+            Map(),
+            None) should not be ('valid)
+    }
+
+    test("a complete configuration is valid") {
+        Configuration(
+            Some("."),
+            Seq(),
+            Seq(),
+            Map(),
+            Some("output")) should be('valid)
+    }
+
     class SpyAnalyze() extends AnalyzerLike {
         var classPath: String = ""
         var categorizer: AnyRef => AnyRef = (x) => x

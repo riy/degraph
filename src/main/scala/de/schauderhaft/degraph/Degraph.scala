@@ -28,7 +28,7 @@ object Degraph {
             case Right(c) =>
                 val g = c.createGraph(Analyzer)
                 val xml = (new Writer()).toXml(g)
-                XML.save(c.output, xml, "UTF8", true, null)
+                XML.save(c.output.get, xml, "UTF8", true, null)
         }
     }
 

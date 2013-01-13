@@ -18,24 +18,26 @@ object Configuration {
         errorMessage match {
             case Some(m) => Left(m)
             case _ => Right((Configuration(
-                classpath = commandLine.classpath(),
+                classpath = Some(commandLine.classpath()),
                 includes = commandLine.includeFilter(),
                 excludes = commandLine.excludeFilter(),
-                output = commandLine.output(),
+                output = Some(commandLine.output()),
                 categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_))))))
         }
     }
 }
 
 case class Configuration(
-    classpath: String,
+    classpath: Option[String],
     includes: Seq[String],
     excludes: Seq[String],
     categories: Map[String, Seq[Pattern]],
-    output: String) {
+    output: Option[String]) {
 
     def createGraph(analyzer: AnalyzerLike) =
-        analyzer.analyze(classpath, buildCategorizer(categories), buildFilter(includes, excludes))
+        analyzer.analyze(classpath.get, buildCategorizer(categories), buildFilter(includes, excludes))
+
+    def valid = classpath.isDefined && output.isDefined
 
     private[this] def buildFilter(includes: Seq[String],
         excludes: Seq[String]) = {
