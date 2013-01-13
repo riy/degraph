@@ -12,4 +12,5 @@ class ConfigurationParser extends RegexParsers {
     }
 
     protected def output: Parser[String] = "output=" ~> ".*".r
+    protected def include: Parser[String] = "include=" ~> ".*".r
 }
