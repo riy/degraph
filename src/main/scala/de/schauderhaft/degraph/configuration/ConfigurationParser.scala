@@ -12,7 +12,7 @@ class ConfigurationParser extends RegexParsers {
         }
     }
 
-    def defs: Parser[Configuration] = definition.* ^^ mayReduce
+    def defs: Parser[Configuration] = opt(eol) ~> definition.* ^^ mayReduce
 
     def definition: Parser[Configuration] = output | include
 

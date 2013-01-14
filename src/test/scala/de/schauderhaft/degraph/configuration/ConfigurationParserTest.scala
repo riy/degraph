@@ -14,6 +14,10 @@ class ConfigurationParserTest extends ConfigurationParser with FunSuite {
     test("output configures outputfile configuration") {
         parse("output=example.file") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
     }
+    test("output configures outputfile configuration, leading newlines") {
+        parse("""
+output=example.file""") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
+    }
 
     test("output configures outputfile configuration with trailing eol") {
         parse("""output=example.file
@@ -45,10 +49,15 @@ class ConfigurationParserTest extends ConfigurationParser with FunSuite {
     }
 
     test("full configuration example") {
+        parse("""output=example.file
+include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+    }
+
+    test("full configuration example with whitespace") {
         parse("""
-                output=example.file
-       include=pattern
-                """) should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+    			output=example.file
+    			include=pattern
+    			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
     }
 
 }
