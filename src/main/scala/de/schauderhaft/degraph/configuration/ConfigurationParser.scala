@@ -32,12 +32,17 @@ class ConfigurationParser extends RegexParsers {
             c1.output.orElse(c2.output))
 
     private def combine(s: Seq[Configuration]): Configuration =
-        s.reduce(merge(_, _))
+        s.fold(Configuration(None, Seq(), Seq(), Map(), None))(merge(_, _))
 
     private val mayReduce = new PartialFunction[Seq[Configuration], Configuration] {
         def isDefinedAt(s: Seq[Configuration]) =
             s.filter(_.output.isDefined).size <= 1 &&
                 s.filter(_.classpath.isDefined).size <= 1
         def apply(s: Seq[Configuration]) = combine(s)
+    }
+
+    private def mayReduce(opt: Option[Seq[Configuration]]): Configuration = opt match {
+        case Some(list: Seq[Configuration]) => mayReduce(list)
+        case None => Configuration(None, Seq(), Seq(), Map(), None)
     }
 }
