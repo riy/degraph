@@ -32,6 +32,10 @@ You'll at least provide a class path to analyze. These are the command line argu
 
 [There is a page with examples in the wiki](https://github.com/schauder/degraph/wiki/Examples).
 
+**Vision**
+
+While currently Degraph only visualizes dependencies, I plan to add the possibility to define allowed and disallowed dependencies, plus an easy way to integrate it into various test frameworks. Failures should then create a diagram of the violation found, therby making fixing the problem easier.
+
 **How to build**
 
 I'm highly interested in contributions, so if you are interested, drop me a message and until I respond have a look at the source code.
