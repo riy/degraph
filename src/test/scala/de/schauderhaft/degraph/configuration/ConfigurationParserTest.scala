@@ -15,6 +15,11 @@ class ConfigurationParserTest extends ConfigurationParser with FunSuite {
         parse("output=example.file") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
     }
 
+    test("output configures outputfile configuration with trailing eol") {
+        parse("""output=example.file
+""") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
+    }
+
     test("include configures include configuration") {
         parse("include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
     }
