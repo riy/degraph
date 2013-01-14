@@ -48,16 +48,25 @@ output=example.file""") should be(Configuration(None, Seq(), Seq(), Map(), Some(
     	""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
     }
 
-    test("full configuration example") {
+    test("two part configuration example") {
         parse("""output=example.file
 include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
     }
 
-    test("full configuration example with whitespace") {
+    test("two part configuration example with whitespace") {
         parse("""
     			output=example.file
     			include=pattern
     			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+    }
+
+    test("full configuration example with whitespace") {
+        parse("""
+                classpath=ap;x.jar
+    			output=example.file
+    			include=pattern
+    	        exclude=expattern
+    			""") should be(Configuration(Some("ap;x.jar"), Seq("pattern"), Seq("expattern"), Map(), Some("example.file")))
     }
 
 }

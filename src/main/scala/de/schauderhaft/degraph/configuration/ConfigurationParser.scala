@@ -7,14 +7,14 @@ object ConfigurationParser
 class ConfigurationParser extends RegexParsers {
     def parse(input: String): Configuration = {
         parseAll(defs, input + "\n") match {
-            case s: Success[Configuration] => s.get
+            case s: Success[_] => s.get
             case f => throw new RuntimeException("Failed to parse" + f)
         }
     }
 
     def defs: Parser[Configuration] = opt(eol) ~> definition.* ^^ mayReduce
 
-    def definition: Parser[Configuration] = output | include
+    def definition: Parser[Configuration] = output | include | exclude | classpath
 
     override val whiteSpace = """[ \t]*""".r
     def eol: Parser[Any] = """(\r?\n)""".r.+
@@ -22,6 +22,8 @@ class ConfigurationParser extends RegexParsers {
     private def line(key: String): Parser[String] = (key + "=") ~> "\\S*".r <~ eol
     protected def output: Parser[Configuration] = line("output") ^^ ((x: String) => Configuration(None, Seq(), Seq(), Map(), Some(x)))
     protected def include: Parser[Configuration] = line("include") ^^ ((x: String) => Configuration(None, Seq(x), Seq(), Map(), None))
+    protected def exclude: Parser[Configuration] = line("exclude") ^^ ((x: String) => Configuration(None, Seq(), Seq(x), Map(), None))
+    protected def classpath: Parser[Configuration] = line("classpath") ^^ ((x: String) => Configuration(Some(x), Seq(), Seq(), Map(), None))
     protected def emptyLine: Parser[Any] = eol
     protected def emptyLines: Parser[Any] = emptyLine.+
 
@@ -44,7 +46,7 @@ class ConfigurationParser extends RegexParsers {
     }
 
     private def mayReduce(opt: Option[Seq[Configuration]]): Configuration = opt match {
-        case Some(list: Seq[Configuration]) => mayReduce(list)
+        case Some(list: Seq[_]) => mayReduce(list)
         case None => Configuration(None, Seq(), Seq(), Map(), None)
     }
 }
