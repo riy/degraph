@@ -32,9 +32,16 @@ class ConfigurationParserTest extends ConfigurationParser with FunSuite {
         parse("include=pattern    ") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
     }
 
-    test("trailing new lines gets ignored") {
+    test("trailing new line gets ignored") {
         parse("""include=pattern
 """) should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    }
+
+    test("trailing new lines gets ignored") {
+        parse("""include=pattern
+    
+    	
+    	""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
     }
 
     test("full configuration example") {

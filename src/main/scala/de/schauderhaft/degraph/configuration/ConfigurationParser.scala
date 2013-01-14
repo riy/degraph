@@ -6,7 +6,7 @@ object ConfigurationParser
 
 class ConfigurationParser extends RegexParsers {
     def parse(input: String): Configuration = {
-        parseAll(definition, input + "\n") match {
+        parseAll(defs, input + "\n") match {
             case s: Success[Configuration] => s.get
             case f => throw new RuntimeException("Failed to parse" + f)
         }
@@ -16,13 +16,14 @@ class ConfigurationParser extends RegexParsers {
 
     def definition: Parser[Configuration] = output | include
 
-    override val whiteSpace = """[ \t]+""".r
-    def eol: Parser[Any] = """(\r?\n)+""".r
+    override val whiteSpace = """[ \t]*""".r
+    def eol: Parser[Any] = """(\r?\n)""".r.+
 
     private def line(key: String): Parser[String] = (key + "=") ~> "\\S*".r <~ eol
     protected def output: Parser[Configuration] = line("output") ^^ ((x: String) => Configuration(None, Seq(), Seq(), Map(), Some(x)))
     protected def include: Parser[Configuration] = line("include") ^^ ((x: String) => Configuration(None, Seq(x), Seq(), Map(), None))
-    protected def emptyLine: Parser[String] = "^\\s$".r
+    protected def emptyLine: Parser[Any] = eol
+    protected def emptyLines: Parser[Any] = emptyLine.+
 
     protected def merge(c1: Configuration, c2: Configuration): Configuration =
         Configuration(
