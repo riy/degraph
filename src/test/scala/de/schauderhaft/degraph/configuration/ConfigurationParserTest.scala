@@ -15,16 +15,28 @@ class ConfigurationParserTest extends ConfigurationParser with FunSuite {
         parse("output=example.file") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
     }
 
-    test("output parses output=file expression") {
-        val result = parseAll(output, "output=file")
-        result should be('successful)
-        result.get should be("file")
+    test("include configures include configuration") {
+        parse("include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
     }
 
-    test("include parses include=pattern expression") {
-        val result = parseAll(include, "include=pattern")
-        result should be('successful)
-        result.get should be("pattern")
+    test("leading whitespace gets ignored") {
+        parse("   include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    }
+
+    test("trailing whitespace gets ignored") {
+        parse("include=pattern    ") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    }
+
+    test("trailing new lines gets ignored") {
+        parse("""include=pattern
+""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    }
+
+    test("full configuration example") {
+        parse("""
+                output=example.file
+       include=pattern
+                """) should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
     }
 
 }
