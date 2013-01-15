@@ -15,7 +15,7 @@ import de.schauderhaft.degraph.analysis.Node.packageNode
 class ConfigurationTest extends FunSuite with ShouldMatchers {
 
     test("valid configuration returns a Righ[Configuration]") {
-        Configuration(Array()).isRight should be(true)
+        Configuration(Array[String]()).isRight should be(true)
     }
 
     test("classpath gets passed to analyzer") {

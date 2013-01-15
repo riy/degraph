@@ -28,11 +28,11 @@ object Configuration {
 }
 
 case class Configuration(
-    classpath: Option[String],
-    includes: Seq[String],
-    excludes: Seq[String],
-    categories: Map[String, Seq[Pattern]],
-    output: Option[String]) {
+    classpath: Option[String] = None,
+    includes: Seq[String] = Seq(),
+    excludes: Seq[String] = Seq(),
+    categories: Map[String, Seq[Pattern]] = Map(),
+    output: Option[String] = None) {
 
     def createGraph(analyzer: AnalyzerLike) =
         analyzer.analyze(classpath.get, buildCategorizer(categories), buildFilter(includes, excludes))
