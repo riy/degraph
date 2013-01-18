@@ -69,4 +69,31 @@ include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), 
     			""") should be(Configuration(Some("ap;x.jar"), Seq("pattern"), Seq("expattern"), Map(), Some("example.file")))
     }
 
+    test("Named Pattern") {
+        parseAll(namedPattern, """DependencyFinder *.jeant*.**
+""").get should be(NamedPattern("""*.jeant*.**""", "DependencyFinder"))
+    }
+
+    test("word") {
+        parseAll(word, """ß439qu8rej""").get should be("""ß439qu8rej""")
+    }
+
+    test("curly braces aren't a word : {") {
+        parseAll(word, """{""").successful should be(false)
+    }
+
+    test("curly braces aren't a word : }") {
+        parseAll(word, """{""").successful should be(false)
+    }
+
+    test("slice definition") {
+        parse("""
+            libs = {
+                DependencyFinder *.jeant*.**
+                *.(*).**           
+            }
+                """) should be(Configuration(
+            categories = Map("libs" -> List(NamedPattern("""*.jeant*.**""", "DependencyFinder"), UnnamedPattern("""*.(*).**""")))))
+    }
+
 }
