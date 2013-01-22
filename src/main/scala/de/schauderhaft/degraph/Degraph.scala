@@ -32,16 +32,4 @@ object Degraph {
         }
     }
 
-    private def buildCategorizer(groupings: List[String]) = {
-        val groupingCats = groupings.map(new PatternMatchingCategorizer("x", _))
-        val categorizers = List(InternalClassCategorizer, PackageCategorizer) ++ groupingCats
-        combine(categorizers: _*)
-    }
-
-    private def buildFilter(includes: List[String],
-        excludes: List[String]) = {
-        new IncludeExcludeFilter(
-            includes.map((x: String) => RegExpFilter.filter(x.r)).toSet,
-            excludes.map((x: String) => RegExpFilter.filter(x.r)).toSet)
-    }
 }
