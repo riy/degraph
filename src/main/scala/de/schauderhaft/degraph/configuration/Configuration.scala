@@ -9,20 +9,28 @@ import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
 import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
 import de.schauderhaft.degraph.categorizer.PackageCategorizer
 import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
+import scala.io.Source
+import java.io.File
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
+        val eitherConfig = fromCommandLine(args)
+
+        eitherConfig
+    }
+    private def fromCommandLine(args: Array[String]): Either[String, Configuration] = {
         var errorMessage: Option[String] = None
         val commandLine = CommandLineParser.parse(args)
         commandLine.initialize { case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help) }
         errorMessage match {
             case Some(m) => Left(m)
-            case _ => Right((Configuration(
+            case _ if (commandLine.file.isEmpty) => Right((Configuration(
                 classpath = Some(commandLine.classpath()),
                 includes = commandLine.includeFilter(),
                 excludes = commandLine.excludeFilter(),
                 output = Some(commandLine.output()),
                 categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_))))))
+            case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString))
         }
     }
 }

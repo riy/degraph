@@ -10,6 +10,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.analysis.Node
 import de.schauderhaft.degraph.analysis.Node.packageNode
+import de.schauderhaft.degraph.analysis.Node.classNode
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationTest extends FunSuite with ShouldMatchers {
@@ -43,13 +44,30 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
         categorizer(packageNode("jens.schauderhaft.de")) should be(Node("default", "schauderhaft"))
     }
 
+    test("the string after -f is considered a configuration file and gets loaded") {
+        val config = Configuration(Array("-f", "src/test/resource/example.config")).right.get
+
+        config.output should be(Some("o.graphml"))
+
+        val spy = new SpyAnalyze()
+        config.createGraph(spy)
+
+        spy.classPath should be("""src/test/scala""")
+
+        spy.filter("javax.swing.JPanel") should be(false)
+        spy.filter("de.schauderhaft") should be(true)
+        //
+        //        val categorizer = spy.categorizer
+        //        categorizer(classNode("jens.schauderhaft.de")) should be(Node("default", "schauderhaft"))
+    }
+
     test("invalid configuration returns a Left(message)") {
         val message = Configuration(Array("garbage")).left.get
         message should include("garbage")
         message should include("Degraph")
     }
 
-    test("a configuration with out classpath to analyze is not valid") {
+    test("a configuration without classpath to analyze is not valid") {
         Configuration(
             None,
             Seq(),
@@ -58,7 +76,7 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
             Some("output")) should not be ('valid)
     }
 
-    test("a configuration with out output to analyze is not valid") {
+    test("a configuration without output to analyze is not valid") {
         Configuration(
             Some("."),
             Seq(),

@@ -58,16 +58,15 @@ class CommandLineParserTest extends FunSuite {
         config.includeFilter() should be(List("filter"))
     }
 
+    test("the strings after -f  are considered the configurationFile") {
+        val config = CommandLineParser.parse(Array[String]("-f", "file"))
+        config.initialize { case e => }
+        config.file.get should be(Some("file"))
+    }
+
     test("default groupings are empty") {
         val config = CommandLineParser.parse(Array[String]())
         config.initialize { case e => }
         config.groupings() should be('empty)
     }
-
-    test("the strings after -g s are considered the groupings") {
-        val config = CommandLineParser.parse(Array[String]("-g", "alpha", "beta", "gamma"))
-        config.initialize { case e => }
-        config.groupings() should be(List("alpha", "beta", "gamma"))
-    }
-
 }
