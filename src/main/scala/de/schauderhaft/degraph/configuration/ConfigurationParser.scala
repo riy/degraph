@@ -19,7 +19,7 @@ class ConfigurationParser extends RegexParsers {
     override val whiteSpace = """[ \t]*""".r
     def eol: Parser[Any] = """(\r?\n)""".r.+
 
-    private def line(key: String): Parser[String] = (key + "=") ~> word <~ eol
+    private def line(key: String): Parser[String] = (key ~ "=") ~> word <~ eol
     protected def output: Parser[Configuration] = line("output") ^^ ((x: String) => Configuration(None, Seq(), Seq(), Map(), Some(x)))
     protected def include: Parser[Configuration] = line("include") ^^ ((x: String) => Configuration(None, Seq(x), Seq(), Map(), None))
     protected def exclude: Parser[Configuration] = line("exclude") ^^ ((x: String) => Configuration(None, Seq(), Seq(x), Map(), None))

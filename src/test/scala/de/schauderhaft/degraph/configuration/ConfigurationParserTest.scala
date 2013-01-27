@@ -59,6 +59,12 @@ include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), 
     			include=pattern
     			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
     }
+    test("two part configuration example with whitespace around =") {
+        parse("""
+    			output = example.file
+    			include = pattern
+    			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+    }
 
     test("full configuration example with whitespace") {
         parse("""
