@@ -3,11 +3,10 @@ package de.schauderhaft.degraph.categorizer
 class ParallelCategorizer(cs: (AnyRef => AnyRef)*) extends (AnyRef => AnyRef) {
     def apply(x: AnyRef): AnyRef = cs match {
         case _ if (cs.isEmpty) => x
-        case _ => cs.head(x) match {
-            case y if (y == x) => x
-            case y => ParentAwareNode(y)
-        }
+        case _ => ParentAwareNode(cs.map(_(x)): _*).prune
     }
 }
 
-case class ParentAwareNode(vals: AnyRef*)
+case class ParentAwareNode(vals: AnyRef*) {
+    def prune = if (vals.size == 1) vals.head else this
+}
