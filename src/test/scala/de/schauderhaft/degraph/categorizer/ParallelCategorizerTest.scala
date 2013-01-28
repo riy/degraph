@@ -25,4 +25,12 @@ class ParallelCategorizerTest extends FunSuite with ShouldMatchers {
     test("parallel combination of two functions returns the results of the all functions") {
         new ParallelCategorizer(ListCategory("a", "b"), ListCategory("a", "c"))("a") should be(ParentAwareNode("b", "c"))
     }
+
+    test("steps through elements of a PackageAwareNode") {
+        new ParallelCategorizer()(ParentAwareNode("a", "b", "c")) should be(ParentAwareNode("b", "c"))
+    }
+
+    test("steps through elements of a PackageAwareNode (single element)") {
+        new ParallelCategorizer()(ParentAwareNode("a")) should be(ParentAwareNode("a"))
+    }
 }
