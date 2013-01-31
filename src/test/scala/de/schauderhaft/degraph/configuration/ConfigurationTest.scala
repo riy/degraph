@@ -8,9 +8,8 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node.packageNode
-import de.schauderhaft.degraph.analysis.Node.classNode
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._
 import de.schauderhaft.degraph.categorizer.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])

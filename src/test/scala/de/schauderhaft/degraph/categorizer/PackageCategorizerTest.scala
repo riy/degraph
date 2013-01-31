@@ -7,8 +7,8 @@ import org.scalatest.matchers.ShouldMatchers.be
 import org.scalatest.matchers.ShouldMatchers.convertToAnyRefShouldWrapper
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._
 
 @RunWith(classOf[JUnitRunner])
 class PackageCategorizerTest extends FunSuite {

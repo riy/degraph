@@ -6,8 +6,8 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._ 
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._ 
 
 
 

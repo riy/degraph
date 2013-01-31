@@ -3,7 +3,7 @@ package de.schauderhaft.degraph.filter
 import scala.util.matching.Regex
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.model.Node
 
 /**
  * filters nodes based on regular expression

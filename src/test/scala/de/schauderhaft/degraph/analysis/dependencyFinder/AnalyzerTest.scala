@@ -7,8 +7,8 @@ import org.scalatest.matchers.MatchResult
 import org.scalatest.matchers.Matcher
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 

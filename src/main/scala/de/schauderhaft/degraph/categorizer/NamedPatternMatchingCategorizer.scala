@@ -1,6 +1,6 @@
 package de.schauderhaft.degraph.categorizer
 
-import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.model.Node
 
 /**
  * categorizes package nodes by matching them against ant like patterns.

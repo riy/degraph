@@ -1,9 +1,10 @@
 package de.schauderhaft.degraph.analysis.dependencyFinder
 
 import com.jeantessier.dependency.ClassNode
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._
 import com.jeantessier.dependency.PackageNode
+
+import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.Node
 
 /**
  * converts objects as returned by Dependency Finder to the objects used by Degraph

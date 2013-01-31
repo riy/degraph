@@ -1,6 +1,6 @@
 package de.schauderhaft.degraph.writer
 
-import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.categorizer.ParentAwareNode
 
 /**

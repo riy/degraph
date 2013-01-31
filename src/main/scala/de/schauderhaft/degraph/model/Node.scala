@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.analysis
+package de.schauderhaft.degraph.model
 
 /**
  * companion object providing factory methods for often needed kinds of Node instances.

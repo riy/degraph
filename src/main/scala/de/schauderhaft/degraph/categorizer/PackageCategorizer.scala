@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.categorizer
 import com.jeantessier.dependency.ClassNode
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._
 
 /**
  * categorizes a java node as member of the matching package node

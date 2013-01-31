@@ -4,8 +4,8 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._
 import de.schauderhaft.degraph.categorizer.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])

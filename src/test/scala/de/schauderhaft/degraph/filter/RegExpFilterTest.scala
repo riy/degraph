@@ -6,8 +6,8 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers.be
 import org.scalatest.matchers.ShouldMatchers.convertToAnyShouldWrapper
 import de.schauderhaft.degraph.analysis.dependencyFinder.Convert
-import de.schauderhaft.degraph.analysis.Node
-import de.schauderhaft.degraph.analysis.Node._
+import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node._
 
 @RunWith(classOf[JUnitRunner])
 class RegExpFilterTest extends FunSuite {

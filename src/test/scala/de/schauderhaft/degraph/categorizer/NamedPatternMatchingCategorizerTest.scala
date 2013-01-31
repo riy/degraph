@@ -4,8 +4,8 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.FunSuite
-import de.schauderhaft.degraph.analysis.Node._
-import de.schauderhaft.degraph.analysis.Node
+import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.Node
 
 @RunWith(classOf[JUnitRunner])
 class NamedPatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
