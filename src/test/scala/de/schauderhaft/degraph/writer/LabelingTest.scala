@@ -6,6 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.analysis.Node
 import de.schauderhaft.degraph.analysis.Node._
+import de.schauderhaft.degraph.categorizer.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])
 class LabelingTest extends FunSuite with ShouldMatchers {
@@ -24,6 +25,10 @@ class LabelingTest extends FunSuite with ShouldMatchers {
 
     test("the label of a Node is the name of the node") {
         Labeling(classNode("some.Class")) should be("some.Class")
+    }
+
+    test("the label of a ParentAwareNode is the name of the first contained node") {
+        Labeling(new ParentAwareNode(packageNode("the package"), classNode("Some Java class"))) should be("the package")
     }
 
     class DummyObject(override val toString: String)
