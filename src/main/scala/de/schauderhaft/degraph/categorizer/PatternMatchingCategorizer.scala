@@ -23,7 +23,7 @@ import de.schauderhaft.degraph.analysis.Node
  * de.(*.test) categorizes de.some.test as 'some.test'
  * de.(*).test categorizes it as 'some'
  */
-class PatternMatchingCategorizer(targetType: String, pattern: String)
+case class PatternMatchingCategorizer(targetType: String, pattern: String)
     extends (AnyRef => AnyRef) {
     private[this] val matcher = new PatternMatcher(pattern)
 

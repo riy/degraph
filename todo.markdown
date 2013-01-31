@@ -1,3 +1,10 @@
+* test and cleanup malformed Configuration
+* remove -g option from command line
+* make slicing work.
+* rename all thing Category to slicing/slice
+
+* refactor Categories to Slicing
+
 * make a website
 * have a domain
 * make dependency finder available for maven/gradle/ivy

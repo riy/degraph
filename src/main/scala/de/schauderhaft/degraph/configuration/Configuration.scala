@@ -11,6 +11,10 @@ import de.schauderhaft.degraph.categorizer.PackageCategorizer
 import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
 import scala.io.Source
 import java.io.File
+import de.schauderhaft.degraph.categorizer.ParallelCategorizer
+import de.schauderhaft.degraph.categorizer.CombinedSlicer
+import de.schauderhaft.degraph.categorizer.Slicer.toSlicer
+import de.schauderhaft.degraph.categorizer.ParallelCategorizer
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
@@ -54,17 +58,18 @@ case class Configuration(
             excludes.map((x: String) => RegExpFilter.filter(x.r)).toSet)
     }
 
+    // FIXME completely fucked up ... 
+    // step one produce a proper Slicer from a list of patterns
+    // step two combine those with InternalClassSlicer + package slicer
     private[this] def buildCategorizer(categories: Map[String, Seq[Pattern]]): (AnyRef => AnyRef) = {
-        val ps = for { (level, patterns) <- categories }
+        val slicers = for { (level, patterns) <- categories }
             yield buildCategorizer(level, patterns)
-        combine(ps.toSeq: _*)
+        val slicersWithPackages = new ParallelCategorizer(PackageCategorizer +: slicers.toSeq: _*)
+        combine(InternalClassCategorizer, slicersWithPackages)
     }
 
-    private[this] def buildCategorizer(categoryLevel: String, groupings: Seq[Pattern]): (AnyRef => AnyRef) = {
-        val groupingCats = groupings.map((p: Pattern) => new PatternMatchingCategorizer(categoryLevel, p.pattern))
-        val categorizers = List(InternalClassCategorizer, PackageCategorizer) ++ groupingCats
-        combine(categorizers: _*)
-    }
+    private[this] def buildCategorizer(slicing: String, groupings: Seq[Pattern]): (AnyRef => AnyRef) =
+        new CombinedSlicer(groupings.map(toSlicer(slicing, _)): _*)
 
 }
 

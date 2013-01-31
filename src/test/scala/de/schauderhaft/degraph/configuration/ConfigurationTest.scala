@@ -11,6 +11,7 @@ import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.analysis.Node
 import de.schauderhaft.degraph.analysis.Node.packageNode
 import de.schauderhaft.degraph.analysis.Node.classNode
+import de.schauderhaft.degraph.categorizer.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationTest extends FunSuite with ShouldMatchers {
@@ -36,14 +37,6 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
         filter("whats that") should be(false)
     }
 
-    test("categorizer gets passed to analyzer") {
-        val config = Configuration(Array("-g", "*.(*).*")).right.get
-        val spy = new SpyAnalyze()
-        config.createGraph(spy)
-        val categorizer = spy.categorizer
-        categorizer(packageNode("jens.schauderhaft.de")) should be(Node("default", "schauderhaft"))
-    }
-
     test("the string after -f is considered a configuration file and gets loaded") {
         val config = Configuration(Array("-f", "src/test/resource/example.config")).right.get
 
@@ -56,9 +49,10 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
 
         spy.filter("javax.swing.JPanel") should be(false)
         spy.filter("de.schauderhaft") should be(true)
-        //
-        //        val categorizer = spy.categorizer
-        //        categorizer(classNode("jens.schauderhaft.de")) should be(Node("default", "schauderhaft"))
+
+        val categorizer = spy.categorizer
+        categorizer(classNode("de.schauderhaft.degraph.parser.Jens")) should be(
+            ParentAwareNode(packageNode("de.schauderhaft.degraph.parser"), Node("part", "parser"), Node("lib", "degraph"), Node("internalExternal", "internal")))
     }
 
     test("invalid configuration returns a Left(message)") {
