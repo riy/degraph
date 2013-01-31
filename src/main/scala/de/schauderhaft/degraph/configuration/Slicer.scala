@@ -1,8 +1,7 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.configuration
 
-import de.schauderhaft.degraph.configuration.Pattern
-import de.schauderhaft.degraph.configuration.NamedPattern
-import de.schauderhaft.degraph.configuration.UnnamedPattern
+import de.schauderhaft.degraph.categorizer.NamedPatternMatchingCategorizer
+import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
 
 object Slicer {
     def toSlicer(s: String, p: Pattern) = p match {

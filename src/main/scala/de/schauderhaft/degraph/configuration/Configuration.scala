@@ -1,20 +1,18 @@
 package de.schauderhaft.degraph.configuration
 
-import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
+import scala.io.Source
+
 import org.rogach.scallop.exceptions.ScallopException
+
+import Slicer.toSlicer
+import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
+import de.schauderhaft.degraph.categorizer.CombinedSlicer
+import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
+import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
+import de.schauderhaft.degraph.categorizer.PackageCategorizer
+import de.schauderhaft.degraph.categorizer.ParallelCategorizer
 import de.schauderhaft.degraph.filter.IncludeExcludeFilter
 import de.schauderhaft.degraph.filter.RegExpFilter
-import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
-import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
-import de.schauderhaft.degraph.categorizer.PackageCategorizer
-import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
-import scala.io.Source
-import java.io.File
-import de.schauderhaft.degraph.categorizer.ParallelCategorizer
-import de.schauderhaft.degraph.categorizer.CombinedSlicer
-import de.schauderhaft.degraph.categorizer.Slicer.toSlicer
-import de.schauderhaft.degraph.categorizer.ParallelCategorizer
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
