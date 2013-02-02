@@ -1,10 +1,9 @@
 apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'application'
-//apply from: "https://launchpad.net/gradle-release/trunk/1.0/+download/apply.groovy"
+apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
 
 description= 'Degraph is a library for producing dependency graphs for visual inspection'
-
 
 mainClassName = 'de.schauderhaft.degraph.Degraph'
 
@@ -18,6 +17,9 @@ tasks.withType(ScalaCompile) {
 
 applicationDistribution.from(['license.txt','readme.markdown']) {
     into "/"
+}
+applicationDistribution.from('src/demo/resource'){
+    into "/example/"
 }
 
 targetCompatibility = 1.7
