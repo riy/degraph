@@ -56,9 +56,6 @@ case class Configuration(
             excludes.map((x: String) => RegExpFilter.filter(x.r)).toSet)
     }
 
-    // FIXME completely fucked up ... 
-    // step one produce a proper Slicer from a list of patterns
-    // step two combine those with InternalClassSlicer + package slicer
     private[this] def buildCategorizer(categories: Map[String, Seq[Pattern]]): (AnyRef => AnyRef) = {
         val slicers = for { (level, patterns) <- categories }
             yield buildCategorizer(level, patterns)
