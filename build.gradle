@@ -11,6 +11,8 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.3'
 }
 
+createReleaseTag.dependsOn distZip
+
 tasks.withType(ScalaCompile) {
     scalaCompileOptions.useAnt = false
 }
