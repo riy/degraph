@@ -9,7 +9,7 @@ If you do a hierarchic layout in yed for the resulting graphml file you can easi
 to different packages, layer or modules without creating circular dependencies or 
 which you have to move in order to break cycles. 
 
-**How to run**
+## How to run ##
 
 Degraph is a command line tool. Just download the **[binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/degraph-0.0.2.zip)**
 and execute *degraph* or *degraph.bat* depending on the operating system you are on.
@@ -26,16 +26,16 @@ You'll have to provide at least a class path to analyze. These are the command l
 
 *-f* <configuration file> takes the path of a configuration file. When a configuration file is provided all other command line arguments get ignored. Configuration files allow to specify the arguments described above, plus they allow for slicing your code base, i.e. you can define modules, layers or other 'parts' of your application that you want to viusalize in the dependency graph. See the description of the [configuration file format](https://github.com/schauder/degraph/wiki/Configuration-File-Format) for details.
 
-**How do the results look like?**
+## How do the results look like? ##
 Take a look at the [examples page](https://github.com/schauder/degraph/wiki/Examples) to get an impression of how the results might look and the effect of specifc slicings.
 
-**Vision**
+## Vision ##
 
 While currently Degraph only visualizes dependencies, I plan to add the possibility to define allowed and disallowed dependencies, plus an easy way to integrate it into various test frameworks. Failures should then create a diagram of the violation found, therby making fixing the problem easier.
 
 If you have any ideas what Degraph should be able to do, just open an [issue](https://github.com/schauder/degraph/issues).
 
-**How to build**
+## How to build ##
 
 I'm highly interested in contributions, so if you are interested, drop me a message and until I respond have a look at the source code.
 
@@ -51,11 +51,11 @@ To create a directory that looks like you just installed Degraph:
 
     gradlew installApp
 
-**Download**
+## Download ##
 
 [Binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/degraph-0.0.2.zip)
 
-**Feedback**
+## Feedback ##
 
 Please use [the github issue feature](https://github.com/schauder/degraph/issues) for questions, bug reports or improvement requests. 
 
