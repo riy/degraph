@@ -1,11 +1,11 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import MultiCategorizer.combine
-import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
+import de.schauderhaft.degraph.slicer.MultiCategorizer.combine;
 
 @RunWith(classOf[JUnitRunner])
 class MultiCategorizerTest extends FunSuite with ShouldMatchers {

@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 class ParallelCategorizer(cs: (AnyRef => AnyRef)*) extends (AnyRef => AnyRef) {
     def apply(x: AnyRef): AnyRef = x match {

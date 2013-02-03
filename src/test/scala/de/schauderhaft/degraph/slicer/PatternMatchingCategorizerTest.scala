@@ -1,11 +1,12 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 import org.junit.runner.RunWith
+import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.FunSuite
-import de.schauderhaft.degraph.model.Node._
+
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.Node.classNode
 
 @RunWith(classOf[JUnitRunner])
 class PatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {

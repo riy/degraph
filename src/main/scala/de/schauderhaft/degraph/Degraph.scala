@@ -2,16 +2,16 @@ package de.schauderhaft.degraph
 
 import scala.xml.XML
 import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
-import de.schauderhaft.degraph.categorizer.InternalClassCategorizer
-import de.schauderhaft.degraph.categorizer.MultiCategorizer.combine
-import de.schauderhaft.degraph.categorizer.PackageCategorizer
+import de.schauderhaft.degraph.slicer.InternalClassCategorizer
+import de.schauderhaft.degraph.slicer.MultiCategorizer.combine
+import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.filter.IncludeExcludeFilter
 import de.schauderhaft.degraph.filter.RegExpFilter
 import de.schauderhaft.degraph.writer.Writer
 import org.rogach.scallop.exceptions.UnknownOption
 import org.rogach.scallop.exceptions.ScallopException
 import org.rogach.scallop.exceptions.Version
-import de.schauderhaft.degraph.categorizer.PatternMatchingCategorizer
+import de.schauderhaft.degraph.slicer.PatternMatchingCategorizer
 import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
 import de.schauderhaft.degraph.configuration.CommandLineParser
 import de.schauderhaft.degraph.configuration.Configuration

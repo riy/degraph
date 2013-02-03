@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers

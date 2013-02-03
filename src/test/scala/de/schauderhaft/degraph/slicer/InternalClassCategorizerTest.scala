@@ -1,13 +1,11 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.jeantessier.dependency.ClassNode
-import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._ 
+
+import de.schauderhaft.degraph.model.Node.classNode
 
 
 

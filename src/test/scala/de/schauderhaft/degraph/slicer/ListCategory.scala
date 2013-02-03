@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 class ListCategory(list : List[AnyRef]) extends (AnyRef => AnyRef) {
     def apply(v : AnyRef) = {

@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 import com.jeantessier.dependency.ClassNode
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.model.Node._

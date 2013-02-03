@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 class PatternMatcher(pattern: String) {
     private[this] val Pattern = ensureParens(escapeStars(escapeDots(pattern))).r

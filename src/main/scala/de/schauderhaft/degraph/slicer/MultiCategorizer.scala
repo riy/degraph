@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 /**
  * combines multiple Categorizers to a single one by applying one after the other until one succeeds to categorize the node.

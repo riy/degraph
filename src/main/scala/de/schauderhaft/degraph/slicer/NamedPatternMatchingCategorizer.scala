@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.categorizer
+package de.schauderhaft.degraph.slicer
 
 import de.schauderhaft.degraph.model.Node
 
@@ -23,13 +23,12 @@ import de.schauderhaft.degraph.model.Node
  * de.(*.test) categorizes de.some.test as 'some.test'
  * de.(*).test categorizes it as 'some'
  */
-case class PatternMatchingCategorizer(targetType: String, pattern: String)
+case class NamedPatternMatchingCategorizer(targetType: String, pattern: String, name: String)
     extends (AnyRef => AnyRef) {
     private[this] val matcher = new PatternMatcher(pattern)
 
     override def apply(x: AnyRef): AnyRef = x match {
-        case n: Node => matcher.matches(n.name).map(Node(targetType, _)).getOrElse(n)
+        case n: Node => matcher.matches(n.name).map(_ => Node(targetType, name)).getOrElse(n)
         case _ => x
     }
-
 }
