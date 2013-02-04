@@ -123,6 +123,13 @@ object EdgeWriter extends ((AnyRef, AnyRef) => Node) {
     private def id(n: AnyRef) = n.toString
     def apply(source: AnyRef, target: AnyRef) =
         <edge id={ id(source) + "::" + id(target) } source={ id(source) } target={ id(target) }>
+            <data key="d10">
+                <y:PolyLineEdge>
+                    <y:LineStyle color="#000000" type="line" width="1.0"/>
+                    <y:Arrows source="none" target="standard"/>
+                    <y:BendStyle smoothed="true"/>
+                </y:PolyLineEdge>
+            </data>
         </edge>
 }
 
