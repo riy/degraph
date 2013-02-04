@@ -13,11 +13,11 @@ class Writer(
 
     def this(nodeWriter: (AnyRef, Graph) => Node) = this(
         nodeWriter,
-        EdgeWriter)
+        new EdgeWriter)
 
     def this() = this(
         NodeWriter,
-        EdgeWriter)
+        new EdgeWriter)
 
     def toXml(g: Graph): Elem = {
         <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
@@ -119,7 +119,7 @@ object LeafNodeWriter {
                                                                          </node>
 }
 
-object EdgeWriter extends ((AnyRef, AnyRef) => Node) {
+class EdgeWriter extends ((AnyRef, AnyRef) => Node) {
     private def id(n: AnyRef) = n.toString
     def apply(source: AnyRef, target: AnyRef) =
         <edge id={ id(source) + "::" + id(target) } source={ id(source) } target={ id(target) }>
