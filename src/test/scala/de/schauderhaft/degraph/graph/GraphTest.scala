@@ -112,4 +112,17 @@ class GraphTest extends FunSuite with ShouldMatchers {
         g.add("a")
         g.topNodes should be(Set("b"))
     }
+
+    test("an empty graph has no cycles") {
+        val g = new Graph()
+        g.edgesInCycles should be(Set())
+    }
+
+    test("a graph with two cyclic dependent nodes has both edges in cycles") {
+        val g = new Graph()
+        g.connect("a", "b")
+        g.connect("b", "a")
+        g.edgesInCycles should be(Set(("a", "b"), ("b", "a")))
+
+    }
 }

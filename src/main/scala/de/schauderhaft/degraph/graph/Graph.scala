@@ -64,4 +64,11 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
         implicit val factory = scalax.collection.edge.LkDiEdge
         internalGraph.addLEdge(cat, node)("contains")
     }
+
+    def edgesInCycles =
+        (for {
+            c <- internalGraph.findCycle.toList
+            e <- c.edgeIterator
+        } yield (e._1.value, e._2.value)).toSet
+
 }
