@@ -11,13 +11,12 @@ class Writer(
     nodeWriter: (AnyRef, Graph) => Node,
     edgeWriter: (AnyRef, AnyRef) => Node) {
 
-    def this(nodeWriter: (AnyRef, Graph) => Node) = this(
-        nodeWriter,
-        new EdgeWriter)
-
     def this() = this(
         NodeWriter,
         new EdgeWriter)
+
+    def this(styler: ((AnyRef, AnyRef) => EdgeStyle)) =
+        this(NodeWriter, new EdgeWriter(styler))
 
     def toXml(g: Graph): Elem = {
         <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
