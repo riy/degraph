@@ -9,6 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.Matcher
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.graph.Graph
+import java.awt.Color
 
 @RunWith(classOf[JUnitRunner])
 class WriterTest extends FunSuite with ShouldMatchers {
@@ -60,5 +61,11 @@ class WriterTest extends FunSuite with ShouldMatchers {
         edgeText should include("edgeElement")
     }
 
+    test("the color and width of the EdgeStyler end up in the edge") {
+        val edgeNode = new EdgeWriter((_, _) => EdgeStyle(Color.RED, 2.0))("x", "y")
+        val styleNode = edgeNode \ "data" \ "PolyLineEdge" \ "LineStyle"
+        styleNode.toString should include("""color="#FF0000"""")
+        styleNode.toString should include("""width="2.0"""")
+    }
 }
 
