@@ -21,7 +21,9 @@ object Labeling {
 
         def removePrefix(label: String, delimiter: String) = {
             val prefix = parentLabel + delimiter
-            if (label.startsWith(prefix))
+            if (prefix == label)
+                label
+            else if (label.startsWith(prefix))
                 label.replace(prefix, "")
             else
                 label
