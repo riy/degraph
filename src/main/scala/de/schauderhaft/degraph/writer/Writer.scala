@@ -15,7 +15,7 @@ class Writer(
         NodeWriter,
         new EdgeWriter)
 
-    def this(styler: ((AnyRef, AnyRef) => EdgeStyle)) =
+    def this(styler: (((AnyRef, AnyRef)) => EdgeStyle)) =
         this(NodeWriter, new EdgeWriter(styler))
 
     def toXml(g: Graph): Elem = {
@@ -119,7 +119,7 @@ object LeafNodeWriter {
 }
 
 class EdgeWriter(
-    styler: ((AnyRef, AnyRef) => EdgeStyle) = (_, _) => DefaultEdgeStyle)
+    styler: (((AnyRef, AnyRef)) => EdgeStyle) = _ => DefaultEdgeStyle)
     extends ((AnyRef, AnyRef) => Node) {
 
     private def id(n: AnyRef) = n.toString

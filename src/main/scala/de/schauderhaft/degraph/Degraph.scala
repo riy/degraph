@@ -1,20 +1,15 @@
 package de.schauderhaft.degraph
 
+import _root_.java.awt.Color.RED
+
 import scala.xml.XML
+
 import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
-import de.schauderhaft.degraph.slicer.InternalClassCategorizer
-import de.schauderhaft.degraph.slicer.MultiCategorizer.combine
-import de.schauderhaft.degraph.slicer.PackageCategorizer
-import de.schauderhaft.degraph.filter.IncludeExcludeFilter
-import de.schauderhaft.degraph.filter.RegExpFilter
-import de.schauderhaft.degraph.writer.Writer
-import org.rogach.scallop.exceptions.UnknownOption
-import org.rogach.scallop.exceptions.ScallopException
-import org.rogach.scallop.exceptions.Version
-import de.schauderhaft.degraph.slicer.PatternMatchingCategorizer
-import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
-import de.schauderhaft.degraph.configuration.CommandLineParser
 import de.schauderhaft.degraph.configuration.Configuration
+import de.schauderhaft.degraph.writer.DefaultEdgeStyle
+import de.schauderhaft.degraph.writer.EdgeStyle
+import de.schauderhaft.degraph.writer.PredicateStyler
+import de.schauderhaft.degraph.writer.Writer
 
 /**
  * The main class of Degraph, plugging everything together,
@@ -27,7 +22,9 @@ object Degraph {
             case Left(m) => println(m)
             case Right(c) =>
                 val g = c.createGraph(Analyzer)
-                val xml = (new Writer()).toXml(g)
+                val edgesInCycles = g.edgesInCycles;
+                val styler = PredicateStyler.styler(edgesInCycles(_), EdgeStyle(RED, 2.0), DefaultEdgeStyle)
+                val xml = (new Writer(styler)).toXml(g)
                 XML.save(c.output.get, xml, "UTF8", true, null)
         }
     }
