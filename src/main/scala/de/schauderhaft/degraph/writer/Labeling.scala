@@ -9,23 +9,25 @@ import de.schauderhaft.degraph.slicer.ParentAwareNode
  * It then removes the part of the name that is identically with the label of the parent node if present.
  */
 object Labeling {
-    def apply(node: AnyRef, parent: Option[AnyRef] = None): String = parent match {
-        case Some(p) =>
-            val nLabel = baseLabel(node)
-            val parentLabel = apply(p)
+    def apply(node: AnyRef, parent: Option[AnyRef] = None): String = {
+        val parentLabel = parent match {
+            case Some(p) =>
+                apply(p)
+            case _ =>
+                baseLabel(node)
+        }
 
-            def removePrefix(label: String, delimiter: String) = {
-                val prefix = parentLabel + delimiter
-                if (label.startsWith(prefix))
-                    label.replace(prefix, "")
-                else
-                    label
-            }
+        val nLabel = baseLabel(node)
 
-            removePrefix(removePrefix(nLabel, "$"), ".")
-        case _ =>
-            baseLabel(node)
+        def removePrefix(label: String, delimiter: String) = {
+            val prefix = parentLabel + delimiter
+            if (label.startsWith(prefix))
+                label.replace(prefix, "")
+            else
+                label
+        }
 
+        removePrefix(removePrefix(nLabel, "$"), ".")
     }
 
     private def baseLabel(node: AnyRef): String = node match {
