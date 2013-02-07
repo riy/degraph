@@ -11,13 +11,21 @@ import de.schauderhaft.degraph.slicer.ParentAwareNode
 object Labeling {
     def apply(node: AnyRef, parent: Option[AnyRef] = None): String = parent match {
         case Some(p) =>
-            val pLabel = apply(p) + "."
-            val nLabel = apply(node)
-            if (nLabel.startsWith(pLabel))
-                nLabel.replace(pLabel, "")
-            else
-                nLabel
-        case _ => baseLabel(node)
+            val nLabel = baseLabel(node)
+            val parentLabel = apply(p)
+
+            def removePrefix(label: String, delimiter: String) = {
+                val prefix = parentLabel + delimiter
+                if (label.startsWith(prefix))
+                    label.replace(prefix, "")
+                else
+                    label
+            }
+
+            removePrefix(removePrefix(nLabel, "$"), ".")
+        case _ =>
+            baseLabel(node)
+
     }
 
     private def baseLabel(node: AnyRef): String = node match {

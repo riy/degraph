@@ -23,6 +23,10 @@ class LabelingTest extends FunSuite with ShouldMatchers {
         Labeling("prefix.suffix", Some("prefix")) should be("suffix")
     }
 
+    test("when the parent + $ is the prefix of the node it gets exluded from the label") {
+        Labeling("prefix$suffix", Some("prefix")) should be("suffix")
+    }
+
     test("the label of a Node is the name of the node") {
         Labeling(classNode("some.Class")) should be("some.Class")
     }
