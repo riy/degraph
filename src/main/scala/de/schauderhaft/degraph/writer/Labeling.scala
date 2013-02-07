@@ -27,7 +27,11 @@ object Labeling {
                 label
         }
 
-        removePrefix(removePrefix(nLabel, "$"), ".")
+        removePrefix(
+            removePrefix(
+                removePrefix(nLabel, "$$"),
+                "$"),
+            ".")
     }
 
     private def baseLabel(node: AnyRef): String = node match {
