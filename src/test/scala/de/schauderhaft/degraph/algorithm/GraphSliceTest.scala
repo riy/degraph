@@ -22,6 +22,6 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
         import SlicingGraph._
 
         val g = SGraph()
-        new SlicingGraph[Nothing, Nothing](g).slice("package") should be(SGraph())
+        graph2ExtGraph[Nothing, Nothing](g).slice("package") should be(SGraph())
     }
 }
