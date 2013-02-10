@@ -7,6 +7,11 @@ import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.model.Node
 
+object Graph {
+    val contains = "contains"
+    val references = "references"
+}
+
 /**
  * a special graph for gathering and organizing dependencies in a hirachical fashion.
  *
@@ -15,6 +20,8 @@ import de.schauderhaft.degraph.model.Node
 class Graph(category: AnyRef => AnyRef = (x) => x,
     filter: AnyRef => Boolean = _ => true,
     edgeFilter: ((AnyRef, AnyRef)) => Boolean = _ => true) {
+
+    import Graph._
 
     private val internalGraph = SGraph[AnyRef, LkDiEdge]()
 
@@ -31,9 +38,9 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
             if (e.label == connectionType)
         } yield e._2.value
 
-    def contentsOf(group: AnyRef): Set[AnyRef] = connectedNodes(group, "contains")
+    def contentsOf(group: AnyRef): Set[AnyRef] = connectedNodes(group, contains)
 
-    def connectionsOf(node: AnyRef): Set[AnyRef] = connectedNodes(node, "references")
+    def connectionsOf(node: AnyRef): Set[AnyRef] = connectedNodes(node, references)
 
     def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
 
@@ -68,12 +75,12 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     private def addEdge(a: AnyRef, b: AnyRef) {
         implicit val factory = scalax.collection.edge.LkDiEdge
         if (filter(a) && filter(b) && edgeFilter(a, b))
-            internalGraph.addLEdge(a, b)("references")
+            internalGraph.addLEdge(a, b)(references)
     }
 
     private def addNodeToCategory(node: AnyRef, cat: AnyRef) = {
         implicit val factory = scalax.collection.edge.LkDiEdge
-        internalGraph.addLEdge(cat, node)("contains")
+        internalGraph.addLEdge(cat, node)(contains)
     }
 
     def edgesInCycles =

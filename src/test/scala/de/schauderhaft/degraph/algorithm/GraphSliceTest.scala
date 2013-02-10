@@ -33,6 +33,6 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
         val g = new Graph(category = PackageCategorizer)
         g.connect(classNode("p.one.Class"), classNode("p.two.Class"))
 
-        g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))("references")))
+        g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))(Graph.references)))
     }
 }
