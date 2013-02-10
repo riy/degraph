@@ -64,11 +64,25 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     def slice(name: String) = {
         val sliceGraph = SGraph[AnyRef, LkDiEdge]()
+        //---------------
         val nodes = internalGraph.nodes.map(_.value).collect { case n: Node => n }
         for {
             n <- nodes
             if (n.nodeType == name)
         } sliceGraph.add(n)
+        //---------------
+        implicit val factory = scalax.collection.edge.LkDiEdge
+        val edges = internalGraph.edges
+        for {
+            e <- edges
+            in1 <- e._1.incoming
+            if (in1.label == contains)
+            val s1 = in1._1
+            in2 <- e._2.incoming
+            if (in2.label == contains)
+            val s2 = in2._1
+        } sliceGraph.addLEdge(s1.value, s2.value)(references)
+
         sliceGraph
     }
 

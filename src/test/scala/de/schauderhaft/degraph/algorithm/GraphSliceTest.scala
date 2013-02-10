@@ -28,8 +28,7 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
         g.slice(packageType) should be(SGraph(packageNode("p")))
     }
 
-    test("the package slice of a graph with two connected nodes in two packages will be that two packages") {
-        pending
+    test("the package slice of a graph with two connected nodes in two packages will be that two packages connected") {
         val g = new Graph(category = PackageCategorizer)
         g.connect(classNode("p.one.Class"), classNode("p.two.Class"))
 
