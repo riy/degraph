@@ -5,6 +5,7 @@ import scalax.collection.GraphPredef._
 import scalax.collection.GraphEdge._
 import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
+import de.schauderhaft.degraph.model.Node
 
 /**
  * a special graph for gathering and organizing dependencies in a hirachical fashion.
@@ -53,6 +54,16 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     }
 
     def allNodes: Set[AnyRef] = internalGraph.nodes.map(_.value).toSet
+
+    def slice(name: String) = {
+        val sliceGraph = SGraph[AnyRef, LkDiEdge]()
+        val nodes = internalGraph.nodes.map(_.value).collect { case n: Node => n }
+        for {
+            n <- nodes
+            if (n.nodeType == name)
+        } sliceGraph.add(n)
+        sliceGraph
+    }
 
     private def addEdge(a: AnyRef, b: AnyRef) {
         implicit val factory = scalax.collection.edge.LkDiEdge

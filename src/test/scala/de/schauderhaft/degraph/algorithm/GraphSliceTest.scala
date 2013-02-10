@@ -4,24 +4,28 @@ import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import de.schauderhaft.degraph.graph.Graph
 import scalax.collection.{ Graph => SGraph }
-import scalax.collection.GraphPredef.EdgeLikeIn
+import de.schauderhaft.degraph.slicer.PackageCategorizer
+import de.schauderhaft.degraph.model.Node._
+import scalax.collection.edge.Implicits._
+import scalax.collection.edge.LkDiEdge
 
 @RunWith(classOf[JUnitRunner])
 class GraphSliceTest extends FunSuite with ShouldMatchers {
 
-    class SlicingGraph[N, E[X] <: EdgeLikeIn[X]](g: SGraph[N, E]) {
-        def slice(name: String): SGraph[N, E] = g
+    test("the package slice of a graph without package is empty") {
+        val g = new Graph()
+        g.add("x")
+
+        g.slice("package") should be(SGraph())
     }
 
-    object SlicingGraph {
-        implicit def graph2ExtGraph[N, E[X] <: EdgeLikeIn[X]](sg: SGraph[N, E]): SlicingGraph[N, E] = new SlicingGraph[N, E](sg)
+    test("the package slice of a graph with some nodes in a single package is that package") {
+        val g = new Graph(category = PackageCategorizer)
+        g.add(classNode("p.C"))
+
+        g.slice(packageType) should be(SGraph(packageNode("p")))
     }
 
-    test("a sliced empty graph is an empty graph") {
-        import SlicingGraph._
-
-        val g = SGraph()
-        graph2ExtGraph[Nothing, Nothing](g).slice("package") should be(SGraph())
-    }
 }
