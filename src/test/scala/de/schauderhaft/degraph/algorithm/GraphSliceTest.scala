@@ -34,4 +34,13 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
 
         g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))(Graph.references)))
     }
+
+    test("test non existing slice") {
+        val g = new Graph(category = PackageCategorizer)
+        g.connect(classNode("p.one.Class"), classNode("p.two.Class"))
+
+        g.slice("no such type") should be(SGraph())
+    }
+    test("test with packages and inner classes") { pending }
+    test("test with multiple slices and inner classes") { pending }
 }
