@@ -68,7 +68,12 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
         /** determines the node in the slice to represent the original node passed as an argument*/
         def sliceNode(n: internalGraph.NodeT): Option[internalGraph.NodeT] =
-            n.incoming.find(e => e.label == contains).map(_._1)
+            n.incoming.
+                find(e => e.label == contains).
+                map(_._1.value).
+                collect { case n: Node => n }.
+                filter(_.nodeType == name).
+                flatMap(internalGraph.find(_))
 
         val sliceGraph = SGraph[AnyRef, LkDiEdge]()
         sliceNodes.foreach(sliceGraph.add(_))
@@ -82,9 +87,9 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
             s2 <- sliceNode(e._2)
         } yield (s1.value, s2.value))
 
-        val matchingEdges = sliceEdges.collect { case t: (Node, Node) if (t._1.nodeType == name && t._2.nodeType == name) => t }
-        for ((s1, s2) <- matchingEdges)
-            sliceGraph.addLEdge(s1.value, s2.value)(references)
+        sliceEdges.foreach(e =>
+            sliceGraph.addLEdge(e._1.value, e._2.value)(references))
+
         sliceGraph
     }
 
