@@ -6,6 +6,8 @@ import scalax.collection.GraphEdge._
 import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.slicer.ParentAwareNode
+import de.schauderhaft.degraph.slicer.ParentAwareNode
 
 object Graph {
     val contains = "contains"
@@ -110,4 +112,16 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
             e <- c.edgeIterator
         } yield (e._1.value, e._2.value)).toSet
 
+}
+
+class SliceNodeFinder(slice: String, graph: SGraph[AnyRef, LkDiEdge]) extends PartialFunction[AnyRef, Node] {
+    def isDefinedAt(n: AnyRef) = n match {
+        case node: Node if (node.nodeType == slice) => true
+        case pan: ParentAwareNode => true
+        case _ => false
+    }
+    def apply(n: AnyRef): Node = n match {
+        case node: Node => node
+        case pan: ParentAwareNode => pan.head.asInstanceOf[Node]
+    }
 }

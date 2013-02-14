@@ -10,6 +10,8 @@ import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.model.Node._
 import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
+import de.schauderhaft.degraph.slicer.MultiCategorizer
+import de.schauderhaft.degraph.slicer.InternalClassCategorizer
 
 @RunWith(classOf[JUnitRunner])
 class GraphSliceTest extends FunSuite with ShouldMatchers {
@@ -18,7 +20,7 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
         val g = new Graph()
         g.add("x")
 
-        g.slice("package") should be(SGraph())
+        g.slice(packageType) should be(SGraph())
     }
 
     test("the package slice of a graph with some nodes in a single package is that package") {
@@ -41,6 +43,16 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
 
         g.slice("no such type") should be(SGraph())
     }
-    test("test with packages and inner classes") { pending }
+
+    test("the package slice of an inner class is its package") {
+        pending
+        // since the slice node will appear anyway we use an edge between to inner classes, to test that they get projected on the correct slice
+        val g = new Graph(category = MultiCategorizer.combine(InternalClassCategorizer, PackageCategorizer))
+
+        g.connect(classNode("p.one.Class$Inner"), classNode("p.two.Class$Inner"))
+
+        g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))(Graph.references)))
+    }
+
     test("test with multiple slices and inner classes") { pending }
 }
