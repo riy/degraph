@@ -31,7 +31,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     def topNodes: Set[AnyRef] =
         for {
             n <- internalGraph.nodes.toSet
-            if (n.incoming.forall(_.label != "contains")) // only the nodes not contained inside another one
+            if (n.incoming.forall(_.label != contains)) // only the nodes not contained inside another one
         } yield n.value
 
     private def connectedNodes(node: AnyRef, connectionType: String): Set[AnyRef] =
@@ -126,13 +126,26 @@ class SliceNodeFinder(slice: String, graph: SGraph[AnyRef, LkDiEdge]) extends Pa
     private def findIn(pan: ParentAwareNode): Node =
         pan.vals.collectFirst { case n: Node if (n.nodeType == slice) => n }.get
 
+    private def container(n: AnyRef) = {
+        val containers = for {
+            in <- graph.find(n).toSeq
+            ie <- in.incoming
+            if (ie.label == Graph.contains)
+        } yield ie._1.value
+        containers.headOption
+    }
+
     def isDefinedAt(n: AnyRef) = n match {
         case node: Node if (node.nodeType == slice) => true
         case pan: ParentAwareNode if (contains(pan)) => true
-        case _ => false
+        case _ => container(n) match {
+            case Some(c) => isDefinedAt(c)
+            case _ => false
+        }
     }
     def apply(n: AnyRef): Node = n match {
         case node: Node => node
         case pan: ParentAwareNode => findIn(pan)
+        case _ => apply(container(n).get)
     }
 }

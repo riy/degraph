@@ -12,6 +12,7 @@ import de.schauderhaft.degraph.model.Node.packageNode
 import de.schauderhaft.degraph.model.Node.packageType
 import de.schauderhaft.degraph.slicer.ParentAwareNode
 import de.schauderhaft.degraph.model.Node
+import Graph.contains
 
 @RunWith(classOf[JUnitRunner])
 class SliceNodeFinderTest extends FunSuite with ShouldMatchers {
@@ -62,4 +63,13 @@ class SliceNodeFinderTest extends FunSuite with ShouldMatchers {
         finder(n) should be(p)
     }
 
+    test("traverses contains relationship") {
+        implicit val factory = scalax.collection.edge.LkDiEdge
+        val p = packageNode("p")
+        val g = SGraph[AnyRef, LkDiEdge]()
+        g.addLEdge(p, "x")(contains)
+        val finder = new SliceNodeFinder(packageType, g)
+        finder.isDefinedAt("x") should be(true)
+        finder("x") should be(p)
+    }
 }
