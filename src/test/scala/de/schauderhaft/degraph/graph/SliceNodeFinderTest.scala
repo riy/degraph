@@ -9,6 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import scalax.collection.mutable.{ Graph => SGraph }
 import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.model.Node.packageNode
+import de.schauderhaft.degraph.model.Node.classNode
 import de.schauderhaft.degraph.model.Node.packageType
 import de.schauderhaft.degraph.slicer.ParentAwareNode
 import de.schauderhaft.degraph.model.Node
@@ -72,4 +73,16 @@ class SliceNodeFinderTest extends FunSuite with ShouldMatchers {
         finder.isDefinedAt("x") should be(true)
         finder("x") should be(p)
     }
+
+    test("returns correct element from slices relationship") {
+        implicit val factory = scalax.collection.edge.LkDiEdge
+        val p = packageNode("p")
+        val c = classNode("p.c")
+        val g = SGraph[AnyRef, LkDiEdge]()
+        g.addLEdge(p, c)(contains)
+        val finder = new SliceNodeFinder(packageType, g)
+        finder.isDefinedAt(c) should be(true)
+        finder(c) should be(p)
+    }
+
 }

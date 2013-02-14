@@ -69,14 +69,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
         def sliceNodes = internalGraph.nodes.map(_.value).collect { case n: Node if (n.nodeType == name) => n }
 
-        /** determines the node in the slice to represent the original node passed as an argument*/
-        def sliceNode(n: internalGraph.NodeT): Option[internalGraph.NodeT] =
-            n.incoming.
-                find(e => e.label == contains). // find the contains relationship
-                map(_._1.value). // unwrap
-                collect { case n: Node => n }. // make sure we are dealing with a Node ...
-                filter(_.nodeType == name). // ... of correct type
-                flatMap(internalGraph.find(_)) // wrap it again.
+        val sliceNodeFinder = new SliceNodeFinder(name, internalGraph)
 
         val sliceGraph = SGraph[AnyRef, LkDiEdge]()
         sliceNodes.foreach(sliceGraph.add(_))
@@ -86,12 +79,10 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
         val edges = internalGraph.edges
         val sliceEdges = (for {
             e <- edges
-            s1 <- sliceNode(e._1)
-            s2 <- sliceNode(e._2)
-        } yield (s1.value, s2.value))
-
-        sliceEdges.foreach(e =>
-            sliceGraph.addLEdge(e._1.value, e._2.value)(references))
+            if (e.label == references)
+            s1 <- sliceNodeFinder.lift(e._1.value)
+            s2 <- sliceNodeFinder.lift(e._2.value)
+        } sliceGraph.addLEdge(s1, s2)(references))
 
         sliceGraph
     }
@@ -144,7 +135,7 @@ class SliceNodeFinder(slice: String, graph: SGraph[AnyRef, LkDiEdge]) extends Pa
         }
     }
     def apply(n: AnyRef): Node = n match {
-        case node: Node => node
+        case node: Node if (node.nodeType == slice) => node
         case pan: ParentAwareNode => findIn(pan)
         case _ => apply(container(n).get)
     }

@@ -45,7 +45,6 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
     }
 
     test("the package slice of an inner class is its package") {
-        pending
         // since the slice node will appear anyway we use an edge between to inner classes, to test that they get projected on the correct slice
         val g = new Graph(category = MultiCategorizer.combine(InternalClassCategorizer, PackageCategorizer))
 
