@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.writer
 
 import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.slicer.ParentAwareNode
+import de.schauderhaft.degraph.model.ParentAwareNode
 
 /**
  * creates a labels from an arbitrary node. It starts with the name of actual Nodes and to String if anything else ends up in the Graph.

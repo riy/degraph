@@ -11,7 +11,7 @@ import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.model.Node.packageNode
 import de.schauderhaft.degraph.model.Node.classNode
 import de.schauderhaft.degraph.model.Node.packageType
-import de.schauderhaft.degraph.slicer.ParentAwareNode
+import de.schauderhaft.degraph.model.ParentAwareNode
 import de.schauderhaft.degraph.model.Node
 import Graph.contains
 

@@ -6,7 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.model.Node._
-import de.schauderhaft.degraph.slicer.ParentAwareNode
+import de.schauderhaft.degraph.model.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])
 class LabelingTest extends FunSuite with ShouldMatchers {

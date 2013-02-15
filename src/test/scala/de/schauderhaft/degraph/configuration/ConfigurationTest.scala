@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.model.Node._
-import de.schauderhaft.degraph.slicer.ParentAwareNode
+import de.schauderhaft.degraph.model.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationTest extends FunSuite with ShouldMatchers {

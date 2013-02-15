@@ -6,9 +6,7 @@ import scalax.collection.GraphEdge._
 import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.slicer.ParentAwareNode
-import de.schauderhaft.degraph.slicer.ParentAwareNode
-import de.schauderhaft.degraph.slicer.ParentAwareNode
+import de.schauderhaft.degraph.model.ParentAwareNode
 
 object Graph {
     val contains = "contains"

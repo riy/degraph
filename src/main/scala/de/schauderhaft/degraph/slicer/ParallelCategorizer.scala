@@ -1,5 +1,7 @@
 package de.schauderhaft.degraph.slicer
 
+import de.schauderhaft.degraph.model.ParentAwareNode
+
 class ParallelCategorizer(cs: (AnyRef => AnyRef)*) extends (AnyRef => AnyRef) {
     def apply(x: AnyRef): AnyRef = x match {
         case pan: ParentAwareNode => pan.next
@@ -12,8 +14,3 @@ class ParallelCategorizer(cs: (AnyRef => AnyRef)*) extends (AnyRef => AnyRef) {
 
 }
 
-case class ParentAwareNode(vals: AnyRef*) {
-    def prune = if (vals.size == 1) vals.head else this
-    def next = if (vals.size > 1) new ParentAwareNode(vals.tail: _*) else this
-    def head = vals.head
-}

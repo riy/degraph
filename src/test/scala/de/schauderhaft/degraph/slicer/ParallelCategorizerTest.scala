@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import de.schauderhaft.degraph.model.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])
 class ParallelCategorizerTest extends FunSuite with ShouldMatchers {

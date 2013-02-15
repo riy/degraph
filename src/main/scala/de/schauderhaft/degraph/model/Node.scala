@@ -16,3 +16,9 @@ object Node {
 case class Node(
     nodeType: String,
     name: String)
+
+case class ParentAwareNode(vals: AnyRef*) {
+    def prune = if (vals.size == 1) vals.head else this
+    def next = if (vals.size > 1) new ParentAwareNode(vals.tail: _*) else this
+    def head = vals.head
+}
