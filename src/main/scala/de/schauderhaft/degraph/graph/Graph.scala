@@ -58,6 +58,8 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
         }
     }
 
+    def connectNodes(a: Node, b: Node) = connect(a, b)
+
     def connect(a: AnyRef, b: AnyRef) {
         addEdge(a, b)
         add(a)
