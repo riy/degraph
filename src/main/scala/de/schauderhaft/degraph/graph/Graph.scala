@@ -7,6 +7,7 @@ import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.ParentAwareNode
+import de.schauderhaft.degraph.model.Node
 
 object Graph {
     val contains = "contains"
@@ -42,6 +43,8 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
     def contentsOf(group: AnyRef): Set[AnyRef] = connectedNodes(group, contains)
 
     def connectionsOf(node: AnyRef): Set[AnyRef] = connectedNodes(node, references)
+
+    def addNode(node: Node) = add(node)
 
     def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
 
