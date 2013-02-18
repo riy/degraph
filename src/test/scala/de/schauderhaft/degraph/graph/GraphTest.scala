@@ -64,20 +64,20 @@ class GraphTest extends FunSuite with ShouldMatchers {
 
     test("edges can get added for not existing nodes") {
         val g = new Graph()
-        val a = new AnyRef()
-        val b = new AnyRef()
-        g.connect(a, b)
+        val a = n("a")
+        val b = n("b")
+        g.connectNodes(a, b)
         g.connectionsOf(a) should be(Set(b))
         g.topNodes should be(Set(a, b))
     }
 
     test("connectionsOf returns all connected nodes") {
         val g = new Graph()
-        val a = new AnyRef()
-        val b = new AnyRef()
-        val c = new AnyRef()
-        g.connect(a, b)
-        g.connect(a, c)
+        val a = n("a")
+        val b = n("b")
+        val c = n("c")
+        g.connectNodes(a, b)
+        g.connectNodes(a, c)
         g.connectionsOf(a) should be(Set(b, c))
         g.topNodes should be(Set(a, b, c))
     }
@@ -123,8 +123,8 @@ class GraphTest extends FunSuite with ShouldMatchers {
 
     test("a graph with two cyclic dependent nodes has both edges in cycles") {
         val g = new Graph()
-        g.connect("a", "b")
-        g.connect("b", "a")
+        g.connectNodes(n("a"), n("b"))
+        g.connectNodes(n("b"), n("a"))
         g.edgesInCycles should be(Set(("a", "b"), ("b", "a")))
     }
 }
