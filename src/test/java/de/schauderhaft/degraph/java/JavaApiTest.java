@@ -11,6 +11,9 @@ import org.junit.Test;
 import de.schauderhaft.degraph.model.SimpleNode;
 
 public class JavaApiTest {
+	private SimpleNode node(String s) {
+		return new SimpleNode(s, s);
+	}
 
 	@Test
 	public void aNewGraphContainsNoTopNodes() throws Exception {
@@ -39,8 +42,8 @@ public class JavaApiTest {
 	@Test
 	public void connectionsOfANodeAreTheNodesItHasEdgesWith() {
 		JavaGraph graph = new JavaGraph();
-		Object a = new Object();
-		Object b = new Object();
+		SimpleNode a = node("a");
+		SimpleNode b = node("b");
 		graph.connect(a, b);
 
 		assertEquals(new HashSet<>(asList(b)), graph.connectionsOf(a));
@@ -49,12 +52,12 @@ public class JavaApiTest {
 	@Test
 	public void writeGraphMlFromGraphExample() {
 		JavaGraph graph = new JavaGraph(new ChessCategory());
-		graph.connect("King", "Queen");
-		graph.connect("Queen", "Rook");
-		graph.connect("Rook", "Bishop");
-		graph.connect("Rook", "Knight");
-		graph.connect("Knight", "Pawn");
-		graph.connect("Bishop", "Pawn");
+		graph.connect(node("King"), node("Queen"));
+		graph.connect(node("Queen"), node("Rook"));
+		graph.connect(node("Rook"), node("Bishop"));
+		graph.connect(node("Rook"), node("Knight"));
+		graph.connect(node("Knight"), node("Pawn"));
+		graph.connect(node("Bishop"), node("Pawn"));
 
 		graph.save("chess.graphml");
 	}

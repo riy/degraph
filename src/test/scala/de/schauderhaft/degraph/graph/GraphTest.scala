@@ -125,6 +125,6 @@ class GraphTest extends FunSuite with ShouldMatchers {
         val g = new Graph()
         g.connectNodes(n("a"), n("b"))
         g.connectNodes(n("b"), n("a"))
-        g.edgesInCycles should be(Set(("a", "b"), ("b", "a")))
+        g.edgesInCycles should be(Set((n("a"), n("b")), (n("b"), n("a"))))
     }
 }

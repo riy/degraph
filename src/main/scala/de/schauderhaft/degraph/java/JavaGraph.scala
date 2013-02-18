@@ -24,7 +24,7 @@ class JavaGraph(graph: Graph) {
 
     def connectionsOf(node: Object): java.util.Set[Object] = graph.connectionsOf(node).asJava
 
-    def connect(a: Object, b: Object): Unit = graph.connect(a, b)
+    def connect(a: Node, b: Node): Unit = graph.connectNodes(a, b)
     def save(fileName: String) {
         XML.save(fileName, (new Writer()).toXml(graph), "UTF-8", true, null)
     }

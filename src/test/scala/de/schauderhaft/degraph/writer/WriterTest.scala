@@ -15,6 +15,8 @@ import de.schauderhaft.degraph.model.SimpleNode
 @RunWith(classOf[JUnitRunner])
 class WriterTest extends FunSuite with ShouldMatchers {
 
+    def n(s: String) = SimpleNode(s, s)
+
     test("SelfTest one") {
         val someXml = <root><subeins>text</subeins></root>
         (someXml \ "subeins").text should be("text")
@@ -40,7 +42,7 @@ class WriterTest extends FunSuite with ShouldMatchers {
 
     test("writing a simple node creates elements for that node") {
         val g = new Graph()
-        val probe = SimpleNode("probe", "probe")
+        val probe = n("probe")
         g.addNode(probe)
         val writer = new Writer((x: AnyRef, _) => <nodeElement>{ x }</nodeElement>, new EdgeWriter())
         val xml = writer.toXml(g)
@@ -49,7 +51,7 @@ class WriterTest extends FunSuite with ShouldMatchers {
 
     test("writing two connected nodes creates elements for the nodes plus an edge") {
         val g = new Graph()
-        g.connect("probe1", "probe2")
+        g.connectNodes(n("probe1"), n("probe2"))
         val writer = new Writer(
             (x: AnyRef, _) => <nodeElement>{ x }</nodeElement>,
             (x: AnyRef, y: AnyRef) => <edgeElement from={ x.toString } to={ y.toString }/>)
