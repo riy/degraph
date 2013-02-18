@@ -50,7 +50,7 @@ object Analyzer extends AnalyzerLike {
             for (
                 nav <- navigations;
                 n <- nav(c)
-            ) g.connect(classNode, Convert(n))
+            ) g.connectNodes(classNode, Convert(n))
         }
         return g
     }
