@@ -33,14 +33,14 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
 
     test("the package slice of a graph with two connected nodes in two packages will be that two packages connected") {
         val g = new Graph(category = PackageCategorizer)
-        g.connectNodes(classNode("p.one.Class"), classNode("p.two.Class"))
+        g.connect(classNode("p.one.Class"), classNode("p.two.Class"))
 
         g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))(Graph.references)))
     }
 
     test("test non existing slice") {
         val g = new Graph(category = PackageCategorizer)
-        g.connectNodes(classNode("p.one.Class"), classNode("p.two.Class"))
+        g.connect(classNode("p.one.Class"), classNode("p.two.Class"))
 
         g.slice("no such type") should be(SGraph())
     }
@@ -49,7 +49,7 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
         // since the slice node will appear anyway we use an edge between to inner classes, to test that they get projected on the correct slice
         val g = new Graph(category = MultiCategorizer.combine(InternalClassCategorizer, PackageCategorizer))
 
-        g.connectNodes(classNode("p.one.Class$Inner"), classNode("p.two.Class$Inner"))
+        g.connect(classNode("p.one.Class$Inner"), classNode("p.two.Class$Inner"))
 
         g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))(Graph.references)))
     }

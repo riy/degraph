@@ -51,7 +51,7 @@ class WriterTest extends FunSuite with ShouldMatchers {
 
     test("writing two connected nodes creates elements for the nodes plus an edge") {
         val g = new Graph()
-        g.connectNodes(n("probe1"), n("probe2"))
+        g.connect(n("probe1"), n("probe2"))
         val writer = new Writer(
             (x: AnyRef, _) => <nodeElement>{ x }</nodeElement>,
             (x: AnyRef, y: AnyRef) => <edgeElement from={ x.toString } to={ y.toString }/>)
