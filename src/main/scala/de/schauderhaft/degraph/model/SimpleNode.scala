@@ -10,14 +10,16 @@ object SimpleNode {
     def packageNode(name: String) = SimpleNode(packageType, name)
 }
 
+sealed trait Node
+
 /**
  * represents a node in the dependency graph.
  */
 case class SimpleNode(
     nodeType: String,
-    name: String)
+    name: String) extends Node
 
-case class ParentAwareNode(vals: AnyRef*) {
+case class ParentAwareNode(vals: AnyRef*) extends Node {
     def prune = if (vals.size == 1) vals.head else this
     def next = if (vals.size > 1) new ParentAwareNode(vals.tail: _*) else this
     def head = vals.head
