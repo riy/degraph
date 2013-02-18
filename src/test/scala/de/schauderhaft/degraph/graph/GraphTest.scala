@@ -20,14 +20,14 @@ class GraphTest extends FunSuite with ShouldMatchers {
     test("a graph contains the nodes that get added to the graph") {
         val g = new Graph()
         val node = n("a")
-        g.addNode(node)
+        g.add(node)
         g.topNodes should contain(node.asInstanceOf[AnyRef])
     }
 
     test("a simple node has no content") {
         val g = new Graph()
         val node = n("a")
-        g.addNode(node)
+        g.add(node)
         g.contentsOf(node) should be('empty)
     }
 
@@ -35,14 +35,14 @@ class GraphTest extends FunSuite with ShouldMatchers {
         val category = new AnyRef()
         val node = n("a")
         val g = new Graph(_ => category)
-        g.addNode(node)
+        g.add(node)
         g.topNodes should contain(category)
     }
 
     test("elements of a category are contained in that category") {
         val g = new Graph(_ => "x", _ => true)
         val node = n("a")
-        g.addNode(node)
+        g.add(node)
         g.contentsOf("x") should contain(node.asInstanceOf[AnyRef])
     }
 
@@ -55,7 +55,7 @@ class GraphTest extends FunSuite with ShouldMatchers {
         val subCategory = new AnyRef()
         val node = n("a")
         val g = new Graph(Map[AnyRef, AnyRef](node -> subCategory).withDefaultValue(topCategory), _ => true)
-        g.addNode(node)
+        g.add(node)
 
         g.topNodes should equal(Set(topCategory))
         g.contentsOf(topCategory) should equal(Set(subCategory))
@@ -85,7 +85,7 @@ class GraphTest extends FunSuite with ShouldMatchers {
     test("simple nodes don't have connections") {
         val g = new Graph()
         val a = n("a")
-        g.addNode(a)
+        g.add(a)
 
         g.connectionsOf(a) should be(Set())
     }
@@ -97,22 +97,22 @@ class GraphTest extends FunSuite with ShouldMatchers {
 
     test("allNodes of a graph without categories are the topNodes") {
         val g = new Graph()
-        g.addNode(n("a"))
-        g.addNode(n("23"))
+        g.add(n("a"))
+        g.add(n("23"))
         g.allNodes should be(g.topNodes)
         g.allNodes should be(Set(n("a"), n("23")))
     }
 
     test("allNodes of a graph with categories contains the topNodes and all categories") {
         val g = new Graph(combine(ListCategory(n("a"), n("b"), n("c")), ListCategory(n("23"), n("42"), n("c"))))
-        g.addNode(n("a"))
-        g.addNode(n("23"))
+        g.add(n("a"))
+        g.add(n("23"))
         g.allNodes should be(Set(n("a"), n("b"), n("c"), n("23"), n("42")))
     }
 
     test("categories don't get filtert") {
         val g = new Graph(ListCategory(n("a"), n("b")), _ == n("a"))
-        g.addNode(n("a"))
+        g.add(n("a"))
         g.topNodes should be(Set(n("b")))
     }
 

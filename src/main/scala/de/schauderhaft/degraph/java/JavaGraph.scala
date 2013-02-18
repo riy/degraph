@@ -20,7 +20,7 @@ class JavaGraph(graph: Graph) {
 
     def topNodes(): java.util.Set[Object] = graph.topNodes.asJava
 
-    def add(node: Node): Unit = graph.addNode(node)
+    def add(node: Node): Unit = graph.add(node)
 
     def connectionsOf(node: Object): java.util.Set[Object] = graph.connectionsOf(node).asJava
 

@@ -19,14 +19,14 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
 
     test("the package slice of a graph without package is empty") {
         val g = new Graph()
-        g.addNode(SimpleNode("x", "x"))
+        g.add(SimpleNode("x", "x"))
 
         g.slice(packageType) should be(SGraph())
     }
 
     test("the package slice of a graph with some nodes in a single package is that package") {
         val g = new Graph(category = PackageCategorizer)
-        g.addNode(classNode("p.C"))
+        g.add(classNode("p.C"))
 
         g.slice(packageType) should be(SGraph(packageNode("p")))
     }

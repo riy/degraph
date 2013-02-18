@@ -44,9 +44,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     def connectionsOf(node: AnyRef): Set[AnyRef] = connectedNodes(node, references)
 
-    def addNode(node: Node) = add(node)
-
-    private def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
+    def add(node: Node) = if (filter(node)) unfilteredAdd(node)
 
     private def unfilteredAdd(node: AnyRef) {
         val cat = category(node)

@@ -45,7 +45,7 @@ object Analyzer extends AnalyzerLike {
 
         for ((_, c) <- classes) {
             val classNode = Convert(c)
-            g.addNode(classNode)
+            g.add(classNode)
 
             for (
                 nav <- navigations;

@@ -43,7 +43,7 @@ class WriterTest extends FunSuite with ShouldMatchers {
     test("writing a simple node creates elements for that node") {
         val g = new Graph()
         val probe = n("probe")
-        g.addNode(probe)
+        g.add(probe)
         val writer = new Writer((x: AnyRef, _) => <nodeElement>{ x }</nodeElement>, new EdgeWriter())
         val xml = writer.toXml(g)
         (xml \ "graph" \ "nodeElement").text should be(probe.toString)
