@@ -20,7 +20,7 @@ object Graph {
  * Argument is a category which is by default the identity. A category is a function that returns an outer node for any node and the node itself if no out node is available
  */
 class Graph(category: AnyRef => AnyRef = (x) => x,
-    filter: AnyRef => Boolean = _ => true,
+    filter: Node => Boolean = _ => true,
     edgeFilter: ((AnyRef, AnyRef)) => Boolean = _ => true) {
 
     import Graph._
