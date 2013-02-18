@@ -86,7 +86,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
         sliceGraph
     }
 
-    private def addEdge(a: AnyRef, b: AnyRef) {
+    private def addEdge(a: Node, b: Node) {
         implicit val factory = scalax.collection.edge.LkDiEdge
         if (filter(a) && filter(b) && edgeFilter(a, b))
             internalGraph.addLEdge(a, b)(references)
