@@ -21,7 +21,7 @@ object Graph {
  */
 class Graph(category: AnyRef => AnyRef = (x) => x,
     filter: Node => Boolean = _ => true,
-    edgeFilter: ((AnyRef, AnyRef)) => Boolean = _ => true) {
+    edgeFilter: ((Node, Node)) => Boolean = _ => true) {
 
     import Graph._
 
