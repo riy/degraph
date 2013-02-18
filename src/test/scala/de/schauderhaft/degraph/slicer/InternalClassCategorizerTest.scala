@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
-import de.schauderhaft.degraph.model.Node.classNode
+import de.schauderhaft.degraph.model.SimpleNode.classNode
 
 
 

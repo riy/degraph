@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.slicer
 import com.jeantessier.dependency.ClassNode
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode._
 
 /**
  * categorizes a java node as member of the matching package node
@@ -9,7 +9,7 @@ import de.schauderhaft.degraph.model.Node._
 object PackageCategorizer extends Function1[AnyRef, AnyRef] {
     def apply(value: AnyRef) = {
         value match {
-            case Node(t, n) if (t == classType) => packageNode(packagePart(n))
+            case SimpleNode(t, n) if (t == classType) => packageNode(packagePart(n))
             case _ => value
         }
     }

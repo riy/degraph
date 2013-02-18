@@ -8,8 +8,8 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode._
 import de.schauderhaft.degraph.model.ParentAwareNode
 
 @RunWith(classOf[JUnitRunner])
@@ -51,7 +51,7 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
 
         val categorizer = spy.categorizer
         categorizer(classNode("de.schauderhaft.degraph.parser.Jens")) should be(
-            ParentAwareNode(packageNode("de.schauderhaft.degraph.parser"), Node("part", "parser"), Node("lib", "degraph"), Node("internalExternal", "internal")))
+            ParentAwareNode(packageNode("de.schauderhaft.degraph.parser"), SimpleNode("part", "parser"), SimpleNode("lib", "degraph"), SimpleNode("internalExternal", "internal")))
     }
 
     test("invalid configuration returns a Left(message)") {

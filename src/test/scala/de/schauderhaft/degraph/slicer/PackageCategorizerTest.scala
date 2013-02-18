@@ -7,8 +7,8 @@ import org.scalatest.matchers.ShouldMatchers.be
 import org.scalatest.matchers.ShouldMatchers.convertToAnyRefShouldWrapper
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode._
 
 @RunWith(classOf[JUnitRunner])
 class PackageCategorizerTest extends FunSuite {
@@ -19,7 +19,7 @@ class PackageCategorizerTest extends FunSuite {
     }
 
     test("an arbitrary Node gets categorized as an arbitrary Node") {
-        PackageCategorizer(Node("x", "alfred")) should be(Node("x", "alfred"))
+        PackageCategorizer(SimpleNode("x", "alfred")) should be(SimpleNode("x", "alfred"))
     }
 
     test("the category of a class node is its package node") {

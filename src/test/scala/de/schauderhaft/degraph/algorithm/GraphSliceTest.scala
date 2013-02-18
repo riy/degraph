@@ -7,7 +7,7 @@ import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.graph.Graph
 import scalax.collection.{ Graph => SGraph }
 import de.schauderhaft.degraph.slicer.PackageCategorizer
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode._
 import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.slicer.MultiCategorizer

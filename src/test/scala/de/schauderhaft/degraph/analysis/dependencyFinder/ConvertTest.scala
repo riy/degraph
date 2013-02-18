@@ -6,8 +6,8 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode._
 
 @RunWith(classOf[JUnitRunner])
 class ConverterTest extends FunSuite with ShouldMatchers {

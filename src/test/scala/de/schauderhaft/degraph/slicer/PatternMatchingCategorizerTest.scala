@@ -5,8 +5,8 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node.classNode
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode.classNode
 
 @RunWith(classOf[JUnitRunner])
 class PatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
@@ -18,6 +18,6 @@ class PatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
 
     test("returns only matched group") {
         val categorizer = new PatternMatchingCategorizer("type", "some.(package).Class")
-        categorizer(classNode("some.package.Class")) should be(Node("type", "package"))
+        categorizer(classNode("some.package.Class")) should be(SimpleNode("type", "package"))
     }
 }

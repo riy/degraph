@@ -5,7 +5,7 @@ import scalax.collection.GraphPredef._
 import scalax.collection.GraphEdge._
 import scalax.collection.edge.Implicits._
 import scalax.collection.edge.LkDiEdge
-import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.ParentAwareNode
 
 object Graph {
@@ -65,7 +65,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     def slice(name: String) = {
 
-        def sliceNodes = internalGraph.nodes.map(_.value).collect { case n: Node if (n.nodeType == name) => n }
+        def sliceNodes = internalGraph.nodes.map(_.value).collect { case n: SimpleNode if (n.nodeType == name) => n }
 
         val sliceNodeFinder = new SliceNodeFinder(name, internalGraph)
 
@@ -104,16 +104,16 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
 }
 
-class SliceNodeFinder(slice: String, graph: SGraph[AnyRef, LkDiEdge]) extends PartialFunction[AnyRef, Node] {
+class SliceNodeFinder(slice: String, graph: SGraph[AnyRef, LkDiEdge]) extends PartialFunction[AnyRef, SimpleNode] {
 
     private def contains(pan: ParentAwareNode): Boolean =
         pan.vals.exists {
-            case n: Node if (n.nodeType == slice) => true
+            case n: SimpleNode if (n.nodeType == slice) => true
             case _ => false
         }
 
-    private def findIn(pan: ParentAwareNode): Node =
-        pan.vals.collectFirst { case n: Node if (n.nodeType == slice) => n }.get
+    private def findIn(pan: ParentAwareNode): SimpleNode =
+        pan.vals.collectFirst { case n: SimpleNode if (n.nodeType == slice) => n }.get
 
     private def container(n: AnyRef) = {
         val containers = for {
@@ -125,15 +125,15 @@ class SliceNodeFinder(slice: String, graph: SGraph[AnyRef, LkDiEdge]) extends Pa
     }
 
     def isDefinedAt(n: AnyRef) = n match {
-        case node: Node if (node.nodeType == slice) => true
+        case node: SimpleNode if (node.nodeType == slice) => true
         case pan: ParentAwareNode if (contains(pan)) => true
         case _ => container(n) match {
             case Some(c) => isDefinedAt(c)
             case _ => false
         }
     }
-    def apply(n: AnyRef): Node = n match {
-        case node: Node if (node.nodeType == slice) => node
+    def apply(n: AnyRef): SimpleNode = n match {
+        case node: SimpleNode if (node.nodeType == slice) => node
         case pan: ParentAwareNode => findIn(pan)
         case _ => apply(container(n).get)
     }

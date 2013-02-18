@@ -5,15 +5,15 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node.classNode
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode.classNode
 
 @RunWith(classOf[JUnitRunner])
 class NamedPatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
 
     test("returns Node of type with name of match") {
         val categorizer = new NamedPatternMatchingCategorizer("type", "(some.package.Class)", "name")
-        categorizer(classNode("some.package.Class")) should be(Node("type", "name"))
+        categorizer(classNode("some.package.Class")) should be(SimpleNode("type", "name"))
     }
     test("returns input when not matched") {
         val categorizer = new NamedPatternMatchingCategorizer("type", "(y)", "name")

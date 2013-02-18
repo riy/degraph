@@ -7,8 +7,8 @@ import org.scalatest.matchers.MatchResult
 import org.scalatest.matchers.Matcher
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -20,7 +20,7 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
     def stringNodes = graph.topNodes.map(_.toString)
     def nodeByString(name: String) = graph.topNodes.find(
         x => x match {
-            case n: Node => n.name == name
+            case n: SimpleNode => n.name == name
             case _ => false
         })
 

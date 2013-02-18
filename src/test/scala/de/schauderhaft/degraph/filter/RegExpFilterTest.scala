@@ -6,8 +6,8 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers.be
 import org.scalatest.matchers.ShouldMatchers.convertToAnyShouldWrapper
 import de.schauderhaft.degraph.analysis.dependencyFinder.Convert
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node._
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.SimpleNode._
 
 @RunWith(classOf[JUnitRunner])
 class RegExpFilterTest extends FunSuite {
@@ -36,7 +36,7 @@ class RegExpFilterTest extends FunSuite {
     }
 
     test("does not match on the node Type") {
-        filter(Node("in.some.packageTest", "x")) should be(false)
+        filter(SimpleNode("in.some.packageTest", "x")) should be(false)
     }
 
     test("otherwise matches on the toString Method") {
