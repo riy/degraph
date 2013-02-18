@@ -10,6 +10,7 @@ import org.scalatest.matchers.Matcher
 import org.scalatest.matchers.ShouldMatchers
 import de.schauderhaft.degraph.graph.Graph
 import java.awt.Color
+import de.schauderhaft.degraph.model.SimpleNode
 
 @RunWith(classOf[JUnitRunner])
 class WriterTest extends FunSuite with ShouldMatchers {
@@ -39,10 +40,11 @@ class WriterTest extends FunSuite with ShouldMatchers {
 
     test("writing a simple node creates elements for that node") {
         val g = new Graph()
-        g.add("probe")
+        val probe = SimpleNode("probe", "probe")
+        g.addNode(probe)
         val writer = new Writer((x: AnyRef, _) => <nodeElement>{ x }</nodeElement>, new EdgeWriter())
         val xml = writer.toXml(g)
-        (xml \ "graph" \ "nodeElement").text should be("probe")
+        (xml \ "graph" \ "nodeElement").text should be(probe.toString)
     }
 
     test("writing two connected nodes creates elements for the nodes plus an edge") {

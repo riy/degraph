@@ -8,6 +8,8 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
+import de.schauderhaft.degraph.model.SimpleNode;
+
 public class JavaApiTest {
 
 	@Test
@@ -19,7 +21,7 @@ public class JavaApiTest {
 	@Test
 	public void aGraphContainsTheNodesThatGetAddedToTheGraph() {
 		JavaGraph graph = new JavaGraph();
-		Object node = new Object();
+		SimpleNode node = new SimpleNode("", "");
 		graph.add(node);
 		assertTrue(graph.topNodes().contains(node));
 	}
@@ -27,7 +29,7 @@ public class JavaApiTest {
 	@Test
 	public void simpleNodesDontHaveConnections() {
 		JavaGraph graph = new JavaGraph();
-		Object node = new Object();
+		SimpleNode node = new SimpleNode("", "");
 		graph.add(node);
 
 		assertEquals(new HashSet<>(), graph.connectionsOf(node));
@@ -60,7 +62,7 @@ public class JavaApiTest {
 	@Test
 	public void aSimpleNodeHasNoContenten() {
 		JavaGraph graph = new JavaGraph();
-		Object node = new Object();
+		SimpleNode node = new SimpleNode("", "");
 		graph.add(node);
 		assertEquals(new HashSet<>(), graph.contentsOf(node));
 	}
@@ -68,7 +70,7 @@ public class JavaApiTest {
 	@Test
 	public void categorizerGetsApplied() {
 		JavaGraph graph = new JavaGraph(new ConstantCategorizer("x"));
-		Object node = new Object();
+		SimpleNode node = new SimpleNode("", "");
 		graph.add(node);
 		assertEquals(new HashSet<>(asList(node)), graph.contentsOf("x"));
 	}

@@ -5,6 +5,7 @@ import de.schauderhaft.degraph.graph.Graph
 import scala.collection.JavaConverters._
 import scala.xml.XML
 import de.schauderhaft.degraph.writer.Writer
+import de.schauderhaft.degraph.model.Node
 
 /**
  * a class intendent to use with  java, so it skips on all the fancy Scala stuff.
@@ -19,7 +20,7 @@ class JavaGraph(graph: Graph) {
 
     def topNodes(): java.util.Set[Object] = graph.topNodes.asJava
 
-    def add(node: Object): Unit = graph.add(node)
+    def add(node: Node): Unit = graph.addNode(node)
 
     def connectionsOf(node: Object): java.util.Set[Object] = graph.connectionsOf(node).asJava
 

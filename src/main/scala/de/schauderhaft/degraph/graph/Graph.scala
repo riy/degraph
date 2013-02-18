@@ -46,7 +46,7 @@ class Graph(category: AnyRef => AnyRef = (x) => x,
 
     def addNode(node: Node) = add(node)
 
-    def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
+    private def add(node: AnyRef) = if (filter(node)) unfilteredAdd(node)
 
     private def unfilteredAdd(node: AnyRef) {
         val cat = category(node)
