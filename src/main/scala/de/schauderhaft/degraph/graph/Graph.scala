@@ -19,7 +19,7 @@ object Graph {
  *
  * Argument is a category which is by default the identity. A category is a function that returns an outer node for any node and the node itself if no out node is available
  */
-class Graph(category: AnyRef => Node = (x) => x match {
+class Graph(category: Node => Node = (x) => x match {
     case n: Node => n
     case _ => SimpleNode("dummy", "dummy")
 },
@@ -49,7 +49,7 @@ class Graph(category: AnyRef => Node = (x) => x match {
 
     def add(node: Node) = if (filter(node)) unfilteredAdd(node)
 
-    private def unfilteredAdd(node: AnyRef) {
+    private def unfilteredAdd(node: Node) {
         val cat = category(node)
         if (cat == node) {
             internalGraph += node
