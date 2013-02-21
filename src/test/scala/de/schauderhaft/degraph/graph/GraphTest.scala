@@ -43,7 +43,7 @@ class GraphTest extends FunSuite with ShouldMatchers {
         val g = new Graph(_ => n("x"), _ => true)
         val node = n("a")
         g.add(node)
-        g.contentsOf("x") should contain(node.asInstanceOf[AnyRef])
+        g.contentsOf(n("x")) should contain(node.asInstanceOf[AnyRef])
     }
 
     test("elements of a not existing category are the empty set") {

@@ -14,8 +14,10 @@ import de.schauderhaft.degraph.model.SimpleNode._
 class PackageCategorizerTest extends FunSuite {
     import org.scalatest.matchers.ShouldMatchers._
 
+    def n(s: String) = SimpleNode(s, s)
+
     test("an arbitrary value gets categorized as an arbitrary value") {
-        PackageCategorizer("alfred") should be("alfred")
+        PackageCategorizer(n("alfred")) should be(n("alfred"))
     }
 
     test("an arbitrary Node gets categorized as an arbitrary Node") {

@@ -10,10 +10,10 @@ import de.schauderhaft.degraph.model.SimpleNode.classNode
 
 @RunWith(classOf[JUnitRunner])
 class PatternMatchingCategorizerTest extends FunSuite with ShouldMatchers {
-
+    def n(s: String) = SimpleNode(s, s)
     test("doesn't match arbitrary object") {
         val categorizer = new PatternMatchingCategorizer("type", "(some.package.Class)")
-        categorizer("x") should be("x")
+        categorizer(n("x")) should be(n("x"))
     }
 
     test("returns only matched group") {
