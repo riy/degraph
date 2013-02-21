@@ -19,7 +19,10 @@ object Graph {
  *
  * Argument is a category which is by default the identity. A category is a function that returns an outer node for any node and the node itself if no out node is available
  */
-class Graph(category: AnyRef => AnyRef = (x) => x,
+class Graph(category: AnyRef => Node = (x) => x match {
+    case n: Node => n
+    case _ => SimpleNode("dummy", "dummy")
+},
     filter: Node => Boolean = _ => true,
     edgeFilter: ((Node, Node)) => Boolean = _ => true) {
 

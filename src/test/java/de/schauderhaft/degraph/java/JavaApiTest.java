@@ -72,9 +72,11 @@ public class JavaApiTest {
 
 	@Test
 	public void categorizerGetsApplied() {
-		JavaGraph graph = new JavaGraph(new ConstantCategorizer("x"));
+		JavaGraph graph = new JavaGraph(new ConstantCategorizer(new SimpleNode(
+				"x", "x")));
 		SimpleNode node = new SimpleNode("", "");
 		graph.add(node);
-		assertEquals(new HashSet<>(asList(node)), graph.contentsOf("x"));
+		assertEquals(new HashSet<>(asList(node)),
+				graph.contentsOf(new SimpleNode("x", "x")));
 	}
 }

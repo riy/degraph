@@ -1,18 +1,17 @@
 package de.schauderhaft.degraph.configuration
 
 import scala.io.Source
-
 import org.rogach.scallop.exceptions.ScallopException
-
 import Slicer.toSlicer
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import de.schauderhaft.degraph.slicer.CombinedSlicer
 import de.schauderhaft.degraph.slicer.ParallelCategorizer
 import de.schauderhaft.degraph.filter.IncludeExcludeFilter
 import de.schauderhaft.degraph.filter.RegExpFilter
-import de.schauderhaft.degraph.slicer.InternalClassCategorizer;
-import de.schauderhaft.degraph.slicer.PackageCategorizer;
+import de.schauderhaft.degraph.slicer.InternalClassCategorizer
+import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.slicer.MultiCategorizer.combine;
+import de.schauderhaft.degraph.model.Node
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
@@ -56,14 +55,14 @@ case class Configuration(
             excludes.map((x: String) => RegExpFilter.filter(x.r)).toSet)
     }
 
-    private[this] def buildCategorizer(categories: Map[String, Seq[Pattern]]): (AnyRef => AnyRef) = {
+    private[this] def buildCategorizer(categories: Map[String, Seq[Pattern]]): (AnyRef => Node) = {
         val slicers = for { (level, patterns) <- categories }
             yield buildCategorizer(level, patterns)
         val slicersWithPackages = new ParallelCategorizer(PackageCategorizer +: slicers.toSeq: _*)
         combine(InternalClassCategorizer, slicersWithPackages)
     }
 
-    private[this] def buildCategorizer(slicing: String, groupings: Seq[Pattern]): (AnyRef => AnyRef) =
+    private[this] def buildCategorizer(slicing: String, groupings: Seq[Pattern]): (AnyRef => Node) =
         new CombinedSlicer(groupings.map(toSlicer(slicing, _)): _*)
 
 }

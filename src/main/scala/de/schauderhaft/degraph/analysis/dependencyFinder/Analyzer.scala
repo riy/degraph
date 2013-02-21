@@ -10,6 +10,7 @@ import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.NodeFactory
 import de.schauderhaft.degraph.filter.NoSelfReference
 import de.schauderhaft.degraph.graph.Graph
+import de.schauderhaft.degraph.model.Node
 
 /**
  * analyzes whatever it finds in the sourceFolder using
@@ -18,7 +19,7 @@ import de.schauderhaft.degraph.graph.Graph
  *
  */
 object Analyzer extends AnalyzerLike {
-    def analyze(sourceFolder: String, categorizer: AnyRef => AnyRef, filter: AnyRef => Boolean): Graph = {
+    def analyze(sourceFolder: String, categorizer: AnyRef => Node, filter: AnyRef => Boolean): Graph = {
 
         def getRootClasses = {
             val loader = new TransientClassfileLoader()

@@ -2,15 +2,16 @@ package de.schauderhaft.degraph.slicer
 import com.jeantessier.dependency.ClassNode
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
+import de.schauderhaft.degraph.model.Node
 
 /**
  * categorizes a java node as member of the matching package node
  */
-object PackageCategorizer extends Function1[AnyRef, AnyRef] {
+object PackageCategorizer extends Function1[AnyRef, Node] {
     def apply(value: AnyRef) = {
         value match {
             case SimpleNode(t, n) if (t == classType) => packageNode(packagePart(n))
-            case _ => value
+            case _ => value.asInstanceOf[Node]
         }
     }
 

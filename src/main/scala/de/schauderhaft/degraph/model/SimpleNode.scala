@@ -19,7 +19,7 @@ case class SimpleNode(
     nodeType: String,
     name: String) extends Node
 
-case class ParentAwareNode(vals: AnyRef*) extends Node {
+case class ParentAwareNode(vals: Node*) extends Node {
     def prune = if (vals.size == 1) vals.head else this
     def next = if (vals.size > 1) new ParentAwareNode(vals.tail: _*) else this
     def head = vals.head

@@ -11,6 +11,7 @@ import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
 import de.schauderhaft.degraph.model.ParentAwareNode
+import de.schauderhaft.degraph.model.Node
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationTest extends FunSuite with ShouldMatchers {
@@ -89,11 +90,11 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
 
     class SpyAnalyze() extends AnalyzerLike {
         var classPath: String = ""
-        var categorizer: AnyRef => AnyRef = (x) => x
+        var categorizer: AnyRef => Node = (x) => x.asInstanceOf[Node]
         var filter: AnyRef => Boolean = (_) => true
 
         def analyze(aClassPath: String,
-            aCategorizer: AnyRef => AnyRef,
+            aCategorizer: AnyRef => Node,
             aFilter: AnyRef => Boolean) = {
             classPath = aClassPath
             categorizer = aCategorizer

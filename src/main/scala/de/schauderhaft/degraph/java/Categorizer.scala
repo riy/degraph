@@ -1,5 +1,7 @@
 package de.schauderhaft.degraph.java
 
+import de.schauderhaft.degraph.model.Node
+
 /**
  * A Categorizer groups nodes in categories. If a node does not belong to any category, the Categorizer should just return the node itself.
  *
@@ -8,5 +10,5 @@ package de.schauderhaft.degraph.java
  *  See JavaApiTest#writeGraphMlFromGraphExampl for example usage.
  */
 trait Categorizer {
-    def categoryOf(node: Object): Object
+    def categoryOf(node: Object): Node
 }

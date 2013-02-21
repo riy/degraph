@@ -32,15 +32,15 @@ class GraphTest extends FunSuite with ShouldMatchers {
     }
 
     test("if an added node is contained in a category, that category gets added") {
-        val category = new AnyRef()
+        val category = n("cat")
         val node = n("a")
         val g = new Graph(_ => category)
         g.add(node)
-        g.topNodes should contain(category)
+        g.topNodes should contain(category.asInstanceOf[AnyRef])
     }
 
     test("elements of a category are contained in that category") {
-        val g = new Graph(_ => "x", _ => true)
+        val g = new Graph(_ => n("x"), _ => true)
         val node = n("a")
         g.add(node)
         g.contentsOf("x") should contain(node.asInstanceOf[AnyRef])
@@ -51,10 +51,10 @@ class GraphTest extends FunSuite with ShouldMatchers {
     }
 
     test("categories that are part of other categories contain each other") {
-        val topCategory = new AnyRef()
-        val subCategory = new AnyRef()
+        val topCategory = n("top")
+        val subCategory = n("sub")
         val node = n("a")
-        val g = new Graph(Map[AnyRef, AnyRef](node -> subCategory).withDefaultValue(topCategory), _ => true)
+        val g = new Graph(Map[AnyRef, SimpleNode](node -> subCategory).withDefaultValue(topCategory), _ => true)
         g.add(node)
 
         g.topNodes should equal(Set(topCategory))

@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.slicer
 
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.Node
 
 /**
  * categorizes package nodes by matching them against ant like patterns.
@@ -24,11 +25,11 @@ import de.schauderhaft.degraph.model.SimpleNode
  * de.(*).test categorizes it as 'some'
  */
 case class NamedPatternMatchingCategorizer(targetType: String, pattern: String, name: String)
-    extends (AnyRef => AnyRef) {
+    extends (AnyRef => Node) {
     private[this] val matcher = new PatternMatcher(pattern)
 
-    override def apply(x: AnyRef): AnyRef = x match {
+    override def apply(x: AnyRef): Node = x match {
         case n: SimpleNode => matcher.matches(n.name).map(_ => SimpleNode(targetType, name)).getOrElse(n)
-        case _ => x
+        case _ => x.asInstanceOf[Node]
     }
 }

@@ -1,5 +1,7 @@
 package de.schauderhaft.degraph.slicer
 
-class CombinedSlicer(slicer: (AnyRef => AnyRef)*) extends (AnyRef => AnyRef) {
-    def apply(n: AnyRef): AnyRef = slicer.foldLeft(n)((x, s) => if (x != n) x else s(n))
+import de.schauderhaft.degraph.model.Node
+
+class CombinedSlicer(slicer: (AnyRef => Node)*) extends (AnyRef => Node) {
+    def apply(n: AnyRef): Node = slicer.foldLeft(n.asInstanceOf[Node])((x, s) => if (x != n) x else s(n))
 }

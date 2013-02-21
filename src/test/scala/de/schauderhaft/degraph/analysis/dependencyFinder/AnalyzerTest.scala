@@ -11,12 +11,13 @@ import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import de.schauderhaft.degraph.model.Node
 
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite with ShouldMatchers {
     private val testClassFolder = System.getProperty("java.class.path")
     println(testClassFolder)
-    private val graph = Analyzer.analyze(testClassFolder, (x) => x, _ => true)
+    private val graph = Analyzer.analyze(testClassFolder, (x: AnyRef) => x.asInstanceOf[Node], (_: AnyRef) => true)
     def stringNodes = graph.topNodes.map(_.toString)
     def nodeByString(name: String) = graph.topNodes.find(
         x => x match {
