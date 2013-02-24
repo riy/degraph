@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.graph
 
 import org.junit.runner.RunWith
+import NodeTestUtil.n
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
@@ -9,8 +10,6 @@ import de.schauderhaft.degraph.slicer.ListCategory
 import de.schauderhaft.degraph.model.SimpleNode
 @RunWith(classOf[JUnitRunner])
 class GraphTest extends FunSuite with ShouldMatchers {
-
-    def n(s: String) = SimpleNode(s, s)
 
     test("a new graph contains no top nodes") {
         val g = new Graph()
@@ -114,17 +113,5 @@ class GraphTest extends FunSuite with ShouldMatchers {
         val g = new Graph(ListCategory(n("a"), n("b")), _ == n("a"))
         g.add(n("a"))
         g.topNodes should be(Set(n("b")))
-    }
-
-    test("an empty graph has no cycles") {
-        val g = new Graph()
-        g.edgesInCycles should be(Set())
-    }
-
-    test("a graph with two cyclic dependent nodes has both edges in cycles") {
-        val g = new Graph()
-        g.connect(n("a"), n("b"))
-        g.connect(n("b"), n("a"))
-        g.edgesInCycles should be(Set((n("a"), n("b")), (n("b"), n("a"))))
     }
 }
