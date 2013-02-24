@@ -3,19 +3,20 @@ package de.schauderhaft.degraph.writer
 import scala.xml.Elem
 import scala.xml.Node
 import de.schauderhaft.degraph.graph.Graph
+import de.schauderhaft.degraph.model.{ Node => GNode }
 
 /**
  * writes a graph to an graphml xml structure which can be displayed by yed in a usable form
  */
 class Writer(
-    nodeWriter: (AnyRef, Graph) => Node,
-    edgeWriter: (AnyRef, AnyRef) => Node) {
+    nodeWriter: (GNode, Graph) => Node,
+    edgeWriter: (GNode, GNode) => Node) {
 
     def this() = this(
         NodeWriter,
         new EdgeWriter)
 
-    def this(styler: (((AnyRef, AnyRef)) => EdgeStyle)) =
+    def this(styler: (((GNode, GNode)) => EdgeStyle)) =
         this(NodeWriter, new EdgeWriter(styler))
 
     def toXml(g: Graph): Elem = {
@@ -46,13 +47,13 @@ class Writer(
     }
 }
 
-object NodeWriter extends ((AnyRef, Graph) => Node) {
+object NodeWriter extends ((GNode, Graph) => Node) {
     val colors = Vector("#99DF0C", "#80A830", "#639204", "#B6EE44")
     def colorScheme(level: Int) = colors(level % colors.size)
     val titleBarColor = "#F7F774"
 
-    def apply(n: AnyRef, g: Graph) = apply(n, g, 0, None): Node
-    def apply(n: AnyRef, g: Graph, level: Int, parent: Option[AnyRef]): Node =
+    def apply(n: GNode, g: Graph): Node = apply(n, g, 0, None)
+    def apply(n: GNode, g: Graph, level: Int, parent: Option[AnyRef]): Node =
         if (g.contentsOf(n).isEmpty)
             LeafNodeWriter(n, g, level, parent)
         else
@@ -63,7 +64,7 @@ object GroupNodeWriter {
     import NodeWriter._
     private def id(n: AnyRef) = n.toString
 
-    def apply(n: AnyRef, g: Graph, level: Int, parent: Option[AnyRef]) =
+    def apply(n: GNode, g: Graph, level: Int, parent: Option[AnyRef]) =
         <node id={ id(n) } yfiles.foldertype="folder">
             <data key="d4"/>
             <data key="d5"/>
@@ -119,12 +120,12 @@ object LeafNodeWriter {
 }
 
 class EdgeWriter(
-    styler: (((AnyRef, AnyRef)) => EdgeStyle) = _ => DefaultEdgeStyle)
-    extends ((AnyRef, AnyRef) => Node) {
+    styler: (((GNode, GNode)) => EdgeStyle) = _ => DefaultEdgeStyle)
+    extends ((GNode, GNode) => Node) {
 
     private def id(n: AnyRef) = n.toString
 
-    def apply(source: AnyRef, target: AnyRef) =
+    def apply(source: GNode, target: GNode) =
         <edge id={ id(source) + "::" + id(target) } source={ id(source) } target={ id(target) }>
             <data key="d10">
                 <y:PolyLineEdge>

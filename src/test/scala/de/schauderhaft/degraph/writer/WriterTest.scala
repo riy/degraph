@@ -66,7 +66,7 @@ class WriterTest extends FunSuite with ShouldMatchers {
     }
 
     test("the color and width of the EdgeStyler end up in the edge") {
-        val edgeNode = new EdgeWriter(_ => EdgeStyle(Color.RED, 2.0))("x", "y")
+        val edgeNode = new EdgeWriter(_ => EdgeStyle(Color.RED, 2.0))(n("x"), n("y"))
         val styleNode = edgeNode \ "data" \ "PolyLineEdge" \ "LineStyle"
         styleNode.toString should include("""color="#FF0000"""")
         styleNode.toString should include("""width="2.0"""")

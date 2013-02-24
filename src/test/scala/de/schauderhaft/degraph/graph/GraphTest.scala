@@ -47,7 +47,7 @@ class GraphTest extends FunSuite with ShouldMatchers {
     }
 
     test("elements of a not existing category are the empty set") {
-        new Graph().contentsOf("x") should be('empty)
+        new Graph().contentsOf(n("x")) should be('empty)
     }
 
     test("categories that are part of other categories contain each other") {
