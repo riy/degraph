@@ -19,10 +19,7 @@ object Graph {
  *
  * Argument is a category which is by default the identity. A category is a function that returns an outer node for any node and the node itself if no out node is available
  */
-class Graph(category: Node => Node = (x) => x match {
-    case n: Node => n
-    case _ => SimpleNode("dummy", "dummy")
-},
+class Graph(category: Node => Node = (x) => x,
     filter: Node => Boolean = _ => true,
     edgeFilter: ((Node, Node)) => Boolean = _ => true) {
 
@@ -73,18 +70,18 @@ class Graph(category: Node => Node = (x) => x match {
 
         val sliceNodeFinder = new SliceNodeFinder(name, internalGraph)
 
-        val sliceGraph = SGraph[AnyRef, LkDiEdge]()
+        val sliceGraph = SGraph[Node, LkDiEdge]()
         sliceNodes.foreach(sliceGraph.add(_))
 
         //---------------
         implicit val factory = scalax.collection.edge.LkDiEdge
         val edges = internalGraph.edges
-        val sliceEdges = (for {
+        for {
             e <- edges
             if (e.label == references)
             s1 <- sliceNodeFinder.lift(e._1.value)
             s2 <- sliceNodeFinder.lift(e._2.value)
-        } sliceGraph.addLEdge(s1, s2)(references))
+        } sliceGraph.addLEdge(s1, s2)(references)
 
         sliceGraph
     }
@@ -100,12 +97,19 @@ class Graph(category: Node => Node = (x) => x match {
         internalGraph.addLEdge(cat, node)(contains)
     }
 
-    def edgesInCycles =
-        (for {
+    def edgesInCycles: Set[(Node, Node)] = {
+        val classEdges = (for {
             c <- internalGraph.findCycle.toList
             e <- c.edgeIterator
         } yield (e._1.value, e._2.value)).toSet
 
+        val packageEdges = (for {
+            p <- slice("Package").findCycle.toList
+            e <- p.edgeIterator
+        } yield (e.edge._1.value, e.edge._2.value)).toSet
+
+        classEdges ++ packageEdges
+    }
 }
 
 /**
