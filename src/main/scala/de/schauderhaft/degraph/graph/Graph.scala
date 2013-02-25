@@ -108,6 +108,9 @@ class Graph(category: Node => Node = (x) => x match {
 
 }
 
+/**
+ * for a graph containing the ParentAwareNodes representing the cross product of various slices types, the SliceNodeFinder finds the nodes representing a single slice type
+ */
 class SliceNodeFinder(slice: String, graph: SGraph[Node, LkDiEdge]) extends PartialFunction[Node, SimpleNode] {
 
     private def contains(pan: ParentAwareNode): Boolean =
