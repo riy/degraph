@@ -17,7 +17,7 @@ class SlicePredicateTest extends FunSuite with ShouldMatchers {
         p(classNode("b"), classNode("a")) should be(false)
     }
 
-    test("returns true for edge with the slice prjection contained in set of edges in cycles") {
+    test("returns true for edge with the slice projection contained in set of edges in cycles") {
         val p = new SlicePredicate(
             Map(n("x") -> n("a"),
                 n("y") -> n("b"),

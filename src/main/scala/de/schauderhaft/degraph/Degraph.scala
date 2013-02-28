@@ -23,7 +23,7 @@ object Degraph {
             case Right(c) =>
                 val g = c.createGraph(Analyzer)
                 val edgesInCycles = g.edgesInCycles;
-                val styler = PredicateStyler.styler(edgesInCycles(_), EdgeStyle(RED, 2.0), DefaultEdgeStyle)
+                val styler = PredicateStyler.styler(new SlicePredicate(c.slicing, edgesInCycles), EdgeStyle(RED, 2.0), DefaultEdgeStyle)
                 val xml = (new Writer(styler)).toXml(g)
                 XML.save(c.output.get, xml, "UTF8", true, null)
         }
