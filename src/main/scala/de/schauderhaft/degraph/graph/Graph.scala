@@ -101,7 +101,7 @@ class Graph(category: Node => Node = (x) => x,
         val classEdges = (for {
             c <- internalGraph.findCycle.toList
             e <- c.edgeIterator
-        } yield (e._1.value, e._2.value)).toSet
+        } yield (e.edge._1.value, e.edge._2.value)).toSet
 
         val packageEdges = (for {
             p <- slice("Package").findCycle.toList
