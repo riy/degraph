@@ -98,17 +98,14 @@ class Graph(category: Node => Node = (x) => x,
     }
 
     def edgesInCycles: Set[(Node, Node)] = {
-        val classEdges = (for {
-            c <- internalGraph.findCycle.toList
-            e <- c.edgeIterator
+        val sliceType = Set("Class", "Package")
+        val edges = (for {
+            st <- sliceType
+            s <- slice(st).findCycle.toList
+            e <- s.edgeIterator
         } yield (e.edge._1.value, e.edge._2.value)).toSet
 
-        val packageEdges = (for {
-            p <- slice("Package").findCycle.toList
-            e <- p.edgeIterator
-        } yield (e.edge._1.value, e.edge._2.value)).toSet
-
-        classEdges ++ packageEdges
+        edges
     }
 }
 
