@@ -8,10 +8,14 @@ class SlicePredicate(
     extends (((Node, Node)) => Boolean) {
 
     def apply(e: (Node, Node)): Boolean = {
-        edgesInCycles((e._1, slicing(e._2))) ||
-            edgesInCycles((slicing(e._1), e._2)) ||
-            edgesInCycles((e._1, e._2)) ||
-            edgesInCycles((slicing(e._1), slicing(e._2)))
+        def nodeAndSlice(n: Node) = Set(n, slicing(n))
+
+        val edgeCandidates = for {
+            n1 <- nodeAndSlice(e._1)
+            n2 <- nodeAndSlice(e._2)
+        } yield (n1, n2)
+
+        edgeCandidates.exists(e => edgesInCycles(e._1, e._2))
     }
 
 }
