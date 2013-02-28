@@ -6,6 +6,6 @@ import de.schauderhaft.degraph.model.Node
 trait AnalyzerLike {
     def analyze(
         sourceFolder: String,
-        categorizer: AnyRef => Node,
+        categorizer: Node => Node,
         filter: AnyRef => Boolean): Graph
 }

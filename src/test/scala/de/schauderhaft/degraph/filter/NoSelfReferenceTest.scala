@@ -6,6 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.slicer.MultiCategorizer._
 import de.schauderhaft.degraph.slicer.ListCategory
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.graph.NodeTestUtil.n
 
 @RunWith(classOf[JUnitRunner])
 class NoSelfReferenceTest extends FunSuite {
@@ -14,11 +15,11 @@ class NoSelfReferenceTest extends FunSuite {
     def n(s: String) = SimpleNode(s, s)
 
     test("returns true for unrelated objects") {
-        new NoSelfReference()("a", "b") should be(true)
+        new NoSelfReference()(n("a"), n("b")) should be(true)
     }
 
     test("returns false for identical objects") {
-        new NoSelfReference()("a", "a") should be(false)
+        new NoSelfReference()(n("a"), n("a")) should be(false)
     }
 
     test("returns false if second object is contained in Categories of first instance") {

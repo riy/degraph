@@ -90,11 +90,11 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
 
     class SpyAnalyze() extends AnalyzerLike {
         var classPath: String = ""
-        var categorizer: AnyRef => Node = (x) => x.asInstanceOf[Node]
+        var categorizer: Node => Node = (x) => x.asInstanceOf[Node]
         var filter: AnyRef => Boolean = (_) => true
 
         def analyze(aClassPath: String,
-            aCategorizer: AnyRef => Node,
+            aCategorizer: Node => Node,
             aFilter: AnyRef => Boolean) = {
             classPath = aClassPath
             categorizer = aCategorizer
