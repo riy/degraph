@@ -11,22 +11,37 @@ import de.schauderhaft.degraph.graph.NodeTestUtil.n
 class SlicePredicateTest extends FunSuite with ShouldMatchers {
 
     test("returns true for edge contained in set of edges in cycles") {
-        val p = new SlicePredicate(n => n, Set((classNode("a"), classNode("b"))))
-        p(classNode("x"), classNode("y")) should be(false)
-        p(classNode("a"), classNode("b")) should be(true)
-        p(classNode("b"), classNode("a")) should be(false)
+        val predicate = new SlicePredicate(n => n, Set((classNode("a"), classNode("b"))))
+        predicate(classNode("x"), classNode("y")) should be(false)
+        predicate(classNode("a"), classNode("b")) should be(true)
+        predicate(classNode("b"), classNode("a")) should be(false)
     }
 
     test("returns true for edge with the slice projection contained in set of edges in cycles") {
-        val p = new SlicePredicate(
+        val predicate = new SlicePredicate(
             Map(n("x") -> n("a"),
                 n("y") -> n("b"),
                 n("a") -> n("x"),
                 n("b") -> n("y")),
             Set((n("x"), n("y"))))
-        p(n("x"), n("y")) should be(false)
-        p(n("a"), n("b")) should be(true)
-        p(n("b"), n("a")) should be(false)
+        predicate(n("a"), n("b")) should be(true)
+        predicate(n("b"), n("a")) should be(false)
     }
 
+    test("returns true for edge in set but with the slice projection NOT contained in set of edges in cycles") {
+        val predicate = new SlicePredicate(
+            Map(n("x") -> n("a"),
+                n("y") -> n("b"),
+                n("a") -> n("x"),
+                n("b") -> n("y")),
+            Set((n("x"), n("y"))))
+        predicate(n("x"), n("y")) should be(true)
+        predicate(n("a"), n("y")) should be(true)
+        predicate(n("x"), n("b")) should be(true)
+        predicate(n("a"), n("b")) should be(true)
+    }
+
+    test("returns true when slice projection is parentAwareNode containing an element of edges in cycles") {
+        pending
+    }
 }

@@ -7,6 +7,11 @@ class SlicePredicate(
     edgesInCycles: Set[(Node, Node)])
     extends (((Node, Node)) => Boolean) {
 
-    def apply(e: (Node, Node)): Boolean = edgesInCycles((slicing(e._1), slicing(e._2)))
+    def apply(e: (Node, Node)): Boolean = {
+        edgesInCycles((e._1, slicing(e._2))) ||
+            edgesInCycles((slicing(e._1), e._2)) ||
+            edgesInCycles((e._1, e._2)) ||
+            edgesInCycles((slicing(e._1), slicing(e._2)))
+    }
 
 }
