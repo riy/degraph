@@ -18,11 +18,11 @@ class GraphCycleTest extends FunSuite with ShouldMatchers {
         g.edgesInCycles should be(Set())
     }
 
-    test("a graph with two cyclic dependent nodes has both edges in cycles") {
+    test("a graph with two cyclic dependent nodes without slices does not report those as cycles") {
         val g = new Graph()
         g.connect(n("a"), n("b"))
         g.connect(n("b"), n("a"))
-        g.edgesInCycles should be(Set((n("a"), n("b")), (n("b"), n("a"))))
+        g.edgesInCycles should be(Set())
     }
 
     test("a graph with a cyclic dependency between to packages returns dependencies between those packages as cyclic") {
