@@ -51,7 +51,7 @@ class Graph(category: Node => Node = (x) => x,
         if (cat == node) {
             internalGraph += node
         } else {
-            addNodeToCategory(node, cat)
+            addNodeToSlice(node, cat)
             unfilteredAdd(cat)
         }
     }
@@ -92,7 +92,7 @@ class Graph(category: Node => Node = (x) => x,
             internalGraph.addLEdge(a, b)(references)
     }
 
-    private def addNodeToCategory(node: Node, cat: Node) = {
+    private def addNodeToSlice(node: Node, cat: Node) = {
         implicit val factory = scalax.collection.edge.LkDiEdge
         internalGraph.addLEdge(cat, node)(contains)
     }
