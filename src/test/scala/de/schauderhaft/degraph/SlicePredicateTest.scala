@@ -6,6 +6,8 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.model.SimpleNode.classNode
 import de.schauderhaft.degraph.graph.NodeTestUtil.n
+import de.schauderhaft.degraph.model.ParentAwareNode
+import de.schauderhaft.degraph.model.Node
 
 @RunWith(classOf[JUnitRunner])
 class SlicePredicateTest extends FunSuite with ShouldMatchers {
@@ -42,6 +44,19 @@ class SlicePredicateTest extends FunSuite with ShouldMatchers {
     }
 
     test("returns true when slice projection is parentAwareNode containing an element of edges in cycles") {
+
+        val predicate = new SlicePredicate(
+            Map[Node, Node](n("a") -> ParentAwareNode(n("x"), n("y"), n("z")),
+                n("b") -> ParentAwareNode(n("u"), n("v"), n("w"))).withDefault(x => x),
+            Set((n("z"), n("w"))))
+        predicate(n("a"), n("b")) should be(true)
+        predicate(n("a"), n("w")) should be(true)
+        predicate(n("z"), n("b")) should be(true)
+        predicate(n("z"), n("w")) should be(true)
+
+    }
+
+    test("mulitlevel slicing") {
         pending
     }
 }

@@ -15,7 +15,7 @@ class SlicePredicate(
             n2 <- nodeAndSlice(e._2)
         } yield (n1, n2)
 
-        edgeCandidates.exists(e => edgesInCycles(e._1, e._2))
+        edgeCandidates.exists(e => edgesInCycles.exists(eic => e._1.contains(eic._1) && e._2.contains(eic._2)))
     }
 
 }
