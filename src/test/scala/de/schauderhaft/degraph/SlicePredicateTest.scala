@@ -56,7 +56,14 @@ class SlicePredicateTest extends FunSuite with ShouldMatchers {
 
     }
 
-    test("mulitlevel slicing") {
-        pending
+    test("returns true when the slice of a slice of a slice (or something) results in an element of edges in cycles") {
+        val predicate = new SlicePredicate(
+            Map[Node, Node](
+                n("subsub") -> n("sub"),
+                n("sub") -> n("SomeClass")).withDefault(x => x),
+            Set((n("a"), n("SomeClass"))))
+
+        predicate(n("a"), n("subsub")) should be(true)
+
     }
 }
