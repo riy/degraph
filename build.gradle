@@ -20,7 +20,7 @@ tasks.withType(ScalaCompile) {
     scalaCompileOptions.useAnt = false
 }
 
-applicationDistribution.from(['license.txt','readme.markdown']) {
+applicationDistribution.from(['license.txt','readme.markdown', 'releaseNotes.md']) {
     into "/"
 }
 applicationDistribution.from('src/demo/resource'){
