@@ -64,9 +64,4 @@ class CommandLineParserTest extends FunSuite {
         config.file.get should be(Some("file"))
     }
 
-    test("default groupings are empty") {
-        val config = CommandLineParser.parse(Array[String]())
-        config.initialize { case e => }
-        config.groupings() should be('empty)
-    }
 }

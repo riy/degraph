@@ -30,7 +30,7 @@ object Configuration {
                 includes = commandLine.includeFilter(),
                 excludes = commandLine.excludeFilter(),
                 output = Some(commandLine.output()),
-                categories = Map("default" -> commandLine.groupings().map(UnnamedPattern(_))))))
+                categories = Map())))
             case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString))
         }
     }
