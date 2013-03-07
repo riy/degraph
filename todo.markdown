@@ -1,9 +1,8 @@
 * test and cleanup malformed Configuration
 * remove -g option from command line
-* make slicing work.
-* rename all thing Category to slicing/slice
-
 * refactor Categories to Slicing
+* write release notes
+* test cycle identification for multiple slicings
 
 * make a website
 * have a domain
