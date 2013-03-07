@@ -8,10 +8,12 @@ For each slicing a check for circular dependencies is implemented.
 If a cycle is found all dependencies contributing to that circle get colored red. 
 For each slicing there is at most one circle detected. 
 So after breaking that circle Degraph might confront you with another one.
-
-### 0.0.2
+This is a easy to implement solution for the final goal of marking an as small as 
+possible set of edges to break in order to get a direacted acylcic graph for all slicings
 
 -g option removed
+
+### 0.0.2
 
 Configuration files introduced. Thereby achieving a usable way to define slices. See https://github.com/schauder/degraph/wiki/Configuration-File-Format for usage
 
