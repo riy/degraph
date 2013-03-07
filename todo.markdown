@@ -1,17 +1,10 @@
 * test and cleanup malformed Configuration
-* remove -g option from command line
 * refactor Categories to Slicing
-* write release notes
 * test cycle identification for multiple slicings
 
 * make a website
 * have a domain
 * make dependency finder available for maven/gradle/ivy
-* http://arborjs.org/introduction
-* https://gephi.org/
-* https://github.com/jgraph/jgraphx
-* https://www.assembla.com/spaces/scala-graph/wiki
-* http://jung.sourceforge.net/
 
 **Other Dependency Analysis Tools** 
 * http://classycle.sourceforge.net/
@@ -26,5 +19,13 @@
 **Other Resources and Stuff**
 * http://stackoverflow.com/questions/4421882/how-to-unit-test-package-dependencies-in-scala
 * Spanning Tree as Basis for Layout of cyclic directed graphs
+
+
+**Todo for release**
+* set version in CommandLineParser
+* set version in example config
+* release
+* upload distribution files
+* update download links in readme
 
 
