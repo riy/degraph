@@ -11,7 +11,7 @@ which you have to move in order to break cycles.
 
 ## How to run ##
 
-Degraph is a command line tool. Just download the **[binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/degraph-0.0.2.zip)**
+Degraph is a command line tool. Just download the **[binary distribution of Degraph](http://schauder.github.com/degraph//download/degraph-0.0.3.zip)**
 and execute *degraph* or *degraph.bat* depending on the operating system you are on.
 
 You'll have to provide at least a class path to analyze. These are the command line arguments available right now:
@@ -53,7 +53,7 @@ To create a directory that looks like you just installed Degraph:
 
 ## Download ##
 
-[Binary distribution of Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/degraph-0.0.2.zip)
+[Binary distribution of Degraph](http://schauder.github.com/degraph//download/degraph-0.0.3.zip)
 
 ## Feedback ##
 
