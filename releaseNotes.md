@@ -1,6 +1,6 @@
 ## Release Notes
 
-### 0.0.3 (not released yet)
+### 0.0.3
 
 includes & excludes now use the ant like syntax used for slicing. This makes them easier to use. 
 They loose some of the theoretical power, but that was of little use for this purpose anyway.
