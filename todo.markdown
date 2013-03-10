@@ -27,5 +27,6 @@
 * release
 * upload distribution files
 * update download links in readme
-
+* test examples 
+* check for version numbers in the wiki pages
 
