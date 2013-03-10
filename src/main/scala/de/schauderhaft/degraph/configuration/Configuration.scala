@@ -10,8 +10,9 @@ import de.schauderhaft.degraph.filter.IncludeExcludeFilter
 import de.schauderhaft.degraph.filter.RegExpFilter
 import de.schauderhaft.degraph.slicer.InternalClassCategorizer
 import de.schauderhaft.degraph.slicer.PackageCategorizer
-import de.schauderhaft.degraph.slicer.MultiCategorizer.combine;
+import de.schauderhaft.degraph.slicer.MultiCategorizer.combine
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
@@ -53,8 +54,8 @@ case class Configuration(
     private[this] def buildFilter(includes: Seq[String],
         excludes: Seq[String]) = {
         new IncludeExcludeFilter(
-            includes.map((x: String) => RegExpFilter.filter(x.r)).toSet,
-            excludes.map((x: String) => RegExpFilter.filter(x.r)).toSet)
+            includes.map((x: String) => new PatternMatchingFilter(x)).toSet,
+            excludes.map((x: String) => new PatternMatchingFilter(x)).toSet)
     }
 
     private[this] def buildCategorizer(categories: Map[String, Seq[Pattern]]): (AnyRef => Node) = {

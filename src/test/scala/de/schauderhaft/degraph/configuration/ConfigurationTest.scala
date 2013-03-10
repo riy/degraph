@@ -32,9 +32,9 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
         val spy = new SpyAnalyze()
         config.createGraph(spy)
         val filter = spy.filter
-        filter("input") should be(true)
-        filter("inputty") should be(false)
-        filter("whats that") should be(false)
+        filter(classNode("input")) should be(true)
+        filter(classNode("inputty")) should be(false)
+        filter(classNode("whats that")) should be(false)
     }
 
     test("the string after -f is considered a configuration file and gets loaded") {
@@ -47,8 +47,8 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
 
         spy.classPath should be("""src/test/scala""")
 
-        spy.filter("javax.swing.JPanel") should be(false)
-        spy.filter("de.schauderhaft") should be(true)
+        spy.filter(classNode("javax.swing.JPanel")) should be(false)
+        spy.filter(classNode("de.schauderhaft")) should be(true)
 
         val categorizer = spy.categorizer
         categorizer(classNode("de.schauderhaft.degraph.parser.Jens")) should be(
@@ -91,11 +91,11 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
     class SpyAnalyze() extends AnalyzerLike {
         var classPath: String = ""
         var categorizer: Node => Node = (x) => x.asInstanceOf[Node]
-        var filter: AnyRef => Boolean = (_) => true
+        var filter: Node => Boolean = (_) => true
 
         def analyze(aClassPath: String,
             aCategorizer: Node => Node,
-            aFilter: AnyRef => Boolean) = {
+            aFilter: Node => Boolean) = {
             classPath = aClassPath
             categorizer = aCategorizer
             filter = aFilter

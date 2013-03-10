@@ -19,7 +19,7 @@ import de.schauderhaft.degraph.model.Node
  *
  */
 object Analyzer extends AnalyzerLike {
-    def analyze(sourceFolder: String, categorizer: Node => Node, filter: AnyRef => Boolean): Graph = {
+    def analyze(sourceFolder: String, categorizer: Node => Node, filter: Node => Boolean): Graph = {
 
         def getRootClasses = {
             val loader = new TransientClassfileLoader()
