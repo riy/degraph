@@ -2,6 +2,9 @@
 
 ### 0.0.3 (not released yet)
 
+includes & excludes now use the ant like syntax used for slicing. This makes them easier to use. 
+They loose some of the theoretical power, but that was of little use for this purpose anyway.
+
 Edges have now smooth corners making following them with the eye easier.
 
 For each slicing a check for circular dependencies is implemented. 
@@ -15,7 +18,8 @@ possible set of edges to break in order to get a direacted acylcic graph for all
 
 ### 0.0.2
 
-Configuration files introduced. Thereby achieving a usable way to define slices. See https://github.com/schauder/degraph/wiki/Configuration-File-Format for usage
+Configuration files introduced. Thereby achieving a usable way to define slices. 
+See https://github.com/schauder/degraph/wiki/Configuration-File-Format for usage
 
 Graph now has nice colors
 
