@@ -1,10 +1,9 @@
-package de.schauderhaft.degraph.algorithm
+package de.schauderhaft.degraph.graph
 
 import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import de.schauderhaft.degraph.graph.Graph
 import scalax.collection.{ Graph => SGraph }
 import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.model.SimpleNode._
@@ -13,6 +12,11 @@ import scalax.collection.edge.LkDiEdge
 import de.schauderhaft.degraph.slicer.MultiCategorizer
 import de.schauderhaft.degraph.slicer.InternalClassCategorizer
 import de.schauderhaft.degraph.model.SimpleNode
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import scalax.collection.{ Graph => SGraph }
+import scalax.collection.Graph.apply$default$3
+import scalax.collection.GraphPredef.anyToNode
 
 @RunWith(classOf[JUnitRunner])
 class GraphSliceTest extends FunSuite with ShouldMatchers {
