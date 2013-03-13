@@ -1,13 +1,16 @@
-package de.schauderhaft.degraph
+package de.schauderhaft.degraph.writer
 
 import org.junit.runner.RunWith
-import org.scalatest.matchers.ShouldMatchers
+import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import de.schauderhaft.degraph.model.SimpleNode.classNode
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
+
 import de.schauderhaft.degraph.graph.NodeTestUtil.n
-import de.schauderhaft.degraph.model.ParentAwareNode
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.ParentAwareNode
+import de.schauderhaft.degraph.model.SimpleNode.classNode
 
 @RunWith(classOf[JUnitRunner])
 class SlicePredicateTest extends FunSuite with ShouldMatchers {

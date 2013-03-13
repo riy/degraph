@@ -1,15 +1,14 @@
 package de.schauderhaft.degraph
 
 import _root_.java.awt.Color.RED
-
 import scala.xml.XML
-
 import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.writer.DefaultEdgeStyle
 import de.schauderhaft.degraph.writer.EdgeStyle
 import de.schauderhaft.degraph.writer.PredicateStyler
 import de.schauderhaft.degraph.writer.Writer
+import de.schauderhaft.degraph.writer.SlicePredicate
 
 /**
  * The main class of Degraph, plugging everything together,

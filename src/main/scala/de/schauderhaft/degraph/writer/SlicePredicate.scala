@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph
+package de.schauderhaft.degraph.writer
 
 import de.schauderhaft.degraph.model.Node
 
