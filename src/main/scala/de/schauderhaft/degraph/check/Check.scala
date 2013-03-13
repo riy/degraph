@@ -6,9 +6,11 @@ import org.scalatest.matchers.HavePropertyMatchResult
 
 object Check {
     val classpath = new Configuration
-    val cycles = new HavePropertyMatcher[Configuration, Unit] {
-        def apply(conf: Configuration): HavePropertyMatchResult[Unit] = {
-            new HavePropertyMatchResult[Unit](true, "dependency cycles", (), ())
+    val cycles = new HavePropertyMatcher[Configuration, Set[Violation]] {
+        def apply(conf: Configuration): HavePropertyMatchResult[Set[Violation]] = {
+            new HavePropertyMatchResult(true, "dependency cycles", Set(), Set())
         }
     }
 }
+
+case class Violation()
