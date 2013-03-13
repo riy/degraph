@@ -12,7 +12,7 @@ If a cycle is found all dependencies contributing to that circle get colored red
 For each slicing there is at most one circle detected. 
 So after breaking that circle Degraph might confront you with another one.
 This is a easy to implement solution for the final goal of marking an as small as 
-possible set of edges to break in order to get a direacted acylcic graph for all slicings
+possible set of edges to break in order to get a directed acylcic graph for all slicings
 
 -g option removed
 
