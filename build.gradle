@@ -68,5 +68,5 @@ dependencies {
     compile 'com.assembla.scala-incubator:graph-core_2.9.2:1.5.1'        
 	
 	testCompile 'junit:junit:4.10'
-	testCompile 'org.scalatest:scalatest_2.9.2:1.8'
+	compile 'org.scalatest:scalatest_2.9.2:1.8'
 }

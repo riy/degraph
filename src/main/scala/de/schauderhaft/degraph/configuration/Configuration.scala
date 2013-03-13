@@ -51,6 +51,8 @@ case class Configuration(
 
     def valid = classpath.isDefined && output.isDefined
 
+    def including(s: String): Configuration = copy(includes = includes :+ s)
+
     private[this] def buildFilter(includes: Seq[String],
         excludes: Seq[String]) = {
         new IncludeExcludeFilter(
