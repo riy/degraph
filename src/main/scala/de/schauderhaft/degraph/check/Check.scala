@@ -20,11 +20,7 @@ object Check {
 
     private def sliceNode(edge: (Node, Node)) = {
         val (n1, n2) = edge
-        if (n1.types != n2.types) {
-            println("strange edge: " + edge)
-            false
-        } else
-            n1.types.head != "Class"
+        n1.types == n2.types && n1.types.head != "Class"
     }
 }
 

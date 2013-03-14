@@ -13,7 +13,7 @@ class DependencyTest extends FunSuite with ShouldMatchers {
         classpath.including("de.schauderhaft.**") should have(noCycles)
     }
 
-    test("some of the external libs have cycles") {
+    test("Check identifies cycles") {
         classpath.including("org.apache.log4j.**") should not have (noCycles)
     }
 
