@@ -10,11 +10,11 @@ import Check._
 class DependencyTest extends FunSuite with ShouldMatchers {
 
     test("Degraph has no cycles") {
-        classpath.including("de.schauderhaft.**") should have(noCycles)
+        classpath.including("de.schauderhaft.**") should be(violationFree)
     }
 
     test("Check identifies cycles") {
-        classpath.including("org.apache.log4j.**") should not have (noCycles)
+        classpath.including("org.apache.log4j.**") should not be (violationFree)
     }
 
     test("Degraph honors its constraints") {
