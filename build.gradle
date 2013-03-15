@@ -13,7 +13,7 @@ description= 'Degraph is a library for producing dependency graphs for visual in
 mainClassName = 'de.schauderhaft.degraph.Degraph'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.3'
+    gradleVersion = '1.4'
 }
 
 tasks.withType(ScalaCompile) {
