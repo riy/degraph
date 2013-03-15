@@ -61,7 +61,7 @@ dependencies {
 	
 	compile 'com.jeantessier:dependencyfinder:1.2.1-beta4'
 	compile 'apache-oro:jakarta-oro:2.0.8'
-	compile 'com.google.guava:guava:12.0'
+	compile 'com.google.guava:guava:14.0.1'
 
 	compile 'log4j:log4j:1.2.17'
 	compile 'org.rogach:scallop_2.9.2:0.8.1'
