@@ -1,6 +1,6 @@
 ## Release Notes
 
-### 0.0.4 (upcomming)
+### 0.0.4 (upcoming)
 
 Matchers to be used with scalatest to test classpaths for circular dependencies and violations of defined legal dependencies.
 
