@@ -18,7 +18,6 @@ class DependencyTest extends FunSuite with ShouldMatchers {
     }
 
     test("Degraph honors its constraints") {
-        pending
-        // classpath.including("de.schauderhaft.**") should not have (violations.with("someFile").expecting("X:y" -> "Z:b"))
+        classpath.including("de.schauderhaft.**") should be(violationFree)
     }
 }
