@@ -1,5 +1,9 @@
 ## Release Notes
 
+### 0.0.4 (upcoming)
+
+Matchers to be used with scalatest to test classpaths for circular dependencies and violations of defined legal dependencies.
+
 ### 0.0.3
 
 includes & excludes now use the ant like syntax used for slicing. This makes them easier to use. 
