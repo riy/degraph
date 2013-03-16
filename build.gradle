@@ -10,7 +10,8 @@ try{ // fails when there is no network available
 }
 description= 'Degraph is a library for producing dependency graphs for visual inspection'
 
-mainClassName = 'de.schauderhaft.degraph.Degraph'
+targetCompatibility = 1.7
+sourceCompatibility = 1.7
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.4'
@@ -20,16 +21,18 @@ tasks.withType(ScalaCompile) {
     scalaCompileOptions.useAnt = false
 }
 
+mainClassName = 'de.schauderhaft.degraph.Degraph'
 applicationDistribution.from(['license.txt','readme.markdown', 'releaseNotes.md']) {
     into "/"
 }
 applicationDistribution.from('src/demo/resource'){
     into "/example/"
 }
+applicationDistribution.from('build/docs'){
+    into "/docs"
+}
 
-targetCompatibility = 1.7
-sourceCompatibility = 1.7
-
+distZip.dependsOn scaladoc
 
 buildscript {
     repositories {
