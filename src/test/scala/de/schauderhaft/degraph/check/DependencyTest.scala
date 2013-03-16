@@ -19,5 +19,9 @@ class DependencyTest extends FunSuite with ShouldMatchers {
 
     test("Degraph honors its constraints") {
         classpath.including("de.schauderhaft.**") should be(violationFree)
+
+        //        forType("module").allow("a", "b", any("x","y","z"), none("u","v","w",)"c", )
+        //        allowDirectOnly
+
     }
 }
