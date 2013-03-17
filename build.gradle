@@ -3,7 +3,7 @@ task wrapper(type: Wrapper) {
 }
 
 task gitAdd(type:Exec) {
-  commandLine 'git', 'add', 'docs/'
+  commandLine 'git', 'add', 'nightly/'
 }
 task commitChanges(type:Exec) {
   commandLine 'git', 'commit', '-m', '"automatic updated of scaladoc"'
