@@ -62,4 +62,4 @@ Please use [the github issue feature](https://github.com/schauder/degraph/issues
 If you like Degraph just say so on twitter, facebook or wherever you like. 
 
 ## Build Status over at Cloudbees ##
-[![Build Status](https://schauder.ci.cloudbees.com/job/degraph/badge/icon)](https://schauder.ci.cloudbees.com/job/degraph/)
+[![Build Status](https://schauder.ci.cloudbees.com/job/degraph-commit/badge/icon)](https://schauder.ci.cloudbees.com/job/degraph-commit/)
