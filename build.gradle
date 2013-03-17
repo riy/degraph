@@ -2,10 +2,15 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.4'
 }
 
+
+
+task mvFiles(type:Exec) {
+  commandLine 'mv', 'build/docs/scaladoc/', 'nightly/docs/scaladoc/'
+}
 task gitAdd(type:Exec) {
   commandLine 'git', 'add', 'nightly/'
 }
-task commitChanges(type:Exec) {
+task gitCommit(type:Exec) {
   commandLine 'git', 'commit', '-m', '"automatic updated of scaladoc"'
 }
  
