@@ -18,13 +18,14 @@ class CheckTest extends FunSuite with ShouldMatchers {
     //        forType("module").allow("a", "b", any("x","y","z"), none("u","v","w",)"c", )
     //        allowDirectOnly
 
-    test("matcher accepts violation free graph for simple layering") {
-        val conf = new Configuration with MockCreate {
-            val graph = new Graph()
-        }
-        val constraint = conf.forType("mod").allow("a", "b", "c")
+    private def mockConfig() = new Configuration with MockCreate {
+        val graph = new Graph()
+    }
 
-        Check.violationFree(constraint).matches should be(true)
+    test("matcher accepts violation free graph for simple layering") {
+        val conf = mockConfig.forType("mod").allow("a", "b", "c")
+
+        Check.violationFree(conf).matches should be(true)
     }
 
     trait MockCreate {
