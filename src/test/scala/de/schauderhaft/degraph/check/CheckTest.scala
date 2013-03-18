@@ -27,15 +27,14 @@ class CheckTest extends FunSuite with ShouldMatchers {
         for ((a, b) <- conns) graph.connect(a, b)
     }
 
+    val ascending = for {
+        x <- 'a' to 'c'
+        y <- 'a' to 'c'
+        if (x <= y)
+    } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
+
     test("matcher accepts violation free graph for simple layering") {
-        val allLegal = for {
-            x <- 'a' to 'c'
-            y <- 'a' to 'c'
-            if (x < y)
-        } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
-
-        val conf = mockConfig(allLegal).forType(mod).allow("a", "b", "c")
-
+        val conf = mockConfig(ascending).forType(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
