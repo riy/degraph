@@ -8,9 +8,13 @@ import org.scalatest.OptionValues._
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
+import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.model.Node
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
+    val mod = "mod"
+
     test("configuration cotains the classpath") {
         Check.classpath.classpath.value should include("log4j")
     }
@@ -18,12 +22,19 @@ class CheckTest extends FunSuite with ShouldMatchers {
     //        forType("module").allow("a", "b", any("x","y","z"), none("u","v","w",)"c", )
     //        allowDirectOnly
 
-    private def mockConfig() = new Configuration with MockCreate {
+    private def mockConfig(conns: Traversable[(Node, Node)]) = new Configuration with MockCreate {
         val graph = new Graph()
+        for ((a, b) <- conns) graph.connect(a, b)
     }
 
     test("matcher accepts violation free graph for simple layering") {
-        val conf = mockConfig.forType("mod").allow("a", "b", "c")
+        val allLegal = for {
+            x <- 'a' to 'c'
+            y <- 'a' to 'c'
+            if (x < y)
+        } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
+
+        val conf = mockConfig(allLegal).forType(mod).allow("a", "b", "c")
 
         Check.violationFree(conf).matches should be(true)
     }
