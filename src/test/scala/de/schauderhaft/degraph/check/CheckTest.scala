@@ -19,16 +19,18 @@ class CheckTest extends FunSuite with ShouldMatchers {
     //        allowDirectOnly
 
     test("matcher accepts violation free graph for simple layering") {
-        val conf = new Configuration with MockCreate
-        conf.forType("mod").allow("a", "b", "c")
+        val conf = new Configuration with MockCreate {
+            val graph = new Graph()
+        }
+        val constraint = conf.forType("mod").allow("a", "b", "c")
+
+        Check.violationFree(constraint).matches should be(true)
     }
 
     trait MockCreate {
         this: Configuration =>
-        //self => Configuration
-        override def createGraph(any: AnalyzerLike) = {
-            new Graph
-        }
+        val graph: Graph
+        override def createGraph(any: AnalyzerLike) = graph
 
     }
 
