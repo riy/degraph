@@ -53,6 +53,8 @@ case class Configuration(
 
     def including(s: String): Configuration = copy(includes = includes :+ s)
 
+    def forType(sliceType: String) = new ConstraintBuilder(this, sliceType)
+
     private[this] def buildFilter(includes: Seq[String],
         excludes: Seq[String]) = {
         new IncludeExcludeFilter(
@@ -69,7 +71,10 @@ case class Configuration(
 
     private[this] def buildCategorizer(slicing: String, groupings: Seq[Pattern]): (AnyRef => Node) =
         new CombinedSlicer(groupings.map(toSlicer(slicing, _)): _*)
+}
 
+class ConstraintBuilder(configuration: Configuration, sliceType: String) {
+    def allow(slices: String*): Configuration = configuration
 }
 
 sealed trait Pattern {
@@ -77,3 +82,4 @@ sealed trait Pattern {
 }
 case class UnnamedPattern(val pattern: String) extends Pattern
 case class NamedPattern(val pattern: String, name: String) extends Pattern
+
