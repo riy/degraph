@@ -13,6 +13,7 @@ import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.slicer.MultiCategorizer.combine
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.slicer.PatternMatchingFilter
+import de.schauderhaft.degraph.graph.Graph
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
@@ -42,7 +43,8 @@ case class Configuration(
     includes: Seq[String] = Seq(),
     excludes: Seq[String] = Seq(),
     categories: Map[String, Seq[Pattern]] = Map(),
-    output: Option[String] = None) {
+    output: Option[String] = None,
+    constraint: Set[LayeringConstraint] = Set()) {
 
     lazy val slicing = buildCategorizer(categories)
 
@@ -74,8 +76,12 @@ case class Configuration(
 }
 
 class ConstraintBuilder(configuration: Configuration, sliceType: String) {
-    def allow(slices: String*): Configuration = configuration
+    def allow(slices: String*): Configuration =
+        configuration.copy(
+            constraint = configuration.constraint + LayeringConstraint(sliceType, slices))
 }
+
+case class LayeringConstraint(sliceType: String, slices: Traversable[String])
 
 sealed trait Pattern {
     def pattern: String
