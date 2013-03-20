@@ -15,7 +15,7 @@ import de.schauderhaft.degraph.model.Node
 class CheckTest extends FunSuite with ShouldMatchers {
     val mod = "mod"
 
-    test("configuration cotains the classpath") {
+    test("configuration contains the classpath") {
         Check.classpath.classpath.value should include("log4j")
     }
 
@@ -23,9 +23,9 @@ class CheckTest extends FunSuite with ShouldMatchers {
     //        allowDirectOnly
 
     private def mockConfig(conns: Traversable[(Node, Node)]) = {
-        val graph = new Graph()
+            val graph = new Graph()
 
-        for ((a, b) <- conns) graph.connect(a, b)
+            for ((a, b) <- conns) graph.connect(a, b)
 
         val analyzer = new AnalyzerLike {
             def analyze(
@@ -37,7 +37,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
         new Configuration(
             classpath = Some("x"),
             analyzer = analyzer)
-    }
+        }
 
     val ascending = for {
         x <- 'a' to 'c'
@@ -45,10 +45,31 @@ class CheckTest extends FunSuite with ShouldMatchers {
         if (x <= y)
     } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
 
+    val descending = for {
+        x <- 'a' to 'c'
+        y <- 'a' to 'c'
+        if (x > y)
+    } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
+
     test("matcher accepts violation free graph for simple layering") {
+        pending
         val conf = mockConfig(ascending).forType(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
+
+    for (illegalCon <- descending)
+        test("matcher detects violations for simple layering %s".format(illegalCon)) {
+            pending
+            val conf = mockConfig(Set(illegalCon)).forType(mod).allow("a", "b", "c")
+            Check.violationFree(conf).matches should be(false)
+        }
+
+    for (illegalCon <- descending)
+        test("matcher detects cycles %s".format(illegalCon)) {
+            pending
+            val conf = mockConfig(ascending :+ illegalCon).forType(mod).allow("a", "b", "c")
+            Check.violationFree(conf).matches should be(false)
+        }
 
 }
 
