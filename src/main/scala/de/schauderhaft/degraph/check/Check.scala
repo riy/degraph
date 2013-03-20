@@ -22,7 +22,7 @@ object Check {
         private def lowerCaseFirstLetter(s: String) = s.head.toLower + s.tail
         def apply(conf: Configuration) = {
 
-            val g = conf.createGraph(Analyzer)
+            val g = conf.createGraph()
             val edgesInCycles = g.edgesInCycles.filter(sliceNode)
 
             val failureMessage = "The configuration " + conf + " contains the circular dependency " + edgesInCycles

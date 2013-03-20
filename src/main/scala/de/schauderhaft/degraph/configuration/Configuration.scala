@@ -47,7 +47,7 @@ case class Configuration(
 
     lazy val slicing = buildCategorizer(categories)
 
-    def createGraph(a: AnalyzerLike) =
+    def createGraph() =
         analyzer.analyze(classpath.get, slicing, buildFilter(includes, excludes))
 
     def valid = classpath.isDefined && output.isDefined

@@ -20,7 +20,7 @@ object Degraph {
         Configuration(args) match {
             case Left(m) => println(m)
             case Right(c) =>
-                val g = c.copy(analyzer = Analyzer).createGraph(Analyzer)
+                val g = c.copy(analyzer = Analyzer).createGraph()
                 val edgesInCycles = g.edgesInCycles;
                 val styler = PredicateStyler.styler(new SlicePredicate(c.slicing, edgesInCycles), EdgeStyle(RED, 2.0), DefaultEdgeStyle)
                 val xml = (new Writer(styler)).toXml(g)
