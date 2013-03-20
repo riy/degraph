@@ -10,7 +10,8 @@ import org.scalatest.matchers.MatchResult
 
 object Check {
     val classpath = new Configuration(
-        classpath = Option(System.getProperty("java.class.path")))
+        classpath = Option(System.getProperty("java.class.path")),
+        analyzer = Analyzer)
 
     private def sliceNode(edge: (Node, Node)) = {
         val (n1, n2) = edge

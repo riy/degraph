@@ -23,14 +23,14 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
     test("classpath gets passed to analyzer") {
         val config = Configuration(Array("-c", "clp")).right.get
         val spy = new SpyAnalyze()
-        config.createGraph(spy)
+        config.copy(analyzer = spy).createGraph(spy)
         spy.classPath should be("clp")
     }
 
     test("include / exclude gets passed to analyzer") {
         val config = Configuration(Array("-i", "input", "-e", "inputty")).right.get
         val spy = new SpyAnalyze()
-        config.createGraph(spy)
+        config.copy(analyzer = spy).createGraph(spy)
         val filter = spy.filter
         filter(classNode("input")) should be(true)
         filter(classNode("inputty")) should be(false)
@@ -43,7 +43,7 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
         config.output should be(Some("o.graphml"))
 
         val spy = new SpyAnalyze()
-        config.createGraph(spy)
+        config.copy(analyzer = spy).createGraph(spy)
 
         spy.classPath should be("""src/test/scala""")
 

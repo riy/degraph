@@ -22,9 +22,21 @@ class CheckTest extends FunSuite with ShouldMatchers {
     //        forType("module").allow("a", "b", any("x","y","z"), none("u","v","w",)"c", )
     //        allowDirectOnly
 
-    private def mockConfig(conns: Traversable[(Node, Node)]) = new Configuration with MockCreate {
+    private def mockConfig(conns: Traversable[(Node, Node)]) = {
         val graph = new Graph()
+
         for ((a, b) <- conns) graph.connect(a, b)
+
+        val analyzer = new AnalyzerLike {
+            def analyze(
+                sourceFolder: String,
+                categorizer: Node => Node,
+                filter: Node => Boolean): Graph = graph
+        }
+
+        new Configuration(
+            classpath = Some("x"),
+            analyzer = analyzer)
     }
 
     val ascending = for {
@@ -36,13 +48,6 @@ class CheckTest extends FunSuite with ShouldMatchers {
     test("matcher accepts violation free graph for simple layering") {
         val conf = mockConfig(ascending).forType(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
-    }
-
-    trait MockCreate {
-        this: Configuration =>
-        val graph: Graph
-        override def createGraph(any: AnalyzerLike) = graph
-
     }
 
 }

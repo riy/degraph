@@ -42,11 +42,12 @@ case class Configuration(
     includes: Seq[String] = Seq(),
     excludes: Seq[String] = Seq(),
     categories: Map[String, Seq[Pattern]] = Map(),
-    output: Option[String] = None) {
+    output: Option[String] = None,
+    analyzer: AnalyzerLike = null) {
 
     lazy val slicing = buildCategorizer(categories)
 
-    def createGraph(analyzer: AnalyzerLike) =
+    def createGraph(a: AnalyzerLike) =
         analyzer.analyze(classpath.get, slicing, buildFilter(includes, excludes))
 
     def valid = classpath.isDefined && output.isDefined
