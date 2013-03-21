@@ -14,6 +14,7 @@ import de.schauderhaft.degraph.slicer.MultiCategorizer.combine
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 import de.schauderhaft.degraph.graph.Graph
+import de.schauderhaft.degraph.model.SimpleNode
 
 object Configuration {
     def apply(args: Array[String]): Either[String, Configuration] = {
@@ -79,10 +80,20 @@ case class Configuration(
 class ConstraintBuilder(configuration: Configuration, sliceType: String) {
     def allow(slices: String*): Configuration =
         configuration.copy(
-            constraint = configuration.constraint + LayeringConstraint(sliceType, slices))
+            constraint = configuration.constraint + LayeringConstraint(sliceType, slices.toIndexedSeq))
 }
 
-case class LayeringConstraint(sliceType: String, slices: Traversable[String])
+case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) {
+    def isViolatedBy(n1: Node, n2: Node) = {
+        //        n1.types.contains(sliceType) &&
+        //            n2.types.contains(sliceType) &&
+        indexOf(n1) > indexOf(n2)
+    }
+
+    private def indexOf(n: Node) = n match {
+        case sn: SimpleNode => slices.indexOf(sn.name)
+    }
+}
 
 sealed trait Pattern {
     def pattern: String
