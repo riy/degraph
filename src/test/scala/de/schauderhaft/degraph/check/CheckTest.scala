@@ -106,5 +106,13 @@ class CheckTest extends FunSuite with ShouldMatchers {
         pending
     }
 
+    test("any in group") {
+        pending
+    }
+
+    test("only direct") {
+        pending
+    }
+
 }
 
