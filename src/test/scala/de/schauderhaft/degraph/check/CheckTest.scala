@@ -39,38 +39,34 @@ class CheckTest extends FunSuite with ShouldMatchers {
             analyzer = analyzer)
     }
 
-    val ascending = for {
+    def ascending(st: String) = for {
         x <- 'a' to 'c'
         y <- 'a' to 'c'
         if (x <= y)
-    } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
+    } yield (SimpleNode(st, x.toString), SimpleNode(st, y.toString))
 
-    val descending = for {
+    def descending(st: String) = for {
         x <- 'a' to 'c'
         y <- 'a' to 'c'
         if (x > y)
-    } yield (SimpleNode(mod, x.toString), SimpleNode(mod, y.toString))
+    } yield (SimpleNode(st, x.toString), SimpleNode(st, y.toString))
 
     test("matcher accepts violation free graph for simple layering") {
-        val conf = mockConfig(ascending).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(ascending(mod)).forType(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
-    for (illegalCon <- descending)
+    for (illegalCon <- descending(mod))
         test("matcher detects violations for simple layering %s".format(illegalCon)) {
             val conf = mockConfig(Set(illegalCon)).forType(mod).allow("a", "b", "c")
             Check.violationFree(conf).matches should be(false)
         }
 
-    for (illegalCon <- descending)
+    for (illegalCon <- descending(mod))
         test("matcher detects cycles %s".format(illegalCon)) {
-            val conf = mockConfig(ascending :+ illegalCon).forType(mod).allow("a", "b", "c")
+            val conf = mockConfig(ascending(mod) :+ illegalCon).forType(mod).allow("a", "b", "c")
             Check.violationFree(conf).matches should be(false)
         }
-
-    test("allow unknown dependencies") {
-        pending
-    }
 
     for {
         c <- 'a' to 'c'
@@ -93,7 +89,16 @@ class CheckTest extends FunSuite with ShouldMatchers {
     }
 
     test("works without constraints") {
-        val conf = mockConfig(ascending)
+        val conf = mockConfig(ascending(mod))
+        Check.violationFree(conf).matches should be(true)
+    }
+
+    for {
+        c1 <- 'a' to 'c'
+        c2 <- 'a' to 'c'
+        val con = (SimpleNode(mod, c1.toString), SimpleNode(mod, c2.toString))
+    } test("accepts unspecified dependencies %s ".format((c1, c2))) {
+        val conf = mockConfig(Set(con)).forType(mod).allow("x", "b", "y")
         Check.violationFree(conf).matches should be(true)
     }
 
