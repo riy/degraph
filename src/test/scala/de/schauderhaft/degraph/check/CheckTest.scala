@@ -86,6 +86,18 @@ class CheckTest extends FunSuite with ShouldMatchers {
         }
     }
 
+    for {
+        c <- 'a' to 'c'
+        con <- Set(
+            (SimpleNode("x", "a"), SimpleNode("x", c.toString)),
+            (SimpleNode("x", c.toString), SimpleNode("x", "a")))
+    } test("constraint ignores connections in other slices %s".format(con)) {
+        val conf = mockConfig(Set(con)).forType(mod).allow("a", "b", "c")
+        withClue(con) {
+            Check.violationFree(conf).matches should be(true)
+        }
+    }
+
     test("no constraints") {
         pending
     }
