@@ -85,8 +85,6 @@ class ConstraintBuilder(configuration: Configuration, sliceType: String) {
 
 case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) {
     def isViolatedBy(n1: Node, n2: Node) = {
-        //        n1.types.contains(sliceType) &&
-        //            n2.types.contains(sliceType) &&
         indexOf(n1) > indexOf(n2)
     }
 
