@@ -8,7 +8,7 @@ import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.CodeDependencyCollector
 import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.NodeFactory
-import de.schauderhaft.degraph.filter.NoSelfReference
+import de.schauderhaft.degraph.analysis.dependencyFinder.NoSelfReference
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.Node
 

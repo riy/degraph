@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.filter
+package de.schauderhaft.degraph.analysis.dependencyFinder
 
 import de.schauderhaft.degraph.model.Node
 
