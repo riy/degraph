@@ -40,10 +40,10 @@ class CheckTest extends FunSuite with ShouldMatchers {
             analyzer = analyzer)
     }
 
-    def ascending(st: String) = for {
+    def ascending(st: String, includeEqual: Boolean = true) = for {
         x <- 'a' to 'c'
         y <- 'a' to 'c'
-        if (x <= y)
+        if (x < y || x == y && includeEqual)
     } yield (SimpleNode(st, x.toString), SimpleNode(st, y.toString))
 
     def descending(st: String) = for {
@@ -104,8 +104,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
     }
 
     for {
-        con <- ascending(mod) ++ descending(mod)
-        if (con._1 != con._2)
+        con <- ascending(mod, false) ++ descending(mod)
     } test("multiple constraints both get checked %s".format(con)) {
         val conf = mockConfig(Set(con)).
             forType(mod).allow("a", "b", "c").
@@ -115,11 +114,15 @@ class CheckTest extends FunSuite with ShouldMatchers {
         }
     }
 
-    test("any in group") {
+    test("only direct") {
         pending
     }
 
-    test("only direct") {
+    test("strict does not allow dependencies from or to others") {
+        pending
+    }
+
+    test("any in group") {
         pending
     }
 
