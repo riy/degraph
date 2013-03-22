@@ -6,8 +6,7 @@ import Slicer.toSlicer
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import de.schauderhaft.degraph.slicer.CombinedSlicer
 import de.schauderhaft.degraph.slicer.ParallelCategorizer
-import de.schauderhaft.degraph.filter.IncludeExcludeFilter
-import de.schauderhaft.degraph.filter.RegExpFilter
+import de.schauderhaft.degraph.analysis.dependencyFinder.IncludeExcludeFilter
 import de.schauderhaft.degraph.slicer.InternalClassCategorizer
 import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.slicer.MultiCategorizer.combine

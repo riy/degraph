@@ -1,10 +1,10 @@
-package de.schauderhaft.degraph.filter
+package de.schauderhaft.degraph.analysis.dependencyFinder
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.matchers.ShouldMatchers.be
-import org.scalatest.matchers.ShouldMatchers.convertToAnyShouldWrapper
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.graph.NodeTestUtil.n
 
 @RunWith(classOf[JUnitRunner])
