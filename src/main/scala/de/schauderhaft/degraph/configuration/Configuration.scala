@@ -90,6 +90,7 @@ case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) {
 
     private def indexOf(n: Node) = n match {
         case sn: SimpleNode => slices.indexOf(sn.name)
+        case _ => throw new IllegalStateException("Sorry, I thought this would never happen, please report a bug including the callstack")
     }
 }
 

@@ -6,7 +6,6 @@ import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.slicer.MultiCategorizer._
 import de.schauderhaft.degraph.slicer.ListCategory
 import de.schauderhaft.degraph.model.SimpleNode
-import de.schauderhaft.degraph.analysis.dependencyFinder.NoSelfReference
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers.be
