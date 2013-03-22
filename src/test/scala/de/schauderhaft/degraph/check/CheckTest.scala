@@ -10,6 +10,7 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.configuration.LayeringConstraint
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
@@ -102,8 +103,16 @@ class CheckTest extends FunSuite with ShouldMatchers {
         Check.violationFree(conf).matches should be(true)
     }
 
-    test("multiple constraints") {
-        pending
+    for {
+        con <- ascending(mod) ++ descending(mod)
+        if (con._1 != con._2)
+    } test("multiple constraints both get checked %s".format(con)) {
+        val conf = mockConfig(Set(con)).
+            forType(mod).allow("a", "b", "c").
+            forType(mod).allow("c", "b", "a")
+        withClue(con) {
+            Check.violationFree(conf).matches should be(false)
+        }
     }
 
     test("any in group") {

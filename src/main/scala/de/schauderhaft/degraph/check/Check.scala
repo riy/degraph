@@ -9,6 +9,7 @@ import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
 import de.schauderhaft.degraph.graph.Graph
 import org.scalatest.matchers.ShouldMatchers._
+import de.schauderhaft.degraph.configuration.LayeringConstraint
 
 object Check {
     val classpath = new Configuration(
@@ -26,17 +27,17 @@ object Check {
         def apply(conf: Configuration) = {
             val g = conf.createGraph()
 
-            def checkForViolations = {
-                if (conf.constraint.isEmpty)
-                    Set()
-                else {
-                    val constraint = conf.constraint.head
-                    val sg = g.slice(constraint.sliceType)
-                    sg.edges.filter(e => constraint.isViolatedBy(e._1, e._2))
-                }
+            def checkForViolations: Set[(Node, Node)] = {
+                for {
+                    c <- conf.constraint
+                    val sg = g.slice(c.sliceType)
+                    eT <- sg.edges.toSeq
+                    val e = eT.value
+                    if (c.isViolatedBy(e._1, e._2))
+                } yield (e._1.value, e._2.value)
             }
 
-            def checkForCycles = {
+            def checkForCycles: Set[(Node, Node)] = {
                 g.edgesInCycles.filter(sliceNode)
             }
 
