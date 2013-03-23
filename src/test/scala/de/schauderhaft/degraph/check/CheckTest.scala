@@ -109,16 +109,53 @@ class CheckTest extends FunSuite with ShouldMatchers {
         val conf = mockConfig(Set(con)).
             forType(mod).allow("a", "b", "c").
             forType(mod).allow("c", "b", "a")
-        withClue(con) {
-            Check.violationFree(conf).matches should be(false)
+        Check.violationFree(conf).matches should be(false)
+    }
+
+    for (i <- 0 to 4)
+        test("allowDirect allows direct dependencies between layers, including unspecified %d".format(i)) {
+            def n(c: Char) = SimpleNode(mod, c.toString)
+            val chars = 'a' to 'f'
+            val deps = Set(
+                (n(chars(i)), n(chars(i + 1))),
+                (n(chars(i)), n(chars(i))))
+            val conf = mockConfig(
+                deps).
+                forType(mod).allowDirect("b", "c", "d")
+            withClue(deps) {
+                Check.violationFree(conf).matches should be(true)
+            }
         }
-    }
 
-    test("only direct") {
-        pending
-    }
+    for (i <- 1 to 2)
+        test("allowDirect disallows inverse dependencies %d".format(i)) {
+            def n(c: Char) = SimpleNode(mod, c.toString)
+            val chars = 'b' to 'd'
+            val deps = Set(
+                (n(chars(i)), n(chars(i - 1))))
+            val conf = mockConfig(
+                deps).
+                forType(mod).allowDirect("b", "c", "d")
+            withClue(deps) {
+                Check.violationFree(conf).matches should be(false)
+            }
+        }
 
-    test("strict does not allow dependencies from or to others") {
+    for (i <- 0 to 2)
+        test("allowDirect disallows dependencies skipping layers, including unspecified %d".format(i)) {
+            def n(c: Char) = SimpleNode(mod, c.toString)
+            val chars = 'a' to 'e'
+            val deps = Set(
+                (n(chars(i)), n(chars(i + 2))))
+            val conf = mockConfig(
+                deps).
+                forType(mod).allowDirect("b", "c", "d")
+            withClue(deps) {
+                Check.violationFree(conf).matches should be(false)
+            }
+        }
+
+    test("strictly does not allow dependencies from or to others") {
         pending
     }
 
