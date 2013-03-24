@@ -1,6 +1,7 @@
 apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'application'
+apply plugin: 'github-pages'
 
 try{ // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
@@ -34,13 +35,23 @@ applicationDistribution.from('build/docs'){
 
 distZip.dependsOn scaladoc
 
+githubPages {
+  repoUri = 'https://github.com/schauder/degraph.git'
+  credentials {
+    username = System.properties['credentials.username']
+	password = System.properties['credentials.password']
+  }  
+}
+
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:master-REL-6'
-    }
+        classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:master-REL-6' // executable jar plugin
+	}
+	
+	dependencies { classpath 'org.ajoberstar:gradle-git:0.4.0' } // github-pages plugin
 }
 
 repositories {
