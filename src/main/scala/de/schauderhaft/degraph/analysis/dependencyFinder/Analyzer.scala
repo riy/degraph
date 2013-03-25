@@ -10,6 +10,7 @@ import com.jeantessier.dependency.FeatureNode
 import com.jeantessier.dependency.NodeFactory
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.model.SimpleNode
 
 /**
  * analyzes whatever it finds in the sourceFolder using
@@ -49,12 +50,12 @@ object Analyzer extends AnalyzerLike {
 
         for ((_, c) <- classes) {
             val classNode = Convert(c)
+
             g.add(classNode)
             for {
                 nav <- navigations
                 n <- nav(c)
             } g.connect(classNode, Convert(n))
-
         }
         return g
     }

@@ -58,8 +58,8 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
     }
 
     test("Dependency from class to class used only inside a method") {
-        (pending)
         graph should connect("de.schauderhaft.degraph.examples.UsageInMethod" -> "java.lang.String")
+        graph should connect("de.schauderhaft.degraph.examples.UsageInMethod" -> "java.lang.System")
     }
 
     test("No self references") {

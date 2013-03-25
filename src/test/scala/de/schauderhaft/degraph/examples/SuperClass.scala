@@ -23,9 +23,3 @@ class OtherUser {
 abstract class UsesAnnotation
 
 abstract class MyRunner extends Runner
-
-abstract class UsageInMethod {
-    def usage() {
-        println("Hello World") // this is a dependency to String
-    }
-}
