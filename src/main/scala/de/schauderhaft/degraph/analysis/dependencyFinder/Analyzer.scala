@@ -35,22 +35,31 @@ object Analyzer extends AnalyzerLike {
 
         val featureOutboundClass = (c: ClassNode) => for (
             f <- c.getFeatures();
-            od @ (dummy: FeatureNode) <- f.getOutboundDependencies().toTraversable
+            od @ (dummy: FeatureNode) <- f.getOutboundDependencies().toSeq
         ) yield od.getClassNode()
+
         // different ways to find classes a class depends on.
         val navigations = List(
-            (c: ClassNode) => c.getParents().toTraversable, // finds superclasses
-            (c: ClassNode) => c.getOutboundDependencies().toTraversable, // finds classes of fields
+            (c: ClassNode) => c.getParents().toSeq, // finds superclasses
+            (c: ClassNode) => c.getOutboundDependencies().toSeq, // finds classes of fields
             featureOutboundClass)
 
         for ((_, c) <- classes) {
             val classNode = Convert(c)
             g.add(classNode)
-
-            for (
-                nav <- navigations;
+            for (f <- c.getFeatures()) {
+                for (o <- f.getOutboundDependencies()) {
+                    g.connect(classNode, Convert(o))
+                }
+            }
+            for {
+                nav <- navigations
                 n <- nav(c)
-            ) g.connect(classNode, Convert(n))
+            } {
+                //                if (classNode.name.endsWith("OnArray"))
+                //                    println(classNode + " -> " + n)
+                g.connect(classNode, Convert(n))
+            }
         }
         return g
     }

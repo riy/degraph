@@ -17,7 +17,7 @@ import de.schauderhaft.degraph.model.Node
 class AnalyzerTest extends FunSuite with ShouldMatchers {
     private val testClassFolder = System.getProperty("java.class.path")
     println(testClassFolder)
-    private val graph = Analyzer.analyze(testClassFolder, (x: AnyRef) => x.asInstanceOf[Node], (_: AnyRef) => true)
+    private val graph = Analyzer.analyze(testClassFolder, x => x, _ => true)
     def stringNodes = graph.topNodes.map(_.toString)
     def nodeByString(name: String) = graph.topNodes.find(
         x => x match {
@@ -53,6 +53,15 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
         graph should connect("de.schauderhaft.degraph.examples.UsesAnnotation" -> "de.schauderhaft.degraph.examples.MyRunner")
     }
 
+    test("Dependency from class to class used as an array") {
+        graph should connect("de.schauderhaft.degraph.examples.DependsOnArray" -> "java.lang.String")
+    }
+
+    test("Dependency from class to class used only inside a method") {
+        (pending)
+        graph should connect("de.schauderhaft.degraph.examples.UsageInMethod" -> "java.lang.String")
+    }
+
     test("No self references") {
         for (
             n <- graph.topNodes;
@@ -71,8 +80,11 @@ class AnalyzerTest extends FunSuite with ShouldMatchers {
                 val fromNode = nodeByString(from)
                 if (fromNode.isEmpty)
                     messages = "there is no node %s in the graph %s".format(from, graph) :: messages
-                if (messages.isEmpty && !graph.connectionsOf(fromNode.get).contains(toNode.get))
-                    messages = "there is no connection from %s to %s in %s".format(from, to, graph) :: messages
+                else {
+                    val connections = graph.connectionsOf(fromNode.get)
+                    if (messages.isEmpty && !connections.contains(toNode.get))
+                        messages = "there is no connection from %s to %s in %s. The only connections are %s".format(from, to, graph, connections) :: messages
+                }
                 new MatchResult(
                     !toNode.isEmpty
                         && !fromNode.isEmpty
