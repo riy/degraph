@@ -1,8 +1,15 @@
-## Release Notes
+# Release Notes
 
-### 0.0.4 (upcoming)
+## 0.0.4 (upcoming)
 
-Matchers to be used with scalatest to test classpaths for circular dependencies and violations of defined legal dependencies.
+### Bugfixes
+
+	- in previous releases dependencies only used inside a method didn't get picked up by Degraph. This is now fixed. O 
+
+### New Features####
+
+Matchers to be used with scalatest to test classpaths for circular dependencies and violations of defined legal dependencies. 
+These are to be considered early drafts. The DSL used will probably change a bit before things settle down.
 
 ### 0.0.3
 
