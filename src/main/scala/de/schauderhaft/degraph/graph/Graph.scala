@@ -14,6 +14,10 @@ object Graph {
     val references = "references"
 }
 
+trait SliceSource {
+    def slice(name: String): SGraph[Node, LkDiEdge]
+}
+
 /**
  * a special graph for gathering and organizing dependencies in a hirachical fashion.
  *
@@ -21,7 +25,7 @@ object Graph {
  */
 class Graph(category: Node => Node = (x) => x,
     filter: Node => Boolean = _ => true,
-    edgeFilter: ((Node, Node)) => Boolean = _ => true) {
+    edgeFilter: ((Node, Node)) => Boolean = _ => true) extends SliceSource {
 
     import Graph._
 
