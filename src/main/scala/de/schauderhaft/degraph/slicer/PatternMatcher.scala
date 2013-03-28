@@ -11,14 +11,18 @@ class PatternMatcher(pattern: String) {
     }
 
     private[this] def escapeStars(p: String) = {
-        val doubleStarPlaceHolder = "&"
-        val singleStarPlaceHolder = "§"
+        if (p.contains("***")) throw new IllegalArgumentException("More than two '*'s in a row is not a supported pattern.")
+        val doubleStarPlaceHolder = getPlaceHolder(p)
+        val singleStarPlaceHolder = getPlaceHolder(p + doubleStarPlaceHolder)
         p.
             replace("**", doubleStarPlaceHolder).
             replace("*", singleStarPlaceHolder).
             replace(doubleStarPlaceHolder, """.*""").
             replace(singleStarPlaceHolder, """[^\.]*""")
     }
+
+    private[this] def getPlaceHolder(pattern: String) =
+        ((1).toChar to (200).toChar).find(!pattern.contains(_)).head.toString
 
     private[this] def escapeDots(p: String) = p.replace(".", """\.""")
 

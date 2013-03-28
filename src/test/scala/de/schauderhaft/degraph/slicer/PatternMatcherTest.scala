@@ -65,12 +65,12 @@ class PatternMatcherTest extends FunSuite with ShouldMatchers {
     }
 
     test("*** throws an exception") {
-        new PatternMatcher("invalid***pattern")
-        pending
+        val caught = evaluating {
+            val matcher = new PatternMatcher("invalid***pattern")
+            matcher.matches("blah")
+        } should produce[IllegalArgumentException]
+
+        caught.getMessage() should be("More than two '*'s in a row is not a supported pattern.")
     }
 
-    test("can handle weird characters in the pattern") {
-        pending
-        new PatternMatcher("""[^&|!"§$%&/()=?""")
-    }
 }
