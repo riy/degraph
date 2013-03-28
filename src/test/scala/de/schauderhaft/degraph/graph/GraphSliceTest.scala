@@ -58,5 +58,4 @@ class GraphSliceTest extends FunSuite with ShouldMatchers {
         g.slice(packageType) should be(SGraph((packageNode("p.one") ~+#> packageNode("p.two"))(Graph.references)))
     }
 
-    test("test with multiple slices and inner classes") { pending }
 }
