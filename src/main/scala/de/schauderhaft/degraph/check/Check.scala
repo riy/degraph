@@ -30,11 +30,8 @@ object Check {
             def checkForViolations: Set[(Node, Node)] = {
                 for {
                     c <- conf.constraint
-                    val sg = g.slice(c.sliceType)
-                    eT <- sg.edges.toSeq
-                    val e = eT.value
-                    if (c.isViolatedBy(e._1, e._2))
-                } yield (e._1.value, e._2.value)
+                    v <- c.violations(g)
+                } yield v
             }
 
             def checkForCycles: Set[(Node, Node)] = {

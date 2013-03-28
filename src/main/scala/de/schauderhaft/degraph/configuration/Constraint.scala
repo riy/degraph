@@ -14,6 +14,7 @@ import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.graph.SliceSource
 
 trait Constraint {
     def sliceType: String
@@ -26,6 +27,14 @@ trait Constraint {
         case _ => throw new IllegalStateException("Sorry, I thought this would never happen, please report a bug including the callstack")
     }
 
+    def violations(ss: SliceSource) = {
+        val sg = ss.slice(sliceType)
+        for {
+            eT <- sg.edges.toSeq
+            val e = eT.value
+            if (isViolatedBy(e._1, e._2))
+        } yield (e._1.value, e._2.value)
+    }
 }
 
 case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends Constraint {
@@ -33,6 +42,7 @@ case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) ext
         indexOf(n1) >= 0 &&
             indexOf(n2) >= 0 &&
             indexOf(n1) > indexOf(n2)
+
 }
 case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends Constraint {
     def isViolatedBy(n1: Node, n2: Node) =
