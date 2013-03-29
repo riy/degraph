@@ -104,7 +104,7 @@ class Graph(category: Node => Node = (x) => x,
 
     def slices = internalGraph.nodes.flatMap(_.types)
 
-    def edgesInCycles: Set[(Node, Node)] = {
+    private def edgesInCycles: Set[(Node, Node)] = {
         val edges = (for {
             st <- slices
             s <- slice(st).findCycle.toList

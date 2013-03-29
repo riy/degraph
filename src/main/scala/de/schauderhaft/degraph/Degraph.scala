@@ -21,7 +21,7 @@ object Degraph {
             case Left(m) => println(m)
             case Right(c) =>
                 val g = c.copy(analyzer = Analyzer).createGraph()
-                val edgesInCycles = g.edgesInCycles;
+                val edgesInCycles = c.constraint.flatMap(_.violations(g));
                 val styler = PredicateStyler.styler(new SlicePredicate(c.slicing, edgesInCycles), EdgeStyle(RED, 2.0), DefaultEdgeStyle)
                 val xml = (new Writer(styler)).toXml(g)
                 XML.save(c.output.get, xml, "UTF8", true, null)
