@@ -14,12 +14,13 @@ class ConfigurationParser extends RegexParsers {
 
     def defs: Parser[Configuration] = opt(eol) ~> definition.* ^^ mayReduce
 
-    def definition: Parser[Configuration] = output | include | exclude | classpath | slice
+    def definition: Parser[Configuration] = comment | output | include | exclude | classpath | slice
 
     override val whiteSpace = """[ \t]*""".r
     def eol: Parser[Any] = """(\r?\n)""".r.+
 
     private def line(key: String): Parser[String] = (key ~ "=") ~> word <~ eol
+    protected def comment: Parser[Configuration] = "#.*".r <~ eol ^^ ((x: String) => Configuration())
     protected def output: Parser[Configuration] = line("output") ^^ ((x: String) => Configuration(None, Seq(), Seq(), Map(), Some(x)))
     protected def include: Parser[Configuration] = line("include") ^^ ((x: String) => Configuration(None, Seq(x), Seq(), Map(), None))
     protected def exclude: Parser[Configuration] = line("exclude") ^^ ((x: String) => Configuration(None, Seq(), Seq(x), Map(), None))
