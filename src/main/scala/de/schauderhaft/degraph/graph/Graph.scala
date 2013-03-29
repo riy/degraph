@@ -15,6 +15,7 @@ object Graph {
 }
 
 trait SliceSource {
+    def slices: Iterable[String]
     def slice(name: String): SGraph[Node, LkDiEdge]
 }
 
@@ -101,10 +102,10 @@ class Graph(category: Node => Node = (x) => x,
         internalGraph.addLEdge(cat, node)(contains)
     }
 
+    def slices = internalGraph.nodes.flatMap(_.types)
     def edgesInCycles: Set[(Node, Node)] = {
-        val sliceTypes = internalGraph.nodes.flatMap(_.types)
         val edges = (for {
-            st <- sliceTypes
+            st <- slices
             s <- slice(st).findCycle.toList
             e <- s.edgeIterator
         } yield (e.edge._1.value, e.edge._2.value)).toSet

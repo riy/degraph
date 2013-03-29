@@ -17,6 +17,10 @@ import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.graph.SliceSource
 
 trait Constraint {
+    def violations(ss: SliceSource): Iterable[(Node, Node)]
+}
+
+trait SlicedConstraint extends Constraint {
     def sliceType: String
 
     def isViolatedBy(n1: Node, n2: Node): Boolean
@@ -37,14 +41,26 @@ trait Constraint {
     }
 }
 
-case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends Constraint {
+object CycleFree extends Constraint {
+    def violations(ss: SliceSource) = {
+        val edges = (for {
+            st <- ss.slices
+            s <- ss.slice(st).findCycle.toList
+            e <- s.edgeIterator
+        } yield (e.edge._1.value, e.edge._2.value)).toSet
+
+        edges
+    }
+}
+
+case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends SlicedConstraint {
     def isViolatedBy(n1: Node, n2: Node) =
         indexOf(n1) >= 0 &&
             indexOf(n2) >= 0 &&
             indexOf(n1) > indexOf(n2)
 
 }
-case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends Constraint {
+case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends SlicedConstraint {
     def isViolatedBy(n1: Node, n2: Node) =
         (indexOf(n1) >= 0 &&
             indexOf(n2) >= 0 &&
@@ -53,4 +69,3 @@ case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[String
                 ((indexOf(n1) < 0 && indexOf(n2) > 0)) ||
                 (indexOf(n1) >= 0 && indexOf(n1) < slices.size - 1 && indexOf(n2) < 0)
 }
-
