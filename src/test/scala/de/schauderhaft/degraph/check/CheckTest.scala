@@ -155,10 +155,6 @@ class CheckTest extends FunSuite with ShouldMatchers {
             }
         }
 
-    test("strictly does not allow dependencies from or to others") {
-        pending
-    }
-
     test("any in group") {
         pending
     }
