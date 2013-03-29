@@ -34,20 +34,14 @@ object Check {
                 } yield v
             }
 
-            def checkForCycles: Set[(Node, Node)] = {
-                g.edgesInCycles.filter(sliceNode)
-            }
-
             val violations = checkForViolations
-            val cycle = checkForCycles
 
-            val matches = violations.isEmpty & cycle.isEmpty
+            val matches = violations.isEmpty
 
-            val failureMessage = "The configuration %s contains edges in cycles: %s or edges in violation of constraints: %s".format(conf, cycle, violations)
+            val failureMessage = "The configuration %s contains edges in cycles or edges in violation of constraints: %s".format(conf, violations)
             val negativeFailureMessage = "The configuration %s does not contain any circular dependencies nor violations of constraints".format(conf)
 
             new MatchResult(matches, failureMessage, negativeFailureMessage)
-
         }
     }
 

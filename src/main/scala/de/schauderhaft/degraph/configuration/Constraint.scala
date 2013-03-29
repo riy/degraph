@@ -45,6 +45,7 @@ object CycleFree extends Constraint {
     def violations(ss: SliceSource) = {
         val edges = (for {
             st <- ss.slices
+            if (st != "Class")
             s <- ss.slice(st).findCycle.toList
             e <- s.edgeIterator
         } yield (e.edge._1.value, e.edge._2.value)).toSet
