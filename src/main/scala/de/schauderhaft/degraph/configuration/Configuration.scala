@@ -79,9 +79,9 @@ case class Configuration(
 class ConstraintBuilder(configuration: Configuration, sliceType: String) {
     def allow(slices: String*): Configuration =
         configuration.copy(
-            constraint = configuration.constraint + LayeringConstraint(sliceType, slices.toIndexedSeq))
+            constraint = configuration.constraint + LayeringConstraint(sliceType, slices.toIndexedSeq.map((x: String) => Set(x))))
     def allowDirect(slices: String*): Configuration = configuration.copy(
-        constraint = configuration.constraint + DirectLayeringConstraint(sliceType, slices.toIndexedSeq))
+        constraint = configuration.constraint + DirectLayeringConstraint(sliceType, slices.toIndexedSeq.map((x: String) => Set(x))))
 }
 
 sealed trait Pattern {

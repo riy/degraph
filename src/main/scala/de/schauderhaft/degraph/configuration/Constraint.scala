@@ -25,9 +25,9 @@ trait SlicedConstraint extends Constraint {
 
     def isViolatedBy(n1: Node, n2: Node): Boolean
 
-    protected def slices: IndexedSeq[String]
+    protected def slices: IndexedSeq[Set[String]]
     protected def indexOf(n: Node) = n match {
-        case sn: SimpleNode => slices.indexOf(sn.name)
+        case sn: SimpleNode => slices.indexWhere(_.contains(sn.name))
         case _ => throw new IllegalStateException("Sorry, I thought this would never happen, please report a bug including the callstack")
     }
 
@@ -54,14 +54,15 @@ object CycleFree extends Constraint {
     }
 }
 
-case class LayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends SlicedConstraint {
+case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Set[String]]) extends SlicedConstraint {
     def isViolatedBy(n1: Node, n2: Node) =
         indexOf(n1) >= 0 &&
             indexOf(n2) >= 0 &&
             indexOf(n1) > indexOf(n2)
 
 }
-case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[String]) extends SlicedConstraint {
+
+case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Set[String]]) extends SlicedConstraint {
     def isViolatedBy(n1: Node, n2: Node) =
         (indexOf(n1) >= 0 &&
             indexOf(n2) >= 0 &&
