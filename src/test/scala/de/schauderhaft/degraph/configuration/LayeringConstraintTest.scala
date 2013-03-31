@@ -22,6 +22,10 @@ class LayeringConstraintTest extends FunSuite with ShouldMatchers {
         val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
         c.violations(MockSliceSource("t", "a" -> "c")) should be(Set())
     }
+    test("reverse dependency is reported as a violation") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("t", "b" -> "a")) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
+    }
 
 }
 
