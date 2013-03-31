@@ -18,4 +18,12 @@ class MultiElementLayerConstraintTest extends FunSuite with ShouldMatchers {
     test("dependencies into a multielement layer are ok") {
         c.violations(MockSliceSource("t", "a" -> "b", "a" -> "d")) should be(Set())
     }
+
+    test("dependencies from a multielement layer are ok") {
+        c.violations(MockSliceSource("t", "b" -> "e", "d" -> "e")) should be(Set())
+    }
+
+    test("dependencies within a multielement layer are ok") {
+        c.violations(MockSliceSource("t", "b" -> "c", "b" -> "d")) should be(Set())
+    }
 }
