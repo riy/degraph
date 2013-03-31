@@ -31,13 +31,13 @@ trait SlicedConstraint extends Constraint {
         case _ => throw new IllegalStateException("Sorry, I thought this would never happen, please report a bug including the callstack")
     }
 
-    def violations(ss: SliceSource) = {
+    def violations(ss: SliceSource): Set[(Node, Node)] = {
         val sg = ss.slice(sliceType)
-        for {
+        (for {
             eT <- sg.edges.toSeq
             val e = eT.value
             if (isViolatedBy(e._1, e._2))
-        } yield (e._1.value, e._2.value)
+        } yield (e._1.value, e._2.value)).toSet
     }
 }
 
