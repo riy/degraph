@@ -13,17 +13,21 @@ import de.schauderhaft.degraph.model.SimpleNode
 
 @RunWith(classOf[JUnitRunner])
 class MultiElementLayerConstraintTest extends FunSuite with ShouldMatchers {
-    val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b", "c", "d"), Set("e")))
+    val paramTupel = ("t", IndexedSeq(Set("a"), Set("b", "c", "d"), Set("e")))
+    val cons = Seq(LayeringConstraint.tupled(paramTupel),
+        DirectLayeringConstraint.tupled(paramTupel))
 
-    test("dependencies into a multielement layer are ok") {
-        c.violations(MockSliceSource("t", "a" -> "b", "a" -> "d")) should be(Set())
-    }
+    for (c <- cons) {
+        test("dependencies into a multielement layer are ok %s".format(c.getClass())) {
+            c.violations(MockSliceSource("t", "a" -> "b", "a" -> "d")) should be(Set())
+        }
 
-    test("dependencies from a multielement layer are ok") {
-        c.violations(MockSliceSource("t", "b" -> "e", "d" -> "e")) should be(Set())
-    }
+        test("dependencies from a multielement layer are ok %s".format(c.getClass())) {
+            c.violations(MockSliceSource("t", "b" -> "e", "d" -> "e")) should be(Set())
+        }
 
-    test("dependencies within a multielement layer are ok") {
-        c.violations(MockSliceSource("t", "b" -> "c", "b" -> "d")) should be(Set())
+        test("dependencies within a multielement layer are ok %s".format(c.getClass())) {
+            c.violations(MockSliceSource("t", "b" -> "c", "b" -> "d")) should be(Set())
+        }
     }
 }
