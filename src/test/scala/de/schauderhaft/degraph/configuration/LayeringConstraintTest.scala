@@ -18,6 +18,11 @@ class LayeringConstraintTest extends FunSuite with ShouldMatchers {
         c.violations(MockSliceSource("t", "a" -> "b", "b" -> "c")) should be(Set())
     }
 
+    test("it's ok to skip layers") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("t", "a" -> "c")) should be(Set())
+    }
+
 }
 
 case class MockSliceSource(slice: String, deps: (String, String)*) extends SliceSource {
