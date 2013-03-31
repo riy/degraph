@@ -22,9 +22,33 @@ class LayeringConstraintTest extends FunSuite with ShouldMatchers {
         val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
         c.violations(MockSliceSource("t", "a" -> "c")) should be(Set())
     }
+
     test("reverse dependency is reported as a violation") {
         val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
         c.violations(MockSliceSource("t", "b" -> "a")) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
+    }
+    test("dependencies in other layers are ignored") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("x", "b" -> "a")) should be(Set())
+    }
+
+    test("dependency to unknown is ok when from last") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("t", "c" -> "x")) should be(Set())
+    }
+
+    test("dependency from unknown is ok when to first") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("t", "x" -> "a")) should be(Set())
+    }
+    test("dependency to unknown is ok when from middle") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("t", "b" -> "x")) should be(Set())
+    }
+
+    test("dependency from unknown is ok when to middle") {
+        val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+        c.violations(MockSliceSource("t", "x" -> "b")) should be(Set())
     }
 
 }
