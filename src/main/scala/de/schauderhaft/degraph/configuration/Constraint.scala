@@ -54,6 +54,14 @@ object CycleFree extends Constraint {
     }
 }
 
+object Layer {
+    def apply(es: String*) = new Layer(es: _*)
+}
+class Layer(es: String*) {
+    val eSet = es.toSet
+    def contains(elem: String): Boolean = eSet.contains(elem)
+}
+
 case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Set[String]]) extends SlicedConstraint {
     def isViolatedBy(n1: Node, n2: Node) =
         indexOf(n1) >= 0 &&
