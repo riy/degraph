@@ -20,9 +20,6 @@ class CheckTest extends FunSuite with ShouldMatchers {
         Check.classpath.classpath.value should include("log4j")
     }
 
-    //        forType("module").allow("a", "b", any("x","y","z"), none("u","v","w",)"c", )
-    //        allowDirectOnly
-
     private def mockConfig(conns: Traversable[(Node, Node)]) = {
         val graph = new Graph()
 
