@@ -13,7 +13,7 @@ import de.schauderhaft.degraph.model.SimpleNode
 
 @RunWith(classOf[JUnitRunner])
 class LayeringConstraintTest extends FunSuite with ShouldMatchers {
-    val c = LayeringConstraint("t", IndexedSeq(Set("a"), Set("b"), Set("c")))
+    val c = LayeringConstraint("t", IndexedSeq(Layer("a"), Layer("b"), Layer("c")))
 
     test("simple violation free graph returns empty Set of violations") {
         c.violations(MockSliceSource("t", "a" -> "b", "b" -> "c")) should be(Set())

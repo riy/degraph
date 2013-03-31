@@ -13,7 +13,7 @@ import de.schauderhaft.degraph.model.SimpleNode
 
 @RunWith(classOf[JUnitRunner])
 class MultiElementLayerConstraintTest extends FunSuite with ShouldMatchers {
-    val paramTupel = ("t", IndexedSeq(Set("a"), Set("b", "c", "d"), Set("e")))
+    val paramTupel = ("t", IndexedSeq(Layer("a"), Layer("b", "c", "d"), Layer("e")))
     val cons = Seq(LayeringConstraint.tupled(paramTupel),
         DirectLayeringConstraint.tupled(paramTupel))
 
