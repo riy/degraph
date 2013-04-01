@@ -37,7 +37,7 @@ distZip.dependsOn scaladoc
 
 
 task pushToBintray(type:Exec) {
-  commandLine 'curl', '-T', 'build/distributions/degraph-' + version + '.zip', '-uschauder:' + bintrayApikey ,'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-'+ version + '.zip'
+  commandLine 'curl', '-T', 'build/distributions/degraph-release-' + version + '.zip', '-uschauder:' + bintrayApikey ,'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-'+ version + '.zip'
 }
 
 
