@@ -14,6 +14,7 @@ import de.schauderhaft.degraph.configuration.LayeringConstraint
 import de.schauderhaft.degraph.configuration.LayeringConstraint
 import de.schauderhaft.degraph.configuration.Layer
 import de.schauderhaft.degraph.configuration.Constraint
+import de.schauderhaft.degraph.configuration.DirectLayeringConstraint
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
@@ -155,13 +156,27 @@ class CheckTest extends FunSuite with ShouldMatchers {
             }
         }
 
-    test("any in group") {
+    test("any in group for LayeringConstraint") {
         import de.schauderhaft.degraph.configuration.Layer._
         Configuration(constraint = Set()).
             forType("x").
             allow("a", anyOf("b", "c", "d"), "e").
             constraint.head should be(
                 LayeringConstraint(
+                    "x",
+                    IndexedSeq(
+                        Layer("a"),
+                        Layer("b", "c", "d"),
+                        Layer("e"))))
+    }
+
+    test("any in group for DirectLayeringConstraint") {
+        import de.schauderhaft.degraph.configuration.Layer._
+        Configuration(constraint = Set()).
+            forType("x").
+            allowDirect("a", anyOf("b", "c", "d"), "e").
+            constraint.head should be(
+                DirectLayeringConstraint(
                     "x",
                     IndexedSeq(
                         Layer("a"),

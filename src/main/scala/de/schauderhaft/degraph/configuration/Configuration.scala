@@ -89,8 +89,12 @@ class ConstraintBuilder(configuration: Configuration, sliceType: String) {
                 configuration.constraint +
                     LayeringConstraint(sliceType, slices.toIndexedSeq.map((x: AnyRef) => any2Layer(x))))
 
-    def allowDirect(slices: String*): Configuration = configuration.copy(
-        constraint = configuration.constraint + DirectLayeringConstraint(sliceType, slices.toIndexedSeq.map((x: String) => Layer(x))))
+    def allowDirect(slices: AnyRef*): Configuration =
+        configuration.copy(
+            constraint =
+                configuration.constraint +
+                    DirectLayeringConstraint(sliceType, slices.toIndexedSeq.map((x: AnyRef) => any2Layer(x))))
+
 }
 
 sealed trait Pattern {
