@@ -78,7 +78,7 @@ case class Configuration(
 
 class ConstraintBuilder(configuration: Configuration, sliceType: String) {
     private def any2Layer(arg: AnyRef): Layer = arg match {
-        case s: String => Layer(s)
+        case s: String => LenientLayer(s)
         case l: Layer => l
         case _ => throw new IllegalArgumentException("Only arguments of type String or Layer are accepted")
     }

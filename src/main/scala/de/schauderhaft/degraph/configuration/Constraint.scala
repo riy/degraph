@@ -55,10 +55,17 @@ object CycleFree extends Constraint {
 }
 
 object Layer {
-    def anyOf(es: String*) = Layer(es: _*)
+    def anyOf(es: String*) = LenientLayer(es: _*)
 }
-case class Layer(es: String*) {
-    val eSet = es.toSet
+trait Layer {
+    def contains(elem: String): Boolean
+}
+case class LenientLayer(es: String*) extends Layer {
+    private[this] val eSet = es.toSet
+    def contains(elem: String): Boolean = eSet.contains(elem)
+}
+case class StrictLayer(es: String*) extends Layer {
+    private[this] val eSet = es.toSet
     def contains(elem: String): Boolean = eSet.contains(elem)
 }
 

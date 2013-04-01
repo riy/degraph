@@ -15,6 +15,8 @@ import de.schauderhaft.degraph.configuration.LayeringConstraint
 import de.schauderhaft.degraph.configuration.Layer
 import de.schauderhaft.degraph.configuration.Constraint
 import de.schauderhaft.degraph.configuration.DirectLayeringConstraint
+import de.schauderhaft.degraph.configuration.StrictLayer
+import de.schauderhaft.degraph.configuration.LenientLayer
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
@@ -165,9 +167,9 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 LayeringConstraint(
                     "x",
                     IndexedSeq(
-                        Layer("a"),
-                        Layer("b", "c", "d"),
-                        Layer("e"))))
+                        LenientLayer("a"),
+                        LenientLayer("b", "c", "d"),
+                        LenientLayer("e"))))
     }
 
     test("any in group for DirectLayeringConstraint") {
@@ -179,9 +181,9 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 DirectLayeringConstraint(
                     "x",
                     IndexedSeq(
-                        Layer("a"),
-                        Layer("b", "c", "d"),
-                        Layer("e"))))
+                        LenientLayer("a"),
+                        LenientLayer("b", "c", "d"),
+                        LenientLayer("e"))))
     }
 
 }
