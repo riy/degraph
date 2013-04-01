@@ -83,17 +83,17 @@ class ConstraintBuilder(configuration: Configuration, sliceType: String) {
         case _ => throw new IllegalArgumentException("Only arguments of type String or Layer are accepted")
     }
 
-    def allow(slices: AnyRef*): Configuration =
+    private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): Configuration =
         configuration.copy(
             constraint =
                 configuration.constraint +
-                    LayeringConstraint(sliceType, slices.toIndexedSeq.map((x: AnyRef) => any2Layer(x))))
+                    toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x))))
+
+    def allow(slices: AnyRef*): Configuration =
+        modifyConfig(slices.toIndexedSeq, LayeringConstraint)
 
     def allowDirect(slices: AnyRef*): Configuration =
-        configuration.copy(
-            constraint =
-                configuration.constraint +
-                    DirectLayeringConstraint(sliceType, slices.toIndexedSeq.map((x: AnyRef) => any2Layer(x))))
+        modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
 
 }
 
