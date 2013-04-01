@@ -55,9 +55,9 @@ object CycleFree extends Constraint {
 }
 
 object Layer {
-    def apply(es: String*) = new Layer(es: _*)
+    def anyOf(es: String*) = Layer(es: _*)
 }
-class Layer(es: String*) {
+case class Layer(es: String*) {
     val eSet = es.toSet
     def contains(elem: String): Boolean = eSet.contains(elem)
 }
