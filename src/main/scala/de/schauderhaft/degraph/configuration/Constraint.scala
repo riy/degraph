@@ -70,19 +70,26 @@ case class StrictLayer(es: String*) extends Layer {
 }
 
 case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) extends SlicedConstraint {
-    def isViolatedBy(n1: Node, n2: Node) =
-        indexOf(n1) >= 0 &&
-            indexOf(n2) >= 0 &&
-            indexOf(n1) > indexOf(n2)
+    def isViolatedBy(n1: Node, n2: Node) = {
+        val i1 = indexOf(n1)
+        val i2 = indexOf(n2)
+        i1 >= 0 &&
+            i2 >= 0 &&
+            (i1 > i2 ||
+                (n1 != n2 && i1 == i2 && slices(i1).isInstanceOf[StrictLayer]))
+    }
 
 }
 
 case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) extends SlicedConstraint {
-    def isViolatedBy(n1: Node, n2: Node) =
-        (indexOf(n1) >= 0 &&
-            indexOf(n2) >= 0 &&
-            (indexOf(n1) > indexOf(n2) ||
-                indexOf(n2) - indexOf(n1) > 1)) ||
-                ((indexOf(n1) < 0 && indexOf(n2) > 0)) ||
-                (indexOf(n1) >= 0 && indexOf(n1) < slices.size - 1 && indexOf(n2) < 0)
+    def isViolatedBy(n1: Node, n2: Node) = {
+        val i1 = indexOf(n1)
+        val i2 = indexOf(n2)
+        (i1 >= 0 &&
+            i2 >= 0 &&
+            (i1 > i2 ||
+                i2 - i1 > 1 || (n1 != n2 && i1 == i2 && slices(i1).isInstanceOf[StrictLayer]))) ||
+                (i1 < 0 && i2 > 0) ||
+                (i1 >= 0 && i1 < slices.size - 1 && i2 < 0)
+    }
 }
