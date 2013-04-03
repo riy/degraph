@@ -1,4 +1,5 @@
 ---
+layout: main
 title: Welcome to Degraph
 ---
 #Welcome to Degraph, the tool for analyzing, visualizing and (soon to come) controlling dependencies inside your Java Code#
