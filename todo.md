@@ -1,3 +1,4 @@
+* really update the gradle wrapper
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
 * remove runtime dependency to all things test from all but the check project
 * move most of the tests in CheckTest to ConstraintCheck,
