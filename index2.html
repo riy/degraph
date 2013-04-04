@@ -48,31 +48,40 @@
 
     <div class="container">
 
-  
-<h1>Degraph</h1> 
-<p>is a tool for controling and visualizing class and package dependencies in JVM applications.</p>
+  <div class="hero-unit">
+  <h2>Degraph</h2>
+        <p>is a tool for controlling and visualizing class and package dependencies in JVM applications.</p>
+        <p><a href="http://schauder.github.com/degraph//download/degraph-0.0.3.zip" class="btn btn-primary btn-large">Download</a></p>
+      </div>
 
-<h2 id='degraph_for_visualization'>Degraph for visualization</h2>
-
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span5">
+          <h2>Degraph for visualization</h2>
 <p>You can analyse class files and jars using Degraph and get a graphml file as result. This can be rendered using <a href='http://www.yworks.com/en/products_yed_about.html'>yed</a>.</p>
-
 <p>What makes Degraph different from other tools is that it supports nested graphs. Inner classes are visualy contained in their containing class; Classes are contained inside packages and if you want you can group packages to modules, layers and so on. These ways of grouping classes are referred to <strong>slices</strong> in Degraph.</p>
 
 <p>If you do a hierarchic layout in yed of the resulting graphml file you can easily see which classes you can move to different packages, layer or modules without creating circular dependencies or which you have to move in order to break cycles.</p>
 
-<p>Read more &#8230;</p>
-
-<h2 id='degraph_for_controlling_dependencies'>Degraph for controlling dependencies</h2>
+          <p><a class="btn" href="#">Read more &#8230;</a></p>
+        </div>
+        <div class="span5">
+<h2>Degraph for controlling dependencies</h2>
 
 <p>Ever wanted to establish a rule in a project like &#8220;stuff from the presentation layer must not access stuff from the persistence layer!&#8221;? Now you can. Based on a simple DSL you can write tests that check rules like this and fail with a list of the violations found.</p>
 
 <p>Since these are normal tests based on mainstream test frameworks they are easily integrated into Continuous Integration builds.</p>
+          <p><a class="btn" href="#">Read more &#8230;</a></p>
+        </div>
 
-<p>Read more &#8230;</p>
+        <div class="span2">
+          <h2>Download</h2>
+<p>To get started <a class="btn" href='http://schauder.github.com/degraph//download/degraph-0.0.3.zip'>download Degraph</a> and follow the steps in <span>Getting Started with Visualization</span> or <span>Getting Started with Tests</span></p>
+          
+        </div>
+      </div>
 
-<h2 id='download'>Download</h2>
 
-<p>To get started download the <strong><a href='http://schauder.github.com/degraph//download/degraph-0.0.3.zip'>current distribution of Degraph</a></strong> and follow the steps in <span>Getting Started with Visualization</span> or <span>Getting Started with Tests</span></p>
 </div> <!-- /container -->
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
