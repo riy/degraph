@@ -2,3 +2,6 @@ bin/
 build/
 *.graphml
 .*
+caches/
+native/
+wrapper/
