@@ -63,7 +63,13 @@ The truth is: Degraph currently shows only a single circular dependency per slic
 ## Ressources ##
 
 ### Feedback ###
+If you have a problem using Degraph, a question, a bug or an idea: Go ahead and create an issue at [Degraphs issue tracker](https://github.com/schauder/degraph/issues?state=open).
 
 ### Sources ###
+You can find the source code to [Degraph at github](https://github.com/schauder/degraph).
 
-### Homepage ### 
+### Keep Up To Date ### 
+
+Want to kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
+
+Don't want to miss the next release? Follow the [author on twitter](http://www.twitter.com/jensschauder).
