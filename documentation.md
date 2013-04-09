@@ -19,15 +19,89 @@ If you do a hierarchic layout in yed for the resulting graphml file you can easi
 
 ## Visualization of Dependencies ##
 
-Visualization of Dependencies can be very helpfull when you try to understand the structure (or the absence of such structure) of dependencies in a project. Lets get started right away by analyzing Degraph and it's components itself.
+Visualization of Dependencies can be very helpfull when you try to understand the structure (or the absence of such structure) of dependencies in a project. Lets get started right away by analyzing Degraph and some of it's components itself.
 
 ### Getting Started ### 
+The following images are created (and can be recreated by yourself) by 
+
+* downloading degraph
+* unzip to a directory ( _theDir_ )
+* open a console and change into _theDir_/degraph/bin
+* execute `degraph -f ../example/example#.config` with # replace by one of the digits 1, 2 or 3
+* open the resulting `example#.graphml' in yed, opening up some of the nodes and applying an hierarchic layout. 
+
+If you open the images in a separate tab you can see an even larger version, where you can read all the labels.
+
+#### The structure of Degraph ####
+
+##### Configuration File #####
+
+    output = example1.graphml
+    classpath = ../lib/degraph-0.0.2.jar
+    exclude = java
+    exclude = scala
+    part = {
+        de.schauderhaft.*.(*).**
+    }
+    lib = {
+	de.schauderhaft.(*).**
+	*.(*).**
+    }
+    internalExternal = {
+        internal de.schauderhaft.**
+        external **
+    }
+
+Note that there are two simple excludes for filtering out scala and java core libraries, but other libraries show up in the diagram, although they are not part of the analyzed jar, but referenced from the jar
+
+There is a separate [wiki page explaining the configuration file format](https://github.com/schauder/degraph/wiki/Configuration-File-Format)
+
+##### Result #####
+
+![Diagram of the structure of Degraph as created by Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/selfTest.png)
+
+Degraph is rather boring to look at since it is rather small and also has a very clean package structure (after all it is a tool for managing package structure). So lets look at a more interesting example.
+
+#### Overall structure of Log4J ####
+
+##### Configuration File #####
+
+    output = example2.graphml
+    classpath = ../lib/log4j-1.2.16.jar
+    include = log4j
+    part = {
+        org.apache.log4j.(*).**
+    }
+
+##### Result #####
+
+![Diagram of the structure of Log4J as created by Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/example2.png)
+
+As you can see the diagram is rather large. But two parts seem to be very important: `helpers` and `spi` there are lots of arrows to and from those nodes. So lets have a closer look at those, by filtering out everything else
+
+#### The spi and helpers packages of Log4J ####
+
+##### Configuration File #####
+
+    output = example3.graphml
+    classpath = ../lib/log4j-1.2.16.jar
+    include = log4j.spi
+    include = log4j.helpers
+    part = {
+        org.apache.log4j.(*).**
+    }
+
+##### Result #####
+
+![Diagram of the structure of the spi and helpers packages of Log4J as created by Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/example3.png)
+ 
+For this diagram I expanded all the nodes, to see the details of the cycle between the two packages.
+
+As one might have guessed the helpers package contains all kinds of stuff. If this get separated into specific packages one can easily reduce the cycles between the two packages. For example `LogLog` seems to be some basis implementation or interface used by the the `spi` while `OnlyOnceErrorHandler`, `QuietWriter`, `SyslogQuietWriter` and `CountingQuietWriter`seem to be some implementations of an interface provided by `spi`. It might be a good idea to move these two things into two more specific packages. 
 
 ### The Configuration File Format ###
 
 ### Working with yed ###
-
-### Manipulating Dependencies based on Degraph ###
 
 ## Testing of Dependencies ##
 
