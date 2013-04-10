@@ -15,7 +15,20 @@ import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
 
+/**
+ * companion object allowing easy creation of a configuration from commandline arguments.
+ */
 object Configuration {
+
+    /**
+     * just pass the commandline arguments to this method to get an Either representing the
+     * result of attempting to create a configuration out of the arguments.
+     *
+     * If something went wrong a Left will get returned containing an error message, including
+     * some usage advice suitable for presenting it to the user.
+     *
+     * Otherwise a Right instance containing the complete configuration is returned.
+     */
     def apply(args: Array[String]): Either[String, Configuration] = {
         val eitherConfig = fromCommandLine(args)
 
@@ -38,6 +51,9 @@ object Configuration {
     }
 }
 
+/**
+ * represents all the information configurable in commandline arguments and configuration files for Degraph.
+ */
 case class Configuration(
     classpath: Option[String] = None,
     includes: Seq[String] = Seq(),
