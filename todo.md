@@ -9,8 +9,6 @@
 * test and cleanup malformed Configuration
 * refactor Categories to Slicing
 
-* make a website
-* have a domain
 * make dependency finder available for maven/gradle/ivy
 
 **Other Dependency Analysis Tools** 
