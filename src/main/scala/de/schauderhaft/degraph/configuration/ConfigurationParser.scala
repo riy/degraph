@@ -2,6 +2,9 @@ package de.schauderhaft.degraph.configuration
 
 import scala.util.parsing.combinator.RegexParsers
 
+/**
+ * parses a configuration file
+ */
 class ConfigurationParser extends RegexParsers {
     def parse(input: String): Configuration = {
         parseAll(defs, input + "\n") match {
