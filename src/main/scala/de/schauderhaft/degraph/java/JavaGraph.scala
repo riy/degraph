@@ -6,7 +6,7 @@ import scala.collection.JavaConverters._
 import scala.xml.XML
 import de.schauderhaft.degraph.writer.Writer
 import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node
+import java.util.{ Set => JSet }
 
 /**
  * a class intendent to use with  java, so it skips on all the fancy Scala stuff.
@@ -14,12 +14,14 @@ import de.schauderhaft.degraph.model.Node
  *
  *  See JavaApiTest#writeGraphMlFromGraphExampl for example usage.
  */
-class JavaGraph(graph: Graph) {
+class JavaGraph(graph: Graph) extends JavaHierarchicGraph {
     def this() = this(new Graph)
 
     def this(categorizer: Categorizer) = this(new Graph(categorizer.categoryOf _))
 
-    def topNodes(): java.util.Set[Node] = graph.topNodes.asJava
+    def allNodes(): JSet[Node] = graph.allNodes.asJava
+
+    def topNodes(): JSet[Node] = graph.topNodes.asJava
 
     def add(node: Node): Unit = graph.add(node)
 
