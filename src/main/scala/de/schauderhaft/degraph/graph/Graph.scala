@@ -19,6 +19,13 @@ trait SliceSource {
     def slice(name: String): SGraph[Node, LkDiEdge]
 }
 
+trait HierarchicGraph {
+    def topNodes: Set[Node]
+    def contentsOf(group: Node): Set[Node]
+    def connectionsOf(node: Node): Set[Node]
+    def allNodes: Set[Node]
+}
+
 /**
  * a special graph for gathering and organizing dependencies in a hirachical fashion.
  *
@@ -26,7 +33,7 @@ trait SliceSource {
  */
 class Graph(category: Node => Node = (x) => x,
     filter: Node => Boolean = _ => true,
-    edgeFilter: ((Node, Node)) => Boolean = _ => true) extends SliceSource {
+    edgeFilter: ((Node, Node)) => Boolean = _ => true) extends SliceSource with HierarchicGraph {
 
     import Graph._
 

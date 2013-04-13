@@ -2,14 +2,14 @@ package de.schauderhaft.degraph.writer
 
 import scala.xml.Elem
 import scala.xml.Node
-import de.schauderhaft.degraph.graph.Graph
+import de.schauderhaft.degraph.graph.HierarchicGraph
 import de.schauderhaft.degraph.model.{ Node => GNode }
 
 /**
  * writes a graph to an graphml xml structure which can be displayed by yed in a usable form
  */
 class Writer(
-    nodeWriter: (GNode, Graph) => Node,
+    nodeWriter: (GNode, HierarchicGraph) => Node,
     edgeWriter: (GNode, GNode) => Node) {
 
     def this() = this(
@@ -19,7 +19,7 @@ class Writer(
     def this(styler: (((GNode, GNode)) => EdgeStyle)) =
         this(NodeWriter, new EdgeWriter(styler))
 
-    def toXml(g: Graph): Elem = {
+    def toXml(g: HierarchicGraph): Elem = {
         <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
             <key for="graphml" id="d0" yfiles.type="resources"/>
             <key for="port" id="d1" yfiles.type="portgraphics"/>
@@ -47,13 +47,13 @@ class Writer(
     }
 }
 
-object NodeWriter extends ((GNode, Graph) => Node) {
+object NodeWriter extends ((GNode, HierarchicGraph) => Node) {
     val colors = Vector("#99DF0C", "#80A830", "#639204", "#B6EE44")
     def colorScheme(level: Int) = colors(level % colors.size)
     val titleBarColor = "#F7F774"
 
-    def apply(n: GNode, g: Graph): Node = apply(n, g, 0, None)
-    def apply(n: GNode, g: Graph, level: Int, parent: Option[AnyRef]): Node =
+    def apply(n: GNode, g: HierarchicGraph): Node = apply(n, g, 0, None)
+    def apply(n: GNode, g: HierarchicGraph, level: Int, parent: Option[AnyRef]): Node =
         if (g.contentsOf(n).isEmpty)
             LeafNodeWriter(n, g, level, parent)
         else
@@ -64,7 +64,7 @@ object GroupNodeWriter {
     import NodeWriter._
     private def id(n: AnyRef) = n.toString
 
-    def apply(n: GNode, g: Graph, level: Int, parent: Option[AnyRef]) =
+    def apply(n: GNode, g: HierarchicGraph, level: Int, parent: Option[AnyRef]) =
         <node id={ id(n) } yfiles.foldertype="folder">
             <data key="d4"/>
             <data key="d5"/>
@@ -106,17 +106,17 @@ object LeafNodeWriter {
     import NodeWriter.colorScheme
     private def id(n: AnyRef) = n.toString
 
-    def apply(n: AnyRef, g: Graph, level: Int, parent: Option[AnyRef]) = <node id={ id(n) }>
-                                                                             <data key="d5"/>
-                                                                             <data key="d6">
-                                                                                 <y:ShapeNode>
-                                                                                     <y:Fill color={ colorScheme(level) } transparent="false"/>
-                                                                                     <y:BorderStyle color="#000000" type="line" width="1.0"/>
-                                                                                     <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" modelName="internal" modelPosition="c" textColor="#000000" visible="true" x="-33.359375" y="5.6494140625">{ Labeling(n, parent) }</y:NodeLabel>
-                                                                                     <y:Shape type="rectangle"/>
-                                                                                 </y:ShapeNode>
-                                                                             </data>
-                                                                         </node>
+    def apply(n: AnyRef, g: HierarchicGraph, level: Int, parent: Option[AnyRef]) = <node id={ id(n) }>
+                                                                                       <data key="d5"/>
+                                                                                       <data key="d6">
+                                                                                           <y:ShapeNode>
+                                                                                               <y:Fill color={ colorScheme(level) } transparent="false"/>
+                                                                                               <y:BorderStyle color="#000000" type="line" width="1.0"/>
+                                                                                               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" modelName="internal" modelPosition="c" textColor="#000000" visible="true" x="-33.359375" y="5.6494140625">{ Labeling(n, parent) }</y:NodeLabel>
+                                                                                               <y:Shape type="rectangle"/>
+                                                                                           </y:ShapeNode>
+                                                                                       </data>
+                                                                                   </node>
 }
 
 class EdgeWriter(
