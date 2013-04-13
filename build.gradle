@@ -5,7 +5,7 @@ apply plugin: 'github-pages'
 
 try{ // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
-    createReleaseTag.dependsOn distZip
+    createReleaseTag.dependsOn pushToBintray
 } catch (RuntimeException re){
     System.out.println("no network -> releasing not possible")
 }
@@ -40,6 +40,7 @@ task pushToBintray(type:Exec) {
   commandLine 'curl', '-T', 'build/distributions/degraph-release-' + version + '.zip', '-uschauder:' + bintrayApikey ,'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-'+ version + '.zip'
 }
 
+pushToBintray.dependsOn distZip
 
 githubPages {
   repoUri = 'https://github.com/schauder/degraph.git'
