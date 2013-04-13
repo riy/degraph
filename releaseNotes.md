@@ -8,8 +8,7 @@
 
 ### New Features####
 
-Matchers to be used with scalatest to test classpaths for circular dependencies and violations of defined legal dependencies. 
-These are to be considered early drafts. The DSL used will probably change a bit before things settle down.
+    - you can now define and test dependency constraints, see http://schauder.github.io/degraph/documentation.html for details
 
 ### 0.0.3
 
