@@ -30,7 +30,7 @@ class CycleFreeTest extends FunSuite with ShouldMatchers {
         CycleFree.violations(g) should be(Set())
     }
 
-    test("a graph with a cyclic dependency between to packages returns dependencies between those packages as cyclic") {
+    test("a graph with a cyclic dependency between two packages returns dependencies between those packages as cyclic") {
         val g = new Graph(PackageCategorizer)
         g.connect(classNode("de.p1.A1"), classNode("de.p2.B2"))
         g.connect(classNode("de.p2.B1"), classNode("de.p3.C2"))
@@ -53,4 +53,21 @@ class CycleFreeTest extends FunSuite with ShouldMatchers {
             (packageNode("de.p2"), packageNode("de.p3")),
             (packageNode("de.p3"), packageNode("de.p1"))))
     }
+
+    test("a graph with a cyclic dependency between two sets of packages returns dependencies between those packages as cyclic") {
+        val g = new Graph(PackageCategorizer)
+        g.connect(classNode("de.p1.A1"), classNode("de.p2.B2"))
+        g.connect(classNode("de.p2.B1"), classNode("de.p3.C2"))
+        g.connect(classNode("de.p3.C1"), classNode("de.p1.A2"))
+        g.connect(classNode("com.p1.A1"), classNode("com.p2.B2"))
+        g.connect(classNode("com.p2.B1"), classNode("com.p1.C2"))
+
+        CycleFree.violations(g) should be(Set(
+            (packageNode("de.p1"), packageNode("de.p2")),
+            (packageNode("de.p2"), packageNode("de.p3")),
+            (packageNode("de.p3"), packageNode("de.p1")),
+            (packageNode("com.p2"), packageNode("com.p1")),
+            (packageNode("com.p1"), packageNode("com.p2"))))
+    }
+
 }

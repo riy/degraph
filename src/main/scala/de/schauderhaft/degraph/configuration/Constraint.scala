@@ -15,6 +15,8 @@ import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.graph.SliceSource
+import scalax.collection.edge.LkDiEdge
+import scalax.collection.mutable.{ Graph => SGraph }
 /**
  * constraints the allowed dependencies of a dependency graph.
  */
@@ -30,13 +32,26 @@ trait Constraint {
  * constraints the graph to be cycle free for all slice types
  */
 object CycleFree extends Constraint {
+    private def cyclicDependencies(sg: SGraph[Node, LkDiEdge]) = {
+        def iter(sg: SGraph[Node, LkDiEdge], cyclicDependencies: Set[(Node, Node)]): Set[(Node, Node)] = {
+            val newDeps = for {
+                s <- sg.findCycle.toList
+                e <- s.edgeIterator
+            } yield (e.edge._1.value, e.edge._2.value)
+
+            if (newDeps.isEmpty) cyclicDependencies
+            else iter(sg -- newDeps.map((d: (Node, Node)) => LkDiEdge.newEdge[Node, String](d, Graph.references)), cyclicDependencies ++ newDeps)
+        }
+
+        iter(sg, Set())
+    }
+
     def violations(ss: SliceSource) = {
         val edges = (for {
             st <- ss.slices
             if (st != "Class")
-            s <- ss.slice(st).findCycle.toList
-            e <- s.edgeIterator
-        } yield (e.edge._1.value, e.edge._2.value)).toSet
+            d <- cyclicDependencies(ss.slice(st))
+        } yield d).toSet
 
         edges
     }
