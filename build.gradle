@@ -5,9 +5,9 @@ apply plugin: 'github-pages'
 
 try{ // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
-    createReleaseTag.dependsOn pushToBintray
 } catch (RuntimeException re){
-    System.out.println("no network -> releasing not possible")
+    System.out.println("releasing not possible (probably no network)")
+	re.printStackTrace()
 }
 description= 'Degraph is a library for producing dependency graphs for visual inspection'
 
@@ -41,6 +41,8 @@ task pushToBintray(type:Exec) {
 }
 
 pushToBintray.dependsOn distZip
+
+createReleaseTag.dependsOn pushToBintray
 
 githubPages {
   repoUri = 'https://github.com/schauder/degraph.git'
