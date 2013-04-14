@@ -68,7 +68,7 @@ There is a separate [wiki page explaining the configuration file format](https:/
 ##### Result #####
 
 <a href="images/selfTest.png" class="zoomable" >  
-    <img src="images/selfTest_small.png" title="Dependency Structure of Degraph itself (small)">  
+    <img src="images/selfTest_small.png" >  
 </a> 
 <div class="flowBreak">
 </div>
@@ -88,7 +88,11 @@ Degraph is rather boring to look at since it is rather small and also has a very
 
 ##### Result #####
 
-![Diagram of the structure of Log4J as created by Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/example2.png)
+<a href="images/example2.png" class="zoomable" >  
+    <img src="images/example2_small.png" >  
+</a> 
+<div class="flowBreak">
+</div>
 
 As you can see the diagram is rather large. But two parts seem to be very important: `helpers` and `spi` there are lots of arrows to and from those nodes. So lets have a closer look at those, by filtering out everything else
 
@@ -106,7 +110,11 @@ As you can see the diagram is rather large. But two parts seem to be very import
 
 ##### Result #####
 
-![Diagram of the structure of the spi and helpers packages of Log4J as created by Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/example3.png)
+<a href="images/example3.png" class="zoomable" >  
+    <img src="images/example3_small.png" >  
+</a> 
+<div class="flowBreak">
+</div>
  
 For this diagram I expanded all the nodes, to see the details of the cycle between the two packages.
 
