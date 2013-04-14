@@ -157,7 +157,7 @@ Don't want to miss the next release? Follow the [author on twitter](http://www.t
 
 <!-- scripts -->
 
-<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'>
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'>
 </script>  
 
 <script type='text/javascript' src='javascripts/jquery.jqzoom-core-pack.js'>
