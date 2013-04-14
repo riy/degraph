@@ -2,7 +2,6 @@ apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'github-pages'
-apply plugin: 'java'
 
 try{ // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'

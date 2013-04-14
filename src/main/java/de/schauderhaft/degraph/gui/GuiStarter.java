@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.java.gui;
+package de.schauderhaft.degraph.gui;
 
 import javafx.stage.Stage;
 
