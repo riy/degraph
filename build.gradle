@@ -2,6 +2,7 @@ apply plugin: 'scala'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'github-pages'
+apply plugin: 'java'
 
 try{ // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
@@ -75,6 +76,19 @@ repositories {
 }
 
 
+//javafx
+def javafxLib = "jfxrt.jar"
+ 
+def getJavaFXPath(def javafxLib) {
+    def javaHome = System.env["JAVA_HOME"]
+    if (javaHome == null) {
+        throw new RuntimeException("JAVA_HOME environment variable must be set")
+    }
+    def javafxrt = "jre" + File.separator + "lib" + File.separator + javafxLib
+    return new File(javaHome, javafxrt).absolutePath
+}
+ 
+
 dependencies {
     // Libraries needed to run the scala tools
     scalaTools 'org.scala-lang:scala-compiler:2.9.2'
@@ -93,4 +107,7 @@ dependencies {
 	
 	testCompile 'junit:junit:4.11'
 	compile 'org.scalatest:scalatest_2.9.2:1.9.1'
+	
+	//javafx
+	compile files(getJavaFXPath(javafxLib))
 }
