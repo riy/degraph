@@ -67,7 +67,7 @@ There is a separate [wiki page explaining the configuration file format](https:/
 
 ##### Result #####
 
-<a href="images/selfTest.png" class="zoomable" title="Dependency Structure of Degraph itself (large)">  
+<a href="images/selfTest.png" class="zoomable" >  
     <img src="images/selfTest_small.png" title="Dependency Structure of Degraph itself (small)">  
 </a> 
 <div class="flowBreak">
