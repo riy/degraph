@@ -60,11 +60,11 @@ Note that there are two simple excludes for filtering out scala and java core li
 There is a separate [wiki page explaining the configuration file format](https://github.com/schauder/degraph/wiki/Configuration-File-Format)
 
 ##### Result #####
-
+<p>
 <a href="images/selfTest.png" class="zoomable" title="Dependency Structure of Degraph itself (large)">  
     <img src="images/selfTest_small.png" title="Dependency Structure of Degraph itself (small)">  
 </a> 
-
+</p>
 
 Degraph is rather boring to look at since it is rather small and also has a very clean package structure (after all it is a tool for managing package structure). So lets look at a more interesting example.
 
