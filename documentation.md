@@ -1,5 +1,7 @@
 ---
 ---
+<link rel="stylesheet" type="text/css" href="css/jquery.jqzoom.css">
+
 # Degraph Manual #
 
 * auto-gen TOC:
@@ -37,7 +39,7 @@ If you open the images in a separate tab you can see an even larger version, whe
 ##### Configuration File #####
 
     output = example1.graphml
-    classpath = ../lib/degraph-0.0.2.jar
+    classpath = ../lib/degraph-0.0.4.jar
     exclude = java
     exclude = scala
     part = {
@@ -58,7 +60,10 @@ There is a separate [wiki page explaining the configuration file format](https:/
 
 ##### Result #####
 
-![Diagram of the structure of Degraph as created by Degraph](http://blog.schauderhaft.de/wp-content/uploads/2013/02/selfTest.png)
+<a href="images/selfTest.png" class="zoomable" title="Dependency Structure of Degraph itself (large)">  
+    <img src="images/selfTest_small.png" title="Dependency Structure of Degraph itself (small)">  
+</a> 
+
 
 Degraph is rather boring to look at since it is rather small and also has a very clean package structure (after all it is a tool for managing package structure). So lets look at a more interesting example.
 
@@ -147,3 +152,15 @@ You can find the source code to [Degraph at github](https://github.com/schauder/
 Want to kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
 
 Don't want to miss the next release? Follow the [author on twitter](http://www.twitter.com/jensschauder).
+
+
+<!-- scripts -->
+
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>  
+<script type='text/javascript' src='js/jquery.jqzoom-core.js'></script> 
+
+<script type='text/javascript' >
+$(document).ready(function(){  
+    $('.zoomable').jqzoom();  
+}); 
+</script>
