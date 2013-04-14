@@ -1,7 +1,7 @@
 ---
 ---
 
-<link rel="stylesheet" type="text/css" href="css/jquery.jqzoom.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/jquery.jqzoom.css" />
 
 # Degraph Manual #
 
