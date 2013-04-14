@@ -159,10 +159,10 @@ Don't want to miss the next release? Follow the [author on twitter](http://www.t
 
 <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>  
 
-<script type='text/javascript' src='js/jquery.jqzoom-core.js'></script> 
+<script type='text/javascript' src='javascripts/jquery.jqzoom-core-pack.js'></script> 
 
 <script type='text/javascript' >
 $(document).ready(function(){  
-    $('a#zoomable').jqzoom();  
+    $('zoomable').jqzoom();  
 }); 
 </script>
