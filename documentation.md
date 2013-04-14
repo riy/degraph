@@ -163,6 +163,6 @@ Don't want to miss the next release? Follow the [author on twitter](http://www.t
 
 <script type='text/javascript' >
 $(document).ready(function(){  
-    $('.zoomable').jqzoom();  
+    $('a#zoomable').jqzoom();  
 }); 
 </script>
