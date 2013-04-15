@@ -8,6 +8,8 @@ import java.util.Set;
 
 import javafx.scene.control.Label;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import de.schauderhaft.degraph.java.NodeBuilder;
@@ -19,18 +21,31 @@ public class TestNodeConverter {
 
 	NodeLabelConverter underTest = new NodeLabelConverter();
 
+	@Before
+	public void initTestData() {
+		buildData();
+	}
+
+	@After
+	public void clear() {
+		categories.clear();
+	}
+
 	@Test
 	public void shouldSameSize() {
-		buildData();
 		Set<Label> labels = underTest.toLabel(categories.keySet());
 		assertEquals(categories.keySet().size(), labels.size());
 	}
 
-	public Node asNode(String s) {
+	private Node asNode(String s) {
 		return NodeBuilder.create() //
 				.name(s) //
 				.typ("chesspiece") //
 				.createSimpleNode();
+	}
+
+	public void testSameContent() {
+
 	}
 
 	private void buildData() {
