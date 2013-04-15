@@ -27,6 +27,7 @@ for visualizing dependencies.""")
                 default = Some(List()),
                 descr = "if this argument is given, only those nodes get included in the resulting graph, that match the given regular expression.")
             val file = opt[String]("file", default = None)
+            val display = toggle("display", default = Some(false))
 
         }
 

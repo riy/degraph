@@ -45,8 +45,9 @@ object Configuration {
                 includes = commandLine.includeFilter(),
                 excludes = commandLine.excludeFilter(),
                 output = Some(commandLine.output()),
-                categories = Map())))
-            case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString))
+                categories = Map(),
+                display = commandLine.display())))
+            case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString).copy(display = commandLine.display()))
         }
     }
 }
@@ -61,7 +62,8 @@ case class Configuration(
     categories: Map[String, Seq[Pattern]] = Map(),
     output: Option[String] = None,
     constraint: Set[Constraint] = Set(CycleFree),
-    analyzer: AnalyzerLike = null) {
+    analyzer: AnalyzerLike = null,
+    display: Boolean = false) {
 
     lazy val slicing = buildCategorizer(categories)
 
