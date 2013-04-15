@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.gui.converter;
+package de.schauderhaft.degraph.gui;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.schauderhaft.degraph.gui.NodeLabelConverter;
 import de.schauderhaft.degraph.java.NodeBuilder;
 import de.schauderhaft.degraph.model.Node;
 import de.schauderhaft.degraph.model.SimpleNode;
