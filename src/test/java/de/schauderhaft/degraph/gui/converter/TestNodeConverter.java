@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.gui.converter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 import de.schauderhaft.degraph.java.NodeBuilder;
 import de.schauderhaft.degraph.model.Node;
+import de.schauderhaft.degraph.model.SimpleNode;
 
 public class TestNodeConverter {
 
@@ -44,8 +46,26 @@ public class TestNodeConverter {
 				.createSimpleNode();
 	}
 
+	@Test
 	public void testSameContent() {
-
+		Set<Label> labels = underTest.toLabel(categories.keySet());
+		for (Label l : labels) {
+			boolean exists = false;
+			for (Node n : categories.keySet()) {
+				if (n instanceof SimpleNode) {
+					SimpleNode simpleNode = (SimpleNode) n;
+					// System.out
+					// .println(l.getText() + " <> " + simpleNode.name());
+					if (l.getText().equals(simpleNode.name())) {
+						// System.out.println(l.getText() + " == "
+						// + simpleNode.name());
+						exists = true;
+						break;
+					}
+				}
+			}
+			assertTrue("check: " + l.getText(), exists);
+		}
 	}
 
 	private void buildData() {
