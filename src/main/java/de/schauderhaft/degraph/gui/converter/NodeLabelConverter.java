@@ -19,7 +19,6 @@ public class NodeLabelConverter {
 				result.add(new Label(n.toString()));
 			}
 		}
-
 		return result;
 	}
 

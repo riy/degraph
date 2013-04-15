@@ -17,8 +17,7 @@ import de.schauderhaft.degraph.java.NodeBuilder;
 import de.schauderhaft.degraph.model.Node;
 import de.schauderhaft.degraph.model.SimpleNode;
 
-public class TestNodeConverter {
-
+public class NodeLabelConverterTest {
 	Map<Node, Node> categories = new HashMap<>();
 
 	NodeLabelConverter underTest = new NodeLabelConverter();
@@ -54,11 +53,7 @@ public class TestNodeConverter {
 			for (Node n : categories.keySet()) {
 				if (n instanceof SimpleNode) {
 					SimpleNode simpleNode = (SimpleNode) n;
-					// System.out
-					// .println(l.getText() + " <> " + simpleNode.name());
 					if (l.getText().equals(simpleNode.name())) {
-						// System.out.println(l.getText() + " == "
-						// + simpleNode.name());
 						exists = true;
 						break;
 					}
