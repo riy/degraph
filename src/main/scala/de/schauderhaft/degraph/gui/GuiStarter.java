@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.gui;
 
 import javafx.stage.Stage;
+import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 
 /**
  * open the degraph visualisation
@@ -18,7 +19,7 @@ public class GuiStarter extends javafx.application.Application {
 		primaryStage.show();
 	}
 
-	public void show() {
+	public void show(JavaHierarchicGraph g) {
 		launch(new String[0]);
 	}
 
@@ -30,6 +31,6 @@ public class GuiStarter extends javafx.application.Application {
 	public static void main(String[] args) {
 		System.out.println("Geht");
 		GuiStarter s = new GuiStarter();
-		s.show();
+		s.show(null);
 	}
 }
