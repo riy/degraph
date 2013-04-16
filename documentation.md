@@ -48,22 +48,23 @@ Move your mouse over the images to see enlarged versions of the images
 The configuration file example1.config might look like this (details may vary with the version of Degraph)
 
     output = example1.graphml
-    classpath = ../lib/degraph-0.0.4.jar
-    exclude = java
-    exclude = scala
+    classpath = ../lib/degraph-0.0.3.jar
+    exclude = java*.**
+    exclude = scala.**
+    exclude = org.scalatest.**
     part = {
         de.schauderhaft.*.(*).**
     }
     lib = {
-	     de.schauderhaft.(*).**
-	     *.(*).**
+    	de.schauderhaft.(*).**
+    	*.(*).**
     }
     internalExternal = {
-        internal de.schauderhaft.**
-        external **
+       internal de.schauderhaft.**
+       external **
     }
-
-Note that there are two simple excludes for filtering out scala and java core libraries, but other libraries show up in the diagram, although they are not part of the analyzed jar, but referenced from the jar
+		
+Note that there are two simple excludes for filtering out scala and java core libraries, but other libraries show up in the diagram, although they are not part of the analyzed jar, but referenced from the jar.
 
 Everything after the excludes is the configuration of slicings. See the [documentation of the configuration file format for details](#the_configuration_file_format).
 
@@ -137,6 +138,93 @@ If we extract the classes for `helpers` that `spi` depends on into a seperate pa
 **This is the power of Degraph: that you can see all the dependencies of all classes in the packages you decided to look at. This enables you to easily identify classes that you can or should move.**
 
 ### The Configuration File Format ###
+
+Except for very basic experiments you'll want to specify a configuration file using the **-f** command line argument. This section describes the format of the configuration file.
+
+#### Example File ####
+We'll go through the different parts of the configuration file by examining an example, which is also included in the distribution of Degraph 
+
+
+    output = example1.graphml
+    classpath = ../lib/degraph-0.0.3.jar
+    exclude = java*.**
+    exclude = scala.**
+    exclude = org.scalatest.**
+    part = {
+        de.schauderhaft.*.(*).**
+    }
+    lib = {
+    	de.schauderhaft.(*).**
+    	*.(*).**
+    }
+    internalExternal = {
+       internal de.schauderhaft.**
+       external **
+    }
+
+#### Simple Properties ####
+
+You can provide simple properties for the path to analyze, the name of the file to generate, classes to include or exclude using the syntax
+
+    <property>=<value>
+
+Available properties are:
+
+* output - the file where the resulting graphml file will be created. Relative paths are relative to your current directory when you start degraph.
+* classpath - this is the path to analyze. It is a list of files and directories seperated by the classpath separation character of your platform, i.e. `':'` on Unix and `';'` ond windows. All class and jar files found in those directories or subdirectories will get picked up by Degraph.  
+* exclude an Ant like pattern of class names to exclude from the analysis
+* include an Ant like pattern of class names to include from the analysis. If not specified, all classes (minus any excludes) are inlcuded. There can be an arbitrary number of exclude and includes specified and the order does not matter. 
+
+Each property has to stand on its own line.
+
+#### Slicing ####
+
+You can specify an arbitrary number of slicings through your code base. A slicing is a grouping of classes that in some sense belong to each other. Examples might be: 
+
+* classes belonging to the same library, like _hibernate_, _log4j_ and so on.
+* classes belonging to the same module, like _shoppingcart_, _authentication_, _fullfillment_.
+* classes belonging to the same layer, like _UI_, _domain_, _persistence_, _restapi_
+* classes belonging to your code vs. external stuff: _internal_, _external_
+
+For each slicing you want to apply you add a section like this to the configuration:
+
+    <slicinglabel> = {
+	    <list of patterns>
+    }
+
+Note that the opening `{` has to be on the same line as the label and `=` sign while the closing `}`  has to be on its own line. Patterns come in two and a half flavors:
+
+*Named patterns* look like this: 
+
+    <name> <pattern>
+
+Every class that is matched by the pattern is part of the slice given by the name. So a pattern of 
+
+    mine de.schauderhaft.** 
+
+will put all classes with a full qualified name starting with `de.schauderhaft.` in a slice named `mine`.
+
+*Simple patterns* look like this:
+
+    <pattern>
+
+or 
+
+    <prefix>(<naming part>)<suffix>
+
+A class matched by this pattern will get added to the slice given by the full `<pattern>` (first case) or by the `<naming part>` in the second case. 
+
+For example this pattern
+
+    *.(*).** 
+
+will put all classes from `org.junit.` in the slice `junit` and all the stuff from `org.hibernate.` in the slice `hibernate`.
+
+All patterns in a slicing definition (i.e. between `{`and `}`) will get tried in order for each class until a match is found. That match defines the slice used for the class.
+
+#### The pattern matching syntax ####
+
+Pattern matching in the definition of slices uses an Ant like syntax for specifying full qualified class names. With `*` standing in for an arbitrary number (0-n) of arbitrary characters, but no dots. `**` matches and arbitrary number (0-n) of arbitrary characters, including dots.
 
 ### Working with yed ###
 
