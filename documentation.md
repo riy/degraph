@@ -290,6 +290,7 @@ No matter how sophisticated a layout algorithm is. A graph witho 1000s of nodes 
 
 ### Java Constraints DSL ###
 
+
 ## Stuff ##
 ### Installation ###
 
@@ -309,6 +310,65 @@ Make sure you have only those classes / jars in the path given to Degraph, that 
 
 ### Nomenclature ###
 
+Degraph abstracts over some things which most of the time don't get abstract over. Therefore I had to come up with some names. This of course is somewhat confusing for people until they understand these name, so this page is here to help.
+
+#### Node ####
+
+A node is something displayed as a box by yed. It might represent a class, package or the intersection of slices of different slice type.
+
+#### Simple Node  ####
+
+A simple node is a node that doesn't have any further substructure. Currently simple nodes represent classes, but one day there might be simple nodes representing a bean in a spring configuration or similar things. 
+
+#### Complex Node ####
+
+A Complex Node is one which has content. There are two kinds of complex nodes: Slice Nodes (see below) and nodes representing classes with inner classes.
+
+#### Slice ####
+
+A slice is a collection of simple nodes. A slice has a slice type. All the classes in the package 'de.schauderhaft.degraph' might be a slice, with the slice type 'package'. All the classes in the package or subpackages of 'org.apache' might be part of the slice 'apache' of type 'lib'. What slices exist depends on the slicings defined in the configuration file. Note: slices are not slice nodes these are different things although the difference is maybe a little hard to grasp. See below for details
+
+#### Slice Type ####
+
+A slice type is a categorization of slices. It can be considered the name of a slicing. All slices with the same type are disjunct, i.e. no simple node is in more than one slice of the same slice type.
+
+#### Slicing ####
+
+The way how all the simple nodes gets distributed into a set of slices which all have the same slice type. This is what you define in a configuration file with something like 
+
+    lib {
+        org.(*).**
+        (*.*).**
+    }
+
+This says: I define the slicing of type 'lib' such that everything starting with 'org.' ends up in the slice given by the second part of the package name. Everything else ends up in the slice given by the first two parts of the package name.
+
+There is one implicit slicing: the one defined by packages.
+
+#### Slice Node ####
+
+a slice node is a node representing a set of slices with mutual distinct type. Ok, take a deep breath. This is going to be a little tricky. 
+
+You might think a Slice Node is the same as a Slice, or just the visual representation of a Slice. But there is a little but important difference. Lets imagine a tiny project with two classes: 
+
+`de.schauderhaft.Example` and `de.schauderhaft.ExampleTest`
+
+Lets work with two slicings: 
+
+1. The default package slicing, which puts each class in its package. 
+
+2. A *deployUnit* slicing which puts everything containing the String 'Test' in the slice 'Test' and everything else in the slice 'Main'
+
+So we have three slices: `deployUnit:Test`, `deployUnit:Main`, `package:de.schauderhaft`
+
+But if you look at it in yed you'll see:
+
+`Test`, `de.schauderhaft in Test`, `Main` and `de.schauderhaft in Main` these are *Slice Nodes*. The important part is that the slice `de.schauderhaft` got duplicated because it contains classes that according to another slicing belong to two different slices.
+
+Note 1: For slicings other then the package slicing you can control the order by which they get applied by the order in which they appear in the configuration file.
+
+Note 2: Conceptually 'a in b' is considered the same Slice Node as 'b in a'  
+
 ## Ressources ##
 
 ### Feedback ###
@@ -322,7 +382,6 @@ You can find the source code to [Degraph at github](https://github.com/schauder/
 Want to kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
 
 Don't want to miss the next release? Follow the [author on twitter](http://www.twitter.com/jensschauder).
-
 
 <!-- scripts -->
 
