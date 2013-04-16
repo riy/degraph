@@ -228,6 +228,60 @@ Pattern matching in the definition of slices uses an Ant like syntax for specify
 
 ### Working with yed ###
 
+Degraph generates `.graphml` files that are intended to be rendered using [yed](yed.yworks.com). Yed is a general purpose graph editor with strong layout capabilities. Lots of its capabilities aren't needed when working with files from Degraph. So this article describes an efficient way to work with it.
+
+I'll assume you have downloaded and installed yed. So go ahead and start it up.
+
+I also assume you have a graphml file ready. If not, head over to the [getting started section](#visualization_of_dependencies) and learn how to create one.
+
+#### Basic Layout ####
+
+On startup you get various options what to do. Choose 'Open...' and select the graphml file you want to view.
+
+You will probably see a single box. That's ok, don't worry. Degraph doesn't generate any layout information on its own, so all boxes are located at the same position, hiding behind each other. We'll change that in a second. 
+
+Select the menu Layout -> Hierarchical ...
+
+This opens a dialog. Select the following options and leave everything else as it is.
+
+On the General tab
+
+Orientation: Left to Right
+
+On the Edges tab
+
+Routing Style: Polyline
+
+Click on the Dock button. This will put the dialog in the side bar.
+
+Press the green triangle play button.
+
+Voila, you should now see your graph nicely laid out.
+
+#### Unfolding nodes ####
+
+You are now seeing nodes representing slices (either custom slices configured in the configuration file or packages). You can unfold those slices by clicking on the little  + marker in the top left corner. After that you probably want to layout the graph again. That's why we docked the layout dialog. You just have to press the play button once more.
+  
+#### Overview ####
+
+In the Overview (it's open by default) you can see a tiny version of the complete graph. If you zoom in, in the main window (for example using the scrollwheel) the overview will highlight the area you are looking at in the main view. You can drag that view port around using the mouse in the Overview, allowing you to quickly navigate even a large graph.
+
+#### Neighborhood View ####
+
+Yed offers a couple of context views. For our purpose the must useful one is the Neighborhood View. It might be already docked on the side of the screen. If not, open it up using the menu Windows -> Context Views -> Neighborhood View. You might want to increase it in size.
+
+If you now click on a node or an edge it shows you the predecessor and successor nodes of whatever you selected. Very helpful if you try to prune dependencies from a class.
+
+#### General Tips ####
+
+No matter how sophisticated a layout algorithm is. A graph witho 1000s of nodes and even more edges will look messy. In order to limit the size of graph you have to deal with use the following techniques:
+
+* Collapse nodes which you don't care about in detail
+
+* Remove collapsed nodes which you don't care about at all, this will also delete all contained nodes.
+
+* When changing your code based on what you see in the graph, you'll probably want to look at the same nodes over and over again. Use filters in your configuration file to limit the nodes generated.
+
 ## Testing of Dependencies ##
 
 ### Getting Started ###
@@ -250,10 +304,6 @@ Make sure you specify the correct path to the **class**-files. Source files don'
 Given a path Degraph analyzes everything that looks like a class file in that directory or in subdirectories, including jar files. So if you use the root directory of a large multi module project in standard maven layout, it will analyze all the class files of the project (test and main). If have jars in there, those will get analyzed as well.
 
 Make sure you have only those classes / jars in the path given to Degraph, that you are really interested in. Make use of the filter options to limit the classes that actually end up in the graph.
-
-#### Degraph show some circular dependencies but not all ####
-
-The truth is: Degraph currently shows only a single circular dependency per slicetype. If you fix that circular dependency Degraph might find the next one. This is obviously not nice and will be fixed in one of the upcoming versions.
 
 ### A little Theory ###
 
