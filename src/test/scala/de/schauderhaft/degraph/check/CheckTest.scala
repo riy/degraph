@@ -31,7 +31,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 filter: Node => Boolean): Graph = graph
         }
 
-        new SliceConstraintBuilder(
+        new ConstraintBuilder(
             new Configuration(
                 classpath = Some("x"),
                 analyzer = analyzer))
@@ -154,7 +154,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
 
     test("any in group for LayeringConstraint") {
         import Layer._
-        SliceConstraintBuilder(Configuration(constraint = Set())).
+        ConstraintBuilder(Configuration(constraint = Set())).
             forType("x").
             allow("a", anyOf("b", "c", "d"), "e").
             configuration.
@@ -169,7 +169,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
 
     test("any in group for DirectLayeringConstraint") {
         import Layer._
-        SliceConstraintBuilder(Configuration(constraint = Set())).
+        ConstraintBuilder(Configuration(constraint = Set())).
             forType("x").
             allowDirect("a", anyOf("b", "c", "d"), "e").
             configuration.

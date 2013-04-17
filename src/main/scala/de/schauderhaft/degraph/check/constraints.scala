@@ -106,28 +106,28 @@ case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]
     }
 }
 
-case class SliceConstraintBuilder(configuration: Configuration, sliceType: String = "") {
+case class ConstraintBuilder(configuration: Configuration, sliceType: String = "") {
     private def any2Layer(arg: AnyRef): Layer = arg match {
         case s: String => LenientLayer(s)
         case l: Layer => l
         case _ => throw new IllegalArgumentException("Only arguments of type String or Layer are accepted")
     }
 
-    private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): SliceConstraintBuilder =
+    private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): ConstraintBuilder =
         copy(configuration =
             configuration.copy(
                 constraint =
                     configuration.constraint +
                         toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x)))))
 
-    def allow(slices: AnyRef*): SliceConstraintBuilder =
+    def allow(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, LayeringConstraint)
 
-    def allowDirect(slices: AnyRef*): SliceConstraintBuilder =
+    def allowDirect(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
 
     def forType(sliceType: String) = copy(sliceType = sliceType)
 
-    def including(s: String): SliceConstraintBuilder = copy(configuration = configuration.copy(includes = configuration.includes :+ s))
+    def including(s: String): ConstraintBuilder = copy(configuration = configuration.copy(includes = configuration.includes :+ s))
 
 }

@@ -35,7 +35,7 @@ object Check {
      * Note in a typical maven like setup it will also include the test classes as well as all libraries, which might not be desirable.
      * Manipulate the configuration to only contain the classpath elements required or use include and exclude filters for limiting the analyzed classes.
      */
-    val classpath = SliceConstraintBuilder(new Configuration(
+    val classpath = ConstraintBuilder(new Configuration(
         classpath = Option(System.getProperty("java.class.path")),
         analyzer = Analyzer), "package")
 
@@ -43,8 +43,8 @@ object Check {
      * a matcher for Configurations testing if the classes specified in the configuration
      * adhere to the dependency constraints configured in the configuration.
      */
-    val violationFree = new BeMatcher[SliceConstraintBuilder] {
-        def apply(constraintBuilder: SliceConstraintBuilder) = {
+    val violationFree = new BeMatcher[ConstraintBuilder] {
+        def apply(constraintBuilder: ConstraintBuilder) = {
             val conf = constraintBuilder.configuration
             val g = conf.createGraph()
 
