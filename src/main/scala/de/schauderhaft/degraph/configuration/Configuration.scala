@@ -72,10 +72,6 @@ case class Configuration(
 
     def valid = classpath.isDefined && output.isDefined
 
-    def including(s: String): Configuration = copy(includes = includes :+ s)
-
-    def forType(sliceType: String) = new ConstraintBuilder(this, sliceType)
-
     private[this] def buildFilter(includes: Seq[String],
         excludes: Seq[String]) = {
         new IncludeExcludeFilter(
@@ -94,24 +90,29 @@ case class Configuration(
         new CombinedSlicer(groupings.map(toSlicer(slicing, _)): _*)
 }
 
-class ConstraintBuilder(configuration: Configuration, sliceType: String) {
+case class SliceConstraintBuilder(configuration: Configuration, sliceType: String = "") {
     private def any2Layer(arg: AnyRef): Layer = arg match {
         case s: String => LenientLayer(s)
         case l: Layer => l
         case _ => throw new IllegalArgumentException("Only arguments of type String or Layer are accepted")
     }
 
-    private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): Configuration =
-        configuration.copy(
-            constraint =
-                configuration.constraint +
-                    toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x))))
+    private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): SliceConstraintBuilder =
+        copy(configuration =
+            configuration.copy(
+                constraint =
+                    configuration.constraint +
+                        toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x)))))
 
-    def allow(slices: AnyRef*): Configuration =
+    def allow(slices: AnyRef*): SliceConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, LayeringConstraint)
 
-    def allowDirect(slices: AnyRef*): Configuration =
+    def allowDirect(slices: AnyRef*): SliceConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
+
+    def forType(sliceType: String) = copy(sliceType = sliceType)
+
+    def including(s: String): SliceConstraintBuilder = copy(configuration = configuration.copy(includes = configuration.includes :+ s))
 
 }
 

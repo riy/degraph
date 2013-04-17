@@ -17,13 +17,15 @@ import de.schauderhaft.degraph.configuration.Constraint
 import de.schauderhaft.degraph.configuration.DirectLayeringConstraint
 import de.schauderhaft.degraph.configuration.StrictLayer
 import de.schauderhaft.degraph.configuration.LenientLayer
+import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
+import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
     val mod = "mod"
 
     test("configuration contains the classpath") {
-        Check.classpath.classpath.value should include("log4j")
+        Check.classpath.configuration.classpath.value should include("log4j")
     }
 
     private def mockConfig(conns: Traversable[(Node, Node)]) = {
@@ -38,9 +40,10 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 filter: Node => Boolean): Graph = graph
         }
 
-        new Configuration(
-            classpath = Some("x"),
-            analyzer = analyzer)
+        new SliceConstraintBuilder(
+            new Configuration(
+                classpath = Some("x"),
+                analyzer = analyzer))
     }
 
     def ascending(st: String, includeEqual: Boolean = true) = for {
@@ -160,9 +163,10 @@ class CheckTest extends FunSuite with ShouldMatchers {
 
     test("any in group for LayeringConstraint") {
         import de.schauderhaft.degraph.configuration.Layer._
-        Configuration(constraint = Set()).
+        SliceConstraintBuilder(Configuration(constraint = Set())).
             forType("x").
             allow("a", anyOf("b", "c", "d"), "e").
+            configuration.
             constraint.head should be(
                 LayeringConstraint(
                     "x",
@@ -174,9 +178,10 @@ class CheckTest extends FunSuite with ShouldMatchers {
 
     test("any in group for DirectLayeringConstraint") {
         import de.schauderhaft.degraph.configuration.Layer._
-        Configuration(constraint = Set()).
+        SliceConstraintBuilder(Configuration(constraint = Set())).
             forType("x").
             allowDirect("a", anyOf("b", "c", "d"), "e").
+            configuration.
             constraint.head should be(
                 DirectLayeringConstraint(
                     "x",

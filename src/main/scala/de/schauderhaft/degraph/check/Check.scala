@@ -10,6 +10,8 @@ import org.scalatest.matchers.MatchResult
 import de.schauderhaft.degraph.graph.Graph
 import org.scalatest.matchers.ShouldMatchers._
 import de.schauderhaft.degraph.configuration.LayeringConstraint
+import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
+import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
 
 /**
  * provides access to configurations and scalatest matchers useful when testing for dependencies.
@@ -36,16 +38,17 @@ object Check {
      * Note in a typical maven like setup it will also include the test classes as well as all libraries, which might not be desirable.
      * Manipulate the configuration to only contain the classpath elements required or use include and exclude filters for limiting the analyzed classes.
      */
-    val classpath = new Configuration(
+    val classpath = SliceConstraintBuilder(new Configuration(
         classpath = Option(System.getProperty("java.class.path")),
-        analyzer = Analyzer)
+        analyzer = Analyzer), "package")
 
     /**
      * a matcher for Configurations testing if the classes specified in the configuration
      * adhere to the dependency constraints configured in the configuration.
      */
-    val violationFree = new BeMatcher[Configuration] {
-        def apply(conf: Configuration) = {
+    val violationFree = new BeMatcher[SliceConstraintBuilder] {
+        def apply(constraintBuilder: SliceConstraintBuilder) = {
+            val conf = constraintBuilder.configuration
             val g = conf.createGraph()
 
             def checkForViolations: Set[(Node, Node)] = {
