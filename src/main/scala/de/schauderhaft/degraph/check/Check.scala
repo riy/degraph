@@ -9,9 +9,6 @@ import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
 import de.schauderhaft.degraph.graph.Graph
 import org.scalatest.matchers.ShouldMatchers._
-import de.schauderhaft.degraph.configuration.LayeringConstraint
-import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
-import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
 
 /**
  * provides access to configurations and scalatest matchers useful when testing for dependencies.

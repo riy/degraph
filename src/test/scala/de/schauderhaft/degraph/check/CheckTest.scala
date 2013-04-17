@@ -10,15 +10,6 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.configuration.LayeringConstraint
-import de.schauderhaft.degraph.configuration.LayeringConstraint
-import de.schauderhaft.degraph.configuration.Layer
-import de.schauderhaft.degraph.configuration.Constraint
-import de.schauderhaft.degraph.configuration.DirectLayeringConstraint
-import de.schauderhaft.degraph.configuration.StrictLayer
-import de.schauderhaft.degraph.configuration.LenientLayer
-import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
-import de.schauderhaft.degraph.configuration.SliceConstraintBuilder
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
@@ -162,7 +153,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
         }
 
     test("any in group for LayeringConstraint") {
-        import de.schauderhaft.degraph.configuration.Layer._
+        import Layer._
         SliceConstraintBuilder(Configuration(constraint = Set())).
             forType("x").
             allow("a", anyOf("b", "c", "d"), "e").
@@ -177,7 +168,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
     }
 
     test("any in group for DirectLayeringConstraint") {
-        import de.schauderhaft.degraph.configuration.Layer._
+        import Layer._
         SliceConstraintBuilder(Configuration(constraint = Set())).
             forType("x").
             allowDirect("a", anyOf("b", "c", "d"), "e").

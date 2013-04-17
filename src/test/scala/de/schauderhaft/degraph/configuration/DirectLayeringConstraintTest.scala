@@ -10,6 +10,8 @@ import scalax.collection.mutable.{ Graph => SGraph }
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.check.LenientLayer
+import de.schauderhaft.degraph.check.DirectLayeringConstraint
 
 @RunWith(classOf[JUnitRunner])
 class DirectLayeringConstraintTest extends FunSuite with ShouldMatchers {
