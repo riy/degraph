@@ -274,7 +274,7 @@ If you now click on a node or an edge it shows you the predecessor and successor
 
 #### General Tips ####
 
-No matter how sophisticated a layout algorithm is. A graph witho 1000s of nodes and even more edges will look messy. In order to limit the size of graph you have to deal with use the following techniques:
+No matter how sophisticated a layout algorithm is. A graph with 1000s of nodes and even more edges will look messy. In order to limit the size of graph you have to deal with use the following techniques:
 
 * Collapse nodes which you don't care about in detail
 
@@ -284,12 +284,85 @@ No matter how sophisticated a layout algorithm is. A graph witho 1000s of nodes 
 
 ## Testing of Dependencies ##
 
-### Getting Started ###
+When you decided what kind of dependencies you want to have in your project, and which you don't, you probably want to ensure that everybody involved sticks to these rules. Degraph will help you with that.
+
+The basic idea is to have a simple set of rules based on the slices you have anyway.
 
 ### Scala Constraints DSL ###
 
+The scala constraints DSL of Degraph is based on [ScalaTest](http://www.scalatest.org/) [matchers](http://www.scalatest.org/user_guide/using_matchers). 
+
+#### No Circles ####
+
+A good start is to check if your application contains dependency cycles. A complete test might look like this:
+
+    import org.junit.runner.RunWith
+    import org.scalatest.junit.JUnitRunner
+    import org.scalatest.matchers.ShouldMatchers
+    import org.scalatest.FunSuite
+    import de.schauderhaft.degraph.check.Check._
+        
+    @RunWith(classOf[JUnitRunner])
+    class DependencyTest extends FunSuite with ShouldMatchers {
+    
+        test("Degraph has no cycles") {
+            classpath.including("de.schauderhaft.**") should be(violationFree)
+        }
+    }
+
+The `RunWith` annotation is only needed so this ScalaTest test becomes a JUnit test. I like it that way, because it allows me to use the JUnit plugin of my IDE to execute the tests, but it is not essential.
+
+Most of the rest is just a standard ScalaTest test. There are really just two interesting lines: 
+
+    import de.schauderhaft.degraph.check.Check._
+
+and	
+	
+    classpath.including("de.schauderhaft.**") should be(violationFree)
+
+The import makes the Degraph DSL available. The second one is the actual test. 
+
+`classpath` is a predefined `Configuration` containing the current classpath as the path to get analyzed. A `Configuration` is the class used to configure Degraph. When you use a configuration file to  configure Degraph you are basically creating a `Configuration` instance.
+
+`including` is a method which allows to define an include filter. Without specifying a filter, Degraph would analyze everything in your classpath. Since this most probably also includes all kinds of libraries, it is a really good idea to limit the result to your own stuff, as I did here.
+
+`violationFree` is the actual matcher that checks all defined dependency constraints. But did we define any? Yes we did. By default every `Configuration` contains the constraint that no cycles are allowed. To be more precise: Every slice type gets checked if it results in any cycles. If so these cycles will be considere a dependency violation. 
+
+#### Adding Slicings ####
+
+*To be defined* (Right now there is only the default slicing '`package`' defined.
+
+#### Simple Constraints On Slicings ####
+
+Thes following specifies that with the slicing 'part' the slice 'check' may depend on any of 'configuration', 'graph' or 'model'. The slice 'configuration' may depend on any of 'graph' and 'model' but not on 'check' and so on. Or to put it differently: Dependencies from left to right are ok, from right to left aren't. This kind of constraint is usefull for slicings specifying business modules, where you want to enforce some ordering.
+
+    classpath.forType("part").allow("check", "configuration", "graph", "model")
+	
+`forType` specifies the slice type this constraint applies to. Note that there is a predefined slicing named 'package'
+
+`allow` allows dependencies between the given slices from left to right, but not from right to left.
+
+Dependencies from and to classes not part of the specified slices ar not constraint.
+
+#### Strict Constraints ####
+ 
+If you don't want to allow dependencies to skip layers, you use `allowDirect` instead of `allow`. So the following allows 'check' to depend on 'configuration, but it disallows a dependency from 'check' to 'graph' or 'model' since that would skip 'configuration' 
+ 
+    classpath.forType("part").allowDirect("check", "configuration", "graph", "model")
+ 
+Classes not part of the specified slices may depend on the first element in the list, and the last element in the list may depend on such unspecified classes.
+ 
+#### Unspecified Order of Slices ####
+
+If there is a group of slices for which you don't care about the order, you can specify them using `anyOf` like in the following example: 
+
+    classpath.forType("part").allow("check", anyOf( "configuration", "graph"), "model")
+	
+The meaning of this constraint is very similar to [the simple constraint above](#simple_constraint_above), with the exception that dependencies from 'configuration' to 'graph' are allowed just as the other way round. Of course the 'no cycles' constraint still applies so both directions of dependencies must not be present at the same time.
+ 
 ### Java Constraints DSL ###
 
+Once the Scala DSL is somewhat finished there will also be a Java version. But since creating a DSL in Scala is so much easier and nicer, Scala comes first. Of course you might consider picking up a little Scala just for a small set of dependency tests ...
 
 ## Stuff ##
 ### Installation ###
