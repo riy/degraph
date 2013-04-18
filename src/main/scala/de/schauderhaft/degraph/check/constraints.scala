@@ -131,7 +131,7 @@ case class ConstraintBuilder(configuration: Configuration, sliceType: String = "
     def allowDirect(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
 
-    def forType(sliceType: String) = copy(sliceType = sliceType)
+    def withSlicing(sliceType: String, sls: AnyRef*) = copy(sliceType = sliceType)
 
     def including(s: String): ConstraintBuilder = copy(configuration = configuration.copy(includes = configuration.includes :+ s))
 

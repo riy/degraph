@@ -50,19 +50,19 @@ class CheckTest extends FunSuite with ShouldMatchers {
     } yield (SimpleNode(st, x.toString), SimpleNode(st, y.toString))
 
     test("matcher accepts violation free graph for simple layering") {
-        val conf = mockConfig(ascending(mod)).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(ascending(mod)).withSlicing(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
     for (illegalCon <- descending(mod))
         test("matcher detects violations for simple layering %s".format(illegalCon)) {
-            val conf = mockConfig(Set(illegalCon)).forType(mod).allow("a", "b", "c")
+            val conf = mockConfig(Set(illegalCon)).withSlicing(mod).allow("a", "b", "c")
             Check.violationFree(conf).matches should be(false)
         }
 
     for (illegalCon <- descending(mod))
         test("matcher detects cycles %s".format(illegalCon)) {
-            val conf = mockConfig(ascending(mod) :+ illegalCon).forType(mod).allow("a", "b", "c")
+            val conf = mockConfig(ascending(mod) :+ illegalCon).withSlicing(mod).allow("a", "b", "c")
             Check.violationFree(conf).matches should be(false)
         }
 
@@ -72,7 +72,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
             (SimpleNode(mod, "a"), SimpleNode("x", c.toString)),
             (SimpleNode("x", c.toString), SimpleNode(mod, "a")))
     } test("constraint ignores connection to and from other slices %s".format(con)) {
-        val conf = mockConfig(Set(con)).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(Set(con)).withSlicing(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
@@ -82,7 +82,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
             (SimpleNode("x", "a"), SimpleNode("x", c.toString)),
             (SimpleNode("x", c.toString), SimpleNode("x", "a")))
     } test("constraint ignores connections in other slices %s".format(con)) {
-        val conf = mockConfig(Set(con)).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(Set(con)).withSlicing(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
@@ -96,7 +96,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
         c2 <- 'a' to 'c'
         val con = (SimpleNode(mod, c1.toString), SimpleNode(mod, c2.toString))
     } test("accepts unspecified dependencies %s ".format((c1, c2))) {
-        val conf = mockConfig(Set(con)).forType(mod).allow("x", "b", "y")
+        val conf = mockConfig(Set(con)).withSlicing(mod).allow("x", "b", "y")
         Check.violationFree(conf).matches should be(true)
     }
 
@@ -104,8 +104,8 @@ class CheckTest extends FunSuite with ShouldMatchers {
         con <- ascending(mod, false) ++ descending(mod)
     } test("multiple constraints both get checked %s".format(con)) {
         val conf = mockConfig(Set(con)).
-            forType(mod).allow("a", "b", "c").
-            forType(mod).allow("c", "b", "a")
+            withSlicing(mod).allow("a", "b", "c").
+            withSlicing(mod).allow("c", "b", "a")
         Check.violationFree(conf).matches should be(false)
     }
 
@@ -118,7 +118,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 (n(chars(i)), n(chars(i))))
             val conf = mockConfig(
                 deps).
-                forType(mod).allowDirect("b", "c", "d")
+                withSlicing(mod).allowDirect("b", "c", "d")
             withClue(deps) {
                 Check.violationFree(conf).matches should be(true)
             }
@@ -132,7 +132,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 (n(chars(i)), n(chars(i - 1))))
             val conf = mockConfig(
                 deps).
-                forType(mod).allowDirect("b", "c", "d")
+                withSlicing(mod).allowDirect("b", "c", "d")
             withClue(deps) {
                 Check.violationFree(conf).matches should be(false)
             }
@@ -146,7 +146,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 (n(chars(i)), n(chars(i + 2))))
             val conf = mockConfig(
                 deps).
-                forType(mod).allowDirect("b", "c", "d")
+                withSlicing(mod).allowDirect("b", "c", "d")
             withClue(deps) {
                 Check.violationFree(conf).matches should be(false)
             }
@@ -155,7 +155,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
     test("any in group for LayeringConstraint") {
         import Layer._
         ConstraintBuilder(Configuration(constraint = Set())).
-            forType("x").
+            withSlicing("x").
             allow("a", anyOf("b", "c", "d"), "e").
             configuration.
             constraint.head should be(
@@ -170,7 +170,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
     test("any in group for DirectLayeringConstraint") {
         import Layer._
         ConstraintBuilder(Configuration(constraint = Set())).
-            forType("x").
+            withSlicing("x").
             allowDirect("a", anyOf("b", "c", "d"), "e").
             configuration.
             constraint.head should be(
