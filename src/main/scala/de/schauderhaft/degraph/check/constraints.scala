@@ -22,7 +22,7 @@ object Layer {
  */
 sealed trait Layer {
     def contains(elem: String): Boolean
-    def allowDependenciesWithinLayer: Boolean
+    def denyDependenciesWithinLayer: Boolean
 }
 
 abstract class SimpleLayer(es: String*) extends Layer {
@@ -34,14 +34,14 @@ abstract class SimpleLayer(es: String*) extends Layer {
  * a layer where the elements of that layer may depend on each other
  */
 case class LenientLayer(es: String*) extends SimpleLayer(es: _*) {
-    val allowDependenciesWithinLayer = true
+    val denyDependenciesWithinLayer = false
 }
 
 /**
  * a layer where the elements of that may NOT depend on each other
  */
 case class StrictLayer(es: String*) extends SimpleLayer(es: _*) {
-    val allowDependenciesWithinLayer = false
+    val denyDependenciesWithinLayer = true
 }
 
 /**
@@ -91,7 +91,7 @@ case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) exte
         val i2 = indexOf(n2)
         constraitContainsBothNodes(i1, i2) &&
             (i1 > i2 ||
-                (n1 != n2 && i1 == i2 && slices(i1).isInstanceOf[StrictLayer]))
+                (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))
     }
 
 }
@@ -105,7 +105,7 @@ case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]
         val i2 = indexOf(n2)
         (constraitContainsBothNodes(i1, i2) &&
             (i1 > i2 ||
-                i2 - i1 > 1 || (n1 != n2 && i1 == i2 && slices(i1).isInstanceOf[StrictLayer]))) ||
+                i2 - i1 > 1 || (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))) ||
                 (i1 < 0 && i2 > 0) ||
                 (i1 >= 0 && i1 < slices.size - 1 && i2 < 0)
     }
