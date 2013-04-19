@@ -367,6 +367,12 @@ Once the Scala DSL is somewhat finished there will also be a Java version. But s
 ## Stuff ##
 ### Installation ###
 
+For using Degraph you need a JDK 7 or higher properly installed. It might work with older versions but we never tried ... let us know if you try it.
+
+Take the downloaded zip file and unzip it to a place you like. 
+
+Done. You can now start Degraph by executing the degraph in the bin folder. If you want to  you can add degraph to your path to make executing it a little easier.
+
 ### FAQ ###
 
 #### The resulting Graph is empty ####
