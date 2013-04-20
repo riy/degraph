@@ -6,7 +6,7 @@ import de.schauderhaft.degraph.configuration.Pattern
 import de.schauderhaft.degraph.configuration.UnnamedPattern
 import de.schauderhaft.degraph.configuration.NamedPattern
 
-case class ConstraintBuilder(private val config: Configuration = new Configuration(), sliceType: String = "", slicings: Map[String, Seq[Pattern]] = Map()) {
+case class ConstraintBuilder(private val config: Configuration = new Configuration(), sliceType: String = "", includes: Seq[String] = Seq(), slicings: Map[String, Seq[Pattern]] = Map()) {
     private def any2Layer(arg: AnyRef): Layer = arg match {
         case s: String => LenientLayer(s)
         case l: Layer => l
@@ -34,8 +34,8 @@ case class ConstraintBuilder(private val config: Configuration = new Configurati
             }))
     }
 
-    def including(s: String): ConstraintBuilder = copy(config = config.copy(includes = config.includes :+ s))
+    def including(s: String): ConstraintBuilder = copy(includes = includes :+ s)
 
-    def configuration = config.copy(categories = slicings)
+    def configuration = config.copy(categories = slicings, includes = includes)
 
 }
