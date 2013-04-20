@@ -20,8 +20,7 @@ public class GuiStarter extends javafx.application.Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("degraph");
 
-		Parent root = FXMLLoader.load(getClass().getResource(
-				"./../../../../MainView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
 
 		// Adding HBox to the scene
 		Scene scene = new Scene(root, 800, 600);
