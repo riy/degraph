@@ -1,9 +1,8 @@
 package de.schauderhaft.degraph.gui;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 
@@ -21,14 +20,11 @@ public class GuiStarter extends javafx.application.Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("degraph");
 
-		StackPane sp = new StackPane();
-		Image img = new Image("logo.PNG");
-		ImageView imgView = new ImageView(img);
-		sp.getChildren().add(imgView);
+		Parent root = FXMLLoader.load(getClass().getResource(
+				"./../../../../MainView.fxml"));
 
 		// Adding HBox to the scene
-		Scene scene = new Scene(sp, imgView.getBoundsInParent().getWidth(),
-				imgView.getBoundsInParent().getHeight());
+		Scene scene = new Scene(root, 800, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
