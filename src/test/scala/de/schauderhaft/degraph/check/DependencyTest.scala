@@ -9,16 +9,22 @@ import Check._
 @RunWith(classOf[JUnitRunner])
 class DependencyTest extends FunSuite with ShouldMatchers {
 
-    test("Degraph has no cycles") {
-        classpath.including("de.schauderhaft.**") should be(violationFree)
+    test("Degraph honors its constraints") {
+        classpath.including("de.schauderhaft.**").
+            withSlicing("part",
+                "de.schauderhaft.*.(*).**").
+                withSlicing("lib",
+                    "de.schauderhaft.**(Test)",
+                    ("main", "de.schauderhaft.(*).**"),
+                    ("*.(*).**")).
+                    withSlicing("internalExternal", ("internal", "de.schauderhaft.**"), ("external", "**")) should be(violationFree)
     }
 
     test("Check identifies cycles") {
         classpath.including("org.apache.log4j.**") should not be (violationFree)
     }
 
-    test("Degraph honors its constraints") {
-        pending
+    test("Degraph has no cycles") {
         classpath.including("de.schauderhaft.**") should be(violationFree)
     }
 }

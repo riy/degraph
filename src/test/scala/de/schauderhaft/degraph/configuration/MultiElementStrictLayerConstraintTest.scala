@@ -10,6 +10,9 @@ import scalax.collection.mutable.{ Graph => SGraph }
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.check.StrictLayer
+import de.schauderhaft.degraph.check.LayeringConstraint
+import de.schauderhaft.degraph.check.DirectLayeringConstraint
 
 @RunWith(classOf[JUnitRunner])
 class MultiElementStrictLayerConstraintTest extends FunSuite with ShouldMatchers {

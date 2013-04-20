@@ -14,6 +14,10 @@ import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.check.LenientLayer
+import de.schauderhaft.degraph.check.LayeringConstraint
+import de.schauderhaft.degraph.check.Layer
+import de.schauderhaft.degraph.check.DirectLayeringConstraint
 
 /**
  * companion object allowing easy creation of a configuration from commandline arguments.
@@ -72,10 +76,6 @@ case class Configuration(
 
     def valid = classpath.isDefined && output.isDefined
 
-    def including(s: String): Configuration = copy(includes = includes :+ s)
-
-    def forType(sliceType: String) = new ConstraintBuilder(this, sliceType)
-
     private[this] def buildFilter(includes: Seq[String],
         excludes: Seq[String]) = {
         new IncludeExcludeFilter(
@@ -92,27 +92,6 @@ case class Configuration(
 
     private[this] def buildCategorizer(slicing: String, groupings: Seq[Pattern]): (AnyRef => Node) =
         new CombinedSlicer(groupings.map(toSlicer(slicing, _)): _*)
-}
-
-class ConstraintBuilder(configuration: Configuration, sliceType: String) {
-    private def any2Layer(arg: AnyRef): Layer = arg match {
-        case s: String => LenientLayer(s)
-        case l: Layer => l
-        case _ => throw new IllegalArgumentException("Only arguments of type String or Layer are accepted")
-    }
-
-    private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): Configuration =
-        configuration.copy(
-            constraint =
-                configuration.constraint +
-                    toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x))))
-
-    def allow(slices: AnyRef*): Configuration =
-        modifyConfig(slices.toIndexedSeq, LayeringConstraint)
-
-    def allowDirect(slices: AnyRef*): Configuration =
-        modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
-
 }
 
 sealed trait Pattern {

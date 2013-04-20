@@ -11,10 +11,10 @@ import de.schauderhaft.degraph.model.SimpleNode.packageNode
 import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.slicer.ParallelCategorizer
 import de.schauderhaft.degraph.model.SimpleNode
-import de.schauderhaft.degraph.configuration.CycleFree
 import de.schauderhaft.degraph.graph.Graph
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import de.schauderhaft.degraph.configuration.CycleFree
 
 @RunWith(classOf[JUnitRunner])
 class CycleFreeTest extends FunSuite with ShouldMatchers {

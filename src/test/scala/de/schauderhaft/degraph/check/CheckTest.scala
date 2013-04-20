@@ -10,20 +10,13 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.configuration.LayeringConstraint
-import de.schauderhaft.degraph.configuration.LayeringConstraint
-import de.schauderhaft.degraph.configuration.Layer
-import de.schauderhaft.degraph.configuration.Constraint
-import de.schauderhaft.degraph.configuration.DirectLayeringConstraint
-import de.schauderhaft.degraph.configuration.StrictLayer
-import de.schauderhaft.degraph.configuration.LenientLayer
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
     val mod = "mod"
 
     test("configuration contains the classpath") {
-        Check.classpath.classpath.value should include("log4j")
+        Check.classpath.configuration.classpath.value should include("log4j")
     }
 
     private def mockConfig(conns: Traversable[(Node, Node)]) = {
@@ -38,9 +31,10 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 filter: Node => Boolean): Graph = graph
         }
 
-        new Configuration(
-            classpath = Some("x"),
-            analyzer = analyzer)
+        new ConstraintBuilder(
+            new Configuration(
+                classpath = Some("x"),
+                analyzer = analyzer))
     }
 
     def ascending(st: String, includeEqual: Boolean = true) = for {
@@ -56,19 +50,19 @@ class CheckTest extends FunSuite with ShouldMatchers {
     } yield (SimpleNode(st, x.toString), SimpleNode(st, y.toString))
 
     test("matcher accepts violation free graph for simple layering") {
-        val conf = mockConfig(ascending(mod)).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(ascending(mod)).withSlicing(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
     for (illegalCon <- descending(mod))
         test("matcher detects violations for simple layering %s".format(illegalCon)) {
-            val conf = mockConfig(Set(illegalCon)).forType(mod).allow("a", "b", "c")
+            val conf = mockConfig(Set(illegalCon)).withSlicing(mod).allow("a", "b", "c")
             Check.violationFree(conf).matches should be(false)
         }
 
     for (illegalCon <- descending(mod))
         test("matcher detects cycles %s".format(illegalCon)) {
-            val conf = mockConfig(ascending(mod) :+ illegalCon).forType(mod).allow("a", "b", "c")
+            val conf = mockConfig(ascending(mod) :+ illegalCon).withSlicing(mod).allow("a", "b", "c")
             Check.violationFree(conf).matches should be(false)
         }
 
@@ -78,7 +72,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
             (SimpleNode(mod, "a"), SimpleNode("x", c.toString)),
             (SimpleNode("x", c.toString), SimpleNode(mod, "a")))
     } test("constraint ignores connection to and from other slices %s".format(con)) {
-        val conf = mockConfig(Set(con)).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(Set(con)).withSlicing(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
@@ -88,7 +82,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
             (SimpleNode("x", "a"), SimpleNode("x", c.toString)),
             (SimpleNode("x", c.toString), SimpleNode("x", "a")))
     } test("constraint ignores connections in other slices %s".format(con)) {
-        val conf = mockConfig(Set(con)).forType(mod).allow("a", "b", "c")
+        val conf = mockConfig(Set(con)).withSlicing(mod).allow("a", "b", "c")
         Check.violationFree(conf).matches should be(true)
     }
 
@@ -102,7 +96,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
         c2 <- 'a' to 'c'
         val con = (SimpleNode(mod, c1.toString), SimpleNode(mod, c2.toString))
     } test("accepts unspecified dependencies %s ".format((c1, c2))) {
-        val conf = mockConfig(Set(con)).forType(mod).allow("x", "b", "y")
+        val conf = mockConfig(Set(con)).withSlicing(mod).allow("x", "b", "y")
         Check.violationFree(conf).matches should be(true)
     }
 
@@ -110,8 +104,8 @@ class CheckTest extends FunSuite with ShouldMatchers {
         con <- ascending(mod, false) ++ descending(mod)
     } test("multiple constraints both get checked %s".format(con)) {
         val conf = mockConfig(Set(con)).
-            forType(mod).allow("a", "b", "c").
-            forType(mod).allow("c", "b", "a")
+            withSlicing(mod).allow("a", "b", "c").
+            withSlicing(mod).allow("c", "b", "a")
         Check.violationFree(conf).matches should be(false)
     }
 
@@ -124,7 +118,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 (n(chars(i)), n(chars(i))))
             val conf = mockConfig(
                 deps).
-                forType(mod).allowDirect("b", "c", "d")
+                withSlicing(mod).allowDirect("b", "c", "d")
             withClue(deps) {
                 Check.violationFree(conf).matches should be(true)
             }
@@ -138,7 +132,7 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 (n(chars(i)), n(chars(i - 1))))
             val conf = mockConfig(
                 deps).
-                forType(mod).allowDirect("b", "c", "d")
+                withSlicing(mod).allowDirect("b", "c", "d")
             withClue(deps) {
                 Check.violationFree(conf).matches should be(false)
             }
@@ -152,17 +146,18 @@ class CheckTest extends FunSuite with ShouldMatchers {
                 (n(chars(i)), n(chars(i + 2))))
             val conf = mockConfig(
                 deps).
-                forType(mod).allowDirect("b", "c", "d")
+                withSlicing(mod).allowDirect("b", "c", "d")
             withClue(deps) {
                 Check.violationFree(conf).matches should be(false)
             }
         }
 
     test("any in group for LayeringConstraint") {
-        import de.schauderhaft.degraph.configuration.Layer._
-        Configuration(constraint = Set()).
-            forType("x").
+        import Layer._
+        ConstraintBuilder(Configuration(constraint = Set())).
+            withSlicing("x").
             allow("a", anyOf("b", "c", "d"), "e").
+            configuration.
             constraint.head should be(
                 LayeringConstraint(
                     "x",
@@ -173,10 +168,11 @@ class CheckTest extends FunSuite with ShouldMatchers {
     }
 
     test("any in group for DirectLayeringConstraint") {
-        import de.schauderhaft.degraph.configuration.Layer._
-        Configuration(constraint = Set()).
-            forType("x").
+        import Layer._
+        ConstraintBuilder(Configuration(constraint = Set())).
+            withSlicing("x").
             allowDirect("a", anyOf("b", "c", "d"), "e").
+            configuration.
             constraint.head should be(
                 DirectLayeringConstraint(
                     "x",
