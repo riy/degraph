@@ -12,7 +12,7 @@ public class LabelDuplicator {
 
 	public Label duplicate(Label source) {
 		Label result = new Label(source.getText());
-
+		result.setStyle(source.getStyle());
 		return result;
 	}
 
