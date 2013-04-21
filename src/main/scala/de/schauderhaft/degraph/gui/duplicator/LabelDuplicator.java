@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.gui;
+package de.schauderhaft.degraph.gui.duplicator;
 
 import javafx.scene.control.Label;
 

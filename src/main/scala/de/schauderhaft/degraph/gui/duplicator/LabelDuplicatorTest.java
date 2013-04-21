@@ -1,10 +1,12 @@
-package de.schauderhaft.degraph.gui;
+package de.schauderhaft.degraph.gui.duplicator;
 
 import static org.junit.Assert.assertEquals;
 import javafx.scene.control.Label;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import de.schauderhaft.degraph.gui.duplicator.LabelDuplicator;
 
 public class LabelDuplicatorTest {
 
