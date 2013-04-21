@@ -30,6 +30,7 @@ public class GuiStarter extends javafx.application.Application {
 	}
 
 	public void show(JavaHierarchicGraph g) {
+		DataProvider.setData(g);
 		launch(new String[0]);
 	}
 

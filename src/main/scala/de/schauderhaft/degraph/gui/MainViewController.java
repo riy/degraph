@@ -44,8 +44,8 @@ public class MainViewController {
 		Set<Node> topNodes = DataProvider.getTopNodes();
 		assert topNodes != null : "no data";
 
-		// Label nodeName = DataProvider.getNodeName(topNodes);
-		// nodeNameLabel = nodeName;
+		Label nodeName = DataProvider.getNodeName(topNodes);
+		nodeNameLabel = nodeName;
 
 	}
 }
