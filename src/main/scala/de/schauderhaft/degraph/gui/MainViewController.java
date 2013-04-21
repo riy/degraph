@@ -27,7 +27,7 @@ public class MainViewController {
 	private Label nodeNameLabel;
 
 	@FXML
-	private AnchorPane nodeView;
+	private AnchorPane nodeViewTemplate;
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
@@ -39,13 +39,22 @@ public class MainViewController {
 		assert contentView != null : "fx:id=\"contentView\" was not injected: check your FXML file 'MainView.fxml'.";
 		assert mainView != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 		assert nodeNameLabel != null : "fx:id=\"nodeNameLabel\" was not injected: check your FXML file 'MainView.fxml'.";
-		assert nodeView != null : "fx:id=\"nodeView\" was not injected: check your FXML file 'MainView.fxml'.";
+		assert nodeViewTemplate != null : "fx:id=\"nodeView\" was not injected: check your FXML file 'MainView.fxml'.";
 
 		Set<Node> topNodes = DataProvider.getTopNodes();
 		assert topNodes != null : "no data";
 
-		Label nodeName = DataProvider.getNodeName(topNodes);
-		nodeNameLabel.setText(nodeName.getText());
+		NodeLabelConverter converter = new NodeLabelConverter();
+		LabelDuplicator duplicator = new LabelDuplicator();
+		double deeper = 20.0;
+		for (Node n : topNodes) {
+			Label duplicate = duplicator.duplicate(nodeNameLabel);
+			duplicate.setText(converter.getNodeName(n));
+			duplicate.setPrefHeight(nodeNameLabel.getPrefHeight() + deeper);
+			deeper += 10;
+			nodeViewTemplate.getChildren().add(duplicate);
+
+		}
 
 	}
 }
