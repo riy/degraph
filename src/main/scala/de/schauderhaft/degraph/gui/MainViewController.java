@@ -1,13 +1,12 @@
 package de.schauderhaft.degraph.gui;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -16,9 +15,7 @@ import org.apache.log4j.Logger;
 import de.schauderhaft.degraph.model.Node;
 
 /**
- * Klasse noch nicht reviewen!
- * 
- * @author thomicha
+ * Controller for the main window which includes 0-n nodeViews
  * 
  */
 public class MainViewController {
@@ -30,6 +27,8 @@ public class MainViewController {
 
 	@FXML
 	private AnchorPane mainView;
+
+	private final Map<String, Object> node4Controller = new HashMap<>();
 
 	Logger LOG = Logger.getLogger(MainViewController.class);
 
@@ -45,19 +44,28 @@ public class MainViewController {
 		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
 		assert topNodes != null : "no data";
 
-		FXMLLoader loader = new FXMLLoader();
-		try {
-			loader.setLocation(this.location);
-			Parent node = (Parent) loader.load(getClass().getResource(
-					"NodeViewTemplate.fxml").openStream());
+		OwnController own = new OwnController();
+		mainView.getChildren().add(own);
 
-			Object controller = loader.getController();
-			assert controller != null;
-
-			mainView.getChildren().add(node);
-		} catch (IOException e) {
-			LOG.error(e);
-		}
+		// FXMLLoader loader = new FXMLLoader();
+		// loader.setLocation(this.location);
+		//
+		// // for (Node n : topNodes) {
+		// for (int i = 0; i < 10; i++) {
+		// try {
+		// Parent node = (Parent) loader.load(getClass().getResource(
+		// "NodeViewTemplate.fxml").openStream());
+		//
+		// Object controller = loader.getController();
+		// assert controller != null;
+		// NodeLabelConverter converter = new NodeLabelConverter();
+		// // String nodeName = converter.getNodeName(n);
+		// // node4Controller.put(nodeName, controller);
+		// mainView.getChildren().add(node);
+		// } catch (IOException e) {
+		// LOG.error(e);
+		// }
+		// }
 
 	}
 }
