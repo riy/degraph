@@ -36,7 +36,7 @@ public class GuiStarter extends javafx.application.Application {
 	}
 
 	public void show(JavaHierarchicGraph g) {
-		DataProvider.setData(g);
+		DataProvider.getInstance().setData(g);
 		launch(new String[0]);
 	}
 
@@ -48,7 +48,6 @@ public class GuiStarter extends javafx.application.Application {
 	public static void main(String[] args) {
 		System.out.println("Geht");
 		GuiStarter s = new GuiStarter();
-		// s.show(null);
 
 		final Map<Node, Node> categories = new HashMap<>();
 		categories.put(asNode("Queen"), asNode("Heavy"));

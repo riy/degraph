@@ -42,7 +42,7 @@ public class MainViewController {
 	void initialize() {
 		assert mainView != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 
-		Set<Node> topNodes = DataProvider.getTopNodes();
+		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
 		assert topNodes != null : "no data";
 
 		FXMLLoader loader = new FXMLLoader();

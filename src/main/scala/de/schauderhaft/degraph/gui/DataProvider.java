@@ -9,23 +9,26 @@ import de.schauderhaft.degraph.model.Node;
 /**
  * Holds the {@link JavaHierarchicGraph} - graph for direct access.
  * 
- * @author thomicha
- * 
  */
 public class DataProvider {
 
-	private static JavaHierarchicGraph GRAPH;
+	private JavaHierarchicGraph graph;
 
-	public static void setData(JavaHierarchicGraph g) {
-		GRAPH = g;
+	private static DataProvider singelton = new DataProvider();
 
+	public static DataProvider getInstance() {
+		return singelton;
 	}
 
-	public static Set<Node> getTopNodes() {
-		return GRAPH.topNodes();
+	public void setData(JavaHierarchicGraph g) {
+		graph = g;
 	}
 
-	public static Label getNodeName(Set<Node> nodes) {
+	public Set<Node> getTopNodes() {
+		return graph.topNodes();
+	}
+
+	public Label getNodeName(Set<Node> nodes) {
 		NodeLabelConverter converter = new NodeLabelConverter();
 		return converter.toLabel(nodes).iterator().next();
 	}
