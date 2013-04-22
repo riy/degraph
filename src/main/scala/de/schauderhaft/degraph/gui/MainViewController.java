@@ -41,11 +41,14 @@ public class MainViewController {
 	void initialize() {
 		assert mainView != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 
-		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
+		Set<Node> topNodes = DataProvider.getInstance().getNodes();
 		assert topNodes != null : "no data";
 
-		NodeController own = new NodeController();
-		mainView.getChildren().add(own);
+		for (Node node : topNodes) {
+
+			NodeController own = new NodeController(node);
+			mainView.getChildren().add(own);
+		}
 
 	}
 }
