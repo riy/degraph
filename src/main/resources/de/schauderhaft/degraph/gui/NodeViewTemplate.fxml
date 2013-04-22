@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" fx:id="nodeViewTemplate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0000084472631" prefWidth="140.5" styleClass="nodeTheme" xmlns:fx="http://javafx.com/fxml" fx:controller="NodeController">
+<AnchorPane id="nodePane" fx:id="nodeViewTemplate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0000084472631" prefWidth="140.5" styleClass="nodeTheme" xmlns:fx="http://javafx.com/fxml" fx:controller="de.schauderhaft.degraph.gui.NodeController">
   <children>
     <AnchorPane id="nodeView" layoutX="7.0" layoutY="16.0" minHeight="80.0" minWidth="127.0" prefHeight="80.0" prefWidth="127.0" styleClass="node-panel">
       <effect>
