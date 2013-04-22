@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import de.schauderhaft.degraph.model.Node;
 
@@ -45,6 +46,11 @@ public class NodeController extends AnchorPane {
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	@FXML
+	void onMouseClicked(MouseEvent event) {
+		System.out.println(converter.getNodeName(node) + " clicked");
 	}
 
 }

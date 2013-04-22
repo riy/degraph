@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="NodePane" fx:id="NodePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0000084472631" prefWidth="140.5" styleClass="nodeTheme" xmlns:fx="http://javafx.com/fxml" >
+<fx:root type="javafx.scene.layout.AnchorPane" id="NodePane" fx:id="NodePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0000084472631" prefWidth="140.5" styleClass="nodeTheme" onMouseClicked="#onMouseClicked" xmlns:fx="http://javafx.com/fxml" >
   <children>
     <AnchorPane id="nodeView" layoutX="7.0" layoutY="16.0" minHeight="80.0" minWidth="127.0" prefHeight="80.0" prefWidth="127.0" styleClass="node-panel">
       <effect>
