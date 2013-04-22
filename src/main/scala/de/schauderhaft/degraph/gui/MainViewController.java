@@ -44,7 +44,7 @@ public class MainViewController {
 		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
 		assert topNodes != null : "no data";
 
-		OwnController own = new OwnController();
+		NodeController own = new NodeController();
 		mainView.getChildren().add(own);
 
 		// FXMLLoader loader = new FXMLLoader();

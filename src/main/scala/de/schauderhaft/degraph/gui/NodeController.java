@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
-public class OwnController extends AnchorPane {
+public class NodeController extends AnchorPane {
 
 	@FXML
 	private ResourceBundle resources;
@@ -25,9 +25,9 @@ public class OwnController extends AnchorPane {
 
 	}
 
-	public OwnController() {
+	public NodeController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-				"OwnNodeViewTemplate.fxml"));
+				"NodeViewTemplate.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
