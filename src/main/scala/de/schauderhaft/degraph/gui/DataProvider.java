@@ -28,6 +28,10 @@ public class DataProvider {
 		return graph.topNodes();
 	}
 
+	public Set<Node> getNodes() {
+		return graph.allNodes();
+	}
+
 	public Label getNodeName(Set<Node> nodes) {
 		NodeLabelConverter converter = new NodeLabelConverter();
 		return converter.toLabel(nodes).iterator().next();
