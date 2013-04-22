@@ -1,26 +1,20 @@
 package de.schauderhaft.degraph.gui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import de.schauderhaft.degraph.java.JavaHierarchicGraph;
+import de.schauderhaft.degraph.model.Node;
 
-import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
-
+/**
+ * Bekommt die eine Node zum Anzeigen!
+ * 
+ */
 public class NodeController {
 
-	@FXML
-	private ResourceBundle resources;
+	Node node;
+	JavaHierarchicGraph graph;
 
-	@FXML
-	private URL location;
-
-	@FXML
-	private AnchorPane nodeViewTemplate;
-
-	@FXML
-	void initialize() {
-		assert nodeViewTemplate != null : "fx:id=\"nodeViewTemplate\" was not injected: check your FXML file 'NodeViewTemplate.fxml'.";
-
+	public NodeController(Node node, JavaHierarchicGraph graph) {
+		this.node = node;
+		this.graph = graph;
 	}
 
 }

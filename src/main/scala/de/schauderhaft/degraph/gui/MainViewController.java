@@ -1,27 +1,21 @@
 package de.schauderhaft.degraph.gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 
-import org.apache.log4j.Logger;
-
-import de.schauderhaft.degraph.model.Node;
-
-/**
- * Klasse noch nicht reviewen!
- * 
- * @author thomicha
- * 
- */
 public class MainViewController {
+
+	JavaHierarchicGraph graph;
+
+	public MainViewController(JavaHierarchicGraph graph) {
+		this.graph = graph;
+	}
+
 	@FXML
 	private ResourceBundle resources;
 
@@ -29,35 +23,17 @@ public class MainViewController {
 	private URL location;
 
 	@FXML
-	private AnchorPane mainView;
-
-	Logger LOG = Logger.getLogger(MainViewController.class);
+	private BorderPane topNodeContent;
 
 	@FXML
-	void onMouseClicked(MouseEvent event) {
-		System.out.println("KLickMainView");
+	void openNode(MouseEvent event) {
 	}
 
 	@FXML
 	void initialize() {
-		assert mainView != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
-
-		Set<Node> topNodes = DataProvider.getTopNodes();
-		assert topNodes != null : "no data";
-
-		FXMLLoader loader = new FXMLLoader();
-		try {
-			loader.setLocation(this.location);
-			Parent node = (Parent) loader.load(getClass().getResource(
-					"NodeViewTemplate.fxml").openStream());
-
-			Object controller = loader.getController();
-			assert controller != null;
-
-			mainView.getChildren().add(node);
-		} catch (IOException e) {
-			LOG.error(e);
-		}
+		boolean b = topNodeContent != null;
+		assert b : "fx:id=\"topNodeContent\" was not injected: check your FXML file 'topNodeView.fxml'.";
 
 	}
+
 }
