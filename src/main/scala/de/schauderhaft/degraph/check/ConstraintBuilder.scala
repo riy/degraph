@@ -6,7 +6,13 @@ import de.schauderhaft.degraph.configuration.Pattern
 import de.schauderhaft.degraph.configuration.UnnamedPattern
 import de.schauderhaft.degraph.configuration.NamedPattern
 
-case class ConstraintBuilder(private val config: Configuration = new Configuration(), sliceType: String = "", includes: Seq[String] = Seq(), slicings: Map[String, Seq[Pattern]] = Map()) {
+case class ConstraintBuilder(
+    private val config: Configuration = new Configuration(),
+    sliceType: String = "",
+    includes: Seq[String] = Seq(),
+    slicings: Map[String, Seq[Pattern]] = Map(),
+    constraints: Set[Constraint] = Set()) {
+
     private def any2Layer(arg: AnyRef): Layer = arg match {
         case s: String => LenientLayer(s)
         case l: Layer => l
@@ -14,11 +20,9 @@ case class ConstraintBuilder(private val config: Configuration = new Configurati
     }
 
     private def modifyConfig(slices: IndexedSeq[AnyRef], toConstraint: (String, IndexedSeq[Layer]) => Constraint): ConstraintBuilder =
-        copy(config =
-            config.copy(
-                constraint =
-                    config.constraint +
-                        toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x)))))
+        copy(constraints =
+            constraints +
+                toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x))))
 
     def allow(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, LayeringConstraint)
@@ -36,6 +40,6 @@ case class ConstraintBuilder(private val config: Configuration = new Configurati
 
     def including(s: String): ConstraintBuilder = copy(includes = includes :+ s)
 
-    def configuration = config.copy(categories = slicings, includes = includes)
+    def configuration = config.copy(categories = slicings, includes = includes, constraint = config.constraint ++ constraints)
 
 }
