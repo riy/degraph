@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import de.schauderhaft.degraph.model.Node;
 
 public class NodeController extends AnchorPane {
 
@@ -17,15 +19,22 @@ public class NodeController extends AnchorPane {
 	private URL location;
 
 	@FXML
-	private AnchorPane nodeViewTemplate;
+	private AnchorPane nodeView;
+
+	private final Node node;
+
+	private final NodeLabelConverter converter = new NodeLabelConverter();
 
 	@FXML
 	void initialize() {
-		assert nodeViewTemplate != null : "fx:id=\"nodeViewTemplate\" was not injected: check your FXML file 'NodeViewTemplate.fxml'.";
+
+		Label label = (Label) this.lookup("#nodeNameLabel");
+		label.setText(converter.getNodeName(node));
 
 	}
 
-	public NodeController() {
+	public NodeController(Node node) {
+		this.node = node;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
 				"NodeViewTemplate.fxml"));
 		fxmlLoader.setRoot(this);

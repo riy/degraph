@@ -30,7 +30,9 @@ public class MainViewController {
 
 	private final Map<String, Object> node4Controller = new HashMap<>();
 
-	Logger LOG = Logger.getLogger(MainViewController.class);
+	private final Logger LOG = Logger.getLogger(MainViewController.class);
+
+	private final NodeLabelConverter converter = new NodeLabelConverter();
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
@@ -41,14 +43,32 @@ public class MainViewController {
 	void initialize() {
 		assert mainView != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 
-		Set<Node> topNodes = DataProvider.getInstance().getNodes();
+		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
 		assert topNodes != null : "no data";
 
+		organizeNodes(topNodes);
+
+	}
+
+	private void organizeNodes(Set<Node> topNodes) {
+
+		// TODO: only for tests
+		// this ist not the solution for a real View !!
+		int placeX = 0;
+		int placeY = 0;
 		for (Node node : topNodes) {
 
-			NodeController own = new NodeController(node);
-			mainView.getChildren().add(own);
-		}
+			NodeController nodeController = new NodeController(node);
+			nodeController.setLayoutX(placeX);
+			nodeController.setLayoutY(placeY);
+			placeX += 150;
+			mainView.getChildren().add(nodeController);
 
+			node4Controller.put(converter.getNodeName(node), nodeController);
+			if (placeX > 500) {
+				placeX = 0;
+				placeY = +100;
+			}
+		}
 	}
 }
