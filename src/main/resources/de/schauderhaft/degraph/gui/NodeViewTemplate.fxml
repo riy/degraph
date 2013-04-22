@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" fx:id="nodeViewTemplate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0000084472631" prefWidth="140.5" styleClass="nodeTheme" xmlns:fx="http://javafx.com/fxml" fx:controller="NodeController">
+  <children>
+    <AnchorPane id="nodeView" layoutX="7.0" layoutY="16.0" minHeight="80.0" minWidth="127.0" prefHeight="80.0" prefWidth="127.0" styleClass="node-panel">
+      <effect>
+        <DropShadow blurType="GAUSSIAN" height="20.0" radius="9.5" width="20.0" />
+      </effect>
+      <stylesheets>
+        <URL value="@degraphStyle.css" />
+      </stylesheets>
+    </AnchorPane>
+    <Label id="nodeNameLabel" prefWidth="127.0" text="NodeName" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.5" AnchorPane.topAnchor="5.0">
+      <stylesheets>
+        <URL value="@degraphStyle.css" />
+      </stylesheets>
+    </Label>
+  </children>
+  <stylesheets>
+    <URL value="@degraphStyle.css" />
+  </stylesheets>
+</AnchorPane>
