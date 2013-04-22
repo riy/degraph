@@ -59,8 +59,9 @@ object Check {
 
             val matches = violations.isEmpty
 
-            val failureMessage = "The configuration %s contains edges in cycles or edges in violation of constraints: %s".format(conf, violations)
-            val negativeFailureMessage = "%s does not contain any violations of the constraints.".format(conf)
+            val failureMessage = """%s yields the following constraint violations: 
+%s""".format(conf, violations)
+            val negativeFailureMessage = "%s does not yield any violations of the constraints.".format(conf)
 
             new MatchResult(matches, failureMessage, negativeFailureMessage)
         }
