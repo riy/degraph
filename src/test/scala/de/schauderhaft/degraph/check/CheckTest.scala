@@ -10,6 +10,7 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.Node
+import de.schauderhaft.degraph.configuration.CycleFree
 
 @RunWith(classOf[JUnitRunner])
 class CheckTest extends FunSuite with ShouldMatchers {
@@ -51,7 +52,9 @@ class CheckTest extends FunSuite with ShouldMatchers {
 
     test("matcher accepts violation free graph for simple layering") {
         val conf = mockConfig(ascending(mod)).withSlicing(mod).allow("a", "b", "c")
-        Check.violationFree(conf).matches should be(true)
+        val matchResult = Check.violationFree(conf)
+        matchResult.matches should be(true)
+        matchResult.negatedFailureMessage should be(conf.configuration + " does not contain any violations of the constraints.")
     }
 
     for (illegalCon <- descending(mod))
