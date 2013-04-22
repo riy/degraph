@@ -6,6 +6,10 @@
     -fx-font-size: 14px;
 }
 
+.nodeTheme{
+	-fx-background-color:black;
+    -fx-font-size: 14px;
+}
 .label {
 	-fx-background-color: yellow;
     -fx-text-fill: black;

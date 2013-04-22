@@ -12,9 +12,14 @@ public class NodeLabelConverter {
 	public Set<Label> toLabel(Set<Node> nodes) {
 		Set<Label> result = new HashSet<>();
 		for (Node n : nodes) {
-			String nodeName = Labeling.apply(n, null);
+			String nodeName = getNodeName(n);
 			result.add(new Label(nodeName));
 		}
 		return result;
+	}
+
+	public String getNodeName(Node n) {
+		String nodeName = Labeling.apply(n, null);
+		return nodeName;
 	}
 }
