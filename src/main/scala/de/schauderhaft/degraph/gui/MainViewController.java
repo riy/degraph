@@ -47,25 +47,5 @@ public class MainViewController {
 		NodeController own = new NodeController();
 		mainView.getChildren().add(own);
 
-		// FXMLLoader loader = new FXMLLoader();
-		// loader.setLocation(this.location);
-		//
-		// // for (Node n : topNodes) {
-		// for (int i = 0; i < 10; i++) {
-		// try {
-		// Parent node = (Parent) loader.load(getClass().getResource(
-		// "NodeViewTemplate.fxml").openStream());
-		//
-		// Object controller = loader.getController();
-		// assert controller != null;
-		// NodeLabelConverter converter = new NodeLabelConverter();
-		// // String nodeName = converter.getNodeName(n);
-		// // node4Controller.put(nodeName, controller);
-		// mainView.getChildren().add(node);
-		// } catch (IOException e) {
-		// LOG.error(e);
-		// }
-		// }
-
 	}
 }
