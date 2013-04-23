@@ -17,6 +17,15 @@ trait Constraint {
     def violations(ss: SliceSource): Iterable[(Node, Node)]
 }
 
+case class ConstraintViolation(sliceType: String, name: String, dependencies: (String, String)*) {
+    override def toString = {
+        val formattedDeps = dependencies
+            .map(t => "%n    " + t._1 + " -> " + t._2)
+            .mkString("").format()
+        "[%s](%s):%s".format(sliceType, name, formattedDeps)
+    }
+}
+
 /**
  * constraints the graph to be cycle free for all slice types
  */
