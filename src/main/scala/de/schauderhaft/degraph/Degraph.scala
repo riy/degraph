@@ -23,7 +23,9 @@ object Degraph {
             case Left(m) => println(m)
             case Right(c) =>
                 val g = c.copy(analyzer = Analyzer).createGraph()
-                val violations = c.constraint.flatMap(_.violations(g));
+                val violations = c.constraint.
+                    flatMap(_.violations(g)).
+                    flatMap(_.dependencies);
                 if (c.display) {
                     new GuiStarter().show(new JavaGraph(g))
                 } else {

@@ -9,6 +9,7 @@ import scalax.collection.GraphPredef.anyToNode
 import scalax.collection.mutable.{ Graph => SGraph }
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.configuration.Constraint
+import de.schauderhaft.degraph.configuration.ConstraintViolation
 
 /**
  * provides a DSLish method of creating Layer instances
@@ -70,13 +71,20 @@ trait SlicedConstraint extends Constraint {
     /**
      * implemented in such a way that all dependencies of the specified slice type will be iterated and @link isViolatedBy called for each dependency
      */
-    def violations(ss: SliceSource): Set[(Node, Node)] = {
+    def violations(ss: SliceSource): Set[ConstraintViolation] = {
         val sg = ss.slice(sliceType)
-        (for {
-            eT <- sg.edges.toSeq
-            val e = eT.value
-            if (isViolatedBy(e._1, e._2))
-        } yield (e._1.value, e._2.value)).toSet
+        val deps =
+            (for {
+                eT <- sg.edges.toSeq
+                val e = eT.value
+                if (isViolatedBy(e._1, e._2))
+            } yield (e._1.value, e._2.value))
+
+        if (deps.isEmpty)
+            Set()
+        else
+            Set(ConstraintViolation(sliceType, "xxxx", deps: _*))
+
     }
 }
 

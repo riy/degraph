@@ -9,6 +9,7 @@ import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
 import de.schauderhaft.degraph.graph.Graph
 import org.scalatest.matchers.ShouldMatchers._
+import de.schauderhaft.degraph.configuration.ConstraintViolation
 
 /**
  * provides access to configurations and scalatest matchers useful when testing for dependencies.
@@ -48,7 +49,7 @@ object Check {
             val conf = constraintBuilder.configuration
             val g = conf.createGraph()
 
-            def checkForViolations: Set[(Node, Node)] = {
+            def checkForViolations: Set[ConstraintViolation] = {
                 for {
                     c <- conf.constraint
                     v <- c.violations(g)
