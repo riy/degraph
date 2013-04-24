@@ -59,20 +59,38 @@ public class MainViewController {
 		int placeX = 0;
 		int placeY = 30;
 		AnchorPane pane = new AnchorPane();
+		
 		for (Node node : topNodes) {
 
-			NodeController nodeController = new NodeController(node);
-			nodeController.setLayoutX(placeX);
-			nodeController.setLayoutY(placeY);
-			placeX += NODESPACE;
-			pane.getChildren().add(nodeController);
+			NodeController nodeController = createController(placeX, placeY,
+					node);
 
-			node4Controller.put(converter.getNodeName(node), nodeController);
+			addControllerToPane(pane, nodeController);
+
+			placeX += NODESPACE;
 			if (placeX > LINEBREAK) {
 				placeX = 0;
 				placeY = +NODESPACE;
 			}
+			
+			node4Controller.put(converter.getNodeName(node), nodeController);
 		}
+		addNodesPaneToScrollPane(pane);
+	}
+
+	private void addNodesPaneToScrollPane(AnchorPane pane) {
 		scrollPane.setContent(pane);
+	}
+
+	private void addControllerToPane(AnchorPane pane,
+			NodeController nodeController) {
+		pane.getChildren().add(nodeController);
+	}
+
+	private NodeController createController(int placeX, int placeY, Node node) {
+		NodeController nodeController = new NodeController(node);
+		nodeController.setLayoutX(placeX);
+		nodeController.setLayoutY(placeY);
+		return nodeController;
 	}
 }
