@@ -10,9 +10,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane id="mainPane" fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="400.0" prefWidth="600.0" styleClass="theme" xmlns:fx="http://javafx.com/fxml" fx:controller="de.schauderhaft.degraph.gui.MainViewController">
-  <children>
-    <MenuBar layoutX="0.0" layoutY="0.0">
+<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="400.0" prefWidth="600.0" styleClass="theme" xmlns:fx="http://javafx.com/fxml" fx:controller="de.schauderhaft.degraph.gui.MainViewController">
+  <content>
+    <MenuBar useSystemMenuBar="true">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -30,9 +30,12 @@
           </items>
         </Menu>
       </menus>
+      <stylesheets>
+        <URL value="@degraphStyle.css" />
+      </stylesheets>
     </MenuBar>
-  </children>
+  </content>
   <stylesheets>
     <URL value="@degraphStyle.css" />
   </stylesheets>
-</AnchorPane>
+</ScrollPane>

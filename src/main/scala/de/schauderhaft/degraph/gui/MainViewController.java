@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -26,8 +27,8 @@ public class MainViewController {
 	private URL location;
 
 	@FXML
-	private AnchorPane mainView;
-
+	private ScrollPane scrollPane;
+	
 	private final Map<String, Object> node4Controller = new HashMap<>();
 
 	private final Logger LOG = Logger.getLogger(MainViewController.class);
@@ -41,7 +42,7 @@ public class MainViewController {
 
 	@FXML
 	void initialize() {
-		assert mainView != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
+		assert scrollPane != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 
 		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
 		assert topNodes != null : "no data";
@@ -55,20 +56,22 @@ public class MainViewController {
 		// TODO: only for tests
 		// this ist not the solution for a real View !!
 		int placeX = 0;
-		int placeY = 0;
+		int placeY = 30;
+		AnchorPane pane = new AnchorPane();
 		for (Node node : topNodes) {
 
 			NodeController nodeController = new NodeController(node);
 			nodeController.setLayoutX(placeX);
 			nodeController.setLayoutY(placeY);
 			placeX += 150;
-			mainView.getChildren().add(nodeController);
-
+			pane.getChildren().add(nodeController);
+			
 			node4Controller.put(converter.getNodeName(node), nodeController);
-			if (placeX > 500) {
+			if (placeX > 1200) {
 				placeX = 0;
 				placeY = +100;
 			}
 		}
+		scrollPane.setContent(pane);
 	}
 }
