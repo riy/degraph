@@ -13,6 +13,7 @@ object SimpleNode {
 sealed trait Node {
     def contains(n: Node): Boolean
     def types: Set[String]
+    def name: String
 }
 
 /**
@@ -33,4 +34,5 @@ case class ParentAwareNode(vals: Node*) extends Node {
 
     def contains(n: Node) = (vals.exists(_.contains(n)))
     def types = vals.flatMap(_.types).toSet
+    def name = vals.map(_.name).mkString(" x ")
 }

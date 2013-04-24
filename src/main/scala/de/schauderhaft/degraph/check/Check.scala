@@ -9,6 +9,7 @@ import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
 import de.schauderhaft.degraph.graph.Graph
 import org.scalatest.matchers.ShouldMatchers._
+import de.schauderhaft.degraph.configuration.ConstraintViolation
 
 /**
  * provides access to configurations and scalatest matchers useful when testing for dependencies.
@@ -48,7 +49,7 @@ object Check {
             val conf = constraintBuilder.configuration
             val g = conf.createGraph()
 
-            def checkForViolations: Set[(Node, Node)] = {
+            def checkForViolations: Set[ConstraintViolation] = {
                 for {
                     c <- conf.constraint
                     v <- c.violations(g)
@@ -59,8 +60,8 @@ object Check {
 
             val matches = violations.isEmpty
 
-            val failureMessage = "The configuration %s contains edges in cycles or edges in violation of constraints: %s".format(conf, violations)
-            val negativeFailureMessage = "%s does not contain any violations of the constraints.".format(conf)
+            val failureMessage = "%s yields the following constraint violations: %s".format(conf, violations.mkString("%n").format())
+            val negativeFailureMessage = "%s does not yield any violations of the constraints.".format(conf)
 
             new MatchResult(matches, failureMessage, negativeFailureMessage)
         }

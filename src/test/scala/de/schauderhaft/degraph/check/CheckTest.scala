@@ -54,13 +54,16 @@ class CheckTest extends FunSuite with ShouldMatchers {
         val conf = mockConfig(ascending(mod)).withSlicing(mod).allow("a", "b", "c")
         val matchResult = Check.violationFree(conf)
         matchResult.matches should be(true)
-        matchResult.negatedFailureMessage should be(conf.configuration + " does not contain any violations of the constraints.")
+        matchResult.negatedFailureMessage should be(conf.configuration + " does not yield any violations of the constraints.")
     }
 
     for (illegalCon <- descending(mod))
         test("matcher detects violations for simple layering %s".format(illegalCon)) {
             val conf = mockConfig(Set(illegalCon)).withSlicing(mod).allow("a", "b", "c")
-            Check.violationFree(conf).matches should be(false)
+            val matchResult = Check.violationFree(conf)
+            matchResult.matches should be(false)
+            matchResult.failureMessage should be((
+                "%s yields the following constraint violations: [%s](a -> b -> c):%n    " + illegalCon._1.name + " -> " + illegalCon._2.name).format(conf.configuration, mod))
         }
 
     for (illegalCon <- descending(mod))

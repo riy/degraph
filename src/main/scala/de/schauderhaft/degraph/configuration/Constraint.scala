@@ -14,7 +14,17 @@ trait Constraint {
      * returns a set of (Node, Node) tuple representing violations of the constraint.
      * The nodes may refer to nodes of a slice, thus representing more than a single dependency in the orginal graph.
      */
-    def violations(ss: SliceSource): Iterable[(Node, Node)]
+    def violations(ss: SliceSource): Iterable[ConstraintViolation]
+    def shortString: String
+}
+
+case class ConstraintViolation(sliceType: String, name: String, dependencies: (Node, Node)*) {
+    override def toString = {
+        val formattedDeps = dependencies
+            .map(t => "%n    " + t._1.name + " -> " + t._2.name)
+            .mkString("").format()
+        "[%s](%s):%s".format(sliceType, name, formattedDeps)
+    }
 }
 
 /**
@@ -39,9 +49,13 @@ object CycleFree extends Constraint {
         val edges = (for {
             st <- ss.slices
             if (st != "Class")
-            d <- cyclicDependencies(ss.slice(st))
-        } yield d).toSet
+            cycDeps = cyclicDependencies(ss.slice(st))
+            if (!cycDeps.isEmpty)
+        } yield ConstraintViolation(st, shortString,
+            cycDeps.map(d => (d._1, d._2)).toSeq: _*)).toSet
 
         edges
     }
+
+    def shortString = "no cycles"
 }

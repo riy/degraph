@@ -16,6 +16,8 @@ import de.schauderhaft.degraph.check.DirectLayeringConstraint
 
 @RunWith(classOf[JUnitRunner])
 class MultiElementStrictLayerConstraintTest extends FunSuite with ShouldMatchers {
+    import ConstraintViolationTestUtil._
+
     val paramTupel = ("t", IndexedSeq(StrictLayer("a"), StrictLayer("b", "c", "d"), StrictLayer("e")))
     val cons = Seq(LayeringConstraint.tupled(paramTupel),
         DirectLayeringConstraint.tupled(paramTupel))
@@ -30,7 +32,7 @@ class MultiElementStrictLayerConstraintTest extends FunSuite with ShouldMatchers
         }
 
         test("dependencies within a multielement layer are not ok %s".format(c.getClass())) {
-            c.violations(MockSliceSource("t", "b" -> "c", "b" -> "d")) should be(Set(
+            dependenciesIn(c.violations(MockSliceSource("t", "b" -> "c", "b" -> "d"))) should be(Set(
                 (SimpleNode("t", "b"), SimpleNode("t", "c")),
                 (SimpleNode("t", "b"), SimpleNode("t", "d"))))
         }

@@ -12,6 +12,10 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.check.LenientLayer
 import de.schauderhaft.degraph.check.LayeringConstraint
+import ConstraintViolationTestUtil._
+import de.schauderhaft.degraph.check.LayeringConstraint
+import de.schauderhaft.degraph.check.LenientLayer
+import de.schauderhaft.degraph.check.StrictLayer
 
 @RunWith(classOf[JUnitRunner])
 class LayeringConstraintTest extends FunSuite with ShouldMatchers {
@@ -26,7 +30,8 @@ class LayeringConstraintTest extends FunSuite with ShouldMatchers {
     }
 
     test("reverse dependency is reported as a violation") {
-        c.violations(MockSliceSource("t", "b" -> "a")) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
+        dependenciesIn(c.violations(MockSliceSource("t", "b" -> "a"))) should
+            be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
     }
     test("dependencies in other layers are ignored") {
         c.violations(MockSliceSource("x", "b" -> "a")) should be(Set())
@@ -47,4 +52,12 @@ class LayeringConstraintTest extends FunSuite with ShouldMatchers {
         c.violations(MockSliceSource("t", "x" -> "b")) should be(Set())
     }
 
+    test("shortString with single element layers") {
+        LayeringConstraint("type", IndexedSeq(StrictLayer("a"), LenientLayer("b"))).
+            shortString should be("a -> b")
+    }
+    test("shortString with multi element layers") {
+        LayeringConstraint("type", IndexedSeq(StrictLayer("a", "x"), LenientLayer("b", "y"))).
+            shortString should be("[a, x] -> (b, y)")
+    }
 }

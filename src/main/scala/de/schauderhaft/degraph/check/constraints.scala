@@ -9,6 +9,7 @@ import scalax.collection.GraphPredef.anyToNode
 import scalax.collection.mutable.{ Graph => SGraph }
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.configuration.Constraint
+import de.schauderhaft.degraph.configuration.ConstraintViolation
 
 /**
  * provides a DSLish method of creating Layer instances
@@ -70,14 +71,38 @@ trait SlicedConstraint extends Constraint {
     /**
      * implemented in such a way that all dependencies of the specified slice type will be iterated and @link isViolatedBy called for each dependency
      */
-    def violations(ss: SliceSource): Set[(Node, Node)] = {
+    def violations(ss: SliceSource): Set[ConstraintViolation] = {
         val sg = ss.slice(sliceType)
-        (for {
-            eT <- sg.edges.toSeq
-            val e = eT.value
-            if (isViolatedBy(e._1, e._2))
-        } yield (e._1.value, e._2.value)).toSet
+        val deps =
+            (for {
+                eT <- sg.edges.toSeq
+                val e = eT.value
+                if (isViolatedBy(e._1, e._2))
+            } yield (e._1.value, e._2.value))
+
+        if (deps.isEmpty)
+            Set()
+        else
+            Set(ConstraintViolation(sliceType, shortString, deps: _*))
+
     }
+
+    private def layersToString(ls: Collection[String], start: String, end: String) =
+        if (ls.size == 1) ls.head
+        else ls.mkString(start, ", ", end)
+
+    protected val arrow: String
+
+    def shortString =
+        (for {
+            l <- slices
+            s = l match {
+                case LenientLayer(es @ _*) => layersToString(es, "(", ")")
+                case StrictLayer(es @ _*) => layersToString(es, "[", "]")
+                case _ => l.toString()
+            }
+        } yield s).mkString(" %s ".format(arrow))
+
 }
 
 /**
@@ -94,6 +119,7 @@ case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) exte
                 (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))
     }
 
+    val arrow = "->"
 }
 
 /**
@@ -109,5 +135,7 @@ case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]
                 (i1 < 0 && i2 > 0) ||
                 (i1 >= 0 && i1 < slices.size - 1 && i2 < 0)
     }
+
+    val arrow = "=>"
 }
 

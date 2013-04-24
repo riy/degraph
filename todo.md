@@ -1,8 +1,7 @@
+* better to String method for configuration
+* ConstraintViolations, with proper toString instead of simple List of dependencies
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
 * remove runtime dependency to all things test from all but the check project
-* move most of the tests in CheckTest to ConstraintCheck,
-* extend those tests to assert for the correct edges reported
-* write tests for checking errormessage
 * write release notes
 * write and automatically deploy webpage
 
