@@ -4,7 +4,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import de.schauderhaft.degraph.java.ChessCategory;
+import de.schauderhaft.degraph.java.JavaGraph;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
+import de.schauderhaft.degraph.model.SimpleNode;
 
 /**
  * open the degraph visualisation
@@ -30,6 +33,7 @@ public class GuiStarter extends javafx.application.Application {
 	}
 
 	public void show(JavaHierarchicGraph g) {
+		DataProvider.getInstance().setData(g);
 		launch(new String[0]);
 	}
 
@@ -39,8 +43,21 @@ public class GuiStarter extends javafx.application.Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Geht");
 		GuiStarter s = new GuiStarter();
-		s.show(null);
+
+		JavaGraph graph = new JavaGraph(new ChessCategory());
+		graph.connect(node("King"), node("Queen"));
+		graph.connect(node("Queen"), node("Rook"));
+		graph.connect(node("Rook"), node("Bishop"));
+		graph.connect(node("Rook"), node("Knight"));
+		graph.connect(node("Knight"), node("Pawn"));
+		graph.connect(node("Bishop"), node("Pawn"));
+
+		graph.save("chess.graphml");
+		s.show(graph);
+	}
+
+	private static SimpleNode node(String s) {
+		return new SimpleNode(s, s);
 	}
 }
