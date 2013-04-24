@@ -83,9 +83,26 @@ trait SlicedConstraint extends Constraint {
         if (deps.isEmpty)
             Set()
         else
-            Set(ConstraintViolation(sliceType, "xxxx", deps: _*))
+            Set(ConstraintViolation(sliceType, shortString, deps: _*))
 
     }
+
+    private def layersToString(ls: Collection[String], start: String, end: String) =
+        if (ls.size == 1) ls.head
+        else ls.mkString(start, ", ", end)
+
+    protected val arrow: String
+
+    def shortString =
+        (for {
+            l <- slices
+            s = l match {
+                case LenientLayer(es @ _*) => layersToString(es, "(", ")")
+                case StrictLayer(es @ _*) => layersToString(es, "[", "]")
+                case _ => l.toString()
+            }
+        } yield s).mkString(" %s ".format(arrow))
+
 }
 
 /**
@@ -102,6 +119,7 @@ case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) exte
                 (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))
     }
 
+    val arrow = "->"
 }
 
 /**
@@ -117,5 +135,7 @@ case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]
                 (i1 < 0 && i2 > 0) ||
                 (i1 >= 0 && i1 < slices.size - 1 && i2 < 0)
     }
+
+    val arrow = "=>"
 }
 

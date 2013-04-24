@@ -15,6 +15,7 @@ trait Constraint {
      * The nodes may refer to nodes of a slice, thus representing more than a single dependency in the orginal graph.
      */
     def violations(ss: SliceSource): Iterable[ConstraintViolation]
+    def shortString: String
 }
 
 case class ConstraintViolation(sliceType: String, name: String, dependencies: (Node, Node)*) {
@@ -50,9 +51,11 @@ object CycleFree extends Constraint {
             if (st != "Class")
             cycDeps = cyclicDependencies(ss.slice(st))
             if (!cycDeps.isEmpty)
-        } yield ConstraintViolation(st, "no cycles",
+        } yield ConstraintViolation(st, shortString,
             cycDeps.map(d => (d._1, d._2)).toSeq: _*)).toSet
 
         edges
     }
+
+    def shortString = "no cycles"
 }

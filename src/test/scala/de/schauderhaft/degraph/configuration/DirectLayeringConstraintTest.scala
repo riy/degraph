@@ -12,6 +12,7 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.check.LenientLayer
 import de.schauderhaft.degraph.check.DirectLayeringConstraint
+import de.schauderhaft.degraph.check.StrictLayer
 
 object ConstraintViolationTestUtil {
     def dependenciesIn(v: Set[ConstraintViolation]) = v.flatMap(_.dependencies.toSet)
@@ -55,5 +56,14 @@ class DirectLayeringConstraintTest extends FunSuite with ShouldMatchers {
     test("dependency from unknown is not ok when to middle") {
         dependenciesIn(c.violations(MockSliceSource("t", "x" -> "b"))) should
             be(Set((SimpleNode("t", "x"), SimpleNode("t", "b"))))
+    }
+
+    test("shortString with single element layers") {
+        DirectLayeringConstraint("type", IndexedSeq(StrictLayer("a"), LenientLayer("b"))).
+            shortString should be("a => b")
+    }
+    test("shortString with multi element layers") {
+        DirectLayeringConstraint("type", IndexedSeq(StrictLayer("a", "x"), LenientLayer("b", "y"))).
+            shortString should be("[a, x] => (b, y)")
     }
 }

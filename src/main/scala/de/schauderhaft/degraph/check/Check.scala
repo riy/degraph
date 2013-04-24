@@ -60,8 +60,7 @@ object Check {
 
             val matches = violations.isEmpty
 
-            val failureMessage = """%s yields the following constraint violations: 
-%s""".format(conf, violations)
+            val failureMessage = "%s yields the following constraint violations: %s".format(conf, violations.mkString("%n").format())
             val negativeFailureMessage = "%s does not yield any violations of the constraints.".format(conf)
 
             new MatchResult(matches, failureMessage, negativeFailureMessage)

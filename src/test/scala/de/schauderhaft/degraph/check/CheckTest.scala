@@ -62,9 +62,8 @@ class CheckTest extends FunSuite with ShouldMatchers {
             val conf = mockConfig(Set(illegalCon)).withSlicing(mod).allow("a", "b", "c")
             val matchResult = Check.violationFree(conf)
             matchResult.matches should be(false)
-            matchResult.failureMessage should be(conf.configuration +
-                """ yields the following constraint violations: 
-                   [""" + mod + "](a -> b -> c): " + illegalCon._1.name + " -> " + illegalCon._2.name)
+            matchResult.failureMessage should be((
+                "%s yields the following constraint violations: [%s](a -> b -> c):%n    " + illegalCon._1.name + " -> " + illegalCon._2.name).format(conf.configuration, mod))
         }
 
     for (illegalCon <- descending(mod))
