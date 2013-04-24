@@ -12,6 +12,7 @@ import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.check.LenientLayer
 import de.schauderhaft.degraph.check.LayeringConstraint
+import ConstraintViolationTestUtil._
 
 @RunWith(classOf[JUnitRunner])
 class LayeringConstraintTest extends FunSuite with ShouldMatchers {
@@ -26,8 +27,8 @@ class LayeringConstraintTest extends FunSuite with ShouldMatchers {
     }
 
     test("reverse dependency is reported as a violation") {
-        val violations = c.violations(MockSliceSource("t", "b" -> "a"))
-        violations.flatMap(_.dependencies.toSet) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
+        dependenciesIn(c.violations(MockSliceSource("t", "b" -> "a"))) should
+            be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
     }
     test("dependencies in other layers are ignored") {
         c.violations(MockSliceSource("x", "b" -> "a")) should be(Set())

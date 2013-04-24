@@ -18,6 +18,8 @@ import de.schauderhaft.degraph.configuration.CycleFree
 
 @RunWith(classOf[JUnitRunner])
 class CycleFreeTest extends FunSuite with ShouldMatchers {
+    import de.schauderhaft.degraph.configuration.ConstraintViolationTestUtil._
+
     test("an empty graph has no cycles") {
         val g = new Graph()
         CycleFree.violations(g) should be(Set())
@@ -36,7 +38,7 @@ class CycleFreeTest extends FunSuite with ShouldMatchers {
         g.connect(classNode("de.p2.B1"), classNode("de.p3.C2"))
         g.connect(classNode("de.p3.C1"), classNode("de.p1.A2"))
 
-        CycleFree.violations(g) should be(Set(
+        dependenciesIn(CycleFree.violations(g)) should be(Set(
             (packageNode("de.p1"), packageNode("de.p2")),
             (packageNode("de.p2"), packageNode("de.p3")),
             (packageNode("de.p3"), packageNode("de.p1"))))
@@ -48,7 +50,7 @@ class CycleFreeTest extends FunSuite with ShouldMatchers {
         g.connect(classNode("de.p2.B1"), classNode("de.p3.C2"))
         g.connect(classNode("de.p3.C1"), classNode("de.p1.A2"))
 
-        CycleFree.violations(g) should be(Set(
+        dependenciesIn(CycleFree.violations(g)) should be(Set(
             (packageNode("de.p1"), packageNode("de.p2")),
             (packageNode("de.p2"), packageNode("de.p3")),
             (packageNode("de.p3"), packageNode("de.p1"))))
@@ -62,7 +64,7 @@ class CycleFreeTest extends FunSuite with ShouldMatchers {
         g.connect(classNode("com.p1.A1"), classNode("com.p2.B2"))
         g.connect(classNode("com.p2.B1"), classNode("com.p1.C2"))
 
-        CycleFree.violations(g) should be(Set(
+        dependenciesIn(CycleFree.violations(g)) should be(Set(
             (packageNode("de.p1"), packageNode("de.p2")),
             (packageNode("de.p2"), packageNode("de.p3")),
             (packageNode("de.p3"), packageNode("de.p1")),
