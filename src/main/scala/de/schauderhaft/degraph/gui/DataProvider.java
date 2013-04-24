@@ -13,7 +13,7 @@ import de.schauderhaft.degraph.model.Node;
 public class DataProvider {
 
 	private JavaHierarchicGraph graph;
-
+	// TODO: singleton entfernen!
 	private static DataProvider singelton = new DataProvider();
 
 	public static DataProvider getInstance() {
@@ -36,4 +36,13 @@ public class DataProvider {
 		NodeLabelConverter converter = new NodeLabelConverter();
 		return converter.toLabel(nodes).iterator().next();
 	}
+
+	public Set<Node> getConnectionsOf(Node node) {
+		return graph.connectionsOf(node);
+	}
+
+	public Set<Node> getContentsOf(Node node) {
+		return graph.contentsOf(node);
+	}
+
 }
