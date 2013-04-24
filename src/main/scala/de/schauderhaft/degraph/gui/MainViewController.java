@@ -28,7 +28,7 @@ public class MainViewController {
 
 	@FXML
 	private ScrollPane scrollPane;
-	
+
 	private final Map<String, Object> node4Controller = new HashMap<>();
 
 	private final Logger LOG = Logger.getLogger(MainViewController.class);
@@ -53,8 +53,9 @@ public class MainViewController {
 
 	private void organizeNodes(Set<Node> topNodes) {
 
-		// TODO: only for tests
-		// this ist not the solution for a real View !!
+		// TODO: make dynamic linebreak depends an sum of node
+		final int LINEBREAK = 800;
+		final int NODESPACE = 200;
 		int placeX = 0;
 		int placeY = 30;
 		AnchorPane pane = new AnchorPane();
@@ -63,13 +64,13 @@ public class MainViewController {
 			NodeController nodeController = new NodeController(node);
 			nodeController.setLayoutX(placeX);
 			nodeController.setLayoutY(placeY);
-			placeX += 150;
+			placeX += NODESPACE;
 			pane.getChildren().add(nodeController);
-			
+
 			node4Controller.put(converter.getNodeName(node), nodeController);
-			if (placeX > 1200) {
+			if (placeX > LINEBREAK) {
 				placeX = 0;
-				placeY = +100;
+				placeY = +NODESPACE;
 			}
 		}
 		scrollPane.setContent(pane);
