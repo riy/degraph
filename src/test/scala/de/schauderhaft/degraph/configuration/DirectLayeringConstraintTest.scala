@@ -15,6 +15,7 @@ import de.schauderhaft.degraph.check.DirectLayeringConstraint
 
 @RunWith(classOf[JUnitRunner])
 class DirectLayeringConstraintTest extends FunSuite with ShouldMatchers {
+
     val c = DirectLayeringConstraint("t", IndexedSeq(LenientLayer("a"), LenientLayer("b"), LenientLayer("c")))
 
     test("simple violation free graph returns empty Set of violations") {
@@ -22,11 +23,15 @@ class DirectLayeringConstraintTest extends FunSuite with ShouldMatchers {
     }
 
     test("it's not ok to skip layers") {
-        c.violations(MockSliceSource("t", "a" -> "c")) should be(Set((SimpleNode("t", "a"), SimpleNode("t", "c"))))
+        val violations = c.violations(MockSliceSource("t", "a" -> "c"))
+
+        violations.flatMap(_.dependencies.toSet) should be(Set((SimpleNode("t", "a"), SimpleNode("t", "c"))))
     }
 
     test("reverse dependency is reported as a violation") {
-        c.violations(MockSliceSource("t", "b" -> "a")) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
+        val violations = c.violations(MockSliceSource("t", "b" -> "a"))
+
+        violations.flatMap(_.dependencies.toSet) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "a"))))
     }
     test("dependencies in other layers are ignored") {
         c.violations(MockSliceSource("x", "b" -> "a")) should be(Set())
@@ -40,10 +45,13 @@ class DirectLayeringConstraintTest extends FunSuite with ShouldMatchers {
         c.violations(MockSliceSource("t", "x" -> "a")) should be(Set())
     }
     test("dependency to unknown is not ok when from middle") {
-        c.violations(MockSliceSource("t", "b" -> "x")) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "x"))))
+        val violations = c.violations(MockSliceSource("t", "b" -> "x"))
+
+        violations.flatMap(_.dependencies.toSet) should be(Set((SimpleNode("t", "b"), SimpleNode("t", "x"))))
     }
 
     test("dependency from unknown is not ok when to middle") {
-        c.violations(MockSliceSource("t", "x" -> "b")) should be(Set((SimpleNode("t", "x"), SimpleNode("t", "b"))))
+        val violations = c.violations(MockSliceSource("t", "x" -> "b"))
+        violations.flatMap(_.dependencies.toSet) should be(Set((SimpleNode("t", "x"), SimpleNode("t", "b"))))
     }
 }
