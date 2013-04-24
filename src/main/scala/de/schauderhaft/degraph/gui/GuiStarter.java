@@ -4,10 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import de.schauderhaft.degraph.java.ChessCategory;
-import de.schauderhaft.degraph.java.JavaGraph;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
-import de.schauderhaft.degraph.model.SimpleNode;
 
 /**
  * open the degraph visualisation
@@ -21,7 +18,7 @@ public class GuiStarter extends javafx.application.Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("degraph");
+		primaryStage.setTitle("Degraph");
 
 		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
 
