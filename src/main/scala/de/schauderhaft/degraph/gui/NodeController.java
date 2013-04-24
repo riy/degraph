@@ -37,7 +37,7 @@ public class NodeController extends AnchorPane {
 	public NodeController(Node node) {
 		this.node = node;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-				"NodeViewTemplate.fxml"));
+				"NodeView.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 
