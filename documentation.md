@@ -228,7 +228,7 @@ Pattern matching in the definition of slices uses an Ant like syntax for specify
 
 ### Working with yed ###
 
-Degraph generates `.graphml` files that are intended to be rendered using [yed](yed.yworks.com). Yed is a general purpose graph editor with strong layout capabilities. Lots of its capabilities aren't needed when working with files from Degraph. So this article describes an efficient way to work with it.
+Degraph generates `.graphml` files that are intended to be rendered using [yed](http://yed.yworks.com). Yed is a general purpose graph editor with strong layout capabilities. Lots of its capabilities aren't needed when working with files from Degraph. So this article describes an efficient way to work with it.
 
 I'll assume you have downloaded and installed yed. So go ahead and start it up.
 
