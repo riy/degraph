@@ -9,7 +9,6 @@ import de.schauderhaft.degraph.writer.EdgeStyle
 import de.schauderhaft.degraph.writer.PredicateStyler
 import de.schauderhaft.degraph.writer.Writer
 import de.schauderhaft.degraph.writer.SlicePredicate
-import de.schauderhaft.degraph.gui.GuiStarter
 import de.schauderhaft.degraph.java.JavaGraph
 
 /**
@@ -27,7 +26,7 @@ object Degraph {
                     flatMap(_.violations(g)).
                     flatMap(_.dependencies);
                 if (c.display) {
-                    new GuiStarter().show(new JavaGraph(g))
+                    println("Sorry no GUI available")
                 } else {
                     val styler = PredicateStyler.styler(new SlicePredicate(c.slicing, violations), EdgeStyle(RED, 2.0), DefaultEdgeStyle)
                     val xml = (new Writer(styler)).toXml(g)
