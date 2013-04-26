@@ -101,10 +101,9 @@ case class Configuration(
             case Some(s) => line(l, s)
         }
 
-        def lineS(l: String, c: Iterable[String]) = c match {
-            case Seq() => ""
-            case _ => line(l, c.mkString(", "))
-        }
+        def lineS(l: String, c: Iterable[String]) =
+            if (c.isEmpty) ""
+            else line(l, c.mkString(", "))
 
         "Configuration{%s%s%s%s%s%s}".format(
             lineO("classpath", classpath),
