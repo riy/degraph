@@ -10,9 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-
-import org.apache.log4j.Logger;
-
 import de.schauderhaft.degraph.model.Node;
 
 /**
@@ -30,8 +27,6 @@ public class MainViewController {
 	private ScrollPane scrollPane;
 
 	private final Map<String, Object> node4Controller = new HashMap<>();
-
-	private final Logger LOG = Logger.getLogger(MainViewController.class);
 
 	private final NodeLabelConverter converter = new NodeLabelConverter();
 
@@ -59,7 +54,7 @@ public class MainViewController {
 		int placeX = 0;
 		int placeY = 30;
 		AnchorPane pane = new AnchorPane();
-		
+
 		for (Node node : topNodes) {
 
 			NodeController nodeController = createController(placeX, placeY,
@@ -72,7 +67,7 @@ public class MainViewController {
 				placeX = 0;
 				placeY = +NODESPACE;
 			}
-			
+
 			node4Controller.put(converter.getNodeName(node), nodeController);
 		}
 		addNodesPaneToScrollPane(pane);
@@ -94,6 +89,3 @@ public class MainViewController {
 		return nodeController;
 	}
 }
-
-
-
