@@ -18,7 +18,7 @@ public class GuiStarter extends javafx.application.Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("degraph");
+		primaryStage.setTitle("Degraph");
 
 		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
 
@@ -30,17 +30,8 @@ public class GuiStarter extends javafx.application.Application {
 	}
 
 	public void show(JavaHierarchicGraph g) {
+		DataProvider.getInstance().setData(g);
 		launch(new String[0]);
 	}
 
-	/**
-	 * TODO: delete this entrypoint
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.out.println("Geht");
-		GuiStarter s = new GuiStarter();
-		s.show(null);
-	}
 }

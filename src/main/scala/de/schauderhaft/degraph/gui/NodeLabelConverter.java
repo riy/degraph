@@ -17,4 +17,9 @@ public class NodeLabelConverter {
 		}
 		return result;
 	}
+
+	public String getNodeName(Node n) {
+		String nodeName = Labeling.apply(n, null);
+		return nodeName;
+	}
 }
