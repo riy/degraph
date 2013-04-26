@@ -1,5 +1,4 @@
 * better to String method for configuration
-* ConstraintViolations, with proper toString instead of simple List of dependencies
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
 * remove runtime dependency to all things test from all but the check project
 * write release notes
