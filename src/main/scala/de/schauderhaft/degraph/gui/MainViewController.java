@@ -68,9 +68,17 @@ public class MainViewController {
 				placeY = +NODESPACE;
 			}
 
+			organizeDependencies(node);
+
 			node4Controller.put(converter.getNodeName(node), nodeController);
 		}
 		addNodesPaneToScrollPane(pane);
+	}
+
+	private void organizeDependencies(Node node) {
+
+		Set<Node> connectionsOf = DataProvider.getInstance().getConnectionsOf(
+				node);
 	}
 
 	private void addNodesPaneToScrollPane(AnchorPane pane) {
