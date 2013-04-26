@@ -5,8 +5,9 @@ import de.schauderhaft.degraph.java.JavaGraph;
 import de.schauderhaft.degraph.model.SimpleNode;
 
 public class GuiStarterTest {
+
 	/**
-	 * TODO: delete this entrypoint
+	 * Start gui with chessexample
 	 * 
 	 * @param args
 	 */
@@ -24,6 +25,7 @@ public class GuiStarterTest {
 		graph.save("chess.graphml");
 		s.show(graph);
 	}
+
 	private static SimpleNode node(String s) {
 		return new SimpleNode(s, s);
 	}
