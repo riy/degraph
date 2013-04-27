@@ -9,8 +9,8 @@
     <meta name="description" content="{{page.metaContent}}">
     <meta name="author" content="Jens Schauder">
 
-	
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+	{% include header.html %}
+		
 	<link rel="stylesheet" type="text/css" href="stylesheets/jquery.jqzoom.css" >
     <style type="text/css">
       body {
@@ -37,8 +37,6 @@
 	}
     </style>
     
-	{% include header.html %}
-	
   </head>
   <body>
 {{content}}
