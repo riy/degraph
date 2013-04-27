@@ -456,17 +456,3 @@ You can find the source code to [Degraph at github](https://github.com/schauder/
 Want to kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
 
 Don't want to miss the next release? Follow the [author on twitter](http://www.twitter.com/jensschauder).
-
-<!-- scripts -->
-
-<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'>
-</script>  
-
-<script type='text/javascript' src='javascripts/jquery.jqzoom-core-pack.js'>
-</script> 
-
-<script type='text/javascript' >
-$(document).ready(function(){  
-    $('.zoomable').jqzoom();  
-}); 
-</script>
