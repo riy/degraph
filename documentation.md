@@ -1,16 +1,8 @@
 ---
-layout: page
+layout: simplPage
 title: Degraph Manual
 metaContent: The manual for Degraph, a tool for visulizing and testing package dependencies in JVM code.
 ---
-
-<link rel="stylesheet" type="text/css" href="stylesheets/jquery.jqzoom.css" />
-<style>
-    .flowBreak
-	{
-		clear:both
-	}
-</style>
 
 # Degraph Manual #
 
