@@ -4,7 +4,7 @@ import de.schauderhaft.degraph.java.ChessCategory;
 import de.schauderhaft.degraph.java.JavaGraph;
 import de.schauderhaft.degraph.model.SimpleNode;
 
-public class GuiStarterTest {
+public class GuiStarterDemo {
 
 	/**
 	 * Start gui with chessexample
