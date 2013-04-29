@@ -95,8 +95,7 @@ public class MainViewController extends ScrollPane {
 	}
 
 	private void organizeDependencies(Node node) {
-
-		Set<Node> connectionsOf = graph.connectionsOf(node);
+		// TODO: have to be implemented
 	}
 
 	private void addNodesPaneToScrollPane(AnchorPane pane) {
