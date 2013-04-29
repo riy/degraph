@@ -1,5 +1,6 @@
 package de.schauderhaft.degraph.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,16 +8,18 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 import de.schauderhaft.degraph.model.Node;
 
 /**
  * Controller for the main window which includes 0-n nodeViews
  * 
  */
-public class MainViewController {
+public class MainViewController extends ScrollPane {
 	@FXML
 	private ResourceBundle resources;
 
@@ -30,6 +33,22 @@ public class MainViewController {
 
 	private final NodeLabelConverter converter = new NodeLabelConverter();
 
+	private final JavaHierarchicGraph graph;
+
+	public MainViewController(JavaHierarchicGraph graph) {
+		this.graph = graph;
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+				"MainView.fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+
+		try {
+			fxmlLoader.load();
+		} catch (IOException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	@FXML
 	void onMouseClicked(MouseEvent event) {
 		System.out.println("KLickMainView");
@@ -39,7 +58,7 @@ public class MainViewController {
 	void initialize() {
 		assert scrollPane != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 
-		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
+		Set<Node> topNodes = graph.topNodes();
 		assert topNodes != null : "no data";
 
 		organizeNodes(topNodes);
@@ -77,8 +96,7 @@ public class MainViewController {
 
 	private void organizeDependencies(Node node) {
 
-		Set<Node> connectionsOf = DataProvider.getInstance().getConnectionsOf(
-				node);
+		Set<Node> connectionsOf = graph.connectionsOf(node);
 	}
 
 	private void addNodesPaneToScrollPane(AnchorPane pane) {
