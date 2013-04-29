@@ -29,7 +29,7 @@ public class NodeController extends AnchorPane {
 	@FXML
 	void initialize() {
 
-		Label label = (Label) this.lookup("#nodeNameLabel");
+		Label label = (Label) this.lookup(UiConst.NODE_NAME_LABEL);
 		label.setText(converter.getNodeName(node));
 
 	}
