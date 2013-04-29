@@ -1,9 +1,9 @@
-* better to String method for configuration
-* ConstraintViolations, with proper toString instead of simple List of dependencies
+* nicely format documentation
+* write release notes
+
+* speed up tests
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
 * remove runtime dependency to all things test from all but the check project
-* write release notes
-* write and automatically deploy webpage
 
 * test and cleanup malformed Configuration
 * refactor Categories to Slicing

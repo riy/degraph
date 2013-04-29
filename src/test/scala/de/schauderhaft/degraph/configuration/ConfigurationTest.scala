@@ -88,6 +88,31 @@ class ConfigurationTest extends FunSuite with ShouldMatchers {
             Some("output")) should be('valid)
     }
 
+    private def makeRegex(s: String) = "(?s)" + s.
+        replace("{", "\\{").
+        replace("}", "\\}").
+        replace("*", ".*")
+
+    test("toString is nice and readabled for empty config") {
+        Configuration(constraint = Set()).toString should fullyMatch regex (
+            makeRegex("Configuration{*}"))
+    }
+
+    test("toString is nice and readabled for full config") {
+
+        val expected = makeRegex(
+            """Configuration{*classpath = ccc*includes = iii*excludes = eee*categories = ca*nnn*ppp*output = ooo*constraints = no cycles*}""")
+
+        Configuration(
+            classpath = Some("ccc"),
+            includes = Seq("iii"),
+            excludes = Seq("eee"),
+            categories = Map("ca" -> Seq(NamedPattern("nnn", "ppp"))),
+            output = Some("ooo"),
+            constraint = Set(CycleFree)).
+            toString should fullyMatch regex (expected)
+    }
+
     class SpyAnalyze() extends AnalyzerLike {
         var classPath: String = ""
         var categorizer: Node => Node = (x) => x.asInstanceOf[Node]

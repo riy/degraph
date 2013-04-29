@@ -92,6 +92,27 @@ case class Configuration(
 
     private[this] def buildCategorizer(slicing: String, groupings: Seq[Pattern]): (AnyRef => Node) =
         new CombinedSlicer(groupings.map(toSlicer(slicing, _)): _*)
+
+    override def toString = {
+        def line(l: String, v: String) = l + " = " + v + "%n".format()
+
+        def lineO(l: String, c: Option[String]) = c match {
+            case None => ""
+            case Some(s) => line(l, s)
+        }
+
+        def lineS(l: String, c: Iterable[String]) =
+            if (c.isEmpty) ""
+            else line(l, c.mkString(", "))
+
+        "Configuration{%s%s%s%s%s%s}".format(
+            lineO("classpath", classpath),
+            lineS("includes", includes),
+            lineS("excludes", excludes),
+            lineS("categories", categories.map(t => t._1 + " " + t._2.mkString(", "))),
+            lineS("output", output),
+            lineS("constraints", constraint.map(_.shortString)))
+    }
 }
 
 sealed trait Pattern {
