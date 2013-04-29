@@ -11,18 +11,20 @@ import de.schauderhaft.degraph.java.JavaHierarchicGraph;
  */
 public class GuiStarter extends javafx.application.Application {
 
+	private static JavaHierarchicGraph graph;
+
 	public GuiStarter() {
 
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		if (graph == null) {
+			throw new RuntimeException("JavaHierarchicGraph is null!");
+		}
 		primaryStage.setTitle("Degraph");
 
-		MainViewController controller = new MainViewController();
-		Parent root = controller;
-		// Parent root =
-		// FXMLLoader.load(getClass().getResource("MainView.fxml"));
+		Parent root = new MainViewController(graph);
 
 		// Adding HBox to the scene
 		Scene scene = new Scene(root, 800, 600);
@@ -31,8 +33,8 @@ public class GuiStarter extends javafx.application.Application {
 
 	}
 
-	public void show(JavaHierarchicGraph g) {
-		DataProvider.getInstance().setData(g);
+	public void show(JavaHierarchicGraph graph) {
+		GuiStarter.graph = graph;
 		launch(new String[0]);
 	}
 

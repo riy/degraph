@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 import de.schauderhaft.degraph.model.Node;
 
 /**
@@ -32,7 +33,10 @@ public class MainViewController extends ScrollPane {
 
 	private final NodeLabelConverter converter = new NodeLabelConverter();
 
-	public MainViewController() {
+	private final JavaHierarchicGraph graph;
+
+	public MainViewController(JavaHierarchicGraph graph) {
+		this.graph = graph;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
 				"MainView.fxml"));
 		fxmlLoader.setRoot(this);
@@ -54,7 +58,7 @@ public class MainViewController extends ScrollPane {
 	void initialize() {
 		assert scrollPane != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
 
-		Set<Node> topNodes = DataProvider.getInstance().getTopNodes();
+		Set<Node> topNodes = graph.topNodes();
 		assert topNodes != null : "no data";
 
 		organizeNodes(topNodes);
@@ -92,8 +96,7 @@ public class MainViewController extends ScrollPane {
 
 	private void organizeDependencies(Node node) {
 
-		Set<Node> connectionsOf = DataProvider.getInstance().getConnectionsOf(
-				node);
+		Set<Node> connectionsOf = graph.connectionsOf(node);
 	}
 
 	private void addNodesPaneToScrollPane(AnchorPane pane) {
