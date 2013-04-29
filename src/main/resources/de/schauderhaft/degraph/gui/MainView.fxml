@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 
-<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="400.0" prefWidth="600.0" styleClass="theme" xmlns:fx="http://javafx.com/fxml" fx:controller="de.schauderhaft.degraph.gui.MainViewController">
+<fx:root type="javafx.scene.control.ScrollPane" fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="400.0" prefWidth="600.0" styleClass="theme" xmlns:fx="http://javafx.com/fxml" >
   <content>
     <MenuBar useSystemMenuBar="true">
       <menus>
@@ -38,4 +38,4 @@
   <stylesheets>
     <URL value="@degraphStyle.css" />
   </stylesheets>
-</ScrollPane>
+</fx:root>
