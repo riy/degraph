@@ -13,10 +13,7 @@
 		
 	<link rel="stylesheet" type="text/css" href="stylesheets/jquery.jqzoom.css" >
     <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
+
       .sidebar-nav {
         padding: 9px 0;
       }
@@ -41,8 +38,22 @@
     
   </head>
   <body>
+  <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li><a href="index.html">Degraph Home</a></li>
+              <li><a href="documentation.html">Manual</a></li>
+              <li><a href="download.html">Download</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
 {{content}}
-  
+        </div>
+      </div>
+  </div>
   
 <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js'>
 </script>  
