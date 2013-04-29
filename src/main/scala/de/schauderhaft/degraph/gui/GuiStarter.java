@@ -20,7 +20,7 @@ public class GuiStarter extends javafx.application.Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		if (graph == null) {
-			throw new RuntimeException("JavaHierarchicGraph is null!");
+			throw new NullPointerException("JavaHierarchicGraph is null!");
 		}
 		primaryStage.setTitle("Degraph");
 
