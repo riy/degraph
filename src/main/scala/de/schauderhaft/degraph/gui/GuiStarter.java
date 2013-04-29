@@ -25,8 +25,7 @@ public class GuiStarter extends javafx.application.Application {
 		primaryStage.setTitle("Degraph");
 
 		Parent rootController = new MainViewController(graph);
-
-		// Adding HBox to the scene
+		// Create new Scene with mainController and window startsize
 		Scene scene = new Scene(rootController, 800, 600);
 		primaryStage.setScene(scene);
 		primaryStage.show();
