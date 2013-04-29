@@ -1,6 +1,8 @@
 package de.schauderhaft.degraph.gui;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import javafx.scene.control.Label;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,5 +30,11 @@ public class NodeControllerTest {
 	public void shouldHaveID() {
 		javafx.scene.Node node = underTest.lookup(UiConst.NODE_NAME_LABEL);
 		assertNotNull(node);
+	}
+
+	@Test
+	public void shouldBeALabelAtID() {
+		javafx.scene.Node node = underTest.lookup(UiConst.NODE_NAME_LABEL);
+		assertTrue(node instanceof Label);
 	}
 }
