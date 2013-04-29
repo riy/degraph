@@ -1,6 +1,5 @@
 package de.schauderhaft.degraph.gui;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,7 +19,10 @@ public class GuiStarter extends javafx.application.Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Degraph");
 
-		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+		MainViewController controller = new MainViewController();
+		Parent root = controller;
+		// Parent root =
+		// FXMLLoader.load(getClass().getResource("MainView.fxml"));
 
 		// Adding HBox to the scene
 		Scene scene = new Scene(root, 800, 600);

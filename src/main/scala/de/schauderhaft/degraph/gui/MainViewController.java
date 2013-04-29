@@ -1,5 +1,6 @@
 package de.schauderhaft.degraph.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +18,7 @@ import de.schauderhaft.degraph.model.Node;
  * Controller for the main window which includes 0-n nodeViews
  * 
  */
-public class MainViewController {
+public class MainViewController extends ScrollPane {
 	@FXML
 	private ResourceBundle resources;
 
@@ -29,6 +31,19 @@ public class MainViewController {
 	private final Map<String, Object> node4Controller = new HashMap<>();
 
 	private final NodeLabelConverter converter = new NodeLabelConverter();
+
+	public MainViewController() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
+				"MainView.fxml"));
+		fxmlLoader.setRoot(this);
+		fxmlLoader.setController(this);
+
+		try {
+			fxmlLoader.load();
+		} catch (IOException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
