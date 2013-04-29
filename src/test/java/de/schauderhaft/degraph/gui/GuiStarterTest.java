@@ -19,21 +19,9 @@ public class GuiStarterTest {
 		assertNotNull(underTest);
 	}
 
-	// @Test(expected = NullPointerException.class)
-	// public void shouldGetException1() throws Exception {
-	// underTest.show(null);
-	// underTest.start(null);
-	//
-	// }
-	//
-	// @Test
-	// public void shouldGetException2() {
-	// underTest.show(null);
-	//
-	// try {
-	// underTest.start(null);
-	// } catch (Exception e) {
-	// assertTrue(e instanceof NullPointerException);
-	// }
-	// }
+	@Test(expected = NullPointerException.class)
+	public void shouldGetException1() throws Exception {
+		underTest.start(null);
+	}
+
 }
