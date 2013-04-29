@@ -2,6 +2,7 @@ package de.schauderhaft.degraph.gui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
@@ -35,4 +36,10 @@ public class MainViewControllerTest {
 		assertEquals(AnchorPane.class, content.getClass());
 	}
 
+	@Test
+	public void contentShouldHaveChildren() {
+		AnchorPane anchorPane = (AnchorPane) underTest.getContent();
+		assertTrue(anchorPane.getChildren() != null);
+
+	}
 }
