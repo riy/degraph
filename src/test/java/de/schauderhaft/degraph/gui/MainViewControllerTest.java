@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
@@ -57,5 +58,13 @@ public class MainViewControllerTest {
 	public void contentShouldHaveSixChildren() {
 		AnchorPane anchorPane = (AnchorPane) underTest.getContent();
 		assertEquals(6, anchorPane.getChildren().size());
+	}
+
+	@Test
+	public void childShouldBeNodeController() {
+		ObservableList<Node> children = ((AnchorPane) underTest.getContent())
+				.getChildren();
+		Node node = children.get(0);
+		assertEquals(NodeController.class, node.getClass());
 	}
 }
