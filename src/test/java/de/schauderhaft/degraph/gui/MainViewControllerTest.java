@@ -12,6 +12,10 @@ import org.junit.Test;
 
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 
+/**
+ * Default - Graph for tests is the chess-graph
+ * 
+ */
 public class MainViewControllerTest {
 
 	private MainViewController underTest;
@@ -49,4 +53,9 @@ public class MainViewControllerTest {
 		assertFalse(anchorPane.getChildren().isEmpty());
 	}
 
+	@Test
+	public void contentShouldHaveSixChildren() {
+		AnchorPane anchorPane = (AnchorPane) underTest.getContent();
+		assertEquals(6, anchorPane.getChildren().size());
+	}
 }
