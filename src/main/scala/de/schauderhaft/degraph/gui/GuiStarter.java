@@ -19,17 +19,22 @@ public class GuiStarter extends javafx.application.Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		if (graph == null) {
-			throw new NullPointerException("JavaHierarchicGraph is null!");
+		try {
+
+			if (graph == null) {
+				throw new NullPointerException("JavaHierarchicGraph is null!");
+			}
+			primaryStage.setTitle("Degraph");
+
+			Parent rootController = new MainViewController(graph);
+			// Create new Scene with mainController and window startsize
+			Scene scene = new Scene(rootController, 800, 600);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		} finally {
+			graph = null;
 		}
-		primaryStage.setTitle("Degraph");
-
-		Parent rootController = new MainViewController(graph);
-		// Create new Scene with mainController and window startsize
-		Scene scene = new Scene(rootController, 800, 600);
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
 	}
 
 	public void show(JavaHierarchicGraph graph) {
