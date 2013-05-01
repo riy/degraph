@@ -17,11 +17,11 @@ import de.schauderhaft.degraph.model.Node;
 public class VisualizeNode {
 
 	private final Node node;
-	private final Point defaultSize;
-	private final Point position;
+	private final NodeSize defaultSize;
+	private final NodePosition position;
 	private final Set<Node> children;
 
-	public VisualizeNode(Point size, Point position, Node node,
+	public VisualizeNode(NodeSize size, NodePosition position, Node node,
 			Set<Node> children) {
 		this.node = node;
 		this.defaultSize = size;

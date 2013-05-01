@@ -50,6 +50,11 @@ public class OrganizeNodesTest {
 
 	}
 
+	@Test
+	public void vNodesShouldntOverlapped() {
+
+	}
+
 	private Set<Node> getSampleData() {
 		return SampleGraph.getChessgraph().topNodes();
 	}

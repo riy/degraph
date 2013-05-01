@@ -1,6 +1,5 @@
 package de.schauderhaft.degraph.gui;
 
-import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,8 +7,8 @@ import de.schauderhaft.degraph.model.Node;
 
 public class OrganizeNodes {
 
-	int nodeSize;
-	int lineBreak;
+	private final int nodeSize;
+	private final int lineBreak;
 
 	public OrganizeNodes(int nodeSize, int lineBreak) {
 		this.nodeSize = nodeSize;
@@ -27,12 +26,23 @@ public class OrganizeNodes {
 		if (nodes == null) {
 			return result;
 		}
-
+		// START HACK - dont REVIEW, simple Layout!
+		int x = 0;
+		int y = 0;
+		NodeSize nSize = new NodeSize(nodeSize, 40);
 		for (Node node : nodes) {
-			result.add(new VisualizeNode(new Point(2, 3), new Point(10, 10),
-					node, new HashSet<Node>()));
+
+			result.add(new VisualizeNode(nSize, new NodePosition(x, y), node,
+					new HashSet<Node>()));
+
+			if (x < lineBreak) {
+				x += nodeSize + 40;
+			} else {
+				x = 0;
+				y += nodeSize + 40;
+			}
 		}
+		// END OF HACK
 		return result;
 	}
-
 }

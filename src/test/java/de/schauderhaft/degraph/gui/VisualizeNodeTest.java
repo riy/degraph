@@ -18,8 +18,8 @@ public class VisualizeNodeTest {
 
 	private VisualizeNode vNode = null;
 	private static Node node;
-	private static Point DEFAULT_SIZE = new Point(200, 30);
-	private static Point SAMPLE_POSITION = new Point(22, 33);
+	private static NodeSize DEFAULT_SIZE = new NodeSize(200, 30);
+	private static NodePosition SAMPLE_POSITION = new NodePosition(22, 33);
 
 	@BeforeClass
 	public static void initNode() {
@@ -54,16 +54,16 @@ public class VisualizeNodeTest {
 	@Test
 	public void posxShouldbe3() {
 		int posX = 3;
-		vNode = new VisualizeNode(DEFAULT_SIZE, new Point(posX, 1), node,
-				new HashSet<Node>());
+		vNode = new VisualizeNode(DEFAULT_SIZE, new NodePosition(posX, 1),
+				node, new HashSet<Node>());
 		assertEquals(posX, vNode.getX());
 	}
 
 	@Test
 	public void posyShouldBe1() {
 		int posY = 1;
-		vNode = new VisualizeNode(DEFAULT_SIZE, new Point(3, posY), node,
-				new HashSet<Node>());
+		vNode = new VisualizeNode(DEFAULT_SIZE, new NodePosition(3, posY),
+				node, new HashSet<Node>());
 		assertEquals(posY, vNode.getY());
 
 	}
