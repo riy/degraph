@@ -16,9 +16,11 @@ import de.schauderhaft.degraph.model.Node;
 public class VisualizeNode {
 
 	private final Node node;
+	private final Point defaultSize;
 
-	public VisualizeNode(Node node) {
+	public VisualizeNode(Point size, Node node) {
 		this.node = node;
+		this.defaultSize = size;
 	}
 
 	public Node getNode() {
@@ -43,7 +45,7 @@ public class VisualizeNode {
 	}
 
 	public Point getSize() {
-		return new Point();
+		return defaultSize;
 
 	}
 

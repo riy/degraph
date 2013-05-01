@@ -14,6 +14,7 @@ public class VisualizeNodeTest {
 
 	private VisualizeNode vNode = null;
 	private static Node node;
+	private static Point DEFAULT_SIZE = new Point(200, 30);
 
 	@BeforeClass
 	public static void initNode() {
@@ -24,7 +25,7 @@ public class VisualizeNodeTest {
 
 	@Before
 	public void init() {
-		vNode = new VisualizeNode(node);
+		vNode = new VisualizeNode(DEFAULT_SIZE, node);
 	}
 
 	@Test
@@ -33,4 +34,9 @@ public class VisualizeNodeTest {
 		assertNotNull(size);
 
 	}
+
+	public void sizeShouldBeDefault() {
+		vNode.getSize();
+	}
+
 }

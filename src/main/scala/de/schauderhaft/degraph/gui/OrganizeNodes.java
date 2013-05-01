@@ -1,5 +1,6 @@
 package de.schauderhaft.degraph.gui;
 
+import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class OrganizeNodes {
 		}
 
 		for (Node node : nodes) {
-			result.add(new VisualizeNode(node));
+			result.add(new VisualizeNode(new Point(2, 3), node));
 		}
 		return result;
 	}
