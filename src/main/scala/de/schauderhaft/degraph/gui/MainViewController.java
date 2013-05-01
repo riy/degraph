@@ -74,26 +74,22 @@ public class MainViewController extends ScrollPane {
 		// TODO: make dynamic linebreak depends an sum of node
 		final int LINEBREAK = 800;
 		final int NODESPACE = 200;
-		int placeX = 0;
-		int placeY = 30;
+
 		AnchorPane pane = new AnchorPane();
 
-		for (Node node : topNodes) {
+		Set<VisualizeNode> allNodes = new OrganizeNodes(NODESPACE, LINEBREAK)
+				.getOrganizedNodes(topNodes);
 
-			NodeController nodeController = createController(placeX, placeY,
-					node);
+		for (VisualizeNode vNode : allNodes) {
+
+			NodeController nodeController = vNode.createController();
 
 			addControllerToPane(pane, nodeController);
 
-			placeX += NODESPACE;
-			if (placeX > LINEBREAK) {
-				placeX = 0;
-				placeY = +NODESPACE;
-			}
+			organizeDependencies(vNode.getNode());
 
-			organizeDependencies(node);
-
-			node4Controller.put(converter.getNodeName(node), nodeController);
+			node4Controller.put(converter.getNodeName(vNode.getNode()),
+					nodeController);
 		}
 		addNodesPaneToScrollPane(pane);
 	}
@@ -111,10 +107,4 @@ public class MainViewController extends ScrollPane {
 		pane.getChildren().add(nodeController);
 	}
 
-	private NodeController createController(int placeX, int placeY, Node node) {
-		NodeController nodeController = new NodeController(node);
-		nodeController.setLayoutX(placeX);
-		nodeController.setLayoutY(placeY);
-		return nodeController;
-	}
 }
