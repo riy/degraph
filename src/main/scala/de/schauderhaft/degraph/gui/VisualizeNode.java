@@ -1,5 +1,7 @@
 package de.schauderhaft.degraph.gui;
 
+import java.awt.Point;
+
 import de.schauderhaft.degraph.model.Node;
 
 /**
@@ -38,6 +40,11 @@ public class VisualizeNode {
 		nodeController.setLayoutX(getX());
 		nodeController.setLayoutY(getY());
 		return nodeController;
+	}
+
+	public Point getSize() {
+		return new Point();
+
 	}
 
 }

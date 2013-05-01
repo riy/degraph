@@ -50,6 +50,10 @@ public class OrganizeNodesTest {
 
 	}
 
+	public void vNodeShouldHavePosition() {
+
+	}
+
 	private Set<Node> getSampleData() {
 		return SampleGraph.getChessgraph().topNodes();
 	}

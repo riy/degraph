@@ -18,7 +18,7 @@ public class OrganizeNodes {
 	/**
 	 * Convert a set of nodes to visualize nodes (vNode).
 	 * 
-	 * VNodes doesn´t intersect each other
+	 * VNodes doesn´t intersect each other, no olverlapping!
 	 */
 	public Set<VisualizeNode> getOrganizedNodes(Set<Node> nodes) {
 
