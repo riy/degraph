@@ -30,19 +30,21 @@ public class NodeControllerTest {
 
 	@Test
 	public void shouldHaveID() {
-		javafx.scene.Node node = underTest.lookup(UiConst.NODE_NAME_LABEL);
+		javafx.scene.Node node = underTest
+				.lookup(NodeController.NODE_NAME_LABEL);
 		assertNotNull(node);
 	}
 
 	@Test
 	public void shouldBeALabelAtID() {
-		javafx.scene.Node node = underTest.lookup(UiConst.NODE_NAME_LABEL);
+		javafx.scene.Node node = underTest
+				.lookup(NodeController.NODE_NAME_LABEL);
 		assertTrue(node instanceof Label);
 	}
 
 	@Test
 	public void labelSHouldHaveSameName() {
-		Label label = (Label) underTest.lookup(UiConst.NODE_NAME_LABEL);
+		Label label = (Label) underTest.lookup(NodeController.NODE_NAME_LABEL);
 		assertEquals(MY_NAME, label.getText());
 	}
 }

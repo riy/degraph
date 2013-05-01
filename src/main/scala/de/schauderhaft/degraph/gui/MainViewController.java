@@ -20,6 +20,7 @@ import de.schauderhaft.degraph.model.Node;
  * 
  */
 public class MainViewController extends ScrollPane {
+
 	@FXML
 	private ResourceBundle resources;
 

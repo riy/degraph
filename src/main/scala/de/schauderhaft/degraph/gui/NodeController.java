@@ -13,6 +13,8 @@ import de.schauderhaft.degraph.model.Node;
 
 public class NodeController extends AnchorPane {
 
+	public static final String NODE_NAME_LABEL = "#nodeNameLabel";
+
 	@FXML
 	private ResourceBundle resources;
 
@@ -29,7 +31,7 @@ public class NodeController extends AnchorPane {
 	@FXML
 	void initialize() {
 
-		Label label = (Label) this.lookup(UiConst.NODE_NAME_LABEL);
+		Label label = (Label) this.lookup(NODE_NAME_LABEL);
 		label.setText(converter.getNodeName(node));
 
 	}
