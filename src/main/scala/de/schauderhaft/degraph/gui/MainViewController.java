@@ -37,6 +37,10 @@ public class MainViewController extends ScrollPane {
 
 	public MainViewController(JavaHierarchicGraph graph) {
 		this.graph = graph;
+		loadingController();
+	}
+
+	private void loadingController() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
 				"MainView.fxml"));
 		fxmlLoader.setRoot(this);
