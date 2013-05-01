@@ -29,7 +29,8 @@ public class OrganizeNodes {
 		}
 
 		for (Node node : nodes) {
-			result.add(new VisualizeNode(new Point(2, 3), node));
+			result.add(new VisualizeNode(new Point(2, 3), new Point(10, 10),
+					node, new HashSet<Node>()));
 		}
 		return result;
 	}
