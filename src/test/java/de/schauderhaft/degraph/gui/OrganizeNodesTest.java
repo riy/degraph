@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
@@ -52,6 +53,21 @@ public class OrganizeNodesTest {
 
 	@Test
 	public void vNodesShouldntOverlapped() {
+		Set<Node> nodes = getSampleData();
+		Set<VisualizeNode> vNodes = underTest.getOrganizedNodes(nodes);
+		for (VisualizeNode vNode : vNodes) {
+			assertOverLappinng(vNode, new HashSet<VisualizeNode>(vNodes));
+		}
+	}
+
+	private void assertOverLappinng(VisualizeNode vNode,
+			HashSet<VisualizeNode> vNodes) {
+		// dont check itself!
+		vNodes.remove(vNode);
+
+		for (VisualizeNode vn : vNodes) {
+			// TODO: logic for test overlapping
+		}
 
 	}
 
