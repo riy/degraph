@@ -84,7 +84,14 @@ public class VisualizeNodeTest {
 		assertTrue(area(DEFAULT_SIZE) < area(vNode.size()));
 	}
 
-	private double area(Point p) {
-		return p.x * p.y;
+	@Test
+	public void withoutChildrenShouldBeDefaultSize() {
+		vNode = new VisualizeNode(DEFAULT_SIZE, SAMPLE_POSITION, node,
+				new HashSet<Node>());
+		assertEquals(area(DEFAULT_SIZE), area(vNode.size()));
+	}
+
+	private Double area(Point p) {
+		return new Double(p.x * p.y);
 	}
 }

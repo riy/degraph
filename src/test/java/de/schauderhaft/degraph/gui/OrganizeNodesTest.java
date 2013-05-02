@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.gui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -69,6 +70,15 @@ public class OrganizeNodesTest {
 			// TODO: logic for test overlapping
 		}
 
+	}
+
+	@Test
+	public void leftNodeShouldNotTouch() {
+		VisualizeNode left = new VisualizeNode(new NodeSize(10, 10),
+				new NodePosition(10, 10), null, new HashSet<Node>());
+		VisualizeNode right = new VisualizeNode(new NodeSize(10, 10),
+				new NodePosition(31, 10), null, new HashSet<Node>());
+		assertFalse(left.overlapped(right));
 	}
 
 	private Set<Node> getSampleData() {

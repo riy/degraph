@@ -51,12 +51,23 @@ public class VisualizeNode {
 
 	public Point size() {
 		// TODO: first try, make it flat in x-direction!
+		if (children.isEmpty()) {
+			return defaultSize;
+		}
 		return new Point(defaultSize.x * childrenSize(), defaultSize.y);
 
 	}
 
 	public int childrenSize() {
 		return children.size();
+	}
+
+	/**
+	 * checks if this node touches another node.
+	 */
+	public boolean overlapped(VisualizeNode that) {
+		return new OverlappingDetector().overlapping(that, this);
+
 	}
 
 }
