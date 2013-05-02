@@ -1,6 +1,5 @@
 package de.schauderhaft.degraph.gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,10 +7,10 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import de.schauderhaft.degraph.gui.util.FXMLUtil;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 import de.schauderhaft.degraph.model.Node;
 
@@ -20,14 +19,12 @@ import de.schauderhaft.degraph.model.Node;
  * 
  */
 public class MainViewController extends ScrollPane {
+
 	@FXML
 	private ResourceBundle resources;
 
 	@FXML
 	private URL location;
-
-	@FXML
-	private ScrollPane scrollPane;
 
 	private final Map<String, Object> node4Controller = new HashMap<>();
 
@@ -37,16 +34,7 @@ public class MainViewController extends ScrollPane {
 
 	public MainViewController(JavaHierarchicGraph graph) {
 		this.graph = graph;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-				"MainView.fxml"));
-		fxmlLoader.setRoot(this);
-		fxmlLoader.setController(this);
-
-		try {
-			fxmlLoader.load();
-		} catch (IOException exception) {
-			throw new RuntimeException(exception);
-		}
+		FXMLUtil.loadAndSetController(this, "MainView.fxml");
 	}
 
 	@FXML
@@ -56,8 +44,6 @@ public class MainViewController extends ScrollPane {
 
 	@FXML
 	void initialize() {
-		assert scrollPane != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
-
 		Set<Node> topNodes = graph.topNodes();
 		assert topNodes != null : "no data";
 
@@ -70,26 +56,22 @@ public class MainViewController extends ScrollPane {
 		// TODO: make dynamic linebreak depends an sum of node
 		final int LINEBREAK = 800;
 		final int NODESPACE = 200;
-		int placeX = 0;
-		int placeY = 30;
+
 		AnchorPane pane = new AnchorPane();
 
-		for (Node node : topNodes) {
+		Set<VisualizeNode> allNodes = new OrganizeNodes(NODESPACE, LINEBREAK)
+				.getOrganizedNodes(topNodes);
 
-			NodeController nodeController = createController(placeX, placeY,
-					node);
+		for (VisualizeNode vNode : allNodes) {
+
+			NodeController nodeController = vNode.createController();
 
 			addControllerToPane(pane, nodeController);
 
-			placeX += NODESPACE;
-			if (placeX > LINEBREAK) {
-				placeX = 0;
-				placeY = +NODESPACE;
-			}
+			organizeDependencies(vNode.getNode());
 
-			organizeDependencies(node);
-
-			node4Controller.put(converter.getNodeName(node), nodeController);
+			node4Controller.put(converter.getNodeName(vNode.getNode()),
+					nodeController);
 		}
 		addNodesPaneToScrollPane(pane);
 	}
@@ -99,7 +81,7 @@ public class MainViewController extends ScrollPane {
 	}
 
 	private void addNodesPaneToScrollPane(AnchorPane pane) {
-		scrollPane.setContent(pane);
+		this.setContent(pane);
 	}
 
 	private void addControllerToPane(AnchorPane pane,
@@ -107,10 +89,4 @@ public class MainViewController extends ScrollPane {
 		pane.getChildren().add(nodeController);
 	}
 
-	private NodeController createController(int placeX, int placeY, Node node) {
-		NodeController nodeController = new NodeController(node);
-		nodeController.setLayoutX(placeX);
-		nodeController.setLayoutY(placeY);
-		return nodeController;
-	}
 }
