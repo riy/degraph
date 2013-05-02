@@ -21,9 +21,6 @@ public class NodeController extends AnchorPane {
 	@FXML
 	private URL location;
 
-	@FXML
-	private AnchorPane nodeView;
-
 	private final Node node;
 
 	private final NodeLabelConverter converter = new NodeLabelConverter();
