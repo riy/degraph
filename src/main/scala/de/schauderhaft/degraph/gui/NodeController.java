@@ -28,9 +28,13 @@ public class NodeController extends AnchorPane {
 	@FXML
 	void initialize() {
 
+		initalizeLabels();
+
+	}
+
+	private void initalizeLabels() {
 		Label label = (Label) this.lookup(NODE_NAME_LABEL);
 		label.setText(converter.getNodeName(node));
-
 	}
 
 	public NodeController(Node node) {
