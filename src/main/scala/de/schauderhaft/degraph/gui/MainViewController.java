@@ -1,6 +1,5 @@
 package de.schauderhaft.degraph.gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,10 +7,10 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import de.schauderhaft.degraph.gui.util.FXMLUtil;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 import de.schauderhaft.degraph.model.Node;
 
@@ -35,20 +34,7 @@ public class MainViewController extends ScrollPane {
 
 	public MainViewController(JavaHierarchicGraph graph) {
 		this.graph = graph;
-		loadingController();
-	}
-
-	private void loadingController() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-				"MainView.fxml"));
-		fxmlLoader.setRoot(this);
-		fxmlLoader.setController(this);
-
-		try {
-			fxmlLoader.load();
-		} catch (IOException exception) {
-			throw new RuntimeException(exception);
-		}
+		FXMLUtil.loadAndSetController(this, "MainView.fxml");
 	}
 
 	@FXML
