@@ -70,6 +70,42 @@ public class OverlappingDetectorTest {
 
 	}
 
+	@Test
+	public void testLimesXDirection() {
+		// right
+		assertFalse(underTest.overlapping(getNode(new NodePosition(39, 50)),
+				getNode(me)));
+		assertTrue(underTest.overlapping(getNode(new NodePosition(40, 50)),
+				getNode(me)));
+		assertTrue(underTest.overlapping(getNode(new NodePosition(41, 50)),
+				getNode(me)));
+		// left
+		assertTrue(underTest.overlapping(getNode(new NodePosition(59, 50)),
+				getNode(me)));
+		assertTrue(underTest.overlapping(getNode(new NodePosition(60, 50)),
+				getNode(me)));
+		assertFalse(underTest.overlapping(getNode(new NodePosition(61, 50)),
+				getNode(me)));
+	}
+
+	@Test
+	public void testLimesYDirection() {
+		// down
+		assertFalse(underTest.overlapping(getNode(new NodePosition(50, 39)),
+				getNode(me)));
+		assertTrue(underTest.overlapping(getNode(new NodePosition(50, 40)),
+				getNode(me)));
+		assertTrue(underTest.overlapping(getNode(new NodePosition(50, 41)),
+				getNode(me)));
+		// up
+		assertTrue(underTest.overlapping(getNode(new NodePosition(50, 59)),
+				getNode(me)));
+		assertTrue(underTest.overlapping(getNode(new NodePosition(50, 60)),
+				getNode(me)));
+		assertFalse(underTest.overlapping(getNode(new NodePosition(50, 61)),
+				getNode(me)));
+	}
+
 	private VisualizeNode getNode(NodePosition pos) {
 		return new VisualizeNode(defaultSize, pos, null, new HashSet<Node>());
 	}
