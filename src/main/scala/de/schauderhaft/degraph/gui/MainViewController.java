@@ -27,9 +27,6 @@ public class MainViewController extends ScrollPane {
 	@FXML
 	private URL location;
 
-	@FXML
-	private ScrollPane scrollPane;
-
 	private final Map<String, Object> node4Controller = new HashMap<>();
 
 	private final NodeLabelConverter converter = new NodeLabelConverter();
@@ -61,8 +58,6 @@ public class MainViewController extends ScrollPane {
 
 	@FXML
 	void initialize() {
-		assert scrollPane != null : "fx:id=\"mainView\" was not injected: check your FXML file 'MainView.fxml'.";
-
 		Set<Node> topNodes = graph.topNodes();
 		assert topNodes != null : "no data";
 
@@ -100,7 +95,7 @@ public class MainViewController extends ScrollPane {
 	}
 
 	private void addNodesPaneToScrollPane(AnchorPane pane) {
-		scrollPane.setContent(pane);
+		this.setContent(pane);
 	}
 
 	private void addControllerToPane(AnchorPane pane,
