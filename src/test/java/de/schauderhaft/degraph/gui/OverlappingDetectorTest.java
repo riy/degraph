@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.gui;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 
@@ -39,6 +40,34 @@ public class OverlappingDetectorTest {
 	@Test
 	public void shouldBeDownOfMe() {
 		assertFalse(underTest.overlapping(getNode(down), getNode(me)));
+	}
+
+	@Test
+	public void shouldBeOverlappedRight() {
+		NodePosition right = new NodePosition(59, 50);
+		assertTrue(underTest.overlapping(getNode(right), getNode(me)));
+
+	}
+
+	@Test
+	public void shouldBeOverlappedLeft() {
+		NodePosition left = new NodePosition(41, 50);
+		assertTrue(underTest.overlapping(getNode(left), getNode(me)));
+
+	}
+
+	@Test
+	public void shouldBeOverlappedUpper() {
+		NodePosition up = new NodePosition(50, 59);
+		assertTrue(underTest.overlapping(getNode(up), getNode(me)));
+
+	}
+
+	@Test
+	public void shouldBeOverlappedDown() {
+		NodePosition down = new NodePosition(50, 59);
+		assertTrue(underTest.overlapping(getNode(down), getNode(me)));
+
 	}
 
 	private VisualizeNode getNode(NodePosition pos) {
