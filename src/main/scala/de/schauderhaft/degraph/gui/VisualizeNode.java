@@ -1,6 +1,5 @@
 package de.schauderhaft.degraph.gui;
 
-import java.awt.Point;
 import java.util.Set;
 
 import de.schauderhaft.degraph.model.Node;
@@ -17,8 +16,8 @@ import de.schauderhaft.degraph.model.Node;
 public class VisualizeNode {
 
 	private final Node node;
-	private final NodeSize defaultSize;
-	private final NodePosition position;
+	private NodeSize defaultSize;
+	private NodePosition position;
 	private final Set<Node> children;
 
 	public VisualizeNode(NodeSize size, NodePosition position, Node node,
@@ -28,6 +27,11 @@ public class VisualizeNode {
 		this.position = position;
 		this.children = children;
 
+	}
+
+	public VisualizeNode(Node node, Set<Node> children) {
+		this.node = node;
+		this.children = children;
 	}
 
 	public Node getNode() {
@@ -44,17 +48,18 @@ public class VisualizeNode {
 
 	public NodeController createController() {
 		NodeController nodeController = new NodeController(getNode());
-		nodeController.setLayoutX(getX());
-		nodeController.setLayoutY(getY());
+
+		// nodeController.setLayoutX(getX());
+		// nodeController.setLayoutY(getY());
 		return nodeController;
 	}
 
-	public Point size() {
+	public NodeSize size() {
 		// TODO: first try, make it flat in x-direction!
 		if (children.isEmpty()) {
-			return defaultSize;
+			return new NodeSize(100, 100);
 		}
-		return new Point(defaultSize.x * childrenSize(), defaultSize.y);
+		return new NodeSize(100 * childrenSize(), 100);
 
 	}
 
@@ -68,6 +73,11 @@ public class VisualizeNode {
 	public boolean overlapped(VisualizeNode that) {
 		return new OverlappingDetector().overlapping(that, this);
 
+	}
+
+	public String getName() {
+		NodeLabelConverter c = new NodeLabelConverter();
+		return c.getNodeName(node);
 	}
 
 }

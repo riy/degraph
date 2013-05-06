@@ -1,7 +1,10 @@
 package de.schauderhaft.degraph.gui;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -10,6 +13,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import de.schauderhaft.degraph.gui.util.FXMLUtil;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 import de.schauderhaft.degraph.model.Node;
@@ -44,11 +49,84 @@ public class MainViewController extends ScrollPane {
 
 	@FXML
 	void initialize() {
+
+		int x = 0;
+		Pane pane = new StackPane();
+
 		Set<Node> topNodes = graph.topNodes();
-		assert topNodes != null : "no data";
+		List<Node> childs = new ArrayList<>(topNodes);
 
-		organizeNodes(topNodes);
+		Node parent = topNodes.iterator().next();
 
+		Set<Node> children = new HashSet<>();
+		children.add(topNodes.iterator().next());
+		children.add(topNodes.iterator().next());
+		VisualizeNode visualizeNode = new VisualizeNode(parent, children);
+		NodeController createController = visualizeNode.createController();
+		// createController.setWidthForAllPanes(visualizeNode.size());
+		pane.getChildren().add(createController);
+		System.out.println("VNode Size:" + visualizeNode.size());
+		System.out.println("Controller :" + createController.toString());
+		System.out.println("Pane: " + pane.getPrefWidth());
+
+		AnchorPane childPane = (AnchorPane) createController
+				.lookup(NodeController.PANE_NAME);
+
+		VisualizeNode vn = new VisualizeNode(childs.get(0), new HashSet<Node>());
+
+		NodeController c = vn.createController();
+		childPane.getChildren().add(c);
+
+		VisualizeNode vn1 = new VisualizeNode(childs.get(1),
+				new HashSet<Node>());
+		c.setLayoutXForAllPanes(0);
+		NodeController c2 = vn1.createController();
+		childPane.getChildren().add(c2);
+		c2.setLayoutXForAllPanes(140);
+		createController.resizeNodeContentView();
+
+		// for (Node node : graph.topNodes()) {
+		//
+		// Set<Node> contentsOf = graph.contentsOf(node);
+		//
+		// VisualizeNode vNode = new VisualizeNode(node, contentsOf);
+		//
+		// NodeController controller = vNode.createController();
+		// controller.setLayoutXForAllPanes(x);
+		// // controller.setWidthForAllPanes(vNode.size());
+		//
+		// AnchorPane childPane = (AnchorPane) controller
+		// .lookup(NodeController.PANE_NAME);
+		//
+		// int innerX = 0;
+		// for (Node child : contentsOf) {
+		// VisualizeNode childNOde = new VisualizeNode(child,
+		// Collections.EMPTY_SET);
+		// NodeController childController = childNOde.createController();
+		// System.out.println(childNOde.getName() + " PrefWidth: "
+		// + childController.getPrefWidth());
+		// childController.setLayoutXForAllPanes(innerX);
+		//
+		// childPane.getChildren().add(childController);
+		// System.out.println(childNOde.getName() + " PrefWidth: "
+		// + childController.getPrefWidth());
+		// innerX += childController.getPrefWidth() + 5;
+		// System.out.println(childController);
+		// }
+		// controller.resizeNodeContentView();
+		// System.out.println("Controller :" + controller.getPrefHeight());
+		// System.out.println("PAne: " + pane.getPrefWidth());
+		// pane.getChildren().add(controller);
+		// }
+
+		//
+		// Set<Node> topNodes = graph.topNodes();
+		// assert topNodes != null : "no data";
+		//
+		// organizeNodes(topNodes);
+		// this.setPrefHeight(pane.getPrefHeight());
+		// this.setPrefWidth(pane.getPrefWidth());
+		this.setContent(pane);
 	}
 
 	private void organizeNodes(Set<Node> topNodes) {
