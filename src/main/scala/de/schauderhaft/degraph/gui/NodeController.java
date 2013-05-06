@@ -64,6 +64,7 @@ public class NodeController extends AnchorPane {
 		int size = nodeContentView.getChildrenUnmodifiable().size();
 		System.out.println("NodeContenView Size: " + size);
 		if (size > 0) {
+			System.out.println(this.toString() + " hat Kinder: " + size);
 			nodeContentView.setPrefWidth(WIDTH * 1.4 * size);
 			nodeContentView.setPrefHeight(HEIGHT * 1.4 * size);
 			nodeName.setPrefWidth(WIDTH * 1.4 * size);

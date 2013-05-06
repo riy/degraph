@@ -54,7 +54,7 @@ public class MainViewController extends ScrollPane {
 		Pane pane = new StackPane();
 
 		Set<Node> topNodes = graph.topNodes();
-		List<Node> childs = new ArrayList<>(topNodes);
+		List<Node> childs = new ArrayList<>(graph.allNodes());
 
 		Node parent = topNodes.iterator().next();
 
@@ -75,14 +75,22 @@ public class MainViewController extends ScrollPane {
 		VisualizeNode vn = new VisualizeNode(childs.get(0), new HashSet<Node>());
 
 		NodeController c = vn.createController();
+		c.setLayoutXForAllPanes(0);
 		childPane.getChildren().add(c);
 
+		//
 		VisualizeNode vn1 = new VisualizeNode(childs.get(1),
 				new HashSet<Node>());
-		c.setLayoutXForAllPanes(0);
 		NodeController c2 = vn1.createController();
 		childPane.getChildren().add(c2);
 		c2.setLayoutXForAllPanes(140);
+
+		VisualizeNode vn3 = new VisualizeNode(childs.get(2),
+				new HashSet<Node>());
+		NodeController c3 = vn3.createController();
+		c3.setLayoutXForAllPanes(270);
+		childPane.getChildren().add(c3);
+
 		createController.resizeNodeContentView();
 
 		// for (Node node : graph.topNodes()) {
