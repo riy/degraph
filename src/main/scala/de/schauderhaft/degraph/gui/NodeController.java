@@ -14,6 +14,7 @@ import de.schauderhaft.degraph.model.Node;
 
 public class NodeController extends AnchorPane {
 
+	private static final double SPACE_RATIO = 1.4;
 	public static final String LABEL_NAME = "#nodeNameLabel";
 	public static final String PANE_NAME = "#nodeView";
 	public static final double WIDTH = 130.0;
@@ -58,22 +59,25 @@ public class NodeController extends AnchorPane {
 		System.out.println("Controller Pos" + this.getLayoutX());
 	}
 
-	public void resizeNodeContentView() {
+	public void fitToSize() {
 		Pane nodeContentView = (Pane) this.lookup(PANE_NAME);
+
 		Label nodeName = (Label) this.lookup(LABEL_NAME);
 		int size = nodeContentView.getChildrenUnmodifiable().size();
 		System.out.println("NodeContenView Size: " + size);
 		if (size > 0) {
+
 			System.out.println(this.toString() + " hat Kinder: " + size);
-			nodeContentView.setPrefWidth(WIDTH * 1.4 * size);
-			nodeContentView.setPrefHeight(HEIGHT * 1.4 * size);
-			nodeName.setPrefWidth(WIDTH * 1.4 * size);
+			nodeContentView.setPrefWidth(size * SPACE_RATIO * HEIGHT);
+			nodeContentView.setPrefHeight(WIDTH * SPACE_RATIO);
+			nodeName.setPrefWidth(size * SPACE_RATIO); // doesnt work
 
 		} else {
 			nodeContentView.setPrefWidth(WIDTH);
 			nodeName.setPrefWidth(WIDTH);
 
 		}
+
 	}
 
 	public void setWidthForAllPanes(Point paneSize) {
