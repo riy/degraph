@@ -1,6 +1,5 @@
 package de.schauderhaft.degraph.gui;
 
-import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -53,6 +52,12 @@ public class NodeController extends AnchorPane {
 		System.out.println(converter.getNodeName(node) + " clicked");
 	}
 
+	public void setLayout(int x, int y) {
+		this.setLayoutX(x);
+		this.setLayoutY(y);
+
+	}
+
 	public void setLayoutXForAllPanes(int x) {
 		this.setLayoutX(x);
 		this.setLayoutY(10);
@@ -77,15 +82,6 @@ public class NodeController extends AnchorPane {
 			nodeName.setPrefWidth(WIDTH);
 
 		}
-
-	}
-
-	public void setWidthForAllPanes(Point paneSize) {
-		this.setPrefWidth(paneSize.getX());
-		this.setPrefHeight(paneSize.getY());
-		((Pane) this.lookup(PANE_NAME)).setPrefWidth(paneSize.getX());
-		((Pane) this.lookup(PANE_NAME)).setPrefHeight(paneSize.getY());
-		((Label) this.lookup(LABEL_NAME)).setPrefWidth(paneSize.getX());
 
 	}
 

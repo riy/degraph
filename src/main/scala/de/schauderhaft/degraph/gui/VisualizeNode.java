@@ -16,14 +16,12 @@ import de.schauderhaft.degraph.model.Node;
 public class VisualizeNode {
 
 	private final Node node;
-	private NodeSize defaultSize;
 	private NodePosition position;
 	private final Set<Node> children;
 
 	public VisualizeNode(NodeSize size, NodePosition position, Node node,
 			Set<Node> children) {
 		this.node = node;
-		this.defaultSize = size;
 		this.position = position;
 		this.children = children;
 
@@ -49,8 +47,6 @@ public class VisualizeNode {
 	public NodeController createController() {
 		NodeController nodeController = new NodeController(getNode());
 
-		// nodeController.setLayoutX(getX());
-		// nodeController.setLayoutY(getY());
 		return nodeController;
 	}
 
