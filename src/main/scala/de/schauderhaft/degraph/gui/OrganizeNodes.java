@@ -45,4 +45,9 @@ public class OrganizeNodes {
 		// END OF HACK
 		return result;
 	}
+
+	public Set<VisualizeNode> getOrderedNodes(Set<Node> nodes) {
+
+		return null;
+	}
 }

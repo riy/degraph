@@ -45,9 +45,10 @@ public class MainViewController extends ScrollPane {
 		Pane pane = new StackPane();
 
 		Set<Node> topNodes = graph.topNodes();
-		int xx = 0;
+		Layouter layouter = new Layouter(graph);
 		for (Node parent : topNodes) {
 			Set<Node> childrenOfParent = graph.contentsOf(parent);
+			// Set<Node> childrenOfParent = graph.topNodes();
 
 			VisualizeNode visualizeNode = new VisualizeNode(parent,
 					childrenOfParent);
@@ -55,7 +56,6 @@ public class MainViewController extends ScrollPane {
 
 			AnchorPane parentContentPane = (AnchorPane) parentController
 					.lookup(NodeController.PANE_NAME);
-			int x = 0;
 			for (Node childrenNode : childrenOfParent) {
 
 				VisualizeNode visualizeChildController = new VisualizeNode(
@@ -63,17 +63,14 @@ public class MainViewController extends ScrollPane {
 				NodeController childController = visualizeChildController
 						.createController();
 				parentContentPane.getChildren().add(childController);
-				childController.setLayoutXForAllPanes(x);
-				x += 160;
-			}
 
-			parentController.setLayoutXForAllPanes(xx);
+				childController.setLayout(layouter.nextPosition(childrenNode));
+			}
+			parentController.setLayout(layouter.nextPosition(parent));
 			pane.getChildren().add(parentController);
-			xx += 160;
 			parentController.fitToSize();
 		}
 
 		this.setContent(pane);
 	}
-
 }
