@@ -35,7 +35,7 @@ public class MainViewController extends ScrollPane {
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
-		System.out.println("KLickMainView");
+		// TODO: not yet implemented
 	}
 
 	@FXML
@@ -46,8 +46,8 @@ public class MainViewController extends ScrollPane {
 		Set<Node> topNodes = graph.topNodes();
 		Layouter layouter = new Layouter(graph);
 		for (Node parent : topNodes) {
-			Set<Node> childrenOfParent = graph.contentsOf(parent);
-			// Set<Node> childrenOfParent = graph.topNodes();
+			// Set<Node> childrenOfParent = graph.contentsOf(parent);
+			Set<Node> childrenOfParent = graph.topNodes();
 
 			NodeController parentController = new NodeController(parent);
 

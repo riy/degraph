@@ -31,9 +31,7 @@ public class NodeController extends AnchorPane {
 
 	@FXML
 	void initialize() {
-
 		initalizeLabels();
-
 	}
 
 	private void initalizeLabels() {
@@ -60,12 +58,6 @@ public class NodeController extends AnchorPane {
 
 	public void setLayout(NodePosition position) {
 		setLayout(position.x, position.y);
-	}
-
-	public void setLayoutXForAllPanes(int x) {
-		this.setLayoutX(x);
-		this.setLayoutY(10);
-		System.out.println("Controller Pos" + this.getLayoutX());
 	}
 
 	public void fitToSize() {

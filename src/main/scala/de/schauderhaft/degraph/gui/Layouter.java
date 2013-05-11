@@ -5,8 +5,8 @@ import de.schauderhaft.degraph.model.Node;
 
 public class Layouter {
 
-	static int notYetImplementedX = 0;
-	static int notYetImplementedY = 0;
+	private int notYetImplementedX = 0;
+	private int notYetImplementedY = 0;
 
 	public Layouter(JavaHierarchicGraph graph) {
 		notYetImplementedX = 0;
@@ -20,10 +20,10 @@ public class Layouter {
 	public NodePosition nextPosition(Node childrenNode) {
 		NodePosition result = new NodePosition(notYetImplementedX,
 				notYetImplementedY);
-		notYetImplementedX += 140;
+		notYetImplementedX += 160;
 		if (notYetImplementedX > 800) {
 			notYetImplementedX = 0;
-			notYetImplementedY += 140;
+			notYetImplementedY += 160;
 		}
 		return result;
 	}
