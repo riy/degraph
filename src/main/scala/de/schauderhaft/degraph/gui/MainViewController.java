@@ -1,7 +1,6 @@
 package de.schauderhaft.degraph.gui;
 
 import java.net.URL;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -50,18 +49,14 @@ public class MainViewController extends ScrollPane {
 			Set<Node> childrenOfParent = graph.contentsOf(parent);
 			// Set<Node> childrenOfParent = graph.topNodes();
 
-			VisualizeNode visualizeNode = new VisualizeNode(parent,
-					childrenOfParent);
-			NodeController parentController = visualizeNode.createController();
+			NodeController parentController = new NodeController(parent);
 
 			AnchorPane parentContentPane = (AnchorPane) parentController
 					.lookup(NodeController.PANE_NAME);
 			for (Node childrenNode : childrenOfParent) {
 
-				VisualizeNode visualizeChildController = new VisualizeNode(
-						childrenNode, new HashSet<Node>());
-				NodeController childController = visualizeChildController
-						.createController();
+				NodeController childController = new NodeController(
+						childrenNode);
 				parentContentPane.getChildren().add(childController);
 
 				childController.setLayout(layouter.nextPosition(childrenNode));
