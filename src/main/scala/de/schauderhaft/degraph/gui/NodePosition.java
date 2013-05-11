@@ -12,4 +12,9 @@ public class NodePosition extends Point {
 	public NodePosition(int x, int y) {
 		super(x, y);
 	}
+
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + ")";
+	}
 }

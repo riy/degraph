@@ -65,15 +65,18 @@ public class NodeController extends AnchorPane {
 
 		Label nodeName = (Label) this.lookup(LABEL_NAME);
 		int size = nodeContentView.getChildrenUnmodifiable().size();
-		System.out.println("NodeContenView Size: " + size);
+		// System.out.println("NodeContenView Size: " + size);
 		if (size > 0) {
 
-			System.out.println(this.toString() + " hat Kinder: " + size);
-			nodeContentView.setPrefWidth(size * SPACE_RATIO * HEIGHT);
-			nodeContentView.setPrefHeight(WIDTH * SPACE_RATIO);
-			nodeName.setPrefWidth(size * SPACE_RATIO); // doesnt work
+			double prefWidth = size * SPACE_RATIO * WIDTH;
+			// System.out.println(this.toString() + " hat Kinder: " + size
+			// + " Größe: " + prefWidth);
+			nodeContentView.setPrefWidth(prefWidth);
+			nodeContentView.setPrefHeight(HEIGHT * SPACE_RATIO);
+			nodeName.setPrefWidth(size * SPACE_RATIO); // label doesnt work
 
 		} else {
+			System.out.println("im Else Teil!");
 			nodeContentView.setPrefWidth(WIDTH);
 			nodeName.setPrefWidth(WIDTH);
 
@@ -85,12 +88,13 @@ public class NodeController extends AnchorPane {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("this.size: " + this.getPrefHeight() + " x "
-				+ this.getPrefWidth() + "  x | y" + this.getLayoutX() + " | "
-				+ this.getLayoutY() + "\n");
+				+ this.getPrefWidth() + " Position (" + this.getLayoutX()
+				+ " | " + this.getLayoutY() + ")\n");
 		Label Label = (Label) this.lookup(LABEL_NAME);
-		sb.append("Label.size: " + Label.getPrefHeight() + " x "
-				+ Label.getPrefWidth() + " x | y" + Label.getLayoutX() + " | "
-				+ Label.getLayoutY() + "\n");
+		sb.append("Label: " + Label.getText() + " size: "
+				+ Label.getPrefHeight() + " x " + Label.getPrefWidth()
+				+ " x | y" + Label.getLayoutX() + " | " + Label.getLayoutY()
+				+ "\n");
 		Pane pane = (Pane) this.lookup(PANE_NAME);
 		sb.append("Pane.size: " + pane.getPrefHeight() + " x "
 				+ pane.getPrefWidth() + " x | y" + pane.getLayoutX() + " | "

@@ -1,6 +1,8 @@
 package de.schauderhaft.degraph.gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -43,12 +45,19 @@ public class MainViewController extends ScrollPane {
 
 		Pane pane = new StackPane();
 
-		Set<Node> topNodes = graph.topNodes();
-		Layouter layouter = new Layouter(graph);
+		Set<Node> topNodes = new HashSet<>();
+		ArrayList<Node> arrayList = new ArrayList<>(graph.topNodes());
+		topNodes.add(arrayList.get(1));
+		// topNodes.add(arrayList.get(2));
+
+		Layouter layout = new Layouter(graph);
 		for (Node parent : topNodes) {
 			// Set<Node> childrenOfParent = graph.contentsOf(parent);
 			Set<Node> childrenOfParent = graph.topNodes();
-
+			// Set<Node> childrenOfParent = new HashSet<>();
+			// ArrayList<Node> arrayList = new ArrayList<>(graph.topNodes());
+			// childrenOfParent.add(arrayList.get(1));
+			// childrenOfParent.add(arrayList.get(2));
 			NodeController parentController = new NodeController(parent);
 
 			AnchorPane parentContentPane = (AnchorPane) parentController
@@ -59,11 +68,18 @@ public class MainViewController extends ScrollPane {
 						childrenNode);
 				parentContentPane.getChildren().add(childController);
 
-				childController.setLayout(layouter.nextPosition(childrenNode));
+				childController.setLayout(layout.nextPosition(childrenNode));
 			}
-			parentController.setLayout(layouter.nextPosition(parent));
+
+			NodePosition positionForParent = layout.nextPosition(parent);
+			System.out.println("Position: " + positionForParent);
+			parentController.setLayout(positionForParent);
 			pane.getChildren().add(parentController);
 			parentController.fitToSize();
+			System.out.println("position for Parent: " + parent.name() + " :"
+					+ positionForParent + " Size: "
+					+ parentController.getPrefHeight() + ","
+					+ parentController.getPrefWidth());
 		}
 
 		this.setContent(pane);
