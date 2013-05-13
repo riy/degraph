@@ -13,7 +13,7 @@ import de.schauderhaft.degraph.model.Node;
 
 public class NodeController extends AnchorPane {
 
-	private static final double SPACE_RATIO = 1.3;
+	private static final double SPACE_RATIO = 1.4;
 	public static final String LABEL_NAME = "#nodeNameLabel";
 	public static final String PANE_NAME = "#nodeView";
 	public static final double WIDTH = 130.0;
