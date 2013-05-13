@@ -9,30 +9,11 @@ import de.schauderhaft.degraph.model.Node;
 
 public class Layouter {
 
-	private int notYetImplementedX = 0;
-	private int notYetImplementedY = 0;
 	private final JavaHierarchicGraph graph;
 
 	public Layouter(JavaHierarchicGraph graph) {
 		this.graph = graph;
-		notYetImplementedX = 0;
-		notYetImplementedY = 0;
 
-	}
-
-	/**
-	 * Returns Position for Node in this layout.
-	 */
-	public NodePosition nextPosition(Node childrenNode) {
-		if (graph.topNodes().contains(childrenNode)) {
-			notYetImplementedX = 0;
-			notYetImplementedY += 320;
-		}
-		NodePosition result = new NodePosition(notYetImplementedX,
-				notYetImplementedY);
-		notYetImplementedX += 160;
-
-		return result;
 	}
 
 	/**
@@ -40,33 +21,31 @@ public class Layouter {
 	 */
 	public Set<NodeController> layoutedChildren(Set<Node> nodes) {
 		Set<NodeController> result = new HashSet<>();
+		int y = 0;
 		for (Node node : nodes) {
-			// Set<Node> childrenOfParent = graph.topNodes(); // testcode TODO:
-			// delete thie
-			Set<Node> childrenOfParent = graph.contentsOf(node);
+			Set<Node> childrenOfParent = graph.topNodes(); // testcode TODO:
+			// delete this
+			// Set<Node> childrenOfParent = graph.contentsOf(node);
 
 			NodeController parentController = new NodeController(node);
-
 			AnchorPane parentContentPane = (AnchorPane) parentController
 					.lookup(NodeController.PANE_NAME);
+
+			int x = 0;
 			for (Node childrenNode : childrenOfParent) {
 
 				NodeController childController = new NodeController(
 						childrenNode);
 				parentContentPane.getChildren().add(childController);
 
-				childController.setLayout(nextPosition(childrenNode));
+				childController.setLayout(new NodePosition(x, 10));
+				x += childController.getPrefWidth() + 10;
 			}
 
-			NodePosition positionForParent = nextPosition(node);
-			System.out.println("Position: " + positionForParent);
-			parentController.setLayout(positionForParent);
+			parentController.setLayout(new NodePosition(0, y));
 			parentController.fitToSize();
-			System.out.println("position for Parent: " + node.name() + " :"
-					+ positionForParent + " Size: "
-					+ parentController.getPrefHeight() + ","
-					+ parentController.getPrefWidth());
-
+			y += parentController.getPrefHeight() + 10;
+			System.out.println("y:" + y);
 			result.add(parentController);
 		}
 		return result;
