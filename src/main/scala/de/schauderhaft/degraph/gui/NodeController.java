@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import de.schauderhaft.degraph.gui.util.FXMLUtil;
 import de.schauderhaft.degraph.model.Node;
 
+/**
+ * Controller for one node visualization.
+ */
 public class NodeController extends AnchorPane {
 
 	private static final double SPACE_RATIO = 1.4;
@@ -47,7 +50,6 @@ public class NodeController extends AnchorPane {
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
-		System.out.println(converter.getNodeName(node) + " clicked");
 	}
 
 	public void setLayout(int x, int y) {
@@ -60,23 +62,23 @@ public class NodeController extends AnchorPane {
 		setLayout(position.x, position.y);
 	}
 
+	/**
+	 * Create pane size depending on children(content) size.
+	 */
 	public void fitToSize() {
 		Pane nodeContentView = (Pane) this.lookup(PANE_NAME);
 
 		Label nodeName = (Label) this.lookup(LABEL_NAME);
 		int size = nodeContentView.getChildrenUnmodifiable().size();
-		// System.out.println("NodeContenView Size: " + size);
 		if (size > 0) {
 
 			double prefWidth = size * SPACE_RATIO * WIDTH;
-			// System.out.println(this.toString() + " hat Kinder: " + size
-			// + " Größe: " + prefWidth);
 			nodeContentView.setPrefWidth(prefWidth);
 			nodeContentView.setPrefHeight(HEIGHT * SPACE_RATIO);
 			nodeName.setPrefWidth(size * SPACE_RATIO); // label doesnt work
 
 		} else {
-			System.out.println("im Else Teil!");
+			// no kids
 			nodeContentView.setPrefWidth(WIDTH);
 			nodeName.setPrefWidth(WIDTH);
 
