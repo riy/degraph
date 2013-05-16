@@ -38,7 +38,7 @@ public class NodeController extends AnchorPane {
 	}
 
 	private void initalizeLabels() {
-		Label label = (Label) this.lookup(LABEL_NAME);
+		Label label = (Label) lookup(LABEL_NAME);
 		label.setText(converter.getNodeName(node));
 	}
 
@@ -53,8 +53,8 @@ public class NodeController extends AnchorPane {
 	}
 
 	public void setLayout(int x, int y) {
-		this.setLayoutX(x);
-		this.setLayoutY(y);
+		setLayoutX(x);
+		setLayoutY(y);
 
 	}
 
@@ -66,9 +66,9 @@ public class NodeController extends AnchorPane {
 	 * Create pane size depending on children(content) size.
 	 */
 	public void fitToSize() {
-		Pane nodeContentView = (Pane) this.lookup(PANE_NAME);
+		Pane nodeContentView = (Pane) lookup(PANE_NAME);
 
-		Label nodeName = (Label) this.lookup(LABEL_NAME);
+		Label nodeName = (Label) lookup(LABEL_NAME);
 		int size = nodeContentView.getChildrenUnmodifiable().size();
 		if (size > 0) {
 
@@ -89,15 +89,14 @@ public class NodeController extends AnchorPane {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("this.size: " + this.getPrefHeight() + " x "
-				+ this.getPrefWidth() + " Position (" + this.getLayoutX()
-				+ " | " + this.getLayoutY() + ")\n");
-		Label Label = (Label) this.lookup(LABEL_NAME);
+		sb.append("this.size: " + getPrefHeight() + " x " + getPrefWidth()
+				+ " Position (" + getLayoutX() + " | " + getLayoutY() + ")\n");
+		Label Label = (Label) lookup(LABEL_NAME);
 		sb.append("Label: " + Label.getText() + " size: "
 				+ Label.getPrefHeight() + " x " + Label.getPrefWidth()
-				+ " x | y" + Label.getLayoutX() + " | " + Label.getLayoutY()
+				+ " x | y " + Label.getLayoutX() + " | " + Label.getLayoutY()
 				+ "\n");
-		Pane pane = (Pane) this.lookup(PANE_NAME);
+		Pane pane = (Pane) lookup(PANE_NAME);
 		sb.append("Pane.size: " + pane.getPrefHeight() + " x "
 				+ pane.getPrefWidth() + " x | y" + pane.getLayoutX() + " | "
 				+ pane.getLayoutY());

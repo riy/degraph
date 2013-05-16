@@ -31,7 +31,7 @@ public class MainViewController extends ScrollPane {
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
-		// TODO: not yet implemented
+		// TODO: not implemented yet
 	}
 
 	@FXML
@@ -43,6 +43,6 @@ public class MainViewController extends ScrollPane {
 		Layouter layout = new Layouter(graph, new RowLayout());
 		pane.getChildren().addAll(layout.layoutedNode(graph.topNodes()));
 
-		this.setContent(pane);
+		setContent(pane);
 	}
 }
