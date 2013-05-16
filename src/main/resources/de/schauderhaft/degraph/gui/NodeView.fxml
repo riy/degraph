@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="NodePane" fx:id="NodePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0000084472631" prefWidth="140.5" styleClass="nodeTheme" onMouseClicked="#onMouseClicked" xmlns:fx="http://javafx.com/fxml" >
+<fx:root type="javafx.scene.layout.AnchorPane" fx:id="NodePane" depthTest="INHERIT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="100.0" prefWidth="140.0" styleClass="nodeTheme" xmlns:fx="http://javafx.com/fxml">
   <children>
-    <AnchorPane id="nodeView" layoutX="7.0" layoutY="16.0" minHeight="80.0" minWidth="127.0" prefHeight="80.0" prefWidth="127.0" styleClass="node-panel">
+    <AnchorPane id="nodeView" blendMode="SRC_OVER" cache="true" layoutX="6.0" layoutY="16.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="79.0" prefWidth="130.0" styleClass="node-panel">
       <effect>
         <DropShadow blurType="GAUSSIAN" height="20.0" radius="9.5" width="20.0" />
       </effect>
@@ -18,7 +18,7 @@
         <URL value="@degraphStyle.css" />
       </stylesheets>
     </AnchorPane>
-    <Label id="nodeNameLabel" prefWidth="127.0" text="NodeName" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.5" AnchorPane.topAnchor="5.0">
+    <Label id="nodeNameLabel" minHeight="-Infinity" minWidth="-Infinity" prefWidth="130.0" text="NodeName" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="7.5" AnchorPane.topAnchor="0.0">
       <stylesheets>
         <URL value="@degraphStyle.css" />
       </stylesheets>
