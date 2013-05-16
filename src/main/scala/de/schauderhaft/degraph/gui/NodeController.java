@@ -50,6 +50,7 @@ public class NodeController extends AnchorPane {
 
 	@FXML
 	void onMouseClicked(MouseEvent event) {
+		// TODO: not implemented, yet
 	}
 
 	public void setLayout(int x, int y) {
@@ -88,6 +89,7 @@ public class NodeController extends AnchorPane {
 
 	@Override
 	public String toString() {
+		// TODO: using String.format()
 		StringBuffer sb = new StringBuffer();
 		sb.append("this.size: " + getPrefHeight() + " x " + getPrefWidth()
 				+ " Position (" + getLayoutX() + " | " + getLayoutY() + ")\n");
@@ -98,7 +100,7 @@ public class NodeController extends AnchorPane {
 				+ "\n");
 		Pane pane = (Pane) lookup(PANE_NAME);
 		sb.append("Pane.size: " + pane.getPrefHeight() + " x "
-				+ pane.getPrefWidth() + " x | y" + pane.getLayoutX() + " | "
+				+ pane.getPrefWidth() + " x | y " + pane.getLayoutX() + " | "
 				+ pane.getLayoutY());
 
 		return sb.toString();
