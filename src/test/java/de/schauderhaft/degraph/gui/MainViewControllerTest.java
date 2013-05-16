@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,32 +37,26 @@ public class MainViewControllerTest {
 	}
 
 	@Test
-	public void contentShouldBeAnchorPane() {
-		Node content = underTest.getContent();
-		assertEquals(AnchorPane.class, content.getClass());
-	}
-
-	@Test
 	public void contentShouldHaveChildren() {
-		AnchorPane anchorPane = (AnchorPane) underTest.getContent();
+		Pane anchorPane = (Pane) underTest.getContent();
 		assertTrue(anchorPane.getChildren() != null);
 	}
 
 	@Test
 	public void contentChildrenSHouldNotBeEmpty() {
-		AnchorPane anchorPane = (AnchorPane) underTest.getContent();
+		Pane anchorPane = (Pane) underTest.getContent();
 		assertFalse(anchorPane.getChildren().isEmpty());
 	}
 
 	@Test
 	public void contentShouldHaveSixChildren() {
-		AnchorPane anchorPane = (AnchorPane) underTest.getContent();
+		Pane anchorPane = (Pane) underTest.getContent();
 		assertEquals(6, anchorPane.getChildren().size());
 	}
 
 	@Test
 	public void childShouldBeNodeController() {
-		ObservableList<Node> children = ((AnchorPane) underTest.getContent())
+		ObservableList<Node> children = ((Pane) underTest.getContent())
 				.getChildren();
 		Node node = children.get(0);
 		assertEquals(NodeController.class, node.getClass());
