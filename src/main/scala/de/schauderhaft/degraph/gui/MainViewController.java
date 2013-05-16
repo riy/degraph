@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import de.schauderhaft.degraph.gui.Layouter.LayoutType;
 import de.schauderhaft.degraph.gui.util.FXMLUtil;
 import de.schauderhaft.degraph.java.JavaHierarchicGraph;
 
@@ -41,7 +40,7 @@ public class MainViewController extends ScrollPane {
 		// pane as content for this scrollPane
 		AnchorPane pane = new AnchorPane();
 
-		Layouter layout = new Layouter(graph, LayoutType.FLOWLAYOUT);
+		Layouter layout = new Layouter(graph, new RowLayout());
 		pane.getChildren().addAll(layout.layoutedNode(graph.topNodes()));
 
 		this.setContent(pane);

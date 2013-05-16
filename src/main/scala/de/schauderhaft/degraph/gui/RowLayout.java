@@ -11,7 +11,7 @@ import de.schauderhaft.degraph.model.Node;
  * This layout has no linbreak to visualize nodes` content
  * 
  */
-public class RowLayout {
+public class RowLayout implements Layout{
 
 	private static final int DISTANCE = 50;
 
