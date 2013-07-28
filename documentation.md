@@ -88,7 +88,7 @@ The configuration file looks like this.
         org.apache.log4j.(*).**
     }
 
-	It specifies the jar to analyze and only includes stuff from `log4j` itself. So we won't see any `java.lang` stuff it might depend on. Also the configuration consideres the first package part after `org.apache.log4j` as a *part*. This means it will create nodes on that level, containing all the classes in the respective packages and subpackages.
+It specifies the jar to analyze and only includes stuff from `log4j` itself. So we won't see any `java.lang` stuff it might depend on. Also the configuration consideres the first package part after `org.apache.log4j` as a *part*. This means it will create nodes on that level, containing all the classes in the respective packages and subpackages.
 	
 ##### Result #####
 
@@ -281,7 +281,9 @@ No matter how sophisticated a layout algorithm is. A graph with 1000s of nodes a
 
 When you decided what kind of dependencies you want to have in your project, and which you don't, you probably want to ensure that everybody involved sticks to these rules. Degraph will help you with that.
 
-The basic idea is to have a simple set of rules based on the slices you have anyway.
+The basic idea is to define slices and based on those slice you define the dependencies that are allowed. 
+
+Currently there is only a Scala DSL available to define these constraints. The DSL is in its early versions and will change significantly in future version once I find out what people are actually trying to do with it.
 
 ### Scala Constraints DSL ###
 
@@ -317,11 +319,11 @@ and
 
 The import makes the Degraph DSL available. The second one is the actual test. 
 
-`classpath` is a predefined `Configuration` containing the current classpath as the path to get analyzed. A `Configuration` is the class used to configure Degraph. When you use a configuration file to  configure Degraph you are basically creating a `Configuration` instance.
+`classpath` is a predefined `ConstraintBuilder` containing the current classpath as the path to get analyzed. 
 
 `including` is a method which allows to define an include filter. Without specifying a filter, Degraph would analyze everything in your classpath. Since this most probably also includes all kinds of libraries, it is a really good idea to limit the result to your own stuff, as I did here.
 
-`violationFree` is the actual matcher that checks all defined dependency constraints. But did we define any? Yes we did. By default every `Configuration` contains the constraint that no cycles are allowed. To be more precise: Every slice type gets checked if it results in any cycles. If so these cycles will be considere a dependency violation. 
+`violationFree` is the actual matcher that checks all defined dependency constraints. But did we define any? Yes we did. By default every `ConstraintBuilder` contains the constraint that no cycles are allowed. To be more precise: Every slice type gets checked if it results in any cycles. If so these cycles will be considere a dependency violation. 
 
 #### Adding Slicings ####
 
@@ -329,7 +331,7 @@ The import makes the Degraph DSL available. The second one is the actual test.
 
 #### Simple Constraints On Slicings ####
 
-Thes following specifies that with the slicing 'part' the slice 'check' may depend on any of 'configuration', 'graph' or 'model'. The slice 'configuration' may depend on any of 'graph' and 'model' but not on 'check' and so on. Or to put it differently: Dependencies from left to right are ok, from right to left aren't. This kind of constraint is usefull for slicings specifying business modules, where you want to enforce some ordering.
+Thes following specifies that with the slicing 'part' the slice 'check' may depend on any of the slices 'configuration', 'graph' or 'model'. The slice 'configuration' may depend on any of 'graph' and 'model' but not on 'check' and so on. Or to put it differently: Dependencies from left to right are ok, from right to left aren't. This kind of constraint is usefull for slicings specifying business modules, where you want to enforce some ordering.
 
     classpath.forType("part").allow("check", "configuration", "graph", "model")
 	
