@@ -1,6 +1,10 @@
 ---
+layout: simplePage
+title: Degraph Downloads
+metaContent: The download page for Degraph, a tool for visualizing and testing package dependencies in JVM code.
 ---
-# Downloads #
+
+# Download #
 
 There is currently only one version of Degraph available for download:
 

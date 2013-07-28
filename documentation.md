@@ -1,7 +1,7 @@
 ---
 layout: simplePage
 title: Degraph Manual
-metaContent: The manual for Degraph, a tool for visulizing and testing package dependencies in JVM code.
+metaContent: The manual for Degraph, a tool for visualizing and testing package dependencies in JVM code.
 ---
 
 # Degraph Manual #
