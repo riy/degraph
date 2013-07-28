@@ -32,7 +32,7 @@ The following images are created (and can be recreated by yourself) by
 * unzip to a directory ( _theDir_ )
 * open a console and change into _theDir_/degraph/bin
 * execute `degraph -f ../example/example#.config` with # replace by one of the digits 1, 2 or 3
-* open the resulting `example#.graphml' in yed, opening up some of the nodes and applying an hierarchic layout. 
+* open the resulting `example#.graphml` in yed, opening up some of the nodes and applying an hierarchic layout. 
 
 Move your mouse over the images to see enlarged versions of the images
 
@@ -455,6 +455,6 @@ You can find the source code to [Degraph at github](https://github.com/schauder/
 
 ### Keep Up To Date ### 
 
-Want to kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
+Want to be kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
 
 Don't want to miss the next release? Follow the [author on twitter](http://www.twitter.com/jensschauder).
