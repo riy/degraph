@@ -6,6 +6,9 @@ import de.schauderhaft.degraph.configuration.Pattern
 import de.schauderhaft.degraph.configuration.UnnamedPattern
 import de.schauderhaft.degraph.configuration.NamedPattern
 
+/**
+ * the basis for the DSL do define constraints on your dependencies in tests.
+ */
 case class ConstraintBuilder(
     private val config: Configuration = new Configuration(),
     sliceType: String = "",
@@ -24,9 +27,24 @@ case class ConstraintBuilder(
             constraints +
                 toConstraint(sliceType, slices.map((x: AnyRef) => any2Layer(x))))
 
+    /**
+     * allows a chain of dependencies. Any slice specified as an argument may depend on any slice mentioned later in the list of arguments.
+     * Dependencies in the opposite direction are forbidden and lead to a test failure
+     *
+     * Arguments are either Strings, denoting a slice or a {Layer}
+     *
+     * see also #allowDirect
+     */
     def allow(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, LayeringConstraint)
 
+    /**
+     *  allows a slice mentioned in the argument list to depend on the directly next element in the argument list.
+     *
+     *
+     *
+     *  see also #allow
+     */
     def allowDirect(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
 

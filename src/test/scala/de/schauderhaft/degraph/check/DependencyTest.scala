@@ -20,7 +20,7 @@ class DependencyTest extends FunSuite with ShouldMatchers {
                     withSlicing("internalExternal", ("internal", "de.schauderhaft.**"), ("external", "**")) should be(violationFree)
     }
 
-    test("Check identifies cycles") {
+    test("Check identifies cycles in log4j") {
         classpath.including("org.apache.log4j.**") should not be (violationFree)
     }
 
