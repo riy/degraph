@@ -10,14 +10,11 @@ import Check._
 class DependencyTest extends FunSuite with ShouldMatchers {
 
     test("Degraph honors its constraints") {
-        classpath.including("de.schauderhaft.**").
-            withSlicing("part",
-                "de.schauderhaft.*.(*).**").
-                withSlicing("lib",
-                    "de.schauderhaft.**(Test)",
-                    ("main", "de.schauderhaft.(*).**"),
-                    ("*.(*).**")).
-                    withSlicing("internalExternal", ("internal", "de.schauderhaft.**"), ("external", "**")) should be(violationFree)
+        classpath. //including("de.schauderhaft.**").
+            withSlicing("part", "de.schauderhaft.*.(*).**").
+            withSlicing("lib", "de.schauderhaft.**(Test)",
+                ("main", "de.schauderhaft.*.**")).
+                withSlicing("internalExternal", ("internal", "de.schauderhaft.**"), ("external", "**")) should be(violationFree)
     }
 
     test("Check identifies cycles in log4j") {
