@@ -10,7 +10,7 @@ import Check._
 class DependencyTest extends FunSuite with ShouldMatchers {
 
     test("Degraph honors its constraints") {
-        classpath. //including("de.schauderhaft.**").
+        classpath.including("de.schauderhaft.**").
             withSlicing("part", "de.schauderhaft.*.(*).**").
             withSlicing("lib", "de.schauderhaft.**(Test)",
                 ("main", "de.schauderhaft.*.**")).
