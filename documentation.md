@@ -478,6 +478,6 @@ You can find the source code to [Degraph at github](https://github.com/schauder/
 
 ### Keep Up To Date ### 
 
-Want to be kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http:/schauder.github.com/degraph/).
+Want to be kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http://schauder.github.io/degraph/).
 
 Don't want to miss the next release? Follow the [author on twitter](http://www.twitter.com/jensschauder).
