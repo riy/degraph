@@ -18,7 +18,7 @@ import de.schauderhaft.degraph.configuration.CycleFree
 
 @RunWith(classOf[JUnitRunner])
 class CycleFreeTest extends FunSuite with ShouldMatchers {
-    import de.schauderhaft.degraph.configuration.ConstraintViolationTestUtil._
+    import ConstraintViolationTestUtil._
 
     test("an empty graph has no cycles") {
         val g = new Graph()

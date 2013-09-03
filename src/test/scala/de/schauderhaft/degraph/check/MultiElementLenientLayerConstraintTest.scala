@@ -1,21 +1,14 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.check
 
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import de.schauderhaft.degraph.graph.SliceSource
-import scalax.collection.edge.LkDiEdge
-import scalax.collection.mutable.{ Graph => SGraph }
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.model.SimpleNode
-import de.schauderhaft.degraph.check.LenientLayer
-import de.schauderhaft.degraph.check.LayeringConstraint
-import de.schauderhaft.degraph.check.DirectLayeringConstraint
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class MultiElementLayerConstraintTest extends FunSuite with ShouldMatchers {
+class MultiElementLenientLayerConstraintTest extends FunSuite with ShouldMatchers {
     val paramTupel = ("t", IndexedSeq(LenientLayer("a"), LenientLayer("b", "c", "d"), LenientLayer("e")))
     val cons = Seq(LayeringConstraint.tupled(paramTupel),
         DirectLayeringConstraint.tupled(paramTupel))

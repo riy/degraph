@@ -1,18 +1,13 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.check
 
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import de.schauderhaft.degraph.graph.SliceSource
-import scalax.collection.edge.LkDiEdge
-import scalax.collection.mutable.{ Graph => SGraph }
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
-import de.schauderhaft.degraph.check.LenientLayer
-import de.schauderhaft.degraph.check.DirectLayeringConstraint
-import de.schauderhaft.degraph.check.StrictLayer
+import de.schauderhaft.degraph.configuration.ConstraintViolation
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 object ConstraintViolationTestUtil {
     def dependenciesIn(v: Set[ConstraintViolation]) = v.flatMap(_.dependencies.toSet)

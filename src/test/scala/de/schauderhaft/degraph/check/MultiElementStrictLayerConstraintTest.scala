@@ -1,18 +1,13 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.check
 
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import de.schauderhaft.degraph.graph.SliceSource
-import scalax.collection.edge.LkDiEdge
-import scalax.collection.mutable.{ Graph => SGraph }
-import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode
-import de.schauderhaft.degraph.check.StrictLayer
-import de.schauderhaft.degraph.check.LayeringConstraint
-import de.schauderhaft.degraph.check.DirectLayeringConstraint
+import ConstraintViolationTestUtil.dependenciesIn
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class MultiElementStrictLayerConstraintTest extends FunSuite with ShouldMatchers {
@@ -35,6 +30,12 @@ class MultiElementStrictLayerConstraintTest extends FunSuite with ShouldMatchers
             dependenciesIn(c.violations(MockSliceSource("t", "b" -> "c", "b" -> "d"))) should be(Set(
                 (SimpleNode("t", "b"), SimpleNode("t", "c")),
                 (SimpleNode("t", "b"), SimpleNode("t", "d"))))
+        }
+
+        test("inverse dependencies within a multielement layer are not ok %s".format(c.getClass())) {
+            dependenciesIn(c.violations(MockSliceSource("t", "c" -> "b", "d" -> "b"))) should be(Set(
+                (SimpleNode("t", "c"), SimpleNode("t", "b")),
+                (SimpleNode("t", "d"), SimpleNode("t", "b"))))
         }
 
         test("self dependencies within a multielement layer are  ok %s".format(c.getClass())) {
