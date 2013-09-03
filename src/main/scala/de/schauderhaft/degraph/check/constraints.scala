@@ -16,6 +16,7 @@ import de.schauderhaft.degraph.configuration.ConstraintViolation
  */
 object Layer {
     def anyOf(es: String*) = LenientLayer(es: _*)
+    def oneOf(es: String*) = StrictLayer(es: _*)
 }
 
 /**

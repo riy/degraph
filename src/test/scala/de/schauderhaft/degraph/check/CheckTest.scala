@@ -187,6 +187,35 @@ class CheckTest extends FunSuite with ShouldMatchers {
                         LenientLayer("b", "c", "d"),
                         LenientLayer("e"))))
     }
+    test("oneOf in group for LayeringConstraint") {
+        import Layer._
+        ConstraintBuilder(Configuration(constraint = Set())).
+            withSlicing("x").
+            allow("a", oneOf("b", "c", "d"), "e").
+            configuration.
+            constraint.head should be(
+                LayeringConstraint(
+                    "x",
+                    IndexedSeq(
+                        LenientLayer("a"),
+                        StrictLayer("b", "c", "d"),
+                        LenientLayer("e"))))
+    }
+
+    test("oneOf in group for DirectLayeringConstraint") {
+        import Layer._
+        ConstraintBuilder(Configuration(constraint = Set())).
+            withSlicing("x").
+            allowDirect("a", oneOf("b", "c", "d"), "e").
+            configuration.
+            constraint.head should be(
+                DirectLayeringConstraint(
+                    "x",
+                    IndexedSeq(
+                        LenientLayer("a"),
+                        StrictLayer("b", "c", "d"),
+                        LenientLayer("e"))))
+    }
 
 }
 
