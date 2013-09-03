@@ -29,9 +29,9 @@ Visualization of Dependencies can be very helpfull when you try to understand th
 The following images are created (and can be recreated by yourself) by 
 
 * downloading degraph
-* unzip to a directory ( _theDir_ )
+* unzip into a directory ( _theDir_ )
 * open a console and change into _theDir_/degraph/bin
-* execute `degraph -f ../example/example#.config` with # replace by one of the digits 1, 2 or 3
+* execute `degraph -f ../example/example#.config` with # replaced by one of the digits 1, 2 or 3
 * open the resulting `example#.graphml` in yed, opening up some of the nodes and applying an hierarchic layout. 
 
 Move your mouse over the images to see enlarged versions of the images
@@ -283,11 +283,15 @@ When you decided what kind of dependencies you want to have in your project, and
 
 The basic idea is to define slices and based on those slice you define the dependencies that are allowed. 
 
-Currently there is only a Scala DSL available to define these constraints. The DSL is in its early versions and will change significantly in future version once I find out what people are actually trying to do with it.
+Currently there is only a Scala DSL available to define these constraints. The DSL is in its early versions and might change significantly in future version once I find out what people are actually trying to do with it.
+
+### Setting up the project ###
+
+Since currently there is only the full distribution zip available of Degraph, you have to unzip the downloaded files and add all the contained jars to your classpath.
 
 ### Scala Constraints DSL ###
 
-The scala constraints DSL of Degraph is based on [ScalaTest](http://www.scalatest.org/) [matchers](http://www.scalatest.org/user_guide/using_matchers). 
+The Scala constraints DSL of Degraph is based on [ScalaTest](http://www.scalatest.org/) [matchers](http://www.scalatest.org/user_guide/using_matchers). 
 
 #### No Circles ####
 
@@ -323,19 +327,26 @@ The import makes the Degraph DSL available. The second one is the actual test.
 
 `including` is a method which allows to define an include filter. Without specifying a filter, Degraph would analyze everything in your classpath. Since this most probably also includes all kinds of libraries, it is a really good idea to limit the result to your own stuff, as I did here.
 
-`violationFree` is the actual matcher that checks all defined dependency constraints. But did we define any? Yes we did. By default every `ConstraintBuilder` contains the constraint that no cycles are allowed. To be more precise: Every slice type gets checked if it results in any cycles. If so these cycles will be considere a dependency violation. 
+`violationFree` is the actual matcher that checks all defined dependency constraints. But did we define any? Yes we did. By default every `ConstraintBuilder` contains the constraint that no cycles are allowed. To be more precise: Every [slice type](#slice_type) gets checked if it results in any cycles. If so these cycles will be considered a dependency violation.
+
+But where did we define any slicing? Every configuration in Degraph contains an implicte Slicing consisting of the packages themself. I.e. the test above asserts, that the code is cycle free on package level. 
 
 #### Adding Slicings ####
 
-*To be defined* (Right now there is only the default slicing '`package`' defined.
+The default slicing '`package`' isn't satisfying. You probably want to define other slicings, e.g. layers of your application, or the different modules of your application or both. You can do that useing the `withSlicing` method and patterns as used in the [configuration for visualization](#Slicing). The first parameter of `withSlicing` is the name of the slicing. The following parameters are patterns in one of two forms, either as an unnamed pattern, these are simple Strings, or as a named pattern, i.e. a tuple of a pattern name and the actual pattern, like in the following examples.
+
+    classpath.including("de.schauderhaft.**") //
+	    .withSlicing("module", "de.schauderhaft.(*).**") // use the third part of the package name as the module name
+        .withSlicing("layer", 
+		    ("persistence","de.schauderhaft.legacy.db.**"), // consider everything in the package de.schauderhaft.legacy.db and subpackages as as part of the layer "persistence"
+		    "de.schauderhaft.*.(*).**") // for everything else use the fourth part of the package name as 
+		) 
 
 #### Simple Constraints On Slicings ####
 
 Thes following specifies that with the slicing 'part' the slice 'check' may depend on any of the slices 'configuration', 'graph' or 'model'. The slice 'configuration' may depend on any of 'graph' and 'model' but not on 'check' and so on. Or to put it differently: Dependencies from left to right are ok, from right to left aren't. This kind of constraint is usefull for slicings specifying business modules, where you want to enforce some ordering.
 
-    classpath.forType("part").allow("check", "configuration", "graph", "model")
-	
-`forType` specifies the slice type this constraint applies to. Note that there is a predefined slicing named 'package'
+    classpath.withSlicing("module", "de.schauderhaft.degraph.(*).**") .allow("check", "configuration", "graph", "model")
 
 `allow` allows dependencies between the given slices from left to right, but not from right to left.
 
@@ -345,7 +356,9 @@ Dependencies from and to classes not part of the specified slices ar not constra
  
 If you don't want to allow dependencies to skip layers, you use `allowDirect` instead of `allow`. So the following allows 'check' to depend on 'configuration, but it disallows a dependency from 'check' to 'graph' or 'model' since that would skip 'configuration' 
  
-    classpath.forType("part").allowDirect("check", "configuration", "graph", "model")
+    classpath
+	    .withSlicing("module", "de.schauderhaft.degraph.(*).**")
+		    .allowDirect("check", "configuration", "graph", "model")
  
 Classes not part of the specified slices may depend on the first element in the list, and the last element in the list may depend on such unspecified classes.
  
@@ -353,10 +366,20 @@ Classes not part of the specified slices may depend on the first element in the 
 
 If there is a group of slices for which you don't care about the order, you can specify them using `anyOf` like in the following example: 
 
-    classpath.forType("part").allow("check", anyOf( "configuration", "graph"), "model")
+    classpath
+	    .withSlicing("module", "de.schauderhaft.degraph.(*).**")
+	        .allow("check", anyOf( "configuration", "graph"), "model")
 	
-The meaning of this constraint is very similar to [the simple constraint above](#simple_constraint_above), with the exception that dependencies from 'configuration' to 'graph' are allowed just as the other way round. Of course the 'no cycles' constraint still applies so both directions of dependencies must not be present at the same time.
- 
+The meaning of this constraint is very similar to [the simple constraint above](##simple_constraints_on_slicings), with the exception that dependencies from 'configuration' to 'graph' are allowed just as the other way round. Of course the 'no cycles' constraint still applies so both directions of dependencies must not be present at the same time.
+
+#### One of Many Slices ####
+
+If you use for example a hexagonal architecture, you probably have something like a persistence and a gui layer both may access the domain layer, but must not access each other. A constraint as that can be expressed using the `oneOf` method
+
+    classpath
+	    .withSlicing("layer", "de.schauderhaft.app.*.(*).**")
+	        .allow(oneOf( "persistence", "gui"), "domain")
+	 
 ### Java Constraints DSL ###
 
 Once the Scala DSL is somewhat finished there will also be a Java version. But since creating a DSL in Scala is so much easier and nicer, Scala comes first. Of course you might consider picking up a little Scala just for a small set of dependency tests ...
