@@ -43,7 +43,7 @@ Move your mouse over the images to see enlarged versions of the images
 The configuration file example1.config might look like this (details may vary with the version of Degraph)
 
     output = example1.graphml
-    classpath = ../lib/degraph-0.0.3.jar
+    classpath = ../lib/degraph-0.0.4.jar
     exclude = java*.**
     exclude = scala.**
     exclude = org.scalatest.**
@@ -141,7 +141,7 @@ We'll go through the different parts of the configuration file by examining an e
 
 
     output = example1.graphml
-    classpath = ../lib/degraph-0.0.3.jar
+    classpath = ../lib/degraph-0.0.4.jar
     exclude = java*.**
     exclude = scala.**
     exclude = org.scalatest.**
