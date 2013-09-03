@@ -29,11 +29,19 @@ You'll have to provide at least a class path to analyze. These are the command l
 ## How do the results look like? ##
 Take a look at the [examples page](https://github.com/schauder/degraph/wiki/Examples) to get an impression of how the results might look and the effect of specifc slicings.
 
+## How to run tests ##
+
+Degraph since version 0.0.4 is able to specify dependency constraints via tests. There is a [seperate repository for Examples](https://github.com/schauder/degraphTalk/blob/master/src/de/schauderhaft/degraph/meta/DependencyTest.scala). More documentation will be available soon.
+
 ## Vision ##
 
-While currently Degraph only visualizes dependencies, I plan to add the possibility to define allowed and disallowed dependencies, plus an easy way to integrate it into various test frameworks. Failures should then create a diagram of the violation found, therby making fixing the problem easier.
+With release 0.0.4 Degraph allows to defined dependency constraints using tests. This feature will need quite some tweaking in the futore: Java Support (instead of just Scala), Support for ignoring dependencies).
 
-If you have any ideas what Degraph should be able to do, just open an [issue](https://github.com/schauder/degraph/issues).
+Also while yed is a cool Graph editor it does way more then Degraph actually needs and misses some other features. So a standaloe (or IDE Plugin based) GUI would be nice.
+
+Finally the definition of dependency constraints used in tests should also be usable for visualization purposes.
+
+If you have more ideas what Degraph should be able to do, just open an [issue](https://github.com/schauder/degraph/issues).
 
 ## How to build ##
 
