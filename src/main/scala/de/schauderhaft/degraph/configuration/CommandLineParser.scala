@@ -9,7 +9,7 @@ object CommandLineParser {
     def parse(args: Seq[String]) = {
         new LazyScallopConf(args) {
 
-            version("Degraph Version 0.1.0.")
+            version("Degraph Version 0.0.5")
             banner("""Degraph analyses class and jar files and creates graphml documents out of it
 for visualizing dependencies.""")
             footer("""See https://github.com/schauder/degraph for more information""")
