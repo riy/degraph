@@ -5,7 +5,7 @@ import de.schauderhaft.degraph.configuration.Constraint
 import de.schauderhaft.degraph.configuration.Pattern
 import de.schauderhaft.degraph.configuration.UnnamedPattern
 import de.schauderhaft.degraph.configuration.NamedPattern
-
+import scala.annotation.varargs
 /**
  * the basis for the DSL do define constraints on your dependencies in tests.
  */
@@ -48,7 +48,7 @@ case class ConstraintBuilder(
     def allowDirect(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
 
-    def withSlicing(sliceType: String, sls: AnyRef*) = {
+    @varargs def withSlicing(sliceType: String, sls: AnyRef*) = {
         copy(sliceType = sliceType, slicings = slicings + (sliceType ->
             sls.map {
                 case s: String => UnnamedPattern(s)
