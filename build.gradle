@@ -5,6 +5,23 @@ apply plugin: 'github-pages'
 
 try{ // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
+	
+    task pushToBintray(type:Exec) {
+      commandLine 'curl', '-T', 'build/distributions/degraph-' + version + '.zip', '-uschauder:' + bintrayApikey ,'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-'+ version + '.zip'
+    }
+    
+    pushToBintray.dependsOn distZip
+    
+    createReleaseTag.dependsOn pushToBintray
+    
+    githubPages {
+      repoUri = 'https://github.com/schauder/degraph.git'
+      credentials {
+        username = System.properties['credentials.username']
+    	password = System.properties['credentials.password']
+      }  
+    }
+	
 } catch (RuntimeException re){
     System.out.println("releasing not possible (probably no network)")
 	re.printStackTrace()
@@ -35,22 +52,6 @@ applicationDistribution.from('build/docs'){
 
 distZip.dependsOn scaladoc
 
-
-task pushToBintray(type:Exec) {
-  commandLine 'curl', '-T', 'build/distributions/degraph-' + version + '.zip', '-uschauder:' + bintrayApikey ,'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-'+ version + '.zip'
-}
-
-pushToBintray.dependsOn distZip
-
-createReleaseTag.dependsOn pushToBintray
-
-githubPages {
-  repoUri = 'https://github.com/schauder/degraph.git'
-  credentials {
-    username = System.properties['credentials.username']
-	password = System.properties['credentials.password']
-  }  
-}
 
 buildscript {
     repositories {
