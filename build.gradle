@@ -94,19 +94,19 @@ dependencies {
 
     // Libraries needed for scala api
     compile 'org.scala-lang:scala-library:2.9.2'
-	
+
 	compile 'com.jeantessier:dependencyfinder:1.2.1-beta4'
-	compile 'apache-oro:jakarta-oro:2.0.8'
+	compile 'oro:oro:2.0.8'
 	compile 'com.google.guava:guava:14.0.1'
 
 	compile 'log4j:log4j:1.2.17'
 	compile 'org.rogach:scallop_2.9.2:0.8.1'
-            
+
     compile 'com.assembla.scala-incubator:graph-core_2.9.2:1.6.2'        
-	
+
 	testCompile 'junit:junit:4.11'
 	compile 'org.scalatest:scalatest_2.9.2:1.9.1'
-	
+
 	//javafx
 	compile files(getJavaFXPath(javafxLib))
 }
