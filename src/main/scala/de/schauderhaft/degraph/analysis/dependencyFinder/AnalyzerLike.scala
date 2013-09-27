@@ -2,7 +2,6 @@ package de.schauderhaft.degraph.analysis.dependencyFinder
 
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.Node
-import de.schauderhaft.degraph.model.Node
 
 /**
  * trait abstracting over who or what provides dependencies.
