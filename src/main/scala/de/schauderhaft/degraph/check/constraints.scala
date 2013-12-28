@@ -15,35 +15,35 @@ import de.schauderhaft.degraph.configuration.ConstraintViolation
  * provides a DSLish method of creating Layer instances
  */
 object Layer {
-    def anyOf(es: String*) = LenientLayer(es: _*)
-    def oneOf(es: String*) = StrictLayer(es: _*)
+  def anyOf(es: String*) = LenientLayer(es: _*)
+  def oneOf(es: String*) = StrictLayer(es: _*)
 }
 
 /**
  * one or more slices making up an architectural layer, i.e. a group of slices all constraint in the same way.
  */
 sealed trait Layer {
-    def contains(elem: String): Boolean
-    def denyDependenciesWithinLayer: Boolean
+  def contains(elem: String): Boolean
+  def denyDependenciesWithinLayer: Boolean
 }
 
 abstract class SimpleLayer(es: String*) extends Layer {
-    private[this] val eSet = es.toSet
-    def contains(elem: String): Boolean = eSet.contains(elem)
+  private[this] val eSet = es.toSet
+  def contains(elem: String): Boolean = eSet.contains(elem)
 }
 
 /**
  * a layer where the elements of that layer may depend on each other
  */
 case class LenientLayer(es: String*) extends SimpleLayer(es: _*) {
-    val denyDependenciesWithinLayer = false
+  val denyDependenciesWithinLayer = false
 }
 
 /**
  * a layer where the elements of that may NOT depend on each other
  */
 case class StrictLayer(es: String*) extends SimpleLayer(es: _*) {
-    val denyDependenciesWithinLayer = true
+  val denyDependenciesWithinLayer = true
 }
 
 /**
@@ -51,58 +51,58 @@ case class StrictLayer(es: String*) extends SimpleLayer(es: _*) {
  *
  */
 trait SlicedConstraint extends Constraint {
-    def sliceType: String
+  def sliceType: String
 
-    /**
-     * a predicate determining if a given node pair violates this constraint.
-     *
-     * Will get called with nodes from the slice type of this constraint
-     */
-    def isViolatedBy(n1: Node, n2: Node): Boolean
+  /**
+   * a predicate determining if a given node pair violates this constraint.
+   *
+   * Will get called with nodes from the slice type of this constraint
+   */
+  def isViolatedBy(n1: Node, n2: Node): Boolean
 
-    protected def slices: IndexedSeq[Layer]
-    protected def indexOf(n: Node) = n match {
-        case sn: SimpleNode => slices.indexWhere(_.contains(sn.name))
-        case _ => throw new IllegalStateException("Sorry, I thought this would never happen, please report a bug including the callstack")
-    }
+  protected def slices: IndexedSeq[Layer]
+  protected def indexOf(n: Node) = n match {
+    case sn: SimpleNode => slices.indexWhere(_.contains(sn.name))
+    case _ => throw new IllegalStateException("Sorry, I thought this would never happen, please report a bug including the callstack")
+  }
 
-    protected def constraitContainsBothNodes(i: Int, j: Int) =
-        i >= 0 && j >= 0
+  protected def constraitContainsBothNodes(i: Int, j: Int) =
+    i >= 0 && j >= 0
 
-    /**
-     * implemented in such a way that all dependencies of the specified slice type will be iterated and @link isViolatedBy called for each dependency
-     */
-    def violations(ss: SliceSource): Set[ConstraintViolation] = {
-        val sg = ss.slice(sliceType)
-        val deps =
-            (for {
-                eT <- sg.edges.toSeq
-                val e = eT.value
-                if (isViolatedBy(e._1, e._2))
-            } yield (e._1.value, e._2.value))
+  /**
+   * implemented in such a way that all dependencies of the specified slice type will be iterated and @link isViolatedBy called for each dependency
+   */
+  def violations(ss: SliceSource): Set[ConstraintViolation] = {
+    val sg = ss.slice(sliceType)
+    val deps =
+      (for {
+        eT <- sg.edges.toSeq
+        e = eT.value
+        if (isViolatedBy(e._1, e._2))
+      } yield (e._1.value, e._2.value))
 
-        if (deps.isEmpty)
-            Set()
-        else
-            Set(ConstraintViolation(sliceType, shortString, deps: _*))
+    if (deps.isEmpty)
+      Set()
+    else
+      Set(ConstraintViolation(sliceType, shortString, deps: _*))
 
-    }
+  }
 
-    private def layersToString(ls: Collection[String], start: String, end: String) =
-        if (ls.size == 1) ls.head
-        else ls.mkString(start, ", ", end)
+  private def layersToString(ls: Iterable[String], start: String, end: String) =
+    if (ls.size == 1) ls.head
+    else ls.mkString(start, ", ", end)
 
-    protected val arrow: String
+  protected val arrow: String
 
-    def shortString =
-        (for {
-            l <- slices
-            s = l match {
-                case LenientLayer(es @ _*) => layersToString(es, "(", ")")
-                case StrictLayer(es @ _*) => layersToString(es, "[", "]")
-                case _ => l.toString()
-            }
-        } yield s).mkString(" %s ".format(arrow))
+  def shortString =
+    (for {
+      l <- slices
+      s = l match {
+        case LenientLayer(es @ _*) => layersToString(es, "(", ")")
+        case StrictLayer(es @ _*) => layersToString(es, "[", "]")
+        case _ => l.toString()
+      }
+    } yield s).mkString(" %s ".format(arrow))
 
 }
 
@@ -112,31 +112,31 @@ trait SlicedConstraint extends Constraint {
  * Dependencies from and to slices not represented by a layer aren't constraint by this constraint
  */
 case class LayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) extends SlicedConstraint {
-    def isViolatedBy(n1: Node, n2: Node) = {
-        val i1 = indexOf(n1)
-        val i2 = indexOf(n2)
-        constraitContainsBothNodes(i1, i2) &&
-            (i1 > i2 ||
-                (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))
-    }
+  def isViolatedBy(n1: Node, n2: Node) = {
+    val i1 = indexOf(n1)
+    val i2 = indexOf(n2)
+    constraitContainsBothNodes(i1, i2) &&
+      (i1 > i2 ||
+        (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))
+  }
 
-    val arrow = "->"
+  val arrow = "->"
 }
 
 /**
  * each layer (A) mentioned in this constraint may only depend on a layer (B) when A comes directly before B
  */
 case class DirectLayeringConstraint(sliceType: String, slices: IndexedSeq[Layer]) extends SlicedConstraint {
-    def isViolatedBy(n1: Node, n2: Node) = {
-        val i1 = indexOf(n1)
-        val i2 = indexOf(n2)
-        (constraitContainsBothNodes(i1, i2) &&
-            (i1 > i2 ||
-                i2 - i1 > 1 || (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))) ||
-                (i1 < 0 && i2 > 0) ||
-                (i1 >= 0 && i1 < slices.size - 1 && i2 < 0)
-    }
+  def isViolatedBy(n1: Node, n2: Node) = {
+    val i1 = indexOf(n1)
+    val i2 = indexOf(n2)
+    (constraitContainsBothNodes(i1, i2) &&
+      (i1 > i2 ||
+        i2 - i1 > 1 || (n1 != n2 && i1 == i2 && slices(i1).denyDependenciesWithinLayer))) ||
+        (i1 < 0 && i2 > 0) ||
+        (i1 >= 0 && i1 < slices.size - 1 && i2 < 0)
+  }
 
-    val arrow = "=>"
+  val arrow = "=>"
 }
 
