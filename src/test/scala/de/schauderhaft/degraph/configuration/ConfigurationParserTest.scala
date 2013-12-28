@@ -3,7 +3,7 @@ package de.schauderhaft.degraph.configuration
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.matchers.ShouldMatchers.{ include => _, _ }
+import org.scalatest.Matchers.{ include => _, _ }
 import org.scalatest.FunSuiteLike
 
 @RunWith(classOf[JUnitRunner])

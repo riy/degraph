@@ -8,7 +8,7 @@ import de.schauderhaft.degraph.model.Node
 import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
 import de.schauderhaft.degraph.graph.Graph
-import org.scalatest.matchers.ShouldMatchers._
+import org.scalatest.Matchers._
 import de.schauderhaft.degraph.configuration.ConstraintViolation
 
 /**
@@ -28,50 +28,50 @@ import de.schauderhaft.degraph.configuration.ConstraintViolation
  */
 object Check {
 
-    /**
-     * a Configuration object containing the current classpath.
-     *
-     * Intended as a starting point for analyzing the application that is currently running.
-     *
-     * Note in a typical maven like setup it will also include the test classes as well as all libraries, which might not be desirable.
-     * Manipulate the configuration to only contain the classpath elements required or use include and exclude filters for limiting the analyzed classes.
-     */
-    val classpath = ConstraintBuilder(new Configuration(
-        classpath = Option(System.getProperty("java.class.path")),
-        analyzer = Analyzer), "package")
+  /**
+   * a Configuration object containing the current classpath.
+   *
+   * Intended as a starting point for analyzing the application that is currently running.
+   *
+   * Note in a typical maven like setup it will also include the test classes as well as all libraries, which might not be desirable.
+   * Manipulate the configuration to only contain the classpath elements required or use include and exclude filters for limiting the analyzed classes.
+   */
+  val classpath = ConstraintBuilder(new Configuration(
+    classpath = Option(System.getProperty("java.class.path")),
+    analyzer = Analyzer), "package")
 
-    /**
-     * a matcher for Configurations testing if the classes specified in the configuration
-     * adhere to the dependency constraints configured in the configuration.
-     */
-    val violationFree = new BeMatcher[ConstraintBuilder] {
-        def apply(constraintBuilder: ConstraintBuilder) = {
-            val conf = constraintBuilder.configuration
-            val g = conf.createGraph()
+  /**
+   * a matcher for Configurations testing if the classes specified in the configuration
+   * adhere to the dependency constraints configured in the configuration.
+   */
+  val violationFree = new BeMatcher[ConstraintBuilder] {
+    def apply(constraintBuilder: ConstraintBuilder) = {
+      val conf = constraintBuilder.configuration
+      val g = conf.createGraph()
 
-            def checkForViolations: Set[ConstraintViolation] = {
-                for {
-                    c <- conf.constraint
-                    v <- c.violations(g)
-                } yield v
-            }
+      def checkForViolations: Set[ConstraintViolation] = {
+        for {
+          c <- conf.constraint
+          v <- c.violations(g)
+        } yield v
+      }
 
-            val violations = checkForViolations
+      val violations = checkForViolations
 
-            val matches = violations.isEmpty
+      val matches = violations.isEmpty
 
-            val failureMessage = "%s yields the following constraint violations: %s".format(conf, violations.mkString("%n").format())
-            val negativeFailureMessage = "%s does not yield any violations of the constraints.".format(conf)
+      val failureMessage = "%s yields the following constraint violations: %s".format(conf, violations.mkString("%n").format())
+      val negativeFailureMessage = "%s does not yield any violations of the constraints.".format(conf)
 
-            new MatchResult(matches, failureMessage, negativeFailureMessage)
-        }
+      new MatchResult(matches, failureMessage, negativeFailureMessage)
     }
+  }
 
-    private def sliceNode(edge: (Node, Node)) = {
-        val (n1, n2) = edge
-        n1.types == n2.types && n1.types.head != "Class"
-    }
+  private def sliceNode(edge: (Node, Node)) = {
+    val (n1, n2) = edge
+    n1.types == n2.types && n1.types.head != "Class"
+  }
 
-    private def lowerCaseFirstLetter(s: String) = s.head.toLower + s.tail
+  private def lowerCaseFirstLetter(s: String) = s.head.toLower + s.tail
 }
 

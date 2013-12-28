@@ -8,7 +8,7 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class CommandLineParserTest extends FunSuite {
-  import org.scalatest.matchers.ShouldMatchers._
+  import org.scalatest.Matchers._
 
   test("default outputfile is 'output.graphml'") {
     val config = CommandLineParser.parse(Array[String]())
