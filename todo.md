@@ -1,5 +1,9 @@
+Is exclude available in checks?
+
 * nicely format documentation
 * write release notes
+- Migration to Scala 2.10
+- Java API
 
 * speed up tests
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
