@@ -24,4 +24,9 @@ class DependencyTest extends FunSuite {
   test("Degraph has no cycles") {
     classpath.including("de.schauderhaft.**") should be(violationFree)
   }
+
+  // slow as mud
+  //  test("all the other stuff has no cycles") {
+  //    classpath.excluding("de.schauderhaft.**") should not be (violationFree)
+  //  }
 }
