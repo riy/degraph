@@ -10,13 +10,19 @@ import scalax.collection.mutable.{ Graph => SGraph }
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.configuration.Constraint
 import de.schauderhaft.degraph.configuration.ConstraintViolation
+import scala.annotation.varargs
 
 /**
  * provides a DSLish method of creating Layer instances
  */
 object Layer {
-  def anyOf(es: String*) = LenientLayer(es: _*)
-  def oneOf(es: String*) = StrictLayer(es: _*)
+  @varargs def anyOf(es: String*) = LenientLayer(es: _*)
+  @varargs def oneOf(es: String*) = StrictLayer(es: _*)
+}
+
+object JLayer {
+  @varargs def anyOf(es: String*) = LenientLayer(es: _*)
+  @varargs def oneOf(es: String*) = StrictLayer(es: _*)
 }
 
 /**

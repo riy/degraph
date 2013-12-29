@@ -24,4 +24,14 @@ public class JavaCheckApiTest {
 	public void canUseAllowDirect() {
 		classpath().withSlicing("blah", "whatever").allowDirect("a", "b", "c");
 	}
+
+	@Test
+	public void canUseAnyOf() {
+		JLayer.anyOf("b", "c", "d");
+	}
+
+	@Test
+	public void canUseOneOf() {
+		JLayer.oneOf("b", "c", "d");
+	}
 }
