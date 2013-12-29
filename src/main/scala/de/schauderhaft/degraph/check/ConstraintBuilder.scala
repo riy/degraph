@@ -35,7 +35,7 @@ case class ConstraintBuilder(
      *
      * see also #allowDirect
      */
-    def allow(slices: AnyRef*): ConstraintBuilder =
+    @varargs def allow(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, LayeringConstraint)
 
     /**
@@ -45,7 +45,7 @@ case class ConstraintBuilder(
      *
      *  see also #allow
      */
-    def allowDirect(slices: AnyRef*): ConstraintBuilder =
+    @varargs def allowDirect(slices: AnyRef*): ConstraintBuilder =
         modifyConfig(slices.toIndexedSeq, DirectLayeringConstraint)
 
     @varargs def withSlicing(sliceType: String, sls: AnyRef*) = {
