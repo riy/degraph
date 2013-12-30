@@ -1,6 +1,12 @@
 package de.schauderhaft.degraph.check;
 
+import de.schauderhaft.degraph.configuration.NamedPattern;
+import de.schauderhaft.degraph.check.Check;
+
 import org.junit.Test;
+import static org.hamcrest.core.Is.*;
+
+import static org.junit.Assert.assertThat;
 import static de.schauderhaft.degraph.check.Check.classpath;
 
 public class JavaCheckApiTest {
@@ -33,5 +39,23 @@ public class JavaCheckApiTest {
 	@Test
 	public void canUseOneOf() {
 		JLayer.oneOf("b", "c", "d");
+	}
+
+	@Test
+	public void degraphHonoursItsConstraintsJavaStyle() {
+		assertThat(
+				classpath()
+						.including("de.schauderhaft.**")
+						.withSlicing("part", "de.schauderhaft.*.(*).**")
+						.withSlicing(
+								"lib",
+								"de.schauderhaft.**(Test)",
+								new NamedPattern("main", "de.schauderhaft.*.**"))
+						.withSlicing(
+								"internalExternal",
+								new NamedPattern("internal",
+										"de.schauderhaft.**"),
+								new NamedPattern("external", "**")),
+				is(Check.violationFree()));
 	}
 }
