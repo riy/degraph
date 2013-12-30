@@ -54,6 +54,7 @@ case class ConstraintBuilder(
       sls.map {
         case s: String => UnnamedPattern(s)
         case (n: String, p: String) => NamedPattern(n, p)
+        case p: Pattern => p
       }))
   }
 
