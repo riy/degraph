@@ -107,7 +107,8 @@ dependencies {
 
 	testCompile 'junit:junit:4.11'
 	compile 'org.scalatest:scalatest_2.10:2.0'
-
+    compile 'org.hamcrest:hamcrest-all:1.3'
+            
 	//javafx
 	compile files(getJavaFXPath(javafxLib))
 }

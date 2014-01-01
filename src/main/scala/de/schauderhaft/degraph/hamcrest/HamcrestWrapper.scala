@@ -1,6 +1,6 @@
 package de.schauderhaft.degraph.hamcrest
 
-import org.scalatest.matchers.{ Matcher => SMatcher }
+import org.scalatest.matchers.{ BeMatcher => SMatcher }
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.Description

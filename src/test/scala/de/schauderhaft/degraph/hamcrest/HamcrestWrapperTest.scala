@@ -4,7 +4,7 @@ import org.scalatest.Matchers._
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.matchers.{ Matcher => SMatcher }
+import org.scalatest.matchers.{ BeMatcher => SMatcher }
 import org.hamcrest.{ Matcher => HMatcher }
 import org.scalatest.matchers.MatchResult
 import org.scalatest.prop.PropertyChecks

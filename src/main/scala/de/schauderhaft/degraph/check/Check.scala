@@ -44,7 +44,7 @@ object Check {
    * a matcher for Configurations testing if the classes specified in the configuration
    * adhere to the dependency constraints configured in the configuration.
    */
-  val violationFree = new BeMatcher[ConstraintBuilder] {
+  val violationFree: BeMatcher[ConstraintBuilder] = new BeMatcher[ConstraintBuilder] {
     def apply(constraintBuilder: ConstraintBuilder) = {
       val conf = constraintBuilder.configuration
       val g = conf.createGraph()
