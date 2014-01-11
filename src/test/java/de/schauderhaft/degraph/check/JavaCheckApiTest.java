@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.check;
 
 import de.schauderhaft.degraph.configuration.NamedPattern;
-import de.schauderhaft.degraph.check.Check;
+import static de.schauderhaft.degraph.check.JCheck.*;
 import de.schauderhaft.degraph.hamcrest.HamcrestWrapper;
 
 import org.junit.Test;
@@ -58,6 +58,6 @@ public class JavaCheckApiTest {
 								new NamedPattern("internal",
 										"de.schauderhaft.**"),
 								new NamedPattern("external", "**")),
-				is(new HamcrestWrapper<ConstraintBuilder>(Check.violationFree())));
+				is(violationFree()));
 	}
 }
