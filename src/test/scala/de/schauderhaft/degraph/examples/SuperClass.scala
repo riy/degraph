@@ -1,6 +1,7 @@
 package de.schauderhaft.degraph.examples
 import org.junit.runner.RunWith
 import org.junit.runner.Runner
+import java.util.ArrayList
 
 /**
  * just a file with different dependencies for use in tests
@@ -12,11 +13,18 @@ class SuperClass
 class SubClass extends SuperClass
 
 class User {
-    new Token
+  new Token
 }
 
 class OtherUser {
-    val value = new Token
+  val value = new Token
+}
+
+class MyArrayList extends ArrayList[String]
+
+abstract class ListUser {
+  val listOfStrings = Vector[String]()
+  def listOfInts: Seq[Int]
 }
 
 @RunWith(classOf[MyRunner])
