@@ -5,9 +5,7 @@ import de.schauderhaft.degraph.check.Check;
 import de.schauderhaft.degraph.hamcrest.HamcrestWrapper;
 
 import org.junit.Test;
-import org.scalatest.Matchers;
 
-import scala.annotation.meta.beanGetter;
 import static org.hamcrest.core.Is.*;
 
 import static org.junit.Assert.assertThat;
