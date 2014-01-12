@@ -61,6 +61,13 @@ case class ConstraintBuilder(
   def including(s: String): ConstraintBuilder = copy(includes = includes :+ s)
   def excluding(s: String): ConstraintBuilder = copy(excludes = excludes :+ s)
 
+  def noJars: ConstraintBuilder = copy(config = config.copy(classpath = config.classpath.map(noJars(_))))
+
+  private def noJars(s: String) = if (s.endsWith(".jar"))
+    ""
+  else
+    s
+
   def configuration = config.copy(
     categories = slicings,
     includes = includes,
