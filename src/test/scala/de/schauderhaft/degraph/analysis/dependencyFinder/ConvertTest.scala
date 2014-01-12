@@ -8,6 +8,7 @@ import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
+import de.schauderhaft.degraph.analysis.Convert
 
 @RunWith(classOf[JUnitRunner])
 class ConverterTest extends FunSuite {

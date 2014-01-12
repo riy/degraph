@@ -5,7 +5,7 @@ import org.scalatest.Matchers._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
+import de.schauderhaft.degraph.analysis.AnalyzerLike
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.model.SimpleNode

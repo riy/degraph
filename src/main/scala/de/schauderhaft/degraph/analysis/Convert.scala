@@ -1,8 +1,7 @@
-package de.schauderhaft.degraph.analysis.dependencyFinder
+package de.schauderhaft.degraph.analysis
 
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-
 import de.schauderhaft.degraph.model.SimpleNode._
 import de.schauderhaft.degraph.model.SimpleNode
 

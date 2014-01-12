@@ -9,6 +9,7 @@ import de.schauderhaft.degraph.model.SimpleNode
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.Matchers._
+import de.schauderhaft.degraph.analysis.NoSelfReference
 
 @RunWith(classOf[JUnitRunner])
 class NoSelfReferenceTest extends FunSuite {

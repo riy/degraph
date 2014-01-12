@@ -11,6 +11,9 @@ import com.jeantessier.dependency.NodeFactory
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.model.SimpleNode
+import de.schauderhaft.degraph.analysis.Convert
+import de.schauderhaft.degraph.analysis.NoSelfReference
+import de.schauderhaft.degraph.analysis.AnalyzerLike
 
 /**
  * analyzes whatever it finds in the sourceFolder using

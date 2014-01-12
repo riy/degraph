@@ -7,7 +7,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.OptionValues._
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.analysis.dependencyFinder.AnalyzerLike
+import de.schauderhaft.degraph.analysis.AnalyzerLike
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.configuration.CycleFree
