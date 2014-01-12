@@ -40,6 +40,7 @@ object Configuration {
     eitherConfig
   }
   private def fromCommandLine(args: Array[String]): Either[String, Configuration] = {
+    import scala.language.reflectiveCalls
     var errorMessage: Option[String] = None
     val commandLine = CommandLineParser.parse(args)
     commandLine.initialize { case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help) }
