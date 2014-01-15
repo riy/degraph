@@ -63,10 +63,12 @@ case class ConstraintBuilder(
 
   def noJars: ConstraintBuilder = copy(config = config.copy(classpath = config.classpath.map(noJars(_))))
 
-  private def noJars(s: String) = if (s.endsWith(".jar"))
-    ""
-  else
-    s
+  private def noJars(s: String) = {
+    def isJar(s: String) = s.endsWith(".jar")
+    val sep = System.getProperty("path.separator")
+    val elements = s.split(sep)
+    elements.filterNot(isJar).mkString(sep)
+  }
 
   def configuration = config.copy(
     categories = slicings,

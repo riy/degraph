@@ -7,9 +7,13 @@ import org.scalatest.FunSuite
 import de.schauderhaft.degraph.configuration.UnnamedPattern
 import de.schauderhaft.degraph.configuration.NamedPattern
 import de.schauderhaft.degraph.configuration.Configuration
+import java.util.Collections
+import scala.util.Random
+import org.scalatest.prop.Tables.Table
+import org.scalatest.prop.TableDrivenPropertyChecks
 
 @RunWith(classOf[JUnitRunner])
-class ConstraintBuilderTest extends FunSuite {
+class ConstraintBuilderTest extends FunSuite with TableDrivenPropertyChecks {
 
   test("simple Pattern ends up In Configuration") {
     val conf = ConstraintBuilder().withSlicing("x", "a.(*).**").configuration
@@ -35,8 +39,27 @@ class ConstraintBuilderTest extends FunSuite {
     val cb = ConstraintBuilder(config = new Configuration(classpath = Some("x/")))
     cb.noJars.configuration.classpath should be(Some("x/"))
   }
+
   test("noJars configuration contains only directory based entries, single path gets preserved when path ends in backslash") {
     val cb = ConstraintBuilder(config = new Configuration(classpath = Some("""x\""")))
     cb.noJars.configuration.classpath should be(Some("""x\"""))
+  }
+
+  test("noJars configuration contains only directory based entries, path entries from multiple entries get preserved") {
+
+    val pathSeperator = System.getProperty("path.separator")
+    val r = new Random(0)
+
+    val pathElements = Table("alpha", "beta/gamma", """x\y""")
+    val jarElements = Table("this.jar", "beta/SomeOther.jar")
+    val path = r.shuffle(pathElements ++ jarElements).mkString(pathSeperator)
+
+    val cb = ConstraintBuilder(config = new Configuration(classpath = Some(path)))
+    forAll(pathElements) { p =>
+      cb.noJars.configuration.classpath.get should include(p)
+    }
+    forAll(jarElements) { p =>
+      cb.noJars.configuration.classpath.get should not include (p)
+    }
   }
 }
