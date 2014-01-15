@@ -10,7 +10,7 @@ import Check._
 class DependencyTest extends FunSuite {
 
   test("Degraph honors its constraints") {
-    classpath.including("de.schauderhaft.**").
+    classpath.noJars.including("de.schauderhaft.**").
       withSlicing("part", "de.schauderhaft.*.(*).**").
       withSlicing("lib", "de.schauderhaft.**(Test)",
         ("main", "de.schauderhaft.*.**")).
@@ -22,7 +22,7 @@ class DependencyTest extends FunSuite {
   }
 
   test("Degraph has no cycles") {
-    classpath.including("de.schauderhaft.**") should be(violationFree)
+    classpath.noJars.including("de.schauderhaft.**") should be(violationFree)
   }
 
   // slow as mud
