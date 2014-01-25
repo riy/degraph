@@ -97,6 +97,7 @@ dependencies {
     compile 'org.scala-lang:scala-library:2.10.3'
 
 	compile 'com.jeantessier:dependencyfinder:1.2.1-beta4'
+	compile 'org.ow2.asm:asm:4.2'
 	compile 'oro:oro:2.0.8'
 	compile 'com.google.guava:guava:14.0.1'
 
