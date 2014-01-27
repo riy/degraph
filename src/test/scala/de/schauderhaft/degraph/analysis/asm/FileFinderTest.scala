@@ -33,4 +33,8 @@ class FileFinderTest extends FunSuite
     new FileFinder(".").find() should contain(new File(userDir, "A.class"))
   }
 
+  test("FileFinder should only find class files") {
+    new FileFinder(".").find().foreach(f => f.getName() should endWith(".class"))
+  }
+
 }
