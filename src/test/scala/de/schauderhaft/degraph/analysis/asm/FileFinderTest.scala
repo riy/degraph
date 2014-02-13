@@ -14,15 +14,18 @@ class FileFinderTest extends FunSuite
   with BeforeAndAfterAll {
 
   val userDir = new File(System.getProperty("user.dir")).getCanonicalPath()
+  val filesForTest = Set("A.class", "J.jar", "T.txt")
 
   override def beforeAll() = {
     // create some Files to be used in the test
-
-    new File(userDir, "A.class").createNewFile() should be(true);
+    for (f <- filesForTest)
+      new File(userDir, f).createNewFile() should be(true);
 
   }
+
   override def afterAll() = {
-    new File(userDir, "A.class").delete() should be(true)
+    for (f <- filesForTest)
+      new File(userDir, f).delete() should be(true)
   }
 
   test("FileFinder returns an empty Set if it finds nothing") {
