@@ -7,4 +7,7 @@ caches/
 native/
 wrapper/
 *.iml
+*.ipr
+*.iws
+
 
