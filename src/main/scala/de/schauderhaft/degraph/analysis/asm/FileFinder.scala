@@ -16,5 +16,7 @@ class FileFinder(val rootPath: String) {
 }
 
 object ClassFileFilter extends FilenameFilter {
-  override def accept(f: File, n: String) = n.endsWith(".class")
+  override def accept(f: File, n: String) =
+    n.endsWith(".class") ||
+      n.endsWith(".jar")
 }

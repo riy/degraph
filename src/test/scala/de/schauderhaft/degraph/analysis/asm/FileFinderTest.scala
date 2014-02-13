@@ -36,8 +36,19 @@ class FileFinderTest extends FunSuite
     new FileFinder(".").find() should contain(new File(userDir, "A.class"))
   }
 
-  test("FileFinder should only find class files") {
-    new FileFinder(".").find().foreach(f => f.getName() should endWith(".class"))
+  test("FileFinder should only find class or jar files") {
+    new FileFinder(".").find().foreach(
+      f => f.getName() should (endWith(".class") or endWith(".jar")))
+  }
+
+  test("FileFinder should find the class file") {
+    new FileFinder(".").find()
+      .filter(_.getName().endsWith(".class")) should not be ('empty)
+  }
+
+  test("FileFinder should find the jar file") {
+    new FileFinder(".").find()
+      .filter(_.getName().endsWith(".jar")) should not be ('empty)
   }
 
 }
