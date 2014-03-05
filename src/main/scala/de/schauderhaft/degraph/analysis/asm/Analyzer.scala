@@ -18,7 +18,7 @@ object Analyzer extends AnalyzerLike {
       for {f <- files} {
         if (f.getName.endsWith(".class")) {
           val reader = new ClassReader(new BufferedInputStream(new FileInputStream(f)))
-          reader.accept(new MyClassVisitor(g), 0)
+          reader.accept(new GraphBuildingClassVisitor(g), 0)
         } else {
           val zipFile = new ZipFile(f)
           val entries = zipFile.entries()
@@ -26,7 +26,7 @@ object Analyzer extends AnalyzerLike {
             val e = entries.nextElement()
             if (e.getName.endsWith(".class")) {
               val reader = new ClassReader(zipFile.getInputStream(e))
-              reader.accept(new MyClassVisitor(g), 0)
+              reader.accept(new GraphBuildingClassVisitor(g), 0)
             }
           }
         }
