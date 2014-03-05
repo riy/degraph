@@ -9,11 +9,14 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   private def classNode(slashSeparatedName: String) = SimpleNode.classNode(slashSeparatedName.replace("/", "."))
 
   override def visit(version: Int, access: Int, name: String, signature: String, superName: String, interfaces: Array[String]): Unit = {
-    println("visit: " + name + " " + superName)
+    println("visit: " + name )
     if (superName == null) // happens only for Object I guess
       g.add(classNode(name))
     else
       g.connect(classNode(name), classNode(superName))
+
+    for(i <- interfaces)
+      g.connect(classNode(name), classNode(i))
   }
 
   override def visitSource(source: String, debug: String): Unit = super.visitSource(source, debug)

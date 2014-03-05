@@ -47,6 +47,12 @@ class AnalyzerTest extends FunSuite {
       graph should connect("de.schauderhaft.degraph.examples.User" -> "de.schauderhaft.degraph.examples.Token")
     }
 
+
+    test("Dependency from class to interface is found") {
+      graph should connect("java.lang.String" -> "java.io.Serializable")
+    }
+
+
     test("Dependency from class to member class is found") {
       graph should connect("de.schauderhaft.degraph.examples.OtherUser" -> "de.schauderhaft.degraph.examples.Token")
     }
