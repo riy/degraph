@@ -8,7 +8,9 @@ class FileFinder(val rootPath: String) {
       val files = root.list(ClassFileFilter).toSet
       files.map(new File(root.getCanonicalPath(), _)) ++ expandDirs(root.listFiles(DirFilter).toSet)
     } else
-      Set()
+      Set(root.getAbsoluteFile).filter(
+        (f: File) => ClassFileFilter.accept(f.getParentFile, f.getName)
+      )
   }
 
   private def expandDirs(files: Set[File]) =
@@ -24,6 +26,6 @@ object ClassFileFilter extends FilenameFilter {
       n.endsWith(".jar")
 }
 
-object DirFilter extends FileFilter{
+object DirFilter extends FileFilter {
   def accept(pathname: File): Boolean = pathname.isDirectory
 }

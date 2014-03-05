@@ -9,7 +9,7 @@ import org.scalatest.BeforeAndAfterAll
 
 @RunWith(classOf[JUnitRunner])
 class FileFinderTest extends FunSuite
-  with BeforeAndAfterAll {
+with BeforeAndAfterAll {
 
   val userDir = new File(System.getProperty("user.dir"))
   val tempDir = new File(userDir, "fileFinderTestDir")
@@ -21,12 +21,12 @@ class FileFinderTest extends FunSuite
     tempDir.mkdir()
     // create some Files to be used in the test
     for (f <- filesForTest) {
-        new File(tempDir, f).createNewFile()
+      new File(tempDir, f).createNewFile()
     }
 
     subDir.mkdir()
     for (f <- filesForTest) {
-        new File(subDir, f).createNewFile()
+      new File(subDir, f).createNewFile()
     }
   }
 
@@ -38,8 +38,13 @@ class FileFinderTest extends FunSuite
     subDir.delete()
   }
 
+  test("FileFinder returns the file when the file is a class file") {
+    val testFile = new File(tempDir, "A.class")
+    new FileFinder(testFile.getAbsolutePath).find() should be(Set(testFile))
+  }
+
   test("FileFinder returns an empty Set if it finds nothing") {
-    new FileFinder(new File(tempDir,"/thisPathShouldNotExist/").getAbsolutePath).find() should be(Set[File]())
+    new FileFinder(new File(tempDir, "/thisPathShouldNotExist/").getAbsolutePath).find() should be(Set[File]())
   }
 
   test("FileFinder should find File in user dir when searching for file in current directory") {
