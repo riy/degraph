@@ -32,8 +32,13 @@ class AnalyzerTest extends FunSuite {
     def test(name: String)(testFun: => Unit) = super.test("%s (%s)".format(name, label))(testFun)
 
     test("Selftest: nodeByString works") {
-      nodeByString("java.lang.String").get should be(classNode("java.lang.String"))
+      nodeByString("java.lang.String") should be(Some(classNode("java.lang.String")))
     }
+
+    test("Test classes get found") {
+      nodeByString("de.schauderhaft.degraph.examples.OtherUser") should be (Some(classNode("de.schauderhaft.degraph.examples.OtherUser")))
+    }
+
 
     test("Selftest: example classes got analyzed") {
       nodeByString("de.schauderhaft.degraph.examples.SubClass") should not be (None)
@@ -52,8 +57,7 @@ class AnalyzerTest extends FunSuite {
       graph should connect("java.lang.String" -> "java.io.Serializable")
     }
 
-
-    test("Dependency from class to member class is found") {
+    test("Dependency from class to member type is found") {
       graph should connect("de.schauderhaft.degraph.examples.OtherUser" -> "de.schauderhaft.degraph.examples.Token")
     }
 
