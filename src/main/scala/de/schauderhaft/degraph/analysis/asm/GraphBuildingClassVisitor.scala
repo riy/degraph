@@ -44,14 +44,20 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor = {
 
     class GraphBuildingAnnotationVisitor() extends AnnotationVisitor(api) {
-      //TODO nested Annotations, and values
       override def visit(name: String, value: AnyRef) = {
-
+        value match {
+          case t : Type => g.connect(currentClass,classNode( t.getClassName))
+          case _  =>
+        }
       }
 
       override def visitAnnotation(name: String, desc: String) = {
-        g.connect(currentClass, classNode(name))
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         this
+      }
+
+      override def visitEnum ( name:String,  desc:String,  value :String) {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
     }
 

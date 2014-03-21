@@ -78,6 +78,20 @@ class AnalyzerTest extends FunSuite {
       graph should connect("de.schauderhaft.degraph.examples.UsageInMethod" -> "java.lang.System")
     }
 
+
+    test("Dependency from class to type parameter of superclass") {
+      graph should connect("de.schauderhaft.degraph.examples.MyArrayList" -> "java.lang.String")
+    }
+
+    test("Dependency from class to type parameter of member") {
+      graph should connect("de.schauderhaft.degraph.examples.ListUser" -> "java.lang.String")
+    }
+
+    test("Dependency from class to type parameter of abstract member") {
+      graph should connect("de.schauderhaft.degraph.examples.ListUser" -> "scala.Int")
+    }
+
+
     test("No self references") {
       for (
         n <- graph.topNodes;
