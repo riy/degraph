@@ -17,7 +17,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
     if (desc.startsWith("["))
       classNodeFromDescriptor(desc.substring(1))
     else if (desc.startsWith("L"))
-      Some(classNode(desc.substring(1, desc.length-1)))
+      Some(classNode(desc.substring(1, desc.length - 1)))
     else
       None
   }
@@ -26,6 +26,10 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
   override def visit(version: Int, access: Int, name: String, signature: String, superName: String, interfaces: Array[String]): Unit = {
     currentClass = classNode(name)
+
+    if (signature != null)
+      println(signature)
+
     if (superName == null) // happens only for Object I guess
       g.add(currentClass)
     else
@@ -46,8 +50,8 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
     class GraphBuildingAnnotationVisitor() extends AnnotationVisitor(api) {
       override def visit(name: String, value: AnyRef) = {
         value match {
-          case t : Type => g.connect(currentClass,classNode( t.getClassName))
-          case _  =>
+          case t: Type => g.connect(currentClass, classNode(t.getClassName))
+          case _ =>
         }
       }
 
@@ -56,7 +60,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
         this
       }
 
-      override def visitEnum ( name:String,  desc:String,  value :String) {
+      override def visitEnum(name: String, desc: String, value: String) {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
     }

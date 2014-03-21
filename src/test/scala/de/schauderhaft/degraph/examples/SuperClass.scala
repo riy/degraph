@@ -2,6 +2,7 @@ package de.schauderhaft.degraph.examples
 import org.junit.runner.RunWith
 import org.junit.runner.Runner
 import java.util.ArrayList
+import java.lang.annotation.{RetentionPolicy, Retention}
 
 /**
  * just a file with different dependencies for use in tests
@@ -31,3 +32,6 @@ abstract class ListUser {
 abstract class UsesAnnotation
 
 abstract class MyRunner extends Runner
+
+@Retention(RetentionPolicy.RUNTIME)
+abstract class EnumInAnnotationUser

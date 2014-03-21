@@ -91,6 +91,9 @@ class AnalyzerTest extends FunSuite {
       graph should connect("de.schauderhaft.degraph.examples.ListUser" -> "scala.Int")
     }
 
+    test("Dependency from class to enum parameter in annotation") {
+      graph should connect ("de.schauderhaft.degraph.examples.EnumInAnnotationUser" -> "java.lang.annotation.RetentionPolicy")
+    }
 
     test("No self references") {
       for (
