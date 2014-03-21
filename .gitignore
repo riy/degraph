@@ -6,6 +6,7 @@ build/
 caches/
 native/
 wrapper/
+fileFinderTestDir/
 *.iml
 *.ipr
 *.iws
