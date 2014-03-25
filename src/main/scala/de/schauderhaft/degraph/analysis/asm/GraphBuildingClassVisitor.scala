@@ -23,6 +23,26 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
   import GraphBuildingClassVisitor._
 
+
+  class GraphBuildingAnnotationVisitor() extends AnnotationVisitor(api) {
+    override def visit(name: String, value: AnyRef) = {
+      value match {
+        case t: Type => g.connect(currentClass, classNode(t.getClassName))
+        case _ =>
+      }
+    }
+
+    override def visitAnnotation(name: String, desc: String) = {
+      classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+      this
+    }
+
+    override def visitEnum(name: String, desc: String, value: String) {
+      classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+    }
+  }
+
+
   private def log[T](t: T): T = {
     println(t)
     t
@@ -55,23 +75,6 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
   override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor = {
 
-    class GraphBuildingAnnotationVisitor() extends AnnotationVisitor(api) {
-      override def visit(name: String, value: AnyRef) = {
-        value match {
-          case t: Type => g.connect(currentClass, classNode(t.getClassName))
-          case _ =>
-        }
-      }
-
-      override def visitAnnotation(name: String, desc: String) = {
-        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
-        this
-      }
-
-      override def visitEnum(name: String, desc: String, value: String) {
-        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
-      }
-    }
 
     classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
 
@@ -89,9 +92,19 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
     }
   }
 
-  override def visitField(access: Int, name: String, desc: String, signature: String, value: scala.Any): FieldVisitor = super.visitField(access, name, desc, signature, value)
+  override def visitField(access: Int, name: String, desc: String, signature: String, value: scala.Any): FieldVisitor = {
+    class GraphBuildingFieldVisitor extends FieldVisitor(api) {
+      override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor =
+        new GraphBuildingAnnotationVisitor()
+
+    }
+    classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
+    new GraphBuildingFieldVisitor
+  }
 
   override def visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array[String]): MethodVisitor = super.visitMethod(access, name, desc, signature, exceptions)
 
   override def visitEnd(): Unit = super.visitEnd()
 }
+
+
