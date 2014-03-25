@@ -4,27 +4,35 @@ import de.schauderhaft.degraph.graph.Graph
 import org.objectweb.asm._
 import de.schauderhaft.degraph.model.SimpleNode
 
+
+object GraphBuildingClassVisitor {
+
+  def classNode(slashSeparatedName: String): SimpleNode = SimpleNode.classNode(slashSeparatedName.replace("/", "."))
+
+  def classNodeFromDescriptor(desc: String): Set[SimpleNode] = {
+    if (desc == null)
+      Set()
+    else {
+      val pattern = """(?<=L)([\w/]*)(?=[;<])""".r
+      pattern.findAllIn(desc).map(classNode(_)).toSet
+    }
+  }
+}
+
 class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
+
+  import GraphBuildingClassVisitor._
 
   private def log[T](t: T): T = {
     println(t)
     t
   }
 
-  private def classNode(slashSeparatedName: String): SimpleNode = SimpleNode.classNode(slashSeparatedName.replace("/", "."))
-
-  private def classNodeFromDescriptor(desc: String): Option[SimpleNode] = {
-    if (desc.startsWith("["))
-      classNodeFromDescriptor(desc.substring(1))
-    else if (desc.startsWith("L"))
-      Some(classNode(desc.substring(1, desc.length - 1)))
-    else
-      None
-  }
 
   var currentClass: SimpleNode = null;
 
   override def visit(version: Int, access: Int, name: String, signature: String, superName: String, interfaces: Array[String]): Unit = {
+    println("current class: " + name)
     currentClass = classNode(name)
 
     if (signature != null)
@@ -43,6 +51,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
   override def visitOuterClass(owner: String, name: String, desc: String): Unit = {
     g.add(classNode(owner))
+    classNodeFromDescriptor(desc).foreach(g.add(_))
   }
 
   override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor = {
