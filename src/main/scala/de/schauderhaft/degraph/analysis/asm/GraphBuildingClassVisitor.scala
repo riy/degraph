@@ -32,11 +32,10 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   var currentClass: SimpleNode = null;
 
   override def visit(version: Int, access: Int, name: String, signature: String, superName: String, interfaces: Array[String]): Unit = {
-    println("current class: " + name)
     currentClass = classNode(name)
 
-    if (signature != null)
-      println(signature)
+    // finds type parameters
+    classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
 
     if (superName == null) // happens only for Object I guess
       g.add(currentClass)
