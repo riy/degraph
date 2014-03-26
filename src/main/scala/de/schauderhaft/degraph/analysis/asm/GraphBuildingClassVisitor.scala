@@ -98,11 +98,20 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
         new GraphBuildingAnnotationVisitor()
 
     }
+
     classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
+    classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
     new GraphBuildingFieldVisitor
   }
 
-  override def visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array[String]): MethodVisitor = super.visitMethod(access, name, desc, signature, exceptions)
+  override def visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array[String]): MethodVisitor = {
+    class GraphBuildingMethodVisitor extends MethodVisitor(api){
+
+    }
+    classNodeFromDescriptor(signature).foreach(g.connect(currentClass,_))
+    classNodeFromDescriptor(desc).foreach(g.connect(currentClass,_))
+    new GraphBuildingMethodVisitor
+  }
 
   override def visitEnd(): Unit = super.visitEnd()
 }
