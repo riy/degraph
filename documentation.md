@@ -166,7 +166,7 @@ You can provide simple properties for the path to analyze, the name of the file 
 Available properties are:
 
 * output - the file where the resulting graphml file will be created. Relative paths are relative to your current directory when you start degraph.
-* classpath - this is the path to analyze. It is a list of files and directories seperated by the classpath separation character of your platform, i.e. `':'` on Unix and `';'` ond windows. All class and jar files found in those directories or subdirectories will get picked up by Degraph.  
+* classpath - this is the path to analyze. It is a list of files and directories seperated by the classpath separation character of your platform, i.e. `':'` on Unix and `';'` ond windows. Please make sure there is no space around the separators: "classpath=dir1;dir2". All class and jar files found in those directories or subdirectories will get picked up by Degraph.  
 * exclude an Ant like pattern of class names to exclude from the analysis
 * include an Ant like pattern of class names to include from the analysis. If not specified, all classes (minus any excludes) are inlcuded. There can be an arbitrary number of exclude and includes specified and the order does not matter. 
 
