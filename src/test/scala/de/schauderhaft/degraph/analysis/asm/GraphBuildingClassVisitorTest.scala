@@ -10,6 +10,7 @@ import GraphBuildingClassVisitor._
 class GraphBuildingClassVisitorTest extends FunSuite {
 
   test("no node for garbage") {
+    pending // I'm not sure that we actually see garbage
     val result = classNodeFromDescriptor("xxxxx")
     result.isEmpty should be(true)
   }
@@ -27,6 +28,12 @@ class GraphBuildingClassVisitorTest extends FunSuite {
   test("identifies simple class") {
     val result = GraphBuildingClassVisitor.classNodeFromDescriptor("Ljava/lang/String;")
     result should contain(classNode("java.lang.String"))
+  }
+
+  test("indentifies simple class without leading L*;"){
+    val result = GraphBuildingClassVisitor.classNodeFromDescriptor("java/lang/System")
+    result should contain(classNode("java.lang.System"))
+
   }
 
   test("identifies simple class as Array") {

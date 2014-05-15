@@ -10,11 +10,13 @@ object GraphBuildingClassVisitor {
   def classNode(slashSeparatedName: String): SimpleNode = SimpleNode.classNode(slashSeparatedName.replace("/", "."))
 
   def classNodeFromDescriptor(desc: String): Set[SimpleNode] = {
-    if (desc == null)
+    if (desc == null || desc == "" )
       Set()
     else {
       val pattern = """(?<=L)([\w/]*)(?=[;<])""".r
-      pattern.findAllIn(desc).map(classNode(_)).toSet
+      val matches = pattern.findAllIn(desc)
+      (if (matches.isEmpty) Set(desc) else matches).map(classNode(_)).toSet
+
     }
   }
 }
@@ -94,9 +96,10 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
   override def visitField(access: Int, name: String, desc: String, signature: String, value: scala.Any): FieldVisitor = {
     class GraphBuildingFieldVisitor extends FieldVisitor(api) {
-      override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor =
+      override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor()
-
+      }
     }
 
     classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
@@ -105,15 +108,67 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   }
 
   override def visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array[String]): MethodVisitor = {
-    class GraphBuildingMethodVisitor extends MethodVisitor(api){
+    if (name.contains("usage"))
+    println(currentClass.name + name)
+    class GraphBuildingMethodVisitor extends MethodVisitor(api) {
+      override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        new GraphBuildingAnnotationVisitor()
+      }
 
+      override def visitParameterAnnotation(parameter: Int,
+                                            desc: String,
+                                            visible: Boolean): AnnotationVisitor = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        new GraphBuildingAnnotationVisitor()
+      }
+
+      override def visitTypeInsn(opcode: Int, aType: String): Unit = {
+        if ( currentClass.name.contains("UsageInMethod"))
+        println("visit type inst " + currentClass + ": " + opcode + " - " + aType)
+        classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
+      }
+
+      override def visitFieldInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
+        if ( currentClass.name.contains("UsageInMethod"))
+        println("visitField " + currentClass + ": " + opcode + " - " + owner + " - " + name + " - " + desc)
+        classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+      }
+
+      override def visitMethodInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
+        if ( currentClass.name.contains("UsageInMethod"))
+          println("visitMethod " + currentClass + ": " + opcode + " - " + owner + " - " + name + " - " + desc)
+        classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+      }
+
+      override def visitLdcInsn(cst: scala.Any): Unit = {
+        cst match {
+          case t: Type => classNodeFromDescriptor(t.getDescriptor).foreach(g.connect(currentClass, _))
+          case _ =>
+        }
+      }
+
+      override def visitTryCatchBlock(start: Label, end: Label, handler: Label, aType: String): Unit = {
+        classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
+      }
+
+      override def visitLocalVariable(name: String, desc: String, signature: String, start: Label, end: Label, index: Int): Unit = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
+      }
     }
-    classNodeFromDescriptor(signature).foreach(g.connect(currentClass,_))
-    classNodeFromDescriptor(desc).foreach(g.connect(currentClass,_))
+
+    classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
+    classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+    if (exceptions != null)
+      for {
+        e <- exceptions
+        cn <- classNodeFromDescriptor(e)
+      } g.connect(currentClass, cn)
     new GraphBuildingMethodVisitor
   }
 
-  override def visitEnd(): Unit = super.visitEnd()
+
 }
-
-
