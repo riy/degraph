@@ -88,7 +88,7 @@ class AnalyzerTest extends FunSuite {
     }
 
     test("Dependency from class to type parameter of abstract member") {
-      graph should connect("de.schauderhaft.degraph.examples.ListUser" -> "scala.Int")
+      graph should connect("de.schauderhaft.degraph.examples.ListUser" -> "java.lang.String")
     }
 
     test("Dependency from class to enum parameter in annotation") {

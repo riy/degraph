@@ -25,7 +25,7 @@ class MyArrayList extends ArrayList[String]
 
 abstract class ListUser {
   val listOfStrings = Vector[String]()
-  def listOfInts: Seq[Int]
+  def seqOfStrings: Seq[String]
 }
 
 @RunWith(classOf[MyRunner])

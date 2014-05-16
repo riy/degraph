@@ -46,7 +46,6 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
 
   private def log[T](t: T): T = {
-    println(t)
     t
   }
 
@@ -108,8 +107,6 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   }
 
   override def visitMethod(access: Int, name: String, desc: String, signature: String, exceptions: Array[String]): MethodVisitor = {
-    if (name.contains("usage"))
-    println(currentClass.name + name)
     class GraphBuildingMethodVisitor extends MethodVisitor(api) {
       override def visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
@@ -124,21 +121,15 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       }
 
       override def visitTypeInsn(opcode: Int, aType: String): Unit = {
-        if ( currentClass.name.contains("UsageInMethod"))
-        println("visit type inst " + currentClass + ": " + opcode + " - " + aType)
         classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
       }
 
       override def visitFieldInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        if ( currentClass.name.contains("UsageInMethod"))
-        println("visitField " + currentClass + ": " + opcode + " - " + owner + " - " + name + " - " + desc)
         classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
 
       override def visitMethodInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        if ( currentClass.name.contains("UsageInMethod"))
-          println("visitMethod " + currentClass + ": " + opcode + " - " + owner + " - " + name + " - " + desc)
         classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
