@@ -2,7 +2,7 @@ package de.schauderhaft.degraph
 
 import _root_.java.awt.Color.RED
 import scala.xml.XML
-import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
+import de.schauderhaft.degraph.analysis.asm.Analyzer
 import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.writer.DefaultEdgeStyle
 import de.schauderhaft.degraph.writer.EdgeStyle
