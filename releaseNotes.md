@@ -2,13 +2,22 @@
 
 ## 0.0.5 (upcoming)
 
+### Bugfixes
+    
+	- in the previous releases Degraph used DependencyFinder for analyzing dependencies. Unfortunatly this didn't find many dependencies based on java language features post 1.5. I switched to ASM, which finds many more dependencies. Hopefully all, but to be honest: I can't really tell. Bug reports are highly welcome.
+	
+### New Features
+
+    - you now can define and test dependency constraints using Java http://schauder.github.io/degraph/documentation.html for details
+	- all but the -f command line optiones are to be considered deprecated.
+
 ## 0.0.4 
 
 ### Bugfixes
 
 	- in previous releases dependencies only used inside a method didn't get picked up by Degraph. This is now fixed. O 
 
-### New Features####
+### New Features
 
     - you can now define and test dependency constraints, see http://schauder.github.io/degraph/documentation.html for details
 
