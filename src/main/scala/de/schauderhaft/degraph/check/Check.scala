@@ -1,14 +1,10 @@
 package de.schauderhaft.degraph.check
 
 import de.schauderhaft.degraph.configuration.Configuration
-import org.scalatest.matchers.HavePropertyMatcher
-import org.scalatest.matchers.HavePropertyMatchResult
-import de.schauderhaft.degraph.analysis.dependencyFinder.Analyzer
+import de.schauderhaft.degraph.analysis.asm.Analyzer
 import de.schauderhaft.degraph.model.Node
 import org.scalatest.matchers.BeMatcher
 import org.scalatest.matchers.MatchResult
-import de.schauderhaft.degraph.graph.Graph
-import org.scalatest.Matchers._
 import de.schauderhaft.degraph.configuration.ConstraintViolation
 
 /**

@@ -16,7 +16,6 @@ class AnalyzerTest extends FunSuite {
   private val testClassFolder = System.getProperty("java.class.path")
   println(testClassFolder)
   private val graphs = Map(
-    "depFinder" -> dependencyFinder.Analyzer.analyze(testClassFolder, x => x, _ => true),
     "asm" -> asm.Analyzer.analyze(testClassFolder, x => x, _ => true))
 
 
