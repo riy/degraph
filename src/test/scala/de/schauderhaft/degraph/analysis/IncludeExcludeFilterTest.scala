@@ -1,12 +1,9 @@
-package de.schauderhaft.degraph.analysis.dependencyFinder
+package de.schauderhaft.degraph.analysis
 
-import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.graph.NodeTestUtil.n
-import de.schauderhaft.degraph.analysis.IncludeExcludeFilter
 
 @RunWith(classOf[JUnitRunner])
 class IncludeExcludeFilterTest extends FunSuite {

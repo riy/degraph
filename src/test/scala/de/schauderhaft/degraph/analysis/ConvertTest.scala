@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.analysis.dependencyFinder
+package de.schauderhaft.degraph.analysis
 
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
@@ -6,9 +6,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.jeantessier.dependency.ClassNode
 import com.jeantessier.dependency.PackageNode
-import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
-import de.schauderhaft.degraph.analysis.Convert
 
 @RunWith(classOf[JUnitRunner])
 class ConverterTest extends FunSuite {

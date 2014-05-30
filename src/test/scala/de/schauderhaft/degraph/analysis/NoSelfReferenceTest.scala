@@ -1,15 +1,12 @@
-package de.schauderhaft.degraph.analysis.dependencyFinder
+package de.schauderhaft.degraph.analysis
 
-import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
 import de.schauderhaft.degraph.slicer.MultiCategorizer._
 import de.schauderhaft.degraph.slicer.ListCategory
 import de.schauderhaft.degraph.model.SimpleNode
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.Matchers._
-import de.schauderhaft.degraph.analysis.NoSelfReference
 
 @RunWith(classOf[JUnitRunner])
 class NoSelfReferenceTest extends FunSuite {
