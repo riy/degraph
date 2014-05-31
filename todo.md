@@ -1,18 +1,9 @@
-Is exclude available in checks?
-
-* nicely format documentation
-* write release notes
-- Migration to Scala 2.10
-- Java API
-
 * speed up tests
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
 * remove runtime dependency to all things test from all but the check project
 
 * test and cleanup malformed Configuration
 * refactor Categories to Slicing
-
-* make dependency finder available for maven/gradle/ivy
 
 **Other Dependency Analysis Tools** 
 * http://classycle.sourceforge.net/
@@ -30,10 +21,10 @@ Is exclude available in checks?
 * http://stackoverflow.com/questions/4421882/how-to-unit-test-package-dependencies-in-scala
 * Spanning Tree as Basis for Layout of cyclic directed graphs
 
-
 **Todo for release**
+* update release notes
 * set version in CommandLineParser
-* set version in example config
+* set version in example1.config
 * release
 * upload distribution files
 * update download links in readme

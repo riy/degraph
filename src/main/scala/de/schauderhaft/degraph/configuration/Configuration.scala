@@ -6,18 +6,11 @@ import Slicer.toSlicer
 import de.schauderhaft.degraph.analysis.AnalyzerLike
 import de.schauderhaft.degraph.slicer.CombinedSlicer
 import de.schauderhaft.degraph.slicer.ParallelCategorizer
-import de.schauderhaft.degraph.analysis.dependencyFinder
 import de.schauderhaft.degraph.slicer.InternalClassCategorizer
 import de.schauderhaft.degraph.slicer.PackageCategorizer
 import de.schauderhaft.degraph.slicer.MultiCategorizer.combine
 import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.slicer.PatternMatchingFilter
-import de.schauderhaft.degraph.graph.Graph
-import de.schauderhaft.degraph.model.SimpleNode
-import de.schauderhaft.degraph.check.LenientLayer
-import de.schauderhaft.degraph.check.LayeringConstraint
-import de.schauderhaft.degraph.check.Layer
-import de.schauderhaft.degraph.check.DirectLayeringConstraint
 import de.schauderhaft.degraph.analysis.IncludeExcludeFilter
 
 /**

@@ -1,21 +1,22 @@
 # Release Notes
 
-## 0.0.5 (upcoming)
+## 0.1.0
 
 ### Bugfixes
     
-	- in the previous releases Degraph used DependencyFinder for analyzing dependencies. Unfortunatly this didn't find many dependencies based on java language features post 1.5. I switched to ASM, which finds many more dependencies. Hopefully all, but to be honest: I can't really tell. Bug reports are highly welcome.
+	- in the previous releases Degraph used DependencyFinder for analyzing dependencies. Unfortunatly this missed many
+	dependencies based on java language features post 1.5. I switched to ASM, which finds many more dependencies.
+	Hopefully all, but to be honest: I can't really tell. Bug reports are highly welcome.
 	
 ### New Features
 
     - you now can define and test dependency constraints using Java http://schauder.github.io/degraph/documentation.html for details
-	- all but the -f command line optiones are to be considered deprecated.
 
 ## 0.0.4 
 
 ### Bugfixes
 
-	- in previous releases dependencies only used inside a method didn't get picked up by Degraph. This is now fixed. O 
+	- in previous releases dependencies only used inside a method didn't get picked up by Degraph. This is now fixed.
 
 ### New Features
 
@@ -32,7 +33,7 @@ For each slicing a check for circular dependencies is implemented.
 If a cycle is found all dependencies contributing to that circle get colored red. 
 For each slicing there is at most one circle detected. 
 So after breaking that circle Degraph might confront you with another one.
-This is a easy to implement solution for the final goal of marking an as small as 
+This is a easy to implement solution for the final goal of marking a small as
 possible set of edges to break in order to get a directed acylcic graph for all slicings
 
 -g option removed
