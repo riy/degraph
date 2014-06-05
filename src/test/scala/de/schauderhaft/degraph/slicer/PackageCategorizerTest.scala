@@ -3,8 +3,6 @@ package de.schauderhaft.degraph.slicer
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.jeantessier.dependency.ClassNode
-import com.jeantessier.dependency.PackageNode
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
 
