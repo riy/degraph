@@ -10,14 +10,25 @@ object GraphBuildingClassVisitor {
   def classNode(slashSeparatedName: String): SimpleNode = SimpleNode.classNode(slashSeparatedName.replace("/", "."))
 
   def classNodeFromDescriptor(desc: String): Set[SimpleNode] = {
-    if (desc == null || desc == "" )
-      Set()
-    else {
-      val pattern = """(?<=L)([\w/]*)(?=[;<])""".r
-      val matches = pattern.findAllIn(desc)
-      (if (matches.isEmpty) Set(desc) else matches).map(classNode(_)).toSet
-
+    def internal: Set[SimpleNode] =
+      if (desc == null || desc == "")
+        Set()
+      else {
+        val pattern = """(?<=L)([\w/$]+)(?=[;<])""".r
+        val matches = pattern.findAllIn(desc)
+        (if (matches.isEmpty) Set(desc) else matches).map(classNode(_)).toSet
+      }
+    val probs = Set("(III)V", "(DD)J")
+    val result = internal
+    val problem = result.find((n) => probs.contains(n.name))
+    if (problem.nonEmpty){
+      println
+      println("problem: " + problem.get)
+      println("input: " + desc)
+      new RuntimeException().printStackTrace(System.out)
     }
+
+    result
   }
 }
 
@@ -160,6 +171,4 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       } g.connect(currentClass, cn)
     new GraphBuildingMethodVisitor
   }
-
-
 }
