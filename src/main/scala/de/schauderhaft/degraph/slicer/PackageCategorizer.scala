@@ -1,5 +1,5 @@
 package de.schauderhaft.degraph.slicer
-import com.jeantessier.dependency.ClassNode
+
 import de.schauderhaft.degraph.model.SimpleNode
 import de.schauderhaft.degraph.model.SimpleNode._
 import de.schauderhaft.degraph.model.Node
