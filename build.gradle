@@ -82,8 +82,6 @@ dependencies {
     compile 'org.scala-lang:scala-library:2.10.3'
 
 	compile 'org.ow2.asm:asm:4.2'
-	compile 'oro:oro:2.0.8'
-	compile 'com.google.guava:guava:14.0.1'
 
 	compile 'log4j:log4j:1.2.17'
 	compile 'org.rogach:scallop_2.10:0.9.4'
