@@ -1,6 +1,7 @@
 * Where does Lde.schauderhaft.degraph.writer.PredicateStyler come from?
 * How does egacyCheckingEqualizer happen?
 * Where does (III)V come from?
+* Where does the dependency without name come from? Test depends on it.
 * remove dependencies to dependencyFinder
 * update all dependencies
 
