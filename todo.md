@@ -1,4 +1,6 @@
-* Where do the Lde.schauderhaft classes come from?
+* Where does Lde.schauderhaft.degraph.writer.PredicateStyler come from?
+* How does egacyCheckingEqualizer happen?
+* Where does (III)V come from?
 * remove dependencies to dependencyFinder
 * update all dependencies
 
