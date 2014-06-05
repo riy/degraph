@@ -67,12 +67,8 @@ buildscript {
 
 repositories {
     mavenCentral()
-	mavenCentral name: 'jboss deprecated', artifactUrls: ["https://repository.jboss.org/nexus/content/repositories/deprecated"]
-	mavenCentral name: 'sonatype releases', artifactUrls: ["https://oss.sonatype.org/content/repositories/releases"]
 }
 
-
- 
 
 dependencies {
     // Libraries needed to run the scala tools
