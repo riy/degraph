@@ -69,11 +69,6 @@ repositories {
     mavenCentral()
 	mavenCentral name: 'jboss deprecated', artifactUrls: ["https://repository.jboss.org/nexus/content/repositories/deprecated"]
 	mavenCentral name: 'sonatype releases', artifactUrls: ["https://oss.sonatype.org/content/repositories/releases"]
-	add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = 'Schauderhaft'
-			m2compatible=true
-            addArtifactPattern 'http://maven.schauderhaft.de/[organisation]/[module]/[revision]/[module]-[revision].[ext]'
-        }
 }
 
 
@@ -95,8 +90,8 @@ dependencies {
 
     compile 'com.assembla.scala-incubator:graph-core_2.10:1.7.0'     
 
-	testCompile 'junit:junit:4.11'
 	compile 'org.scalatest:scalatest_2.10:2.0'
     compile 'org.hamcrest:hamcrest-all:1.3'
-            
+
+    testCompile 'junit:junit:4.11'
 }
