@@ -76,7 +76,7 @@ class Graph(category: Node => Node = (x) => x,
 
     def allNodes: Set[Node] = internalGraph.nodes.map(_.value).toSet
 
-    def slice(name: String) = {
+    def slice(name: String) : SGraph[Node, LkDiEdge]= {
 
         def sliceNodes = internalGraph.nodes.map(_.value).collect { case n: SimpleNode if (n.nodeType == name) => n }
 
@@ -115,7 +115,7 @@ class Graph(category: Node => Node = (x) => x,
         val edges = (for {
             st <- slices
             s <- slice(st).findCycle.toList
-            e <- s.edgeIterator
+            e <- s.edges
         } yield (e.edge._1.value, e.edge._2.value)).toSet
 
         edges

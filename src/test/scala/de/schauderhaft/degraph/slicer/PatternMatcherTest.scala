@@ -65,10 +65,10 @@ class PatternMatcherTest extends FunSuite {
   }
 
   test("*** throws an exception") {
-    val caught = evaluating {
+    val caught = the[IllegalArgumentException] thrownBy  {
       val matcher = new PatternMatcher("invalid***pattern")
       matcher.matches("blah")
-    } should produce[IllegalArgumentException]
+    }
 
     caught.getMessage() should be("More than two '*'s in a row is not a supported pattern.")
   }

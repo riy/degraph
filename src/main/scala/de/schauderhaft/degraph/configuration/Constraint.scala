@@ -35,7 +35,7 @@ object CycleFree extends Constraint {
         def iter(sg: SGraph[Node, LkDiEdge], cyclicDependencies: Set[(Node, Node)]): Set[(Node, Node)] = {
             val newDeps = for {
                 s <- sg.findCycle.toList
-                e <- s.edgeIterator
+                e <- s.edges
             } yield (e.edge._1.value, e.edge._2.value)
 
             if (newDeps.isEmpty) cyclicDependencies
