@@ -18,7 +18,9 @@ object GraphBuildingClassVisitor {
         val matches = pattern.findAllIn(desc)
         (if (matches.isEmpty) Set(desc) else matches).map(classNode(_)).toSet
       }
-    val probs = Set("(III)V", "(DD)J")
+    val probs = Set(
+      //"(III)V",
+      "(DD)J")
     val result = internal
     val problem = result.find((n) => probs.contains(n.name))
     if (problem.nonEmpty){

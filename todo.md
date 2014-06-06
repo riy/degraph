@@ -1,5 +1,7 @@
 * Where does (III)V come from?
     direct input
+* Where does (DD)J come from?
+    direct input
 * update all dependencies
 
 * speed up tests
