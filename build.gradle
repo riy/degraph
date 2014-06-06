@@ -33,7 +33,7 @@ targetCompatibility = 1.7
 sourceCompatibility = 1.7
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.5'
+    gradleVersion = '1.12'
 }
 
 tasks.withType(ScalaCompile) {
