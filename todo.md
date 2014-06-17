@@ -1,14 +1,9 @@
-* Where does (III)V come from?
-    direct input
-* Where does (DD)J come from?
-    direct input
 * update all dependencies
 
 * speed up tests
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
 * remove runtime dependency to all things test from all but the check project
 
-* test and cleanup malformed Configuration
 * refactor Categories to Slicing
 
 **Other Dependency Analysis Tools** 
