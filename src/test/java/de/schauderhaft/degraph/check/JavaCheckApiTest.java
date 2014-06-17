@@ -2,7 +2,6 @@ package de.schauderhaft.degraph.check;
 
 import de.schauderhaft.degraph.configuration.NamedPattern;
 import static de.schauderhaft.degraph.check.JCheck.*;
-import de.schauderhaft.degraph.hamcrest.HamcrestWrapper;
 
 import org.junit.Test;
 

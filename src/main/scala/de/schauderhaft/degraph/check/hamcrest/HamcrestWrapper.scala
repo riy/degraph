@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph.hamcrest
+package de.schauderhaft.degraph.check.hamcrest
 
 import org.scalatest.matchers.{ BeMatcher => SMatcher }
 import org.hamcrest.Matcher
