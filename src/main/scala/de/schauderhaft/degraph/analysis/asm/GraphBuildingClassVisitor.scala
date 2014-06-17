@@ -7,7 +7,10 @@ import de.schauderhaft.degraph.model.SimpleNode
 
 object GraphBuildingClassVisitor {
 
-  def classNode(slashSeparatedName: String): SimpleNode = SimpleNode.classNode(slashSeparatedName.replace("/", "."))
+  def classNode(slashSeparatedName: String): SimpleNode = {
+    if (slashSeparatedName.contains(";")) throw new IllegalArgumentException("Semicolon found where none belongs!")
+    SimpleNode.classNode(slashSeparatedName.replace("/", "."))
+  }
 
   def classNodeFromDescriptor(desc: String): Set[SimpleNode] = {
     def internal: Set[SimpleNode] =
@@ -119,7 +122,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       }
 
       override def visitTypeInsn(opcode: Int, aType: String): Unit = {
-        g.connect(currentClass, classNode(aType))
+        classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
       }
 
       override def visitFieldInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
