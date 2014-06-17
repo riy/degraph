@@ -1,4 +1,4 @@
-package de.schauderhaft.degraph
+package de.schauderhaft.degraph.app
 
 import _root_.java.awt.Color.RED
 import scala.xml.XML
@@ -9,7 +9,6 @@ import de.schauderhaft.degraph.writer.EdgeStyle
 import de.schauderhaft.degraph.writer.PredicateStyler
 import de.schauderhaft.degraph.writer.Writer
 import de.schauderhaft.degraph.writer.SlicePredicate
-import de.schauderhaft.degraph.java.JavaGraph
 
 /**
  * The main class of Degraph, plugging everything together,
