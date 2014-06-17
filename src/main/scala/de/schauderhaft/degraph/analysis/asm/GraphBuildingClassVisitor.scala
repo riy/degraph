@@ -8,8 +8,17 @@ import de.schauderhaft.degraph.model.SimpleNode
 object GraphBuildingClassVisitor {
 
   def classNode(slashSeparatedName: String): SimpleNode = {
-    if (slashSeparatedName.contains(";")) throw new IllegalArgumentException("Semicolon found where none belongs!")
+    if (slashSeparatedName.contains(";"))
+      new IllegalArgumentException("parameter has unexpected content. This is an internal error, please open a bug for degraph with this output: " + slashSeparatedName).printStackTrace()
     SimpleNode.classNode(slashSeparatedName.replace("/", "."))
+  }
+
+  def classNodeFromSingleType(singleTypeDescription : String) ={
+    val Pattern = """\[*L([\w/$]+);""".r
+    singleTypeDescription match {
+      case Pattern(x) => classNode(x)
+      case _ => classNode(singleTypeDescription)
+    }
   }
 
   def classNodeFromDescriptor(desc: String): Set[SimpleNode] = {
@@ -35,7 +44,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   class GraphBuildingAnnotationVisitor() extends AnnotationVisitor(api) {
     override def visit(name: String, value: AnyRef) = {
       value match {
-        case t: Type => g.connect(currentClass, classNode(t.getClassName))
+        case t: Type => g.connect(currentClass, classNodeFromSingleType(t.getClassName))
         case _ =>
       }
     }
@@ -122,16 +131,16 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       }
 
       override def visitTypeInsn(opcode: Int, aType: String): Unit = {
-        classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
+        g.connect(currentClass, classNodeFromSingleType(aType))
       }
 
       override def visitFieldInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        g.connect(currentClass, classNode(owner))
+        g.connect(currentClass, classNodeFromSingleType(owner))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
 
       override def visitMethodInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        g.connect(currentClass, classNode(owner))
+        classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
 

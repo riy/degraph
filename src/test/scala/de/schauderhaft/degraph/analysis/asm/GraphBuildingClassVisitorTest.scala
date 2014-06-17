@@ -24,10 +24,21 @@ class GraphBuildingClassVisitorTest extends FunSuite {
 
 
   test("create a simple class node") {
-    val result = GraphBuildingClassVisitor.classNode("java/lang/System")
+    val result = GraphBuildingClassVisitor.classNodeFromSingleType("java/lang/System")
     result should be(classNode("java.lang.System"))
-
   }
+
+  test("create a simple class node from byte code syntax") {
+    val result = GraphBuildingClassVisitor.classNodeFromSingleType("[Ljava/lang/Object;")
+    result should be(classNode("java.lang.Object"))
+  }
+
+  test("create a simple class node from byte code syntax of multidimensional array") {
+    val result = GraphBuildingClassVisitor.classNodeFromSingleType("[[Ljava/lang/Object;")
+    result should be(classNode("java.lang.Object"))
+  }
+
+
 
   test("identifies simple class as Array") {
     val result = GraphBuildingClassVisitor.classNodeFromDescriptor("[Ljava/lang/String;")
@@ -70,15 +81,6 @@ class GraphBuildingClassVisitorTest extends FunSuite {
     result should contain(classNode("org/scalatest/prop/TableFor19"))
     result should contain(classNode("scala/runtime/BoxedUnit"))
     result should not contain (classNode(""))
-  }
-
-  test("(DD)I"){
-    val asmType = Type.getType("(DD)I")
-    println(asmType.getArgumentTypes.toList)
-    println(asmType.getElementType)
-    println(asmType.getReturnType)
-    val inti = Type.getType("I")
-    println (inti.getClassName)
   }
 
   test("primitive types get ignored"){
