@@ -16,21 +16,11 @@ object GraphBuildingClassVisitor {
       else {
         val pattern = """(?<=L)([\w/$]+)(?=[;<])""".r
         val matches = pattern.findAllIn(desc)
-        (if (matches.isEmpty) Set(desc) else matches).map(classNode(_)).toSet
+        matches.map(classNode(_)).toSet
       }
-    val probs = Set(
-      //"(III)V",
-      "(DD)J")
-    val result = internal
-    val problem = result.find((n) => probs.contains(n.name))
-    if (problem.nonEmpty){
-      println
-      println("problem: " + problem.get)
-      println("input: " + desc)
-      new RuntimeException().printStackTrace(System.out)
-    }
 
-    result
+
+    internal
   }
 }
 
@@ -58,12 +48,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
   }
 
 
-  private def log[T](t: T): T = {
-    t
-  }
-
-
-  var currentClass: SimpleNode = null;
+  var currentClass: SimpleNode = null
 
   override def visit(version: Int, access: Int, name: String, signature: String, superName: String, interfaces: Array[String]): Unit = {
     currentClass = classNode(name)
@@ -134,16 +119,16 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       }
 
       override def visitTypeInsn(opcode: Int, aType: String): Unit = {
-        classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
+        g.connect(currentClass, classNode(aType))
       }
 
       override def visitFieldInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
+        g.connect(currentClass, classNode(owner))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
 
       override def visitMethodInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
+        g.connect(currentClass, classNode(owner))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
       }
 
@@ -155,7 +140,8 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       }
 
       override def visitTryCatchBlock(start: Label, end: Label, handler: Label, aType: String): Unit = {
-        classNodeFromDescriptor(aType).foreach(g.connect(currentClass, _))
+        if (aType != null)
+          g.connect(currentClass, classNode(aType))
       }
 
       override def visitLocalVariable(name: String, desc: String, signature: String, start: Label, end: Label, index: Int): Unit = {
@@ -165,6 +151,8 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
     }
 
     classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
+    val asmType = Type.getType(desc)
+
     classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
     if (exceptions != null)
       for {

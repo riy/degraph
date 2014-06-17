@@ -5,15 +5,11 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import GraphBuildingClassVisitor._
+import org.objectweb.asm.Type
 
 @RunWith(classOf[JUnitRunner])
 class GraphBuildingClassVisitorTest extends FunSuite {
 
-  test("no node for garbage") {
-    pending // I'm not sure that we actually see garbage
-    val result = classNodeFromDescriptor("xxxxx")
-    result.isEmpty should be(true)
-  }
 
   test("no node for null") {
     val result = classNodeFromDescriptor(null)
@@ -23,16 +19,13 @@ class GraphBuildingClassVisitorTest extends FunSuite {
   test("no node for empty String") {
     val result = classNodeFromDescriptor("")
     result.isEmpty should be(true)
+    result should be ('empty)
   }
 
-  test("identifies simple class") {
-    val result = GraphBuildingClassVisitor.classNodeFromDescriptor("Ljava/lang/String;")
-    result should contain(classNode("java.lang.String"))
-  }
 
-  test("indentifies simple class without leading L*;") {
-    val result = GraphBuildingClassVisitor.classNodeFromDescriptor("java/lang/System")
-    result should contain(classNode("java.lang.System"))
+  test("create a simple class node") {
+    val result = GraphBuildingClassVisitor.classNode("java/lang/System")
+    result should be(classNode("java.lang.System"))
 
   }
 
@@ -71,12 +64,26 @@ class GraphBuildingClassVisitorTest extends FunSuite {
 
 
   test("empty names") {
-
     val result = GraphBuildingClassVisitor.classNodeFromDescriptor(
       "<A:Ljava/lang/Object;B:Ljava/lang/Object;S:Ljava/lang/Object;>(Lorg/scalatest/prop/TableFor19<TA;TO;>;Lscala/Function19<TA;TB;TS;Lscala/runtime/BoxedUnit;>;)V")
     result should contain(classNode("java/lang/Object"))
     result should contain(classNode("org/scalatest/prop/TableFor19"))
     result should contain(classNode("scala/runtime/BoxedUnit"))
     result should not contain (classNode(""))
+  }
+
+  test("(DD)I"){
+    val asmType = Type.getType("(DD)I")
+    println(asmType.getArgumentTypes.toList)
+    println(asmType.getElementType)
+    println(asmType.getReturnType)
+    val inti = Type.getType("I")
+    println (inti.getClassName)
+  }
+
+  test("primitive types get ignored"){
+    val result = GraphBuildingClassVisitor.classNodeFromDescriptor("(DD)I")
+
+    result should be (empty)
   }
 }
