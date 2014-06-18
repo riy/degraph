@@ -81,7 +81,6 @@ dependencies {
 
 	compile 'org.ow2.asm:asm:5.0.3'
 
-	compile 'log4j:log4j:1.2.17'
 	compile 'org.rogach:scallop_2.10:0.9.5'
 
     compile 'com.assembla.scala-incubator:graph-core_2.10:1.9.0'
