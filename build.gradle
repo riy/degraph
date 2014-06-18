@@ -3,6 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'application'
 apply plugin: 'github-pages'
+apply plugin: 'maven'
 
 apply plugin: 'versions'
 
@@ -14,6 +15,8 @@ buildscript {
 
     dependencies {
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.5-beta-5'
+        classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:1.7.0' // executable jar plugin
+        classpath 'org.ajoberstar:gradle-git:0.8.0'
     }
 }
 
@@ -41,6 +44,7 @@ try{ // fails when there is no network available
 	re.printStackTrace()
 }
 description= 'Degraph is a library for producing dependency graphs for visual inspection'
+group = "de.schauderhaft"
 
 targetCompatibility = 1.7
 sourceCompatibility = 1.7
@@ -65,18 +69,6 @@ applicationDistribution.from('build/docs'){
 }
 
 distZip.dependsOn scaladoc
-
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:1.7.0' // executable jar plugin
-	}
-	
-	dependencies { classpath 'org.ajoberstar:gradle-git:0.8.0' } // github-pages plugin
-}
 
 repositories {
     mavenCentral()
