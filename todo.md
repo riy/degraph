@@ -1,4 +1,5 @@
 * update all dependencies
+* add license texts for scalatest and hamcrest
 
 * speed up tests
 * split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)

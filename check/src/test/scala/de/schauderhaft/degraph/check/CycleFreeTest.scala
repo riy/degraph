@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.Matchers._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import de.schauderhaft.degraph.graph.NodeTestUtil.n
+import de.schauderhaft.degraph.check.NodeTestUtil.n
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.model.SimpleNode.classNode
 import de.schauderhaft.degraph.model.SimpleNode.packageNode
