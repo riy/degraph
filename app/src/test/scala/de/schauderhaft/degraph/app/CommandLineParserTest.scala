@@ -1,11 +1,8 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.app
 
-import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import de.schauderhaft.degraph.app.CommandLineParser
 
 @RunWith(classOf[JUnitRunner])
 class CommandLineParserTest extends FunSuite {

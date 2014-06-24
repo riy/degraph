@@ -2,11 +2,7 @@ package de.schauderhaft.degraph.app
 
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
-import de.schauderhaft.degraph.configuration.Configuration
 import de.schauderhaft.degraph.model.SimpleNode._
-import de.schauderhaft.degraph.configuration.Configuration
-import scala.Some
-import de.schauderhaft.degraph.configuration.Configuration
 import scala.Some
 import de.schauderhaft.degraph.model.{Node, SimpleNode, ParentAwareNode}
 import de.schauderhaft.degraph.analysis.AnalyzerLike

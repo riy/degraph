@@ -1,11 +1,10 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.app
 
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.Matchers.{ include => _, _ }
 import org.scalatest.FunSuiteLike
-import de.schauderhaft.degraph.app.ConfigurationParser
+import de.schauderhaft.degraph.configuration.{UnnamedPattern, NamedPattern, Configuration}
+import org.scalatest.Matchers._
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationParserTest extends ConfigurationParser with FunSuiteLike {
