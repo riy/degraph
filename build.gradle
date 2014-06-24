@@ -16,7 +16,8 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'application'
     apply plugin: 'maven'
-
+    apply plugin: 'versions'
+    
     task wrapper(type: Wrapper) {
         gradleVersion = '1.12'
     }
@@ -70,6 +71,7 @@ subprojects {
 
     dependencies {
         testCompile 'junit:junit:4.11'
+        testCompile 'org.scalatest:scalatest_2.10:2.2.0'
     }
 }
 
@@ -81,14 +83,13 @@ project('core'){
         compile 'org.ow2.asm:asm:5.0.3'
 
         compile 'com.assembla.scala-incubator:graph-core_2.10:1.9.0'
-        testCompile 'org.scalatest:scalatest_2.10:2.2.0-RC2'
     }
 }
 
 project('check'){
     dependencies {
         compile project(':core')
-        compile 'org.scalatest:scalatest_2.10:2.2.0-RC2'
+        compile 'org.scalatest:scalatest_2.10:2.2.0'
         compile 'org.hamcrest:hamcrest-all:1.3'
     }
 }
@@ -99,6 +100,5 @@ project('app'){
         compile 'org.rogach:scallop_2.10:0.9.5'
         compile 'org.rogach:scallop_2.10:0.9.5'
 
-        testCompile 'org.scalatest:scalatest_2.10:2.2.0-RC2'
     }
 }
