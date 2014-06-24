@@ -4,23 +4,36 @@
 
 ### Bugfixes
     
-	- in the previous releases Degraph used DependencyFinder for analyzing dependencies. Unfortunatly this missed many
-	dependencies based on java language features post 1.5. I switched to ASM, which finds many more dependencies.
-	Hopefully all, but to be honest: I can't really tell. Bug reports are highly welcome.
-	
+- in the previous releases Degraph used DependencyFinder for analyzing dependencies. Unfortunately this missed many
+dependencies based on java language features post 1.5. I switched to ASM, which finds many more dependencies.
+Hopefully all, but to be honest: I can't really tell. Bug reports are highly welcome.
+
 ### New Features
 
-    - you now can define and test dependency constraints using Java http://schauder.github.io/degraph/documentation.html for details
+- Split into three modules:
+
+    - core contains the main logic and algorithm. Use this when you want to build your own stuff based on 'my' algorithms
+
+    - app contains the command line application. Also contains the parser for the configuration files
+
+    - check contains the DSL for testing dependencies in your tests
+
+    Since I strongly believe that a package should exist only in one module, some package names had to change as well.
+
+
+### New Features
+
+- you now can define and test dependency constraints using Java http://schauder.github.io/degraph/documentation.html for details
 
 ## 0.0.4 
 
 ### Bugfixes
 
-	- in previous releases dependencies only used inside a method didn't get picked up by Degraph. This is now fixed.
+- in previous releases dependencies only used inside a method didn't get picked up by Degraph. This is now fixed.
 
 ### New Features
 
-    - you can now define and test dependency constraints, see http://schauder.github.io/degraph/documentation.html for details
+- you can now define and test dependency constraints, see http://schauder.github.io/degraph/documentation.html for details
 
 ### 0.0.3
 
