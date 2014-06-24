@@ -1,4 +1,5 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.app
+
 import org.rogach.scallop._
 
 /**

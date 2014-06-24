@@ -1,6 +1,7 @@
-package de.schauderhaft.degraph.configuration
+package de.schauderhaft.degraph.app
 
 import scala.util.parsing.combinator.RegexParsers
+import de.schauderhaft.degraph.configuration.{UnnamedPattern, NamedPattern, Pattern, Configuration}
 
 /**
  * parses a configuration file

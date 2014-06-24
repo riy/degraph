@@ -17,7 +17,7 @@ import de.schauderhaft.degraph.writer.SlicePredicate
 object Degraph {
 
     def main(args: Array[String]): Unit = {
-        Configuration(args) match {
+        ConfigurationFromCommandLine(args) match {
             case Left(m) => println(m)
             case Right(c) =>
                 val g = c.copy(analyzer = Analyzer).createGraph()

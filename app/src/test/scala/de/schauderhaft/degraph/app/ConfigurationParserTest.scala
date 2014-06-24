@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.Matchers.{ include => _, _ }
 import org.scalatest.FunSuiteLike
+import de.schauderhaft.degraph.app.ConfigurationParser
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationParserTest extends ConfigurationParser with FunSuiteLike {

@@ -1,7 +1,5 @@
 package de.schauderhaft.degraph.configuration
 
-import scala.io.Source
-import org.rogach.scallop.exceptions.ScallopException
 import Slicer.toSlicer
 import de.schauderhaft.degraph.analysis.AnalyzerLike
 import de.schauderhaft.degraph.slicer.CombinedSlicer
@@ -13,43 +11,6 @@ import de.schauderhaft.degraph.model.Node
 import de.schauderhaft.degraph.slicer.PatternMatchingFilter
 import de.schauderhaft.degraph.analysis.IncludeExcludeFilter
 
-/**
- * companion object allowing easy creation of a configuration from commandline arguments.
- */
-object Configuration {
-
-  /**
-   * just pass the commandline arguments to this method to get an Either representing the
-   * result of attempting to create a configuration out of the arguments.
-   *
-   * If something went wrong a Left will get returned containing an error message, including
-   * some usage advice suitable for presenting it to the user.
-   *
-   * Otherwise a Right instance containing the complete configuration is returned.
-   */
-  def apply(args: Array[String]): Either[String, Configuration] = {
-    val eitherConfig = fromCommandLine(args)
-
-    eitherConfig
-  }
-  private def fromCommandLine(args: Array[String]): Either[String, Configuration] = {
-    import scala.language.reflectiveCalls
-    var errorMessage: Option[String] = None
-    val commandLine = CommandLineParser.parse(args)
-    commandLine.initialize { case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help) }
-    errorMessage match {
-      case Some(m) => Left(m)
-      case _ if (commandLine.file.isEmpty) => Right((Configuration(
-        classpath = Some(commandLine.classpath()),
-        includes = commandLine.includeFilter(),
-        excludes = commandLine.excludeFilter(),
-        output = Some(commandLine.output()),
-        categories = Map(),
-        display = commandLine.display())))
-      case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString).copy(display = commandLine.display()))
-    }
-  }
-}
 
 /**
  * represents all the information configurable in commandline arguments and configuration files for Degraph.
