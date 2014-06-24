@@ -81,10 +81,6 @@ project('core'){
 
         compile 'com.assembla.scala-incubator:graph-core_2.10:1.9.0'
         testCompile 'org.scalatest:scalatest_2.10:2.2.0-RC2'
-
-    // this is only temporary I sure hope, hope, hope
-        compile 'org.rogach:scallop_2.10:0.9.5'
-
     }
 }
 
@@ -100,6 +96,8 @@ project('app'){
     dependencies {
         compile project(':core')
         compile 'org.rogach:scallop_2.10:0.9.5'
+        compile 'org.rogach:scallop_2.10:0.9.5'
+
         testCompile 'org.scalatest:scalatest_2.10:2.2.0-RC2'
     }
 }
