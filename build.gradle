@@ -31,14 +31,6 @@ allprojects {
 
         createReleaseTag.dependsOn pushToBintray
 
-        githubPages {
-            repoUri = 'https://github.com/schauder/degraph.git'
-            credentials {
-                username = System.properties['credentials.username']
-                password = System.properties['credentials.password']
-            }
-        }
-
     } catch (RuntimeException re) {
         System.out.println("releasing not possible (probably no network)")
         re.printStackTrace()
