@@ -17,8 +17,8 @@ class DependencyTest extends FunSuite {
         withSlicing("internalExternal", ("internal", "de.schauderhaft.**"), ("external", "**")) should be(violationFree)
   }
 
-  test("Check identifies cycles in log4j") {
-    classpath.including("org.apache.log4j.**") should not be (violationFree)
+  test("Check identifies cycles in junit") {
+    classpath.including("**.junit.**") should not be (violationFree)
   }
 
   test("Degraph has no cycles") {

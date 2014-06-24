@@ -17,7 +17,7 @@ class CheckTest extends FunSuite {
   val mod = "mod"
 
   test("configuration contains the classpath") {
-    Check.classpath.configuration.classpath.value should include("log4j")
+    Check.classpath.configuration.classpath.value should include("scalatest")
   }
 
   private def mockConfig(conns: Traversable[(Node, Node)]) = {
