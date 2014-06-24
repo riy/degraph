@@ -1,16 +1,5 @@
-* update all dependencies
-* add license texts for scalatest and hamcrest
-
 * speed up tests
-* split degraph in at least two projects: Degraph Check + Degraph Core (+ Degrap App)
-* remove runtime dependency to all things test from all but the check project
-
 * refactor Categories to Slicing
-
-**Other Dependency Analysis Tools** 
-* http://classycle.sourceforge.net/
-* Dependency Finder
-* JDepend
 
 **Layout Algorithms**
 * http://en.wikipedia.org/wiki/Layered_graph_drawing

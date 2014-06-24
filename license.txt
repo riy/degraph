@@ -15,16 +15,14 @@ limitations under the License.
 
 The distributed form of this application contains various software libraries which come with their own licence terms:
 
-Licensed under Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0):
-guava-12.0.jar
-jakarta-oro-2.0.8.jar
-log4j
+Licensed under Apache 2.0 (see above)
+scalatest
 
-Gnu Public Lesser License
-jsr305
+New BSD License (http://opensource.org/licenses/BSD-3-Clause)
+Hamcrest
 
 Licensed under it own license available in the lib folder of the distribution:
-Dependency Finder (dependencyfinder-1.2.1-beta4.jar)
 scala-library
 scallop
+asm
 
