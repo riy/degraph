@@ -42,7 +42,7 @@ allprojects {
 subprojects {
 
     description = 'Degraph is a library for producing dependency graphs for visual inspection'
-    group = "de.schauderhaft"
+    group = "de.schauderhaft.degraph"
 
     targetCompatibility = 1.7
     sourceCompatibility = 1.7
@@ -51,19 +51,6 @@ subprojects {
     tasks.withType(ScalaCompile) {
         scalaCompileOptions.useAnt = false
     }
-
-    mainClassName = 'de.schauderhaft.degraph.Degraph'
-    applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
-        into "/"
-    }
-    applicationDistribution.from('src/demo/resource') {
-        into "/example/"
-    }
-    applicationDistribution.from('build/docs') {
-        into "/docs"
-    }
-
-    distZip.dependsOn scaladoc
 
     repositories {
         mavenCentral()
@@ -94,7 +81,18 @@ project('check'){
     }
 }
 
-project('app'){
+project('degraph'){
+    mainClassName = 'de.schauderhaft.degraph.app.Degraph'
+    applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
+        into "/"
+    }
+    applicationDistribution.from('src/demo/resource') {
+        into "/example/"
+    }
+
+    distZip.dependsOn scaladoc
+
+
     dependencies {
         compile project(':core')
         compile 'org.rogach:scallop_2.10:0.9.5'
