@@ -59,7 +59,7 @@ subprojects {
 project('core') {
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.jar'
+        commandLine 'curl', '-T', 'build/libs/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.jar'
     }
     pushToBintray.dependsOn("install")
 
@@ -75,7 +75,7 @@ project('core') {
 project('check') {
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.jar'
+        commandLine 'curl', '-T', 'build/libs/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.jar'
     }
     pushToBintray.dependsOn("install")
 
