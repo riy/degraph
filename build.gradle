@@ -14,7 +14,6 @@ buildscript {
 allprojects {
     apply plugin: 'scala'
     apply plugin: 'idea'
-    apply plugin: 'application'
     apply plugin: 'maven'
     apply plugin: 'versions'
 
@@ -32,7 +31,7 @@ allprojects {
             commandLine 'curl', '-T', 'build/distributions/degraph-' + version + '.zip', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + version + '.zip'
         }
 
-        pushToBintray.dependsOn distZip
+        pushToBintray.dependsOn(":degraph:distZip")
 
         createReleaseTag.dependsOn pushToBintray
 
@@ -43,11 +42,8 @@ allprojects {
 }
 
 subprojects {
-
-
     targetCompatibility = 1.7
     sourceCompatibility = 1.7
-
 
     tasks.withType(ScalaCompile) {
         scalaCompileOptions.useAnt = false
@@ -62,7 +58,6 @@ subprojects {
         testCompile 'org.scalatest:scalatest_2.10:2.2.0'
     }
 }
-
 
 project('core'){
     dependencies {
@@ -83,6 +78,8 @@ project('check'){
 }
 
 project('degraph'){
+    apply plugin: 'application'
+
     mainClassName = 'de.schauderhaft.degraph.app.Degraph'
     applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
         into "/"
