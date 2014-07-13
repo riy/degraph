@@ -26,7 +26,9 @@ allprojects {
     try { // fails when there is no network available
         apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
 
-        createReleaseTag.dependsOn pushToBintray
+        createReleaseTag.dependsOn(':degraph:pushToBintray')
+        createReleaseTag.dependsOn(':core:pushToBintray')
+        createReleaseTag.dependsOn(':check:pushToBintray')
 
     } catch (RuntimeException re) {
         System.out.println("releasing not possible (probably no network)")
@@ -55,7 +57,7 @@ subprojects {
 project('core') {
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' name +'-' + version + '.jar'
+        commandLine 'curl', '-T', 'build/distributions/' + name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + name + '-' + version + '.jar'
     }
     pushToBintray.dependsOn("install")
 
@@ -71,7 +73,7 @@ project('core') {
 project('check') {
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' name +'-' + version + '.jar'
+        commandLine 'curl', '-T', 'build/distributions/' + name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + name + '-' + version + '.jar'
     }
     pushToBintray.dependsOn("install")
 
@@ -94,7 +96,7 @@ project('degraph') {
     }
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + name + '-' + version + '.zip', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' name +'-' + version + '.zip'
+        commandLine 'curl', '-T', 'build/distributions/' + name + '-' + version + '.zip', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + name + '-' + version + '.zip'
     }
     pushToBintray.dependsOn("distZip")
 
