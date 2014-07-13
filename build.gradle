@@ -10,18 +10,6 @@ buildscript {
     }
 }
 
-allprojects {
-    apply plugin: 'scala'
-    apply plugin: 'idea'
-    apply plugin: 'maven'
-    apply plugin: 'versions'
-
-    description = 'Degraph is a library for producing dependency graphs for visual inspection'
-    group = "de.schauderhaft.degraph"
-
-    task wrapper(type: Wrapper) {
-        gradleVersion = '1.12'
-    }
 
     try { // fails when there is no network available
         apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
@@ -33,6 +21,20 @@ allprojects {
     } catch (RuntimeException re) {
         System.out.println("releasing not possible (probably no network)")
         re.printStackTrace()
+    }
+
+
+allprojects {
+    apply plugin: 'scala'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+    apply plugin: 'versions'
+
+    description = 'Degraph is a library for producing dependency graphs for visual inspection'
+    group = "de.schauderhaft.degraph"
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '1.12'
     }
 }
 
