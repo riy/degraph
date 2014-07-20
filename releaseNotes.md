@@ -21,8 +21,6 @@ Hopefully all, but to be honest: I can't really tell. Bug reports are highly wel
     Since I strongly believe that a package should exist only in one module, some package names had to change as well.
 
 
-### New Features
-
 - you now can define and test dependency constraints using Java http://schauder.github.io/degraph/documentation.html for details
 
 ## 0.0.4 
