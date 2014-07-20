@@ -12,10 +12,14 @@ import static de.schauderhaft.degraph.check.Check.classpath;
 
 public class JavaCheckApiTest {
 
-	@Test
-	public void canAccessClasspathConfigurationBuilder() {
-		classpath();
-	}
+    @Test
+    public void canAccessClasspathConfigurationBuilder() {
+        classpath();
+    }
+    @Test
+    public void canAccessNoJars() {
+        classpath().noJars();
+    }
 
 	@Test
 	public void canDefineSlices() {
