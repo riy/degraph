@@ -283,11 +283,18 @@ When you decided what kind of dependencies you want to have in your project, and
 
 The basic idea is to define slices and based on those slice you define the dependencies that are allowed. 
 
-Currently there is only a Scala DSL available to define these constraints. The DSL is in its early versions and might change significantly in future version once I find out what people are actually trying to do with it.
+The DSL for defining such criterias comes in two flavors: Scala and Java. The Scala version is the primary one and is a little more slick, but the Java DSL should be very usable and is very close to its Scala sister. You don't have to feel bad for using it. 
+
+The DSL is in its early versions and might change significantly in future version once I find out what people are actually trying to do with it.
+Let me know what you like or don't like and if you have ideas for improvements
 
 ### Setting up the project ###
 
-Since currently there is only the full distribution zip available of Degraph, you have to unzip the downloaded files and add all the contained jars to your classpath.
+You can either download the full distribution zip of Degraph, unzip the downloaded files and add all the contained jars to your classpath.
+
+Alternatively you can download the two relevant artefacts: the *core jar* and *check jar* along with their respective poms and put them in your Maven repository, where you can reference them from your project pom or gradle build file or ...
+
+I start working on getting everything into maven central as soon as I have this documentation task of my hands. So lets get down to business
 
 ### Scala Constraints DSL ###
 
@@ -379,11 +386,54 @@ If you use for example a hexagonal architecture, you probably have something lik
     classpath
 	    .withSlicing("layer", "de.schauderhaft.app.*.(*).**")
 	        .allow(oneOf( "persistence", "gui"), "domain")
+			
+The slices inside a `oneOf` group must not access each other but might get accessed by slices on the left and access slices on the right. Of course you can use `oneOf` inside `allow` as well as inside `allowDirect`.
 	 
+#### Excluding Jar Files ####
+
+Include and exclude work on fully qualified class names. This means if you write the tests as described above all the 3rd party libs in your classpath will still get analyzed, just to be excluded from the dependency graph. But most of the time we just want to check our own code. If this is the case you can use `noJars`, which will exclude everything from the classpath, that does end on `.jar`. This should speed up many tests just fine.
+
 ### Java Constraints DSL ###
 
-Once the Scala DSL is somewhat finished there will also be a Java version. But since creating a DSL in Scala is so much easier and nicer, Scala comes first. Of course you might consider picking up a little Scala just for a small set of dependency tests ...
+If you haven't already, please go back and read the section about the Scala based DSL. It explains how the DSL works and is mostly applicable to the Java DSL as well. I'll wait here and explain the differences in the Java API when you are back.
 
+*... time goes by ...*
+
+#### Importing the DSL ####
+
+The imports for the Java DSL look slightly different. On one hand you probably use Java, so the syntax is a little different, and you also need a little extra stuff, in order to make the API work in Java. So please add the following imports to your test class, apart from your usual JUnit imports:
+
+    import de.schauderhaft.degraph.configuration.NamedPattern;
+    import static de.schauderhaft.degraph.check.JCheck.*;
+    import static de.schauderhaft.degraph.check.Check.classpath;
+    import static de.schauderhaft.degraph.check.JLayer.*
+    import static org.hamcrest.core.Is.*;
+    
+#### Differences in the Java DSL compared to the Scala version ####
+
+`classpath` is a method (just as in Scala but there you can't tell the difference, at least not from its usage). Therefore you have to provide an empty parameter list.
+
+    classpath().withSlicing("blah", "whatever");
+	
+The same is true for `noJars`
+
+    classpath().noJars().withSlicing("blah", "whatever");
+	
+In order to define a named slice pattern you have to actuall instantiate a `NamedPattern`
+
+    classpath().withSlicing(
+			"mainVsTest",
+			"de.schauderhaft.**(Test)",
+			new NamedPattern("main", "de.schauderhaft.*.**"))
+
+Since you probably use JUnit to write your tests, you won't be able to use the ScalaTest matchers (which is a bummer). So we'll use Hamcrest instead.
+
+    assertThat(
+		classpath()
+				.including("de.schauderhaft.**")
+				.withSlicing("part", "de.schauderhaft.*.(*).**"),
+		is(violationFree()));
+			
 ## Stuff ##
 ### Installation ###
 
