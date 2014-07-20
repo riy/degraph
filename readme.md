@@ -33,6 +33,3 @@ To create a directory that looks like you just installed Degraph:
 Please use [the github issue feature](https://github.com/schauder/degraph/issues) for questions, bug reports or improvement requests. 
 
 If you like Degraph just say so on twitter, facebook or wherever you like. 
-
-## Build Status over at Cloudbees ##
-[![Build Status](https://schauder.ci.cloudbees.com/job/degraph-commit/badge/icon)](https://schauder.ci.cloudbees.com/job/degraph-commit/)
