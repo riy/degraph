@@ -10,5 +10,6 @@ fileFinderTestDir/
 *.iml
 *.ipr
 *.iws
+/*.html
 
 
