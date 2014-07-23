@@ -58,6 +58,8 @@ subprojects {
 
 project('core') {
 
+    archivesBaseName = "degraph-core"
+
     task pushToBintray(type: Exec) {
         commandLine 'curl', '-T', 'build/libs/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.jar'
     }
@@ -73,6 +75,8 @@ project('core') {
 }
 
 project('check') {
+
+    archivesBaseName = "degraph-check"
 
     task pushToBintray(type: Exec) {
         commandLine 'curl', '-T', 'build/libs/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.jar'
