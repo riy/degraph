@@ -64,7 +64,7 @@ project('core') {
     pushToBintray.dependsOn("install")
 
     dependencies {
-        compile 'org.scala-lang:scala-library:2.10.3'
+        compile 'org.scala-lang:scala-library:2.10.4'
 
         compile 'org.ow2.asm:asm:5.0.3'
 
