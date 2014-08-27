@@ -28,6 +28,7 @@ allprojects {
     apply plugin: 'scala'
     apply plugin: 'idea'
     apply plugin: 'maven'
+    apply plugin: 'signing'
     apply plugin: 'versions'
 
     description = 'Degraph is a library for producing dependency graphs for visual inspection'
@@ -53,6 +54,24 @@ subprojects {
     dependencies {
         testCompile 'junit:junit:4.11'
         testCompile 'org.scalatest:scalatest_2.10:2.2.0'
+    }
+
+    task javadocJar(type: Jar) {
+        classifier = 'javadoc'
+        from javadoc
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives javadocJar, sourcesJar
+    }
+
+    signing {
+        sign configurations.archives
     }
 }
 
