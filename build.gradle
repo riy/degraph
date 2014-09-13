@@ -31,7 +31,7 @@ allprojects {
     apply plugin: 'signing'
     apply plugin: 'versions'
 
-    description = 'Degraph is a library for producing dependency graphs for visual inspection'
+
     group = "de.schauderhaft.degraph"
 
     task wrapper(type: Wrapper) {
@@ -40,6 +40,7 @@ allprojects {
 }
 
 subprojects {
+
     targetCompatibility = 1.7
     sourceCompatibility = 1.7
 
@@ -58,8 +59,9 @@ subprojects {
 
     task javadocJar(type: Jar) {
         classifier = 'javadoc'
-        from javadoc
+        from scaladoc
     }
+    javadocJar.dependsOn scaladoc
 
     task sourcesJar(type: Jar) {
         classifier = 'sources'
@@ -76,6 +78,10 @@ subprojects {
 }
 
 project('core') {
+
+    description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
+            'as well as writing tests for checking properties of the dependencies. The core module makes up' +
+            ' the main logic of Degraph independent of any UI.'
 
     archivesBaseName = "degraph-core"
 
@@ -95,6 +101,10 @@ project('core') {
 
 project('check') {
 
+    description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
+            'as well as writing tests for checking properties of the dependencies.' +
+            ' The check module allows to write unit tests using scalatest, or junit'
+
     archivesBaseName = "degraph-check"
 
     task pushToBintray(type: Exec) {
@@ -111,6 +121,10 @@ project('check') {
 
 project('degraph') {
     apply plugin: 'application'
+
+    description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
+            'as well as writing tests for checking properties of the dependencies.' +
+    ' The depgraph module is a command line application for creating dependency graphs.'
 
     mainClassName = 'de.schauderhaft.degraph.app.Degraph'
     applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
