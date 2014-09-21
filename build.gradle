@@ -75,6 +75,52 @@ subprojects {
     signing {
         sign configurations.archives
     }
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name 'Degraph'
+                    packaging 'jar'
+                    // optionally artifactId can be defined here
+                    description 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
+                            'as well as writing tests for checking properties of the dependencies.'
+                    url 'http://schauder.github.io/degraph/'
+
+                    scm {
+                        connection 'scm:git:https://github.com/schauder/degraph.git'
+                        developerConnection 'scm:git:https://github.com/schauder/degraph.git'
+                        url 'https://github.com/schauder/degraph.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The Apache License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'schauder'
+                            name 'Jens Schauder'
+                            email 'jens@schauderhaft.de'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 project('core') {
