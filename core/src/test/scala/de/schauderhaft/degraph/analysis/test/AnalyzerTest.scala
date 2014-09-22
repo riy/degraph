@@ -111,6 +111,12 @@ class AnalyzerTest extends FunSuite {
       graph should connect ("de.schauderhaft.degraph.examples.ClassWithAnnotationWithArrayOfClasses" -> "java.lang.Float")
     }
 
+    test("class with annotation with annotation with annotation"){
+      graph should connect ("de.schauderhaft.degraph.examples.ClassWithAnnotationWithArrayOfClasses" -> "de.schauderhaft.degraph.examples.AnnoA")
+      graph should connect ("de.schauderhaft.degraph.examples.ClassWithAnnotationWithArrayOfClasses" -> "de.schauderhaft.degraph.examples.AnnoB")
+      graph should connect ("de.schauderhaft.degraph.examples.ClassWithAnnotationWithArrayOfClasses" -> "de.schauderhaft.degraph.examples.AnnoC")
+    }
+
 
     def connect(connection: (String, String)) = {
       val (from, to) = connection
