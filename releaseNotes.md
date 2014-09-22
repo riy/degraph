@@ -1,5 +1,22 @@
 # Release Notes
 
+## 0.1.1 (upcomming)
+
+### Bugfixes
+    
+- classes referenced in an array typed parameter of an annotation where not recognized as a dependency. This is fixed. 
+
+### New Features
+
+- Degraph is now available from Maven Central, so if you are using it as a library you can specify it in your 
+    'build.gradle' file or 'pom.xml' or whatever. The maven syntax for the dependency you need for tests is:
+     
+         <dependency>
+           <groupId>de.schauderhaft.degraph</groupId>
+           <artifactId>degraph-check</artifactId>
+           <version>0.1.1</version>
+         </dependency>
+
 ## 0.1.0
 
 ### Bugfixes
