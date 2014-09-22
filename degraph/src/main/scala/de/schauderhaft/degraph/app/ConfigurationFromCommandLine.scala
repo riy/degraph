@@ -1,6 +1,6 @@
 package de.schauderhaft.degraph.app
 
-import org.rogach.scallop.exceptions.ScallopException
+import org.rogach.scallop.exceptions.{Help, ScallopException}
 import de.schauderhaft.degraph.configuration.Configuration
 import scala.io.Source
 
@@ -24,7 +24,10 @@ object ConfigurationFromCommandLine {
     import scala.language.reflectiveCalls
     var errorMessage: Option[String] = None
     val commandLine = CommandLineParser.parse(args)
-    commandLine.initialize { case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help) }
+    commandLine.initialize {
+      case ScallopException(m) => errorMessage = Some(m + "\nUsage:\n" + commandLine.builder.help)
+      case Help(_) => errorMessage = Some("\nUsage:\n" + commandLine.builder.help)
+    }
     errorMessage match {
       case Some(m) => Left(m)
       case _ if (commandLine.file.isEmpty) => Right((Configuration(
