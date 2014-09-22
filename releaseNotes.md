@@ -9,7 +9,7 @@
 ### New Features
 
 - Degraph is now available from Maven Central, so if you are using it as a library you can specify it in your 
-    'build.gradle' file or 'pom.xml' or whatever. The maven syntax for the dependency you need for tests is:
+    ´build.gradle´ file or ´pom.xml´ or whatever. The maven syntax for the dependency you need for tests is:
      
          <dependency>
            <groupId>de.schauderhaft.degraph</groupId>
