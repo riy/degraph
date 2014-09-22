@@ -4,6 +4,8 @@ import org.junit.runner.Runner
 import java.util.ArrayList
 import java.lang.annotation.{RetentionPolicy, Retention}
 
+import scala.annotation.ClassfileAnnotation
+
 /**
  * just a file with different dependencies for use in tests
  */
@@ -35,3 +37,4 @@ abstract class MyRunner extends Runner
 
 @Retention(RetentionPolicy.RUNTIME)
 abstract class EnumInAnnotationUser
+

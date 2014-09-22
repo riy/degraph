@@ -1,8 +1,8 @@
 package de.schauderhaft.degraph.analysis.asm
 
 import de.schauderhaft.degraph.graph.Graph
-import org.objectweb.asm._
 import de.schauderhaft.degraph.model.SimpleNode
+import org.objectweb.asm._
 
 
 object GraphBuildingClassVisitor {
@@ -13,7 +13,7 @@ object GraphBuildingClassVisitor {
     SimpleNode.classNode(slashSeparatedName.replace("/", "."))
   }
 
-  def classNodeFromSingleType(singleTypeDescription : String) ={
+  def classNodeFromSingleType(singleTypeDescription: String) = {
     val Pattern = """\[*L([\w/$]+);""".r
     singleTypeDescription match {
       case Pattern(x) => classNode(x)
@@ -38,7 +38,7 @@ object GraphBuildingClassVisitor {
 
 class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
 
-  import GraphBuildingClassVisitor._
+  import de.schauderhaft.degraph.analysis.asm.GraphBuildingClassVisitor._
 
 
   class GraphBuildingAnnotationVisitor() extends AnnotationVisitor(api) {
@@ -57,6 +57,8 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
     override def visitEnum(name: String, desc: String, value: String) {
       classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
     }
+
+    override def visitArray(name: String) = this
   }
 
 
