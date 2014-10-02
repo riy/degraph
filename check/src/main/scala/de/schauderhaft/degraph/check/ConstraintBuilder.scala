@@ -15,7 +15,11 @@ case class ConstraintBuilder(
   includes: Seq[String] = Seq(),
   excludes: Seq[String] = Seq(),
   slicings: Map[String, Seq[Pattern]] = Map(),
-  constraints: Set[Constraint] = Set()) {
+  constraints: Set[Constraint] = Set(),
+  output: Option[String] = None) {
+
+  def printTo(path: String) = copy(output = Some(path))
+
 
   private def any2Layer(arg: AnyRef): Layer = arg match {
     case s: String => LenientLayer(s)
@@ -74,6 +78,8 @@ case class ConstraintBuilder(
     categories = slicings,
     includes = includes,
     excludes = excludes,
-    constraint = config.constraint ++ constraints)
+    constraint = config.constraint ++ constraints,
+    output = output
+  )
 
 }

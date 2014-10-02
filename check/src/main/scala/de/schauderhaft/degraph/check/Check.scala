@@ -1,18 +1,21 @@
 package de.schauderhaft.degraph.check
 
-import de.schauderhaft.degraph.configuration.Configuration
+import java.awt.Color._
+
 import de.schauderhaft.degraph.analysis.asm.Analyzer
+import de.schauderhaft.degraph.configuration.{Configuration, ConstraintViolation}
 import de.schauderhaft.degraph.model.Node
-import org.scalatest.matchers.BeMatcher
-import org.scalatest.matchers.MatchResult
-import de.schauderhaft.degraph.configuration.ConstraintViolation
+import de.schauderhaft.degraph.writer._
+import org.scalatest.matchers.{BeMatcher, MatchResult}
+
+import scala.xml.XML
 
 /**
  * provides access to configurations and scalatest matchers useful when testing for dependencies.
  *
  * With all members of Check imported a simple use case looks like this:
  *
- *     classpath.forType("module").allow("advertising", "billing", "customer") should be (violationFree)
+ * classpath.forType("module").allow("advertising", "billing", "customer") should be (violationFree)
  *
  * Such a test checks that
  * * all slice types are cycle free.
@@ -45,14 +48,28 @@ object Check {
       val conf = constraintBuilder.configuration
       val g = conf.createGraph()
 
-      def checkForViolations: Set[ConstraintViolation] = {
-        for {
+      def maybePrintGraph(vs: Set[ConstraintViolation]) {
+        if (!vs.isEmpty) {
+          val styler = PredicateStyler.styler(
+            new SlicePredicate(conf.slicing, vs.
+              flatMap(_.dependencies)),
+            EdgeStyle(RED, 2.0), DefaultEdgeStyle
+          )
+          val xml = (new Writer(styler)).toXml(g)
+          conf.output.foreach(XML.save(_, xml, "UTF8", true, null))
+        }
+      }
+
+      def checkForViolations(): Set[ConstraintViolation] = {
+        val vs = for {
           c <- conf.constraint
           v <- c.violations(g)
         } yield v
+        maybePrintGraph(vs)
+        vs
       }
 
-      val violations = checkForViolations
+      val violations = checkForViolations()
 
       val matches = violations.isEmpty
 
