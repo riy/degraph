@@ -98,6 +98,14 @@ class AnalyzerTest extends FunSuite {
       graph should connect ("de.schauderhaft.degraph.examples.EnumInAnnotationUser" -> "java.lang.annotation.RetentionPolicy")
     }
 
+    test("Dependency from instance to static method") {
+      graph should connect ("de.schauderhaft.degraph.examples.InstanceReferenceToStaticMethod" -> "de.schauderhaft.degraph.examples.StaticMethod")
+    }
+
+    test("Dependency from class to static method") {
+      graph should connect ("de.schauderhaft.degraph.examples.StaticReferenceToStaticMethod" -> "de.schauderhaft.degraph.examples.StaticMethod")
+    }
+
     test("No self references") {
       for (
         n <- graph.topNodes;
