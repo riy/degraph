@@ -142,8 +142,12 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
       }
 
       override def visitMethodInsn(opcode: Int, owner: String, name: String, desc: String): Unit = {
-        classNodeFromDescriptor(owner).foreach(g.connect(currentClass, _))
+        g.connect(currentClass, classNodeFromSingleType(owner))
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+      }
+
+      override def visitMethodInsn(opcode: Int, owner: String, name: String, desc: String, itf: Boolean): Unit = {
+        visitMethodInsn(opcode, owner, name, desc)
       }
 
       override def visitLdcInsn(cst: scala.Any): Unit = {
@@ -162,6 +166,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
       }
+
     }
 
     classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
