@@ -6,7 +6,7 @@
     
 - classes referenced in an array typed parameter of an annotation where not recognized as a dependency. This is fixed. 
 
-- static methods that get referenced didn't create the apropriate dependency (#53)
+- static methods that get referenced didn't create the apropriate dependency https://github.com/schauder/degraph/issues/53
 
 ### New Features
 
