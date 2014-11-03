@@ -22,11 +22,10 @@ class AnalyzerTest extends FunSuite {
   for ((label, graph) <- graphs) {
     def stringNodes = graph.topNodes.map(_.toString)
 
-    def nodeByString(name: String) = graph.topNodes.find(
-      x => x match {
-        case n: SimpleNode => n.name == name
-        case _ => false
-      })
+    def nodeByString(name: String) = graph.topNodes.find {
+      case n: SimpleNode => n.name == name
+      case _ => false
+    }
 
     def test(name: String)(testFun: => Unit) = super.test("%s (%s)".format(name, label))(testFun)
 
@@ -143,8 +142,8 @@ class AnalyzerTest extends FunSuite {
               messages = "there is no connection from %s to %s in %s. The only connections are %s".format(from, to, graph, connections) :: messages
           }
           new MatchResult(
-            !toNode.isEmpty
-              && !fromNode.isEmpty
+            toNode.nonEmpty
+              && fromNode.nonEmpty
               && graph.connectionsOf(fromNode.get).contains(toNode.get),
             messages.mkString(","),
             "There is a connection from %s to %s in %s".format(from, to, graph))
