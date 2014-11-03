@@ -38,8 +38,6 @@ class GraphBuildingClassVisitorTest extends FunSuite {
     result should be(classNode("java.lang.Object"))
   }
 
-
-
   test("identifies simple class as Array") {
     val result = GraphBuildingClassVisitor.classNodeFromDescriptor("[Ljava/lang/String;")
     result should contain(classNode("java.lang.String"))
@@ -50,7 +48,6 @@ class GraphBuildingClassVisitorTest extends FunSuite {
     result should contain(classNode("java.lang.String"))
     result should contain(classNode("java.blah.Blubb"))
   }
-
   test("complex example") {
 
     val result = GraphBuildingClassVisitor.classNodeFromDescriptor("Lscala/runtime/AbstractFunction1<Lscala/Tuple2<Ljava/lang/String;Lorg/rogach/scallop/Scallop;>;Ljava/lang/Object;>;Lscala/Serializable;")
