@@ -105,6 +105,14 @@ class AnalyzerTest extends FunSuite {
       graph should connect ("de.schauderhaft.degraph.examples.StaticReferenceToStaticMethod" -> "de.schauderhaft.degraph.examples.StaticMethod")
     }
 
+    test("Dependency from instance to static field") {
+      graph should connect ("de.schauderhaft.degraph.examples.InstanceReferenceToStaticField" -> "de.schauderhaft.degraph.examples.StaticMethod")
+    }
+
+    test("Dependency from class to static field") {
+      graph should connect ("de.schauderhaft.degraph.examples.StaticReferenceToStaticField" -> "de.schauderhaft.degraph.examples.StaticMethod")
+    }
+
     test("No self references") {
       for (
         n <- graph.topNodes;
