@@ -1,6 +1,6 @@
 # Release Notes
 
-## 0.1.1 (upcoming)
+## 0.1.1
 
 ### Bugfixes
     
@@ -16,6 +16,8 @@
            <artifactId>degraph-check</artifactId>
            <version>0.1.1</version>
          </dependency>
+
+- ´.printTo("somepath.graphml")´ you can create a graphml diagram on test failure.
 
 ## 0.1.0
 
