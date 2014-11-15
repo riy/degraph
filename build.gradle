@@ -132,7 +132,7 @@ project('core') {
     archivesBaseName = "degraph-core"
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/libs/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
+        commandLine 'curl', '-T', 'build/libs/degraph-' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
     }
     pushToBintray.dependsOn("install")
 
@@ -154,7 +154,7 @@ project('check') {
     archivesBaseName = "degraph-check"
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/libs/' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
+        commandLine 'curl', '-T', 'build/libs/degraph-' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
     }
     pushToBintray.dependsOn("install")
 
@@ -181,7 +181,7 @@ project('degraph') {
     }
 
     task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + project.name + '-' + version + '.zip', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.zip'
+        commandLine 'curl', '-T', 'build/distributions/degraph-' + project.name + '-' + version + '.zip', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.zip'
     }
     pushToBintray.dependsOn("distZip")
 
