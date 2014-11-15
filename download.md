@@ -16,7 +16,7 @@ The current version is 0.1.1. For information what changed between versions, see
 
 ## Command Line Application ##
 
-[Degraph Command Line Application, Version 0.1.0](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.0.zip)
+[Degraph Command Line Application, Version 0.1.1](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.1.zip)
 
 ## Maven Style Jars & pom.xmls ##
 
@@ -40,17 +40,9 @@ This is the main logic of Degraph. You need it if you want to use the graph mani
        <version>0.1.1</version>
      </dependency>
 
-### degraph ###
-
-This is the command line application. It depends on core. No idea why somebody would want to include it as a dependency but it's there.
-
-     <dependency>
-       <groupId>de.schauderhaft.degraph</groupId>
-       <artifactId>degraph-check</artifactId>
-       <version>0.1.1</version>
-     </dependency>
-
 ## Older Versions ##
+
+[Degraph Binary Distribution, Version 0.1.0](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.0.zip)
 
 [Degraph Binary Distribution, Version 0.0.4](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.0.4.zip)
 
