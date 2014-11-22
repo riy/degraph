@@ -286,7 +286,7 @@ The basic idea is to define slices and based on those slice you define the depen
 The DSL for defining such criterias comes in two flavors: Scala and Java. The Scala version is the primary one and is a little more slick, but the Java DSL should be very usable and is very close to its Scala sister. You don't have to feel bad for using it. 
 
 The DSL is in its early versions and might change significantly in future version once I find out what people are actually trying to do with it.
-Let me know what you like or don't like and if you have ideas for improvements
+Let me know what you like or don't like and if you have ideas for improvements.
 
 ### Setting up the project ###
 
@@ -392,6 +392,20 @@ The slices inside a `oneOf` group must not access each other but might get acces
 #### Excluding Jar Files ####
 
 Include and exclude work on fully qualified class names. This means if you write the tests as described above all the 3rd party libs in your classpath will still get analyzed, just to be excluded from the dependency graph. But most of the time we just want to check our own code. If this is the case you can use `noJars`, which will exclude everything from the classpath, that does end on `.jar`. This should speed up many tests just fine.
+
+#### Printing Graphml on Testfailures ####
+
+If you have test failures you probably want to look at the problem using the visualization of Degraph. Until recently
+you had to start the commandline tool for this,
+including creating a configuration that matches you test. Beginning with release 0.1.1 you can add a call to 'printTo'
+with a path as parameter. Like so
+
+
+    classpath
+        .printTo("degraphTestResult.graphml")
+	    .withSlicing("layer", "de.schauderhaft.app.*.(*).**")
+	        .allow(oneOf( "persistence", "gui"), "domain")
+
 
 ### Java Constraints DSL ###
 
