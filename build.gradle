@@ -11,24 +11,25 @@ buildscript {
 }
 
 
-    try { // fails when there is no network available
-        apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
+try { // fails when there is no network available
+    apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
 
-        createReleaseTag.dependsOn(':degraph:pushToBintray')
-        createReleaseTag.dependsOn(':core:pushToBintray')
-        createReleaseTag.dependsOn(':check:pushToBintray')
+    createReleaseTag.dependsOn(':degraph:pushToBintray')
+    createReleaseTag.dependsOn(':core:pushToBintray')
+    createReleaseTag.dependsOn(':check:pushToBintray')
 
-    } catch (RuntimeException re) {
-        System.out.println("releasing not possible (probably no network)")
-        re.printStackTrace()
-    }
+} catch (RuntimeException re) {
+    System.out.println("releasing not possible (probably no network)")
+    re.printStackTrace()
+}
 
 
 allprojects {
     apply plugin: 'scala'
     apply plugin: 'idea'
     apply plugin: 'maven'
-    apply plugin: 'signing'
+    if (hasProperty('ossrhUsername'))
+        apply plugin: 'signing'
     apply plugin: 'versions'
 
 
@@ -72,55 +73,57 @@ subprojects {
         archives javadocJar, sourcesJar
     }
 
-    signing {
-        sign configurations.archives
-    }
+    if (hasProperty('ossrhUsername'))
+        signing {
+            sign configurations.archives
+        }
 
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    if (hasProperty('ossrhUsername'))
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                pom.project {
-                    name 'Degraph'
-                    packaging 'jar'
-                    // optionally artifactId can be defined here
-                    description 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
-                            'as well as writing tests for checking properties of the dependencies.'
-                    url 'http://schauder.github.io/degraph/'
-
-                    scm {
-                        connection 'scm:git:https://github.com/schauder/degraph.git'
-                        developerConnection 'scm:git:https://github.com/schauder/degraph.git'
-                        url 'https://github.com/schauder/degraph.git'
+                    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                        authentication(userName: ossrhUsername, password: ossrhPassword)
                     }
 
-                    licenses {
-                        license {
-                            name 'The Apache License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                        authentication(userName: ossrhUsername, password: ossrhPassword)
+                    }
+
+                    pom.project {
+                        name 'Degraph'
+                        packaging 'jar'
+                        // optionally artifactId can be defined here
+                        description 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
+                                'as well as writing tests for checking properties of the dependencies.'
+                        url 'http://schauder.github.io/degraph/'
+
+                        scm {
+                            connection 'scm:git:https://github.com/schauder/degraph.git'
+                            developerConnection 'scm:git:https://github.com/schauder/degraph.git'
+                            url 'https://github.com/schauder/degraph.git'
                         }
-                    }
 
-                    developers {
-                        developer {
-                            id 'schauder'
-                            name 'Jens Schauder'
-                            email 'jens@schauderhaft.de'
+                        licenses {
+                            license {
+                                name 'The Apache License, Version 2.0'
+                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'schauder'
+                                name 'Jens Schauder'
+                                email 'jens@schauderhaft.de'
+                            }
                         }
                     }
                 }
             }
         }
-    }
 }
 
 project('core') {
@@ -131,10 +134,7 @@ project('core') {
 
     archivesBaseName = "degraph-core"
 
-    task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/libs/degraph-' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
-    }
-    pushToBintray.dependsOn("install")
+    createBintrayTasks(project.name, version, "install")
 
     dependencies {
         compile 'org.scala-lang:scala-library:2.10.4'
@@ -142,6 +142,15 @@ project('core') {
         compile 'org.ow2.asm:asm:5.0.3'
 
         compile 'com.assembla.scala-incubator:graph-core_2.10:1.9.0'
+    }
+}
+
+private void createBintrayTasks(String projectName, projectVersion, String dependsOn) {
+    if (hasProperty('bintrayApiKey')) {
+        task pushToBintray(type: Exec) {
+            commandLine 'curl', '-T', 'build/libs/degraph-' + projectName + '-' + projectVersion + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + projectVersion + '/degraph-' + projectName + '-' + projectVersion + '.jar'
+        }
+        pushToBintray.dependsOn(dependsOn)
     }
 }
 
@@ -153,10 +162,7 @@ project('check') {
 
     archivesBaseName = "degraph-check"
 
-    task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/libs/degraph-' + project.name + '-' + version + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
-    }
-    pushToBintray.dependsOn("install")
+    createBintrayTasks(project.name, version, "install")
 
     dependencies {
         compile project(':core')
@@ -170,7 +176,7 @@ project('degraph') {
 
     description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
             'as well as writing tests for checking properties of the dependencies.' +
-    ' The depgraph module is a command line application for creating dependency graphs.'
+            ' The depgraph module is a command line application for creating dependency graphs.'
 
     mainClassName = 'de.schauderhaft.degraph.app.Degraph'
     applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
@@ -180,10 +186,7 @@ project('degraph') {
         into "/example/"
     }
 
-    task pushToBintray(type: Exec) {
-        commandLine 'curl', '-T', 'build/distributions/' + project.name + '-' + version + '.zip', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/' + project.name + '-' + version + '.zip'
-    }
-    pushToBintray.dependsOn("distZip")
+    createBintrayTasks(project.name, version, "distZip")
 
     distZip.dependsOn scaladoc
 
