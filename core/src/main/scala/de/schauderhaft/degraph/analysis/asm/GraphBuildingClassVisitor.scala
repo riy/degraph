@@ -36,7 +36,7 @@ object GraphBuildingClassVisitor {
   }
 }
 
-class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM4) {
+class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
 
   import de.schauderhaft.degraph.analysis.asm.GraphBuildingClassVisitor._
 
