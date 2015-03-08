@@ -9,6 +9,7 @@ buildscript {
         classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:1.7.0' // executable jar plugin
     }
 }
+def scalaTestDependency = 'org.scalatest:scalatest_2.10:2.2.4'
 
 
 try { // fails when there is no network available
@@ -36,7 +37,7 @@ allprojects {
     group = "de.schauderhaft.degraph"
 
     task wrapper(type: Wrapper) {
-        gradleVersion = '2.1'
+        gradleVersion = '2.3'
     }
 }
 
@@ -54,8 +55,9 @@ subprojects {
     }
 
     dependencies {
-        testCompile 'junit:junit:4.11'
-        testCompile 'org.scalatest:scalatest_2.10:2.2.0'
+        testCompile 'junit:junit:4.12'
+
+        testCompile scalaTestDependency
     }
 
     task javadocJar(type: Jar) {
@@ -137,7 +139,7 @@ project('core') {
     createBintrayTasks(project.name, version, "install")
 
     dependencies {
-        compile 'org.scala-lang:scala-library:2.10.4'
+        compile 'org.scala-lang:scala-library:2.10.5'
 
         compile 'org.ow2.asm:asm:5.0.3'
 
@@ -166,7 +168,7 @@ project('check') {
 
     dependencies {
         compile project(':core')
-        compile 'org.scalatest:scalatest_2.10:2.2.0'
+        compile scalaTestDependency
         compile 'org.hamcrest:hamcrest-all:1.3'
     }
 }
@@ -194,7 +196,5 @@ project('degraph') {
     dependencies {
         compile project(':core')
         compile 'org.rogach:scallop_2.10:0.9.5'
-        compile 'org.rogach:scallop_2.10:0.9.5'
-
     }
 }
