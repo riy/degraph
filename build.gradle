@@ -90,10 +90,16 @@ subprojects {
     }
 
     if (isRepositoryOwner) {
+        prepareForMavenCentral(project, description)
+
+    }
+}
+
+def prepareForMavenCentral(project, degraphDescription) {
+    project.with {
         signing {
             sign configurations.archives
         }
-
         uploadArchives {
             repositories {
                 mavenDeployer {
