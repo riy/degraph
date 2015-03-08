@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url "https://github.com/ben-manes/gradle-versions-plugin/raw/mvnrepo" }
+        maven { url 'https://github.com/ben-manes/gradle-versions-plugin/raw/mvnrepo' }
         mavenCentral()
     }
 
@@ -32,7 +32,7 @@ try { // fails when there is no network available
     createReleaseTag.dependsOn(':check:pushToBintray')
 
 } catch (RuntimeException re) {
-    System.out.println("releasing not possible (probably no network)")
+    System.out.println('releasing not possible (probably no network)')
     re.printStackTrace()
 }
 
@@ -47,7 +47,7 @@ allprojects {
     apply plugin: 'versions'
 
 
-    group = "de.schauderhaft.degraph"
+    group = 'de.schauderhaft.degraph'
 
     task wrapper(type: Wrapper) {
         gradleVersion = '2.3'
@@ -98,11 +98,11 @@ subprojects {
                 mavenDeployer {
                     beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-                    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
                     }
 
-                    snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
                     }
 
@@ -144,9 +144,9 @@ project('core') {
 
     description = degraphDescription + 'The core module makes up the main logic of Degraph independent of any UI.'
 
-    archivesBaseName = "degraph-core"
+    archivesBaseName = 'degraph-core'
 
-    createBintrayTasks(project.name, version, "install")
+    createBintrayTasks(project.name, version, 'install')
 
     dependencies {
         compile scalaLibraryDependency
@@ -158,9 +158,9 @@ project('core') {
 project('check') {
     description = degraphDescription + 'The check module allows to write unit tests using scalatest, or junit'
 
-    archivesBaseName = "degraph-check"
+    archivesBaseName = 'degraph-check'
 
-    createBintrayTasks(project.name, version, "install")
+    createBintrayTasks(project.name, version, 'install')
 
     dependencies {
         compile project(':core')
@@ -176,13 +176,13 @@ project('degraph') {
 
     mainClassName = 'de.schauderhaft.degraph.app.Degraph'
     applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
-        into "/"
+        into '/'
     }
     applicationDistribution.from('src/demo/resource') {
-        into "/example/"
+        into '/example/'
     }
 
-    createBintrayTasks(project.name, version, "distZip")
+    createBintrayTasks(project.name, version, 'distZip')
 
     distZip.dependsOn scaladoc
 
