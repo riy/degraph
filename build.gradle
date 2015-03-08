@@ -20,6 +20,9 @@ def scallopDependency = 'org.rogach:scallop_2.10:0.9.5'
 
 
 def isRepositoryOwner = hasProperty('ossrhUsername')
+def degraphDescription = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
+        'as well as writing tests for checking properties of the dependencies. '
+
 
 try { // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
@@ -107,8 +110,7 @@ subprojects {
                         name 'Degraph'
                         packaging 'jar'
                         // optionally artifactId can be defined here
-                        description 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
-                                'as well as writing tests for checking properties of the dependencies.'
+                        description degraphDescription
                         url 'http://schauder.github.io/degraph/'
 
                         scm {
@@ -140,9 +142,7 @@ subprojects {
 
 project('core') {
 
-    description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
-            'as well as writing tests for checking properties of the dependencies. The core module makes up' +
-            ' the main logic of Degraph independent of any UI.'
+    description = degraphDescription + 'The core module makes up the main logic of Degraph independent of any UI.'
 
     archivesBaseName = "degraph-core"
 
@@ -155,20 +155,8 @@ project('core') {
     }
 }
 
-private void createBintrayTasks(String projectName, projectVersion, String dependsOn) {
-    if (hasProperty('bintrayApiKey')) {
-        task pushToBintray(type: Exec) {
-            commandLine 'curl', '-T', 'build/libs/degraph-' + projectName + '-' + projectVersion + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + projectVersion + '/degraph-' + projectName + '-' + projectVersion + '.jar'
-        }
-        pushToBintray.dependsOn(dependsOn)
-    }
-}
-
 project('check') {
-
-    description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
-            'as well as writing tests for checking properties of the dependencies.' +
-            ' The check module allows to write unit tests using scalatest, or junit'
+    description = degraphDescription + 'The check module allows to write unit tests using scalatest, or junit'
 
     archivesBaseName = "degraph-check"
 
@@ -184,9 +172,7 @@ project('check') {
 project('degraph') {
     apply plugin: 'application'
 
-    description = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
-            'as well as writing tests for checking properties of the dependencies.' +
-            ' The depgraph module is a command line application for creating dependency graphs.'
+    description = degraphDescription + 'The degraph module is a command line application for creating dependency graphs.'
 
     mainClassName = 'de.schauderhaft.degraph.app.Degraph'
     applicationDistribution.from(['license.txt', 'readme.markdown', 'releaseNotes.md']) {
@@ -207,3 +193,12 @@ project('degraph') {
     }
 }
 
+
+def createBintrayTasks(String projectName, projectVersion, String dependsOn) {
+    if (hasProperty('bintrayApiKey')) {
+        task pushToBintray(type: Exec) {
+            commandLine 'curl', '-T', 'build/libs/degraph-' + projectName + '-' + projectVersion + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + projectVersion + '/degraph-' + projectName + '-' + projectVersion + '.jar'
+        }
+        pushToBintray.dependsOn(dependsOn)
+    }
+}
