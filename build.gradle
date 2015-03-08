@@ -18,6 +18,9 @@ def asmDependency = 'org.ow2.asm:asm:5.0.3'
 def graphCorDependency = 'com.assembla.scala-incubator:graph-core_2.10:1.9.0'
 def scallopDependency = 'org.rogach:scallop_2.10:0.9.5'
 
+
+def isRepositoryOwner = hasProperty('ossrhUsername')
+
 try { // fails when there is no network available
     apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
 
@@ -35,7 +38,8 @@ allprojects {
     apply plugin: 'scala'
     apply plugin: 'idea'
     apply plugin: 'maven'
-    if (hasProperty('ossrhUsername'))
+
+    if (isRepositoryOwner)
         apply plugin: 'signing'
     apply plugin: 'versions'
 
@@ -81,12 +85,11 @@ subprojects {
         archives javadocJar, sourcesJar
     }
 
-    if (hasProperty('ossrhUsername'))
+    if (isRepositoryOwner) {
         signing {
             sign configurations.archives
         }
 
-    if (hasProperty('ossrhUsername'))
         uploadArchives {
             repositories {
                 mavenDeployer {
@@ -132,6 +135,7 @@ subprojects {
                 }
             }
         }
+    }
 }
 
 project('core') {
@@ -202,3 +206,4 @@ project('degraph') {
         compile scallopDependency
     }
 }
+
