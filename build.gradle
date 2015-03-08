@@ -37,21 +37,22 @@ try { // fails when there is no network available
 }
 
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
+
 allprojects {
     apply plugin: 'scala'
     apply plugin: 'idea'
     apply plugin: 'maven'
+    apply plugin: 'versions'
 
     if (isRepositoryOwner)
         apply plugin: 'signing'
-    apply plugin: 'versions'
 
 
     group = 'de.schauderhaft.degraph'
 
-    task wrapper(type: Wrapper) {
-        gradleVersion = '2.3'
-    }
 }
 
 subprojects {
