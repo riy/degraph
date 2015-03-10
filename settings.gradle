@@ -1,1 +1,1 @@
-include 'core', 'degraph', 'check'
+include 'core', 'degraph', 'check', 'jdk8tests'

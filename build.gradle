@@ -33,7 +33,6 @@ try { // fails when there is no network available
 
 } catch (RuntimeException re) {
     System.out.println('releasing not possible (probably no network)')
-    re.printStackTrace()
 }
 
 
@@ -95,57 +94,6 @@ subprojects {
     }
 }
 
-def prepareForMavenCentral(project, degraphDescription) {
-    project.with {
-        signing {
-            sign configurations.archives
-        }
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                    repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
-                        authentication(userName: ossrhUsername, password: ossrhPassword)
-                    }
-
-                    snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
-                        authentication(userName: ossrhUsername, password: ossrhPassword)
-                    }
-
-                    pom.project {
-                        name 'Degraph'
-                        packaging 'jar'
-                        // optionally artifactId can be defined here
-                        description degraphDescription
-                        url 'http://schauder.github.io/degraph/'
-
-                        scm {
-                            connection 'scm:git:https://github.com/schauder/degraph.git'
-                            developerConnection 'scm:git:https://github.com/schauder/degraph.git'
-                            url 'https://github.com/schauder/degraph.git'
-                        }
-
-                        licenses {
-                            license {
-                                name 'The Apache License, Version 2.0'
-                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                            }
-                        }
-
-                        developers {
-                            developer {
-                                id 'schauder'
-                                name 'Jens Schauder'
-                                email 'jens@schauderhaft.de'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 project('core') {
 
@@ -200,12 +148,68 @@ project('degraph') {
     }
 }
 
+project('jdk8tests'){
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+}
 
-def createBintrayTasks(String projectName, projectVersion, String dependsOn) {
+private def createBintrayTasks(String projectName, projectVersion, String dependsOn) {
     if (hasProperty('bintrayApiKey')) {
         task pushToBintray(type: Exec) {
             commandLine 'curl', '-T', 'build/libs/degraph-' + projectName + '-' + projectVersion + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + projectVersion + '/degraph-' + projectName + '-' + projectVersion + '.jar'
         }
         pushToBintray.dependsOn(dependsOn)
+    }
+}
+
+private def prepareForMavenCentral(project, degraphDescription) {
+    project.with {
+        signing {
+            sign configurations.archives
+        }
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                    repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+                        authentication(userName: ossrhUsername, password: ossrhPassword)
+                    }
+
+                    snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+                        authentication(userName: ossrhUsername, password: ossrhPassword)
+                    }
+
+                    pom.project {
+                        name 'Degraph'
+                        packaging 'jar'
+                        // optionally artifactId can be defined here
+                        description degraphDescription
+                        url 'http://schauder.github.io/degraph/'
+
+                        scm {
+                            connection 'scm:git:https://github.com/schauder/degraph.git'
+                            developerConnection 'scm:git:https://github.com/schauder/degraph.git'
+                            url 'https://github.com/schauder/degraph.git'
+                        }
+
+                        licenses {
+                            license {
+                                name 'The Apache License, Version 2.0'
+                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'schauder'
+                                name 'Jens Schauder'
+                                email 'jens@schauderhaft.de'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
