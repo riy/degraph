@@ -1,5 +1,18 @@
 # Release Notes
 
+## 0.2.0 (upcomming)
+
+### Bugfixes
+
+- Fixed the build file so it works without any special properties, like usernames, password and private keys,
+that are only needed for releasing [#56](https://github.com/schauder/degraph/issues/56)
+
+- Fixed [Type annotations cause RuntimeException (#55)](https://github.com/schauder/degraph/issues/55)
+
+### New Features
+
+- Java 8 Type Annotations get analyzed. This is really a side effect of the fix of issue #56
+
 ## 0.1.1
 
 ### Bugfixes
