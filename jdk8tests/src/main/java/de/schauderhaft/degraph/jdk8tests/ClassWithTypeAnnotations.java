@@ -1,9 +1,10 @@
 package de.schauderhaft.degraph.jdk8tests;
 
 import java.sql.SQLException;
+import java.util.List;
 
-public class ClassWithTypeAnnotations //    implements clause:
-        implements @TypeAnno1 List<@TypeAnno2 T> {
+public class ClassWithTypeAnnotations<T> //    implements clause:
+        implements @TypeAnno1 ClassWithTypeParam<@TypeAnno2 T> {
 
 
     //    Class instance creation expression:
@@ -16,5 +17,10 @@ public class ClassWithTypeAnnotations //    implements clause:
 
     //    Thrown exception declaration:
     void throwsAnnotatedException() throws @TypeAnno5 SQLException {
+    }
+
+    @Override
+    public @TypeAnno2 T doSomething() {
+        return null;
     }
 }

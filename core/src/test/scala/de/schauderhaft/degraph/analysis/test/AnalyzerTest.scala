@@ -14,7 +14,6 @@ import de.schauderhaft.degraph.analysis._
 @RunWith(classOf[JUnitRunner])
 class AnalyzerTest extends FunSuite {
   private val testClassFolder = System.getProperty("java.class.path")
-  println(testClassFolder)
   private val graphs = Map(
     "asm" -> asm.Analyzer.analyze(testClassFolder, x => x, _ => true))
 

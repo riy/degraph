@@ -10,14 +10,15 @@ buildscript {
     }
 }
 
+def scalaLibraryDependency = 'org.scala-lang:scala-library:2.11.6'
+def scalaXmlDependency = 'org.scala-lang.modules:scala-xml_2.11:1.0.3'
+def scalaParsingDependency = 'org.scala-lang.modules:scala-parser-combinators_2.11:1.0.3'
 def junitDependency = 'junit:junit:4.12'
-def scalaTestDependency = 'org.scalatest:scalatest_2.10:2.2.4'
+def scalaTestDependency = 'org.scalatest:scalatest_2.11:2.2.4'
 def hamcrestAllDependency = 'org.hamcrest:hamcrest-all:1.3'
-def scalaLibraryDependency = 'org.scala-lang:scala-library:2.10.5'
 def asmDependency = 'org.ow2.asm:asm:5.0.3'
-def graphCorDependency = 'com.assembla.scala-incubator:graph-core_2.10:1.9.0'
-def scallopDependency = 'org.rogach:scallop_2.10:0.9.5'
-
+def graphCoreDependency = 'com.assembla.scala-incubator:graph-core_2.11:1.9.1'
+def scallopDependency = 'org.rogach:scallop_2.11:0.9.5'
 
 def isRepositoryOwner = hasProperty('ossrhUsername')
 def degraphDescription = 'Degraph is a library for producing jvm package dependency graphs for visual inspection ' +
@@ -105,8 +106,11 @@ project('core') {
 
     dependencies {
         compile scalaLibraryDependency
+        compile scalaXmlDependency
+        compile scalaParsingDependency
+
         compile asmDependency
-        compile graphCorDependency
+        compile graphCoreDependency
     }
 }
 
@@ -151,6 +155,12 @@ project('degraph') {
 project('jdk8tests'){
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
+
+    dependencies {
+        compile project(':core')
+        testCompile junitDependency
+        testCompile scalaTestDependency
+    }
 }
 
 private def createBintrayTasks(String projectName, projectVersion, String dependsOn) {

@@ -1,0 +1,68 @@
+package de.schauderhaft.degraph.jdk8tests
+
+import de.schauderhaft.degraph.analysis._
+import de.schauderhaft.degraph.graph.Graph
+import de.schauderhaft.degraph.model.SimpleNode
+import SimpleNode._
+import org.junit.runner.RunWith
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.{MatchResult, Matcher}
+import org.scalatest.Matchers._
+
+
+@RunWith(classOf[JUnitRunner])
+class AnalyzerTest extends FunSuite {
+  private val testClassFolder = System.getProperty("java.class.path")
+  private val graphs = Map(
+    "asm" -> asm.Analyzer.analyze(testClassFolder, x => x, _ => true))
+
+
+  for ((label, graph) <- graphs) {
+    def stringNodes = graph.topNodes.map(_.toString)
+
+    def nodeByString(name: String) = graph.topNodes.find {
+      case n: SimpleNode => n.name == name
+      case _ => false
+    }
+
+    def test(name: String)(testFun: => Unit) = super.test("%s (%s)".format(name, label))(testFun)
+
+    test("Selftest: nodeByString works") {
+      nodeByString("java.lang.String") should be(Some(classNode("java.lang.String")))
+    }
+
+
+    test("Dependency from class to type annotation on implements is found") {
+      graph should connect("de.schauderhaft.degraph.jek8test.ClassWithTypeAnnotations" -> "de.schauderhaft.degraph.jek8test.TypeAnno1")
+    }
+
+
+
+    def connect(connection: (String, String)) = {
+      val (from, to) = connection
+      new Matcher[Graph] {
+        override def apply(graph: Graph) = {
+          var messages = List[String]()
+          val toNode = nodeByString(to)
+          if (toNode.isEmpty)
+            messages = "there is no node %s in the graph %s".format(to, graph) :: messages
+          val fromNode = nodeByString(from)
+          if (fromNode.isEmpty)
+            messages = "there is no node %s in the graph %s".format(from, graph) :: messages
+          else {
+            val connections = graph.connectionsOf(fromNode.get)
+            if (messages.isEmpty && !connections.contains(toNode.get))
+              messages = "there is no connection from %s to %s in %s. The only connections are %s".format(from, to, graph, connections) :: messages
+          }
+          new MatchResult(
+            toNode.nonEmpty
+              && fromNode.nonEmpty
+              && graph.connectionsOf(fromNode.get).contains(toNode.get),
+            messages.mkString(","),
+            "There is a connection from %s to %s in %s".format(from, to, graph))
+        }
+      }
+    }
+  }
+}
