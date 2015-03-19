@@ -48,6 +48,9 @@ class AnalyzerTest extends FunSuite {
     test("Dependency from class to type annotation on exception is found") {
       graph should connect("de.schauderhaft.degraph.jdk8tests.ClassWithTypeAnnotations" -> "de.schauderhaft.degraph.jdk8tests.TypeAnno5")
     }
+    test("Dependency from class to type annotation on field is found") {
+      graph should connect("de.schauderhaft.degraph.jdk8tests.ClassWithTypeAnnotations" -> "de.schauderhaft.degraph.jdk8tests.TypeAnno6")
+    }
 
     def connect(connection: (String, String)) = {
       val (from, to) = connection

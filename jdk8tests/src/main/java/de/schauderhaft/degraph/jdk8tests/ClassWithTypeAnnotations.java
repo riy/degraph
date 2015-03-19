@@ -10,7 +10,7 @@ public class ClassWithTypeAnnotations<T> //    implements clause:
     //    Class instance creation expression:
     private Object x = new @TypeAnno3 Object();
 
-    private Object str = "Hallo";
+    private @TypeAnno6 Object str = "Hallo";
 
     //    Type cast:
     private String myString = (@TypeAnno4 String) str;
