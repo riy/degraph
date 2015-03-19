@@ -94,6 +94,16 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
     new GraphBuildingAnnotationVisitor()
   }
 
+
+  override def visitTypeAnnotation(
+                                    typeRef: Int,
+                                    typePath: TypePath,
+                                    desc: String,
+                                    visible: Boolean): AnnotationVisitor = {
+    classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+    new GraphBuildingAnnotationVisitor
+  }
+
   override def visitAttribute(attr: Attribute): Unit = super.visitAttribute(attr)
 
   override def visitInnerClass(name: String, outerName: String, innerName: String, access: Int): Unit = {
