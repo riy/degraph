@@ -144,6 +144,15 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
         new GraphBuildingAnnotationVisitor()
       }
 
+      override def visitTypeAnnotation(
+                                        typeRef: Int,
+                                        typePath: TypePath,
+                                        desc: String,
+                                        visible: Boolean): AnnotationVisitor = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        new GraphBuildingAnnotationVisitor
+      }
+
       override def visitParameterAnnotation(parameter: Int,
                                             desc: String,
                                             visible: Boolean): AnnotationVisitor = {
