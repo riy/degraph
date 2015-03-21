@@ -21,6 +21,12 @@ public class ClassWithTypeAnnotations<T> //    implements clause:
 
     @Override
     public @TypeAnno2 T doSomething() {
-        return null;
+        @TypeAnno8 String local = new String();
+        try{
+        } catch (@TypeAnno7 RuntimeException re){
+
+        }
+
+        return (T)local;
     }
 }

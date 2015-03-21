@@ -160,6 +160,23 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
         new GraphBuildingAnnotationVisitor()
       }
 
+      override def visitInsnAnnotation(typeRef: Int,
+                                       typePath: TypePath,
+                                       desc: String,
+                                       visible: Boolean): AnnotationVisitor = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        new GraphBuildingAnnotationVisitor()
+      }
+
+      override def visitTryCatchAnnotation(typeRef: Int,
+                                           typePath: TypePath,
+                                           desc: String,
+                                           visible: Boolean): AnnotationVisitor = {
+        println("--- try Catch annotation ---")
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        new GraphBuildingAnnotationVisitor()
+      }
+
       override def visitTypeInsn(opcode: Int, aType: String): Unit = {
         g.connect(currentClass, classNodeFromSingleType(aType))
       }
@@ -195,6 +212,16 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
         classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
       }
 
+      override def visitLocalVariableAnnotation(typeRef: Int,
+                                                typePath: TypePath,
+                                                start: Array[Label],
+                                                end: Array[Label],
+                                                index: Array[Int],
+                                                desc: String,
+                                                visible: Boolean) = {
+        classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
+        new GraphBuildingAnnotationVisitor()
+      }
     }
 
     classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
