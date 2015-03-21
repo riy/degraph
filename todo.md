@@ -1,5 +1,6 @@
 * speed up tests
 * refactor Categories to Slicing
+* Testcase for JDK8: Casting to multiple interfaces
 
 **Layout Algorithms**
 * http://en.wikipedia.org/wiki/Layered_graph_drawing
