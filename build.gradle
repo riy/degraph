@@ -164,6 +164,7 @@ project('jdk8tests') {
 }
 
 private def createBintrayTasks(project, String artefactType) {
+    
     if (hasProperty('bintrayApiKey')) {
         project.with {
             task pushToBintray(type: Exec) {
@@ -173,16 +174,26 @@ private def createBintrayTasks(project, String artefactType) {
                         '-uschauder:' + bintrayApiKey,
                         'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.' + artefactType
             }
-            pushToBintray.dependsOn(determineDependsOn(artefactType))
+            pushToBintray.dependsOn(dependsOn(artefactType))
         }
     }
 }
 
-private def determineDependsOn(String artefactType) {
+private String dependsOn(String artefactType) {
     if (artefactType == 'zip') {
         return 'distZip'
     } else if (artefactType == 'jar') {
         return 'install'
+    } else {
+        throw new IllegalArgumentException("don't know how to handle " + artifactType)
+    }
+}
+
+private String artefactDir(String artefactType) {
+    if (artefactType == 'zip') {
+        return 'distributions'
+    } else if (artefactType == 'jar') {
+        return 'libs'
     } else {
         throw new IllegalArgumentException("don't know how to handle " + artifactType)
     }
