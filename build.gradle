@@ -102,7 +102,7 @@ project('core') {
 
     archivesBaseName = 'degraph-core'
 
-    createBintrayTasks(project, 'install')
+    createBintrayTasks(project, 'jar')
 
     dependencies {
         compile scalaLibraryDependency
@@ -119,7 +119,7 @@ project('check') {
 
     archivesBaseName = 'degraph-check'
 
-    createBintrayTasks(project, 'install')
+    createBintrayTasks(project, 'jar')
 
     dependencies {
         compile project(':core')
@@ -141,7 +141,7 @@ project('degraph') {
         into '/example/'
     }
 
-    createBintrayTasks(project, 'distZip')
+    createBintrayTasks(project, 'zip')
 
     distZip.dependsOn scaladoc
 
@@ -163,18 +163,28 @@ project('jdk8tests') {
     }
 }
 
-private def createBintrayTasks(project, String dependsOn) {
+private def createBintrayTasks(project, String artefactType) {
     if (hasProperty('bintrayApiKey')) {
         project.with {
             task pushToBintray(type: Exec) {
                 commandLine 'curl',
                         '-T',
-                        'build/libs/degraph-' + project.name + '-' + version + '.jar',
+                        'build/libs/degraph-' + project.name + '-' + version + '.' + artefactType,
                         '-uschauder:' + bintrayApiKey,
-                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
+                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.' + artefactType
             }
-            pushToBintray.dependsOn(dependsOn)
+            pushToBintray.dependsOn(determineDependsOn(artefactType))
         }
+    }
+}
+
+private def determineDependsOn(String artefactType) {
+    if (artefactType == 'zip') {
+        return 'distZip'
+    } else if (artefactType == 'jar') {
+        return 'install'
+    } else {
+        throw new IllegalArgumentException("don't know how to handle " + artifactType)
     }
 }
 
