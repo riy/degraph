@@ -170,7 +170,7 @@ private def createBintrayTasks(project, String artefactType) {
             task pushToBintray(type: Exec) {
                 commandLine 'curl',
                         '-T',
-                        'build/libs/degraph-' + project.name + '-' + version + '.' + artefactType,
+                        'build/' + artefactDir(artefactType) + '/degraph-' + project.name + '-' + version + '.' + artefactType,
                         '-uschauder:' + bintrayApiKey,
                         'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.' + artefactType
             }
