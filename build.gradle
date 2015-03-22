@@ -102,7 +102,7 @@ project('core') {
 
     archivesBaseName = 'degraph-core'
 
-    createBintrayTasks(project.name, version, 'install')
+    createBintrayTasks(project, 'install')
 
     dependencies {
         compile scalaLibraryDependency
@@ -119,7 +119,7 @@ project('check') {
 
     archivesBaseName = 'degraph-check'
 
-    createBintrayTasks(project.name, version, 'install')
+    createBintrayTasks(project, 'install')
 
     dependencies {
         compile project(':core')
@@ -141,7 +141,7 @@ project('degraph') {
         into '/example/'
     }
 
-    createBintrayTasks(project.name, version, 'distZip')
+    createBintrayTasks(project, 'distZip')
 
     distZip.dependsOn scaladoc
 
@@ -152,7 +152,7 @@ project('degraph') {
     }
 }
 
-project('jdk8tests'){
+project('jdk8tests') {
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
 
@@ -163,12 +163,18 @@ project('jdk8tests'){
     }
 }
 
-private def createBintrayTasks(String projectName, projectVersion, String dependsOn) {
+private def createBintrayTasks(project, String dependsOn) {
     if (hasProperty('bintrayApiKey')) {
-        task pushToBintray(type: Exec) {
-            commandLine 'curl', '-T', 'build/libs/degraph-' + projectName + '-' + projectVersion + '.jar', '-uschauder:' + bintrayApikey, 'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + projectVersion + '/degraph-' + projectName + '-' + projectVersion + '.jar'
+        project.with {
+            task pushToBintray(type: Exec) {
+                commandLine 'curl',
+                        '-T',
+                        'build/libs/degraph-' + name + '-' + version + '.jar',
+                        '-uschauder:' + bintrayApiKey,
+                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + name + '-' + version + '.jar'
+            }
+            pushToBintray.dependsOn(dependsOn)
         }
-        pushToBintray.dependsOn(dependsOn)
     }
 }
 
