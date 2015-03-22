@@ -1,7 +1,6 @@
 package de.schauderhaft.degraph.jdk8tests;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class ClassWithTypeAnnotations<T> //    implements clause:
         implements @TypeAnno1 ClassWithTypeParam<@TypeAnno2 T> {
@@ -13,20 +12,21 @@ public class ClassWithTypeAnnotations<T> //    implements clause:
     private @TypeAnno6 Object str = "Hallo";
 
     //    Type cast:
-    private String myString = (@TypeAnno4 String) str;
+    public String myString = (@TypeAnno4 String) str;
 
     //    Thrown exception declaration:
-    void throwsAnnotatedException() throws @TypeAnno5 SQLException {
+    public void throwsAnnotatedException() throws @TypeAnno5 SQLException {
     }
 
     @Override
     public @TypeAnno2 T doSomething() {
-        @TypeAnno8 String local = new String();
         try{
+            @TypeAnno8 String local = new String();
+
         } catch (@TypeAnno7 RuntimeException re){
 
         }
 
-        return (T)local;
+        return null;
     }
 }

@@ -28,7 +28,7 @@ object GraphBuildingClassVisitor {
       else {
         val pattern = """(?<=L)([\w/$]+)(?=[;<])""".r
         val matches = pattern.findAllIn(desc)
-        matches.map(classNode(_)).toSet
+        matches.map(classNode).toSet
       }
 
 
@@ -172,7 +172,6 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
                                            typePath: TypePath,
                                            desc: String,
                                            visible: Boolean): AnnotationVisitor = {
-        println("--- try Catch annotation ---")
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor()
       }
