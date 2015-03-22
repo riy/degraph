@@ -1,6 +1,6 @@
 # Release Notes
 
-## 0.2.0 (upcomming)
+## 0.1.2 (upcomming)
 
 ### Bugfixes
 
@@ -11,7 +11,7 @@ that are only needed for releasing [#56](https://github.com/schauder/degraph/iss
 
 ### New Features
 
-- Java 8 Type Annotations get analyzed. This is really a side effect of the fix of issue #56
+- Java 8 Type Annotations get analyzed.
 
 ## 0.1.1
 
