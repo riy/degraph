@@ -1,6 +1,6 @@
 # Release Notes
 
-## 0.1.2 (upcomming)
+## 0.1.2
 
 ### Bugfixes
 
