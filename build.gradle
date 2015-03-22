@@ -169,9 +169,9 @@ private def createBintrayTasks(project, String dependsOn) {
             task pushToBintray(type: Exec) {
                 commandLine 'curl',
                         '-T',
-                        'build/libs/degraph-' + name + '-' + version + '.jar',
+                        'build/libs/degraph-' + project.name + '-' + version + '.jar',
                         '-uschauder:' + bintrayApiKey,
-                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + name + '-' + version + '.jar'
+                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.jar'
             }
             pushToBintray.dependsOn(dependsOn)
         }
