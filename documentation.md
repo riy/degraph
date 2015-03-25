@@ -67,7 +67,8 @@ Everything after the excludes is the configuration of slicings. See the [documen
 
 <a href="images/selfTest.png" class="zoomable" >  
     <img src="images/selfTest_small.png" >  
-</a> 
+</a>
+
 <div class="flowBreak">
 </div>
 
@@ -94,7 +95,8 @@ It specifies the jar to analyze and only includes stuff from `log4j` itself. So 
 
 <a href="images/example2.png" class="zoomable" >  
     <img src="images/example2_small.png" >  
-</a> 
+</a>
+
 <div class="flowBreak">
 </div>
 
@@ -121,6 +123,7 @@ This is basically the same configuration as before, just with the includes fine 
 <a href="images/example3.png" class="zoomable" >  
     <img src="images/example3_small.png" >  
 </a> 
+
 <div class="flowBreak">
 </div>
  
