@@ -12,11 +12,11 @@ The command line application contains everything to run Degraph in order to gene
  
 If you want to use Degraph as part of your project use the Maven style Jars & pom.xmls you can use them as Maven dependencies
 
-The current version is 0.1.1. For information what changed between versions, see [the release notes](https://github.com/schauder/degraph/blob/master/releaseNotes.md).
+The current version is {{current_version}}. For information what changed between versions, see [the release notes](https://github.com/schauder/degraph/blob/master/releaseNotes.md).
 
 ## Command Line Application ##
 
-[Degraph Command Line Application, Version 0.1.1](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.1.zip)
+[Degraph Command Line Application, Version {{current_version}}](http://dl.bintray.com/schauder/schauderhaft-de/degraph-{{current_version}}.zip)
 
 ## Maven Style Jars & pom.xmls ##
 
@@ -27,7 +27,7 @@ You need this for writing tests for your dependencies with Degraph. It depends o
      <dependency>
        <groupId>de.schauderhaft.degraph</groupId>
        <artifactId>degraph-check</artifactId>
-       <version>0.1.1</version>
+       <version>{{current_version}}</version>
      </dependency>
 
 ### core ###
@@ -37,10 +37,13 @@ This is the main logic of Degraph. You need it if you want to use the graph mani
      <dependency>
        <groupId>de.schauderhaft.degraph</groupId>
        <artifactId>degraph-core</artifactId>
-       <version>0.1.1</version>
+       <version>{{current_version}}</version>
      </dependency>
 
 ## Older Versions ##
+
+
+[Degraph Command Line Application, Version 0.1.1](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.1.zip)
 
 [Degraph Binary Distribution, Version 0.1.0](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.0.zip)
 
