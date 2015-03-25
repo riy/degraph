@@ -144,7 +144,7 @@ We'll go through the different parts of the configuration file by examining an e
 
 
     output = example1.graphml
-    classpath = ../lib/degraph-0.0.4.jar
+    classpath = ../lib/degraph-{{site.current_version}}.jar
     exclude = java*.**
     exclude = scala.**
     exclude = org.scalatest.**
