@@ -16,7 +16,7 @@ The current version is {{site.current_version}}. For information what changed be
 
 ## Command Line Application ##
 
-[Degraph Command Line Application, Version {{site.current_version}}](http://dl.bintray.com/schauder/schauderhaft-de/degraph-{{site.current_version}}.zip)
+[Degraph Command Line Application, Version {{site.current_version}}](http://dl.bintray.com/schauder/schauderhaft-de/degraph-degraph-{{site.current_version}}.zip)
 
 ## Maven Style Jars & pom.xmls ##
 
