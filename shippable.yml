@@ -1,0 +1,16 @@
+# language
+language: scala
+
+scala:
+    - 2.10.3
+
+# version numbers
+jdk:
+    - oraclejdk8
+
+install:
+    - ./gradlew clean assemble
+before_script:
+    - mkdir -p shippable/testresults
+script:
+    - ./gradlew clean check install
