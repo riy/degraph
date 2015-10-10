@@ -37,3 +37,7 @@ If you have more ideas what Degraph should be able to do, just open an [issue](h
 Please use [the github issue feature](https://github.com/schauder/degraph/issues) for questions, bug reports or improvement requests. 
 
 If you like Degraph just say so on twitter, facebook or wherever you like. 
+
+## Build Info ##
+
+[![Build Status](https://api.shippable.com/projects/55a4b660edd7f2c0526bb24c/badge?branchName=master)](https://app.shippable.com/projects/55a4b660edd7f2c0526bb24c/builds/latest)
