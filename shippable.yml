@@ -12,5 +12,8 @@ install:
     - ./gradlew clean assemble
 before_script:
     - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
 script:
     - ./gradlew clean check install
+after_script:
+    - cp -r */build/test-results/* shippable/testresults/
