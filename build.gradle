@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-def scalaLibraryDependency = 'org.scala-lang:scala-library:2.11.6'
+def scalaLibraryDependency = 'org.scala-lang:scala-library:2.11.7'
 def scalaXmlDependency = 'org.scala-lang.modules:scala-xml_2.11:1.0.3'
 def scalaParsingDependency = 'org.scala-lang.modules:scala-parser-combinators_2.11:1.0.3'
 def junitDependency = 'junit:junit:4.12'
