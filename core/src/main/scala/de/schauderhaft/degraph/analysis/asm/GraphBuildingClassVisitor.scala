@@ -6,17 +6,18 @@ import org.objectweb.asm._
 
 
 object GraphBuildingClassVisitor {
+  val SinglePattern = """\[*L([\w/$]+);""".r
+  val multiPattern = """(?<=L)([\w/$]+)(?=[;<])""".r
 
   def classNode(slashSeparatedName: String): SimpleNode = {
     if (slashSeparatedName.contains(";"))
       new IllegalArgumentException("parameter has unexpected content. This is an internal error, please open a bug for degraph with this output: " + slashSeparatedName).printStackTrace()
-    SimpleNode.classNode(slashSeparatedName.replace("/", "."))
+    SimpleNode.classNode(slashSeparatedName.replace('/', '.'))
   }
 
   def classNodeFromSingleType(singleTypeDescription: String) = {
-    val Pattern = """\[*L([\w/$]+);""".r
     singleTypeDescription match {
-      case Pattern(x) => classNode(x)
+      case SinglePattern(x) => classNode(x)
       case _ => classNode(singleTypeDescription)
     }
   }
@@ -26,8 +27,7 @@ object GraphBuildingClassVisitor {
       if (desc == null || desc == "")
         Set()
       else {
-        val pattern = """(?<=L)([\w/$]+)(?=[;<])""".r
-        val matches = pattern.findAllIn(desc)
+        val matches = multiPattern.findAllIn(desc)
         matches.map(classNode).toSet
       }
 
@@ -96,10 +96,11 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
 
 
   override def visitTypeAnnotation(
-                                    typeRef: Int,
-                                    typePath: TypePath,
-                                    desc: String,
-                                    visible: Boolean): AnnotationVisitor = {
+    typeRef: Int,
+    typePath: TypePath,
+    desc: String,
+    visible: Boolean
+    ): AnnotationVisitor = {
     classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
     new GraphBuildingAnnotationVisitor
   }
@@ -123,10 +124,11 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
       }
 
       override def visitTypeAnnotation(
-                                        typeRef: Int,
-                                        typePath: TypePath,
-                                        desc: String,
-                                        visible: Boolean): AnnotationVisitor = {
+        typeRef: Int,
+        typePath: TypePath,
+        desc: String,
+        visible: Boolean
+        ): AnnotationVisitor = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor
       }
@@ -145,33 +147,40 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
       }
 
       override def visitTypeAnnotation(
-                                        typeRef: Int,
-                                        typePath: TypePath,
-                                        desc: String,
-                                        visible: Boolean): AnnotationVisitor = {
+        typeRef: Int,
+        typePath: TypePath,
+        desc: String,
+        visible: Boolean
+        ): AnnotationVisitor = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor
       }
 
-      override def visitParameterAnnotation(parameter: Int,
-                                            desc: String,
-                                            visible: Boolean): AnnotationVisitor = {
+      override def visitParameterAnnotation(
+        parameter: Int,
+        desc: String,
+        visible: Boolean
+        ): AnnotationVisitor = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor()
       }
 
-      override def visitInsnAnnotation(typeRef: Int,
-                                       typePath: TypePath,
-                                       desc: String,
-                                       visible: Boolean): AnnotationVisitor = {
+      override def visitInsnAnnotation(
+        typeRef: Int,
+        typePath: TypePath,
+        desc: String,
+        visible: Boolean
+        ): AnnotationVisitor = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor()
       }
 
-      override def visitTryCatchAnnotation(typeRef: Int,
-                                           typePath: TypePath,
-                                           desc: String,
-                                           visible: Boolean): AnnotationVisitor = {
+      override def visitTryCatchAnnotation(
+        typeRef: Int,
+        typePath: TypePath,
+        desc: String,
+        visible: Boolean
+        ): AnnotationVisitor = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor()
       }
@@ -211,13 +220,15 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
         classNodeFromDescriptor(signature).foreach(g.connect(currentClass, _))
       }
 
-      override def visitLocalVariableAnnotation(typeRef: Int,
-                                                typePath: TypePath,
-                                                start: Array[Label],
-                                                end: Array[Label],
-                                                index: Array[Int],
-                                                desc: String,
-                                                visible: Boolean) = {
+      override def visitLocalVariableAnnotation(
+        typeRef: Int,
+        typePath: TypePath,
+        start: Array[Label],
+        end: Array[Label],
+        index: Array[Int],
+        desc: String,
+        visible: Boolean
+        ) = {
         classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
         new GraphBuildingAnnotationVisitor()
       }
