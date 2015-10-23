@@ -26,6 +26,7 @@ If you do a hierarchic layout in yed for the resulting graphml file you can easi
 Visualization of Dependencies can be very helpfull when you try to understand the structure (or the absence of such structure) of dependencies in a project. Lets get started right away by analyzing Degraph and some of it's components itself.
 
 ### Getting Started ### 
+
 The following images are created (and can be recreated by yourself) by 
 
 * downloading degraph
@@ -293,11 +294,7 @@ Let me know what you like or don't like and if you have ideas for improvements.
 
 ### Setting up the project ###
 
-You can either download the full distribution zip of Degraph, unzip the downloaded files and add all the contained jars to your classpath.
-
-Alternatively you can download the two relevant artefacts: the *core jar* and *check jar* along with their respective poms and put them in your Maven repository, where you can reference them from your project pom or gradle build file or ...
-
-I start working on getting everything into maven central as soon as I have this documentation task of my hands. So lets get down to business
+You need to add Degraph as a dependency. For most projects the easiest way is to configure it as a dependency in Maven/Gradle/etc. as described on the [Download page](download.html). If you don't manage your dependencies like this you can download the full distribution zip of Degraph, unzip the downloaded files and add all the contained jars to your classpath.
 
 ### Scala Constraints DSL ###
 
