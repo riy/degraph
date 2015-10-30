@@ -6,6 +6,8 @@ import de.schauderhaft.degraph.configuration.Pattern
 import de.schauderhaft.degraph.configuration.UnnamedPattern
 import de.schauderhaft.degraph.configuration.NamedPattern
 import scala.annotation.varargs
+import scala.util.matching.Regex
+
 /**
  * the basis for the DSL do define constraints on your dependencies in tests.
  */
@@ -65,7 +67,24 @@ case class ConstraintBuilder(
   def including(s: String): ConstraintBuilder = copy(includes = includes :+ s)
   def excluding(s: String): ConstraintBuilder = copy(excludes = excludes :+ s)
 
-  def noJars: ConstraintBuilder = copy(config = config.copy(classpath = config.classpath.map(noJars(_))))
+  def noJars: ConstraintBuilder =
+    copy(config = config.copy(classpath = config.classpath.map(noJars)))
+
+  /**
+   * reduces the classpath to be analyzed to include only those elements matching the pattern.
+   *
+   * The pattern is can contain * as a wildcard.
+   */
+  def filterClasspath(pattern: String): ConstraintBuilder = {
+    val regexp = pattern.replace("*", ".*").r
+    copy(config = config.copy(classpath = config.classpath.map(filterClasspath(regexp, _))))
+  }
+
+  private def filterClasspath(pattern: Regex, s: String) = {
+  val sep = System.getProperty("path.separator")
+    val elements = s.split(sep)
+    elements.filter(pattern.pattern.matcher(_).matches()).mkString(sep)
+  }
 
   private def noJars(s: String) = {
     def isJar(s: String) = s.endsWith(".jar")

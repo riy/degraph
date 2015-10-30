@@ -45,6 +45,19 @@ class ConstraintBuilderTest extends FunSuite with TableDrivenPropertyChecks {
     cb.noJars.configuration.classpath should be(Some("""x\"""))
   }
 
+  test("filterClasspath leaves only matching entries in class path - single entry"){
+    val cb = ConstraintBuilder(config = new Configuration(classpath = Some("""xyz\""")))
+    cb.filterClasspath("x*").configuration.classpath should be(Some("""xyz\"""))
+    cb.filterClasspath("a*").configuration.classpath should be(Some(""))
+  }
+
+  test("filterClasspath leaves only matching entries in class path - multiple entries"){
+    val sep = System.getProperty("path.separator")
+
+    val cb = ConstraintBuilder(config = new Configuration(classpath = Some("xyz.jar" + "abc.jar")))
+    cb.filterClasspath("x*.jar").configuration.classpath should be(Some("""xyz.jar"""))
+  }
+
   test("noJars configuration contains only directory based entries, path entries from multiple entries get preserved") {
 
     val pathSeperator = System.getProperty("path.separator")
