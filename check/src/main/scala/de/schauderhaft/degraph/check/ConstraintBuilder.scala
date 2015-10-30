@@ -67,6 +67,11 @@ case class ConstraintBuilder(
   def including(s: String): ConstraintBuilder = copy(includes = includes :+ s)
   def excluding(s: String): ConstraintBuilder = copy(excludes = excludes :+ s)
 
+  /**
+   * removes all jar files from the classpath to be analyzed.
+   *
+   * Everything ending in .jar is considered a jar file.
+   */
   def noJars: ConstraintBuilder =
     copy(config = config.copy(classpath = config.classpath.map(noJars)))
 
@@ -80,17 +85,16 @@ case class ConstraintBuilder(
     copy(config = config.copy(classpath = config.classpath.map(filterClasspath(regexp, _))))
   }
 
-  private def filterClasspath(pattern: Regex, s: String) = {
-  val sep = System.getProperty("path.separator")
-    val elements = s.split(sep)
-    elements.filter(pattern.pattern.matcher(_).matches()).mkString(sep)
-  }
+  private def filterClasspath(pattern: Regex, s: String) =
+    filterClasspathString(s, pattern.pattern.matcher(_).matches())
 
-  private def noJars(s: String) = {
-    def isJar(s: String) = s.endsWith(".jar")
+  private def noJars(s: String) =
+    filterClasspathString(s, ! _.endsWith(".jar"))
+
+  private def filterClasspathString(s: String, filter: String => Boolean) = {
     val sep = System.getProperty("path.separator")
     val elements = s.split(sep)
-    elements.filterNot(isJar).mkString(sep)
+    elements.filter(filter).mkString(sep)
   }
 
   def configuration = config.copy(
