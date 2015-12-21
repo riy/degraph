@@ -438,7 +438,7 @@ In order to define a named slice pattern you have to actuall instantiate a `Name
     classpath().withSlicing(
 			"mainVsTest",
 			"de.schauderhaft.**(Test)",
-			new NamedPattern("main", "de.schauderhaft.*.**"))
+			new NamedPattern("de.schauderhaft.*.**", "main"))
 
 Since you probably use JUnit to write your tests, you won't be able to use the ScalaTest matchers (which is a bummer). So we'll use Hamcrest instead.
 
