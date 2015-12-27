@@ -18,7 +18,7 @@ class DependencyTest extends FunSuite {
   }
 
   test("Check identifies cycles in junit") {
-    classpath.printTo("junitDependencyFailure.graphml").including("**.junit.**") should  not be (violationFree)
+    classpath.printOnFailure("junitDependencyFailure.graphml").including("**.junit.**") should  not be (violationFree)
   }
 
   test("Degraph has no cycles") {

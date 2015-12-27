@@ -17,7 +17,14 @@ case class ConstraintBuilder(
   output: Option[String] = None
 ) {
 
-  def printTo(path: String) = copy(output = Some(path))
+
+  /**
+    * When the test fails the analysis results get written to the given path as a graphml file
+    *
+    * @param path the path or just the file name to use for writing out the graphml-file
+    * @return
+    */
+  def printOnFailure(path: String) = copy(output = Some(path))
 
 
   private def any2Layer(arg: AnyRef): Layer = arg match {
@@ -107,12 +114,6 @@ case class ConstraintBuilder(
     copy(config = config.copy(classpath = config.classpath.map(filterClasspathString(_, filter))))
   }
 
-  private def filterClasspathString(s: String, filter: String => Boolean) = {
-    val sep = System.getProperty("path.separator")
-    val elements = s.split(sep)
-    elements.filter(filter).mkString(sep)
-  }
-
   def configuration = config.copy(
     categories = slicings,
     includes = includes,
@@ -120,5 +121,12 @@ case class ConstraintBuilder(
     constraint = config.constraint ++ constraints,
     output = output
   )
+
+  private def filterClasspathString(s: String, filter: String => Boolean) = {
+    val sep = System.getProperty("path.separator")
+    val elements = s.split(sep)
+    elements.filter(filter).mkString(sep)
+  }
+
 
 }

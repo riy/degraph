@@ -5,6 +5,8 @@
 
 ### New Features
 
+- **needs clarification** printTo reworked
+
 - ConstraintBuilder got a new method `filterClasspath(pattern: String): ConstraintBuilder`
     for limiting the classpath to elements matching the pattern.
     This should be useful, if you want to analyze some, but not all jar-files.
