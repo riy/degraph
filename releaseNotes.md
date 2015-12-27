@@ -1,5 +1,16 @@
 # Release Notes
 
+## 0.1.4 (upcomming)
+
+- minor performance improvements
+- ConstraintBuilder got a new method `filterClasspath(pattern: String): ConstraintBuilder`
+    for limiting the classpath to elements matching the pattern.
+    This should be usefull, if you want to analyze some, but not all jar-files.
+
+## 0.1.3
+
+Version 0.1.3 is the same as 0.1.2
+
 ## 0.1.2
 
 ### Bugfixes
