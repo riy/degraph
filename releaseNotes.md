@@ -1,14 +1,23 @@
 # Release Notes
 
-## 0.1.4 (upcomming)
+## 0.1.4 (upcoming)
 
-- minor performance improvements
+
+### New Features
+
 - ConstraintBuilder got a new method `filterClasspath(pattern: String): ConstraintBuilder`
     for limiting the classpath to elements matching the pattern.
     This should be useful, if you want to analyze some, but not all jar-files.
+
 - ConstraintBuilder got a new method `filterClasspath(filter: (String) => Boolean): ConstraintBuilder`
     for limiting the classpath to elements matching the pattern.
     This should be useful, if you want to analyze some, but not all jar-files.
+
+### Improvements
+
+- minor performance improvements
+
+- adding a little Scaladoc
 
 
 ## 0.1.3
