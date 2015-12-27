@@ -65,8 +65,19 @@ case class ConstraintBuilder(
     )
   }
 
+  /**
+    * defines the packages to be included in the analysis
+    * @param s an ANT style pattern (using ** and * as wildcards) for packages to be included
+    * @return this
+    */
   def including(s: String): ConstraintBuilder = copy(includes = includes :+ s)
 
+
+  /**
+    * defines the packages to be excluded in the analysis
+    * @param s an ANT style pattern (using ** and * as wildcards) for packages to be included
+    * @return this
+    */
   def excluding(s: String): ConstraintBuilder = copy(excludes = excludes :+ s)
 
   /**
