@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.configuration
 
-import org.scalatest.FunSuite
 import org.scalatest.Matchers._
+import org.scalatest.FunSuite
 import de.schauderhaft.degraph.graph.Graph
 import de.schauderhaft.degraph.analysis.AnalyzerLike
 import org.junit.runner.RunWith
@@ -19,7 +19,7 @@ class ConfigurationTest extends FunSuite {
       Seq(),
       Seq(),
       Map(),
-      Some("output")) should not be ('valid)
+      Print("output")) should not be ('valid)
   }
 
   test("a configuration without output to analyze is not valid") {
@@ -28,7 +28,7 @@ class ConfigurationTest extends FunSuite {
       Seq(),
       Seq(),
       Map(),
-      None) should not be ('valid)
+      NoPrinting()) should not be ('valid)
   }
 
   test("a complete configuration is valid") {
@@ -37,7 +37,7 @@ class ConfigurationTest extends FunSuite {
       Seq(),
       Seq(),
       Map(),
-      Some("output")) should be('valid)
+      Print("output")) should be('valid)
   }
 
   private def makeRegex(s: String) = "(?s)" + s.
@@ -46,8 +46,7 @@ class ConfigurationTest extends FunSuite {
     replace("*", ".*")
 
   test("toString is nice and readabled for empty config") {
-    Configuration(constraint = Set()).toString should fullyMatch regex (
-      makeRegex("Configuration{*}"))
+    Configuration(constraint = Set()).toString should fullyMatch regex makeRegex("Configuration{*}")
   }
 
   test("toString is nice and readabled for full config") {
@@ -60,7 +59,7 @@ class ConfigurationTest extends FunSuite {
       includes = Seq("iii"),
       excludes = Seq("eee"),
       categories = Map("ca" -> Seq(NamedPattern("nnn", "ppp"))),
-      output = Some("ooo"),
+      output = Print("ooo"),
       constraint = Set(CycleFree)).
       toString should fullyMatch regex (expected)
   }

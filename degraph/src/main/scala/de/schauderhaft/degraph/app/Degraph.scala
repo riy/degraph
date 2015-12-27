@@ -3,6 +3,7 @@ package de.schauderhaft.degraph.app
 import _root_.java.awt.Color.RED
 
 import de.schauderhaft.degraph.analysis.asm.Analyzer
+import de.schauderhaft.degraph.configuration.Print
 import de.schauderhaft.degraph.writer.{DefaultEdgeStyle, EdgeStyle, PredicateStyler, SlicePredicate, Writer}
 
 import scala.xml.XML
@@ -27,7 +28,7 @@ object Degraph {
           DefaultEdgeStyle
         )
         val xml = new Writer(styler).toXml(g)
-        XML.save(c.output.get, xml, "UTF8", xmlDecl = true, null)
+        XML.save(c.output.asInstanceOf[Print].path, xml, "UTF8", xmlDecl = true, null)
         println("Found %d nodes, with %d slice edges in violation of dependency constraints.".format(g.allNodes.size, violations.size))
     }
   }

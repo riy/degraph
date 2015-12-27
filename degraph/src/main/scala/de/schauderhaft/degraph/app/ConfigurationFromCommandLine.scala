@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.app
 
 import org.rogach.scallop.exceptions.{Help, ScallopException}
-import de.schauderhaft.degraph.configuration.Configuration
+import de.schauderhaft.degraph.configuration.{Print, Configuration}
 import scala.io.Source
 
 object ConfigurationFromCommandLine {
@@ -30,12 +30,15 @@ object ConfigurationFromCommandLine {
     }
     errorMessage match {
       case Some(m) => Left(m)
-      case _ if (commandLine.file.isEmpty) => Right((Configuration(
-        classpath = Some(commandLine.classpath()),
-        includes = commandLine.includeFilter(),
-        excludes = commandLine.excludeFilter(),
-        output = Some(commandLine.output()),
-        categories = Map())))
+      case _ if commandLine.file.isEmpty => Right(
+        Configuration(
+          classpath = Some(commandLine.classpath()),
+          includes = commandLine.includeFilter(),
+          excludes = commandLine.excludeFilter(),
+          output = Print(commandLine.output()),
+          categories = Map()
+        )
+      )
       case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString))
     }
   }

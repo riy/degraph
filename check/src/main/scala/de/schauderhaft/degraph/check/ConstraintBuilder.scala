@@ -1,6 +1,6 @@
 package de.schauderhaft.degraph.check
 
-import de.schauderhaft.degraph.configuration.{Configuration, Constraint, NamedPattern, Pattern, UnnamedPattern}
+import de.schauderhaft.degraph.configuration._
 
 import scala.annotation.varargs
 
@@ -14,7 +14,7 @@ case class ConstraintBuilder(
   excludes: Seq[String] = Seq(),
   slicings: Map[String, Seq[Pattern]] = Map(),
   constraints: Set[Constraint] = Set(),
-  output: Option[String] = None
+  output: PrintConfiguration = NoPrinting()
 ) {
 
 
@@ -24,8 +24,9 @@ case class ConstraintBuilder(
     * @param path the path or just the file name to use for writing out the graphml-file
     * @return
     */
-  def printOnFailure(path: String) = copy(output = Some(path))
+  def printOnFailure(path: String) = copy(output = Print(path, onConstraintViolationOnly = true))
 
+  def printTo(path: String) = copy(output = Print(path, onConstraintViolationOnly = false))
 
   private def any2Layer(arg: AnyRef): Layer = arg match {
     case s: String => LenientLayer(s)

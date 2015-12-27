@@ -1,7 +1,7 @@
 package de.schauderhaft.degraph.app
 
 import scala.util.parsing.combinator.RegexParsers
-import de.schauderhaft.degraph.configuration.{UnnamedPattern, NamedPattern, Pattern, Configuration}
+import de.schauderhaft.degraph.configuration._
 
 /**
  * parses a configuration file
@@ -23,10 +23,10 @@ class ConfigurationParser extends RegexParsers {
 
     private def line(key: String): Parser[String] = (key ~ "=") ~> word <~ eol
     protected def comment: Parser[Configuration] = "#.*".r <~ eol ^^ ((x: String) => Configuration())
-    protected def output: Parser[Configuration] = line("output") ^^ ((x: String) => Configuration(None, Seq(), Seq(), Map(), Some(x)))
-    protected def include: Parser[Configuration] = line("include") ^^ ((x: String) => Configuration(None, Seq(x), Seq(), Map(), None))
-    protected def exclude: Parser[Configuration] = line("exclude") ^^ ((x: String) => Configuration(None, Seq(), Seq(x), Map(), None))
-    protected def classpath: Parser[Configuration] = line("classpath") ^^ ((x: String) => Configuration(Some(x), Seq(), Seq(), Map(), None))
+    protected def output: Parser[Configuration] = line("output") ^^ ((x: String) => Configuration(None, Seq(), Seq(), Map(), Print(x)))
+    protected def include: Parser[Configuration] = line("include") ^^ ((x: String) => Configuration(None, Seq(x), Seq(), Map(), NoPrinting()))
+    protected def exclude: Parser[Configuration] = line("exclude") ^^ ((x: String) => Configuration(None, Seq(), Seq(x), Map(), NoPrinting()))
+    protected def classpath: Parser[Configuration] = line("classpath") ^^ ((x: String) => Configuration(Some(x), Seq(), Seq(), Map(), NoPrinting()))
     protected def emptyLine: Parser[Any] = eol
     protected def slice: Parser[Configuration] = (word <~ "=") ~ patternBlock <~ eol ^^ (x => Configuration(categories = Map((x._1, x._2))))
     protected def patternBlock: Parser[List[Pattern]] = "{" ~> eol ~> patterns <~ "}"
@@ -42,10 +42,10 @@ class ConfigurationParser extends RegexParsers {
             c1.includes ++ c2.includes,
             c1.excludes ++ c2.excludes,
             c1.categories ++ c2.categories,
-            c1.output.orElse(c2.output))
+            c1.output.merge(c2.output))
 
     private def combine(s: Seq[Configuration]): Configuration =
-        s.fold(Configuration(None, Seq(), Seq(), Map(), None))(merge(_, _))
+        s.fold(Configuration(None, Seq(), Seq(), Map(), NoPrinting()))(merge)
 
     private val mayReduce = new PartialFunction[Seq[Configuration], Configuration] {
         def isDefinedAt(s: Seq[Configuration]) =
@@ -56,6 +56,6 @@ class ConfigurationParser extends RegexParsers {
 
     private def mayReduce(opt: Option[Seq[Configuration]]): Configuration = opt match {
         case Some(list: Seq[_]) => mayReduce(list)
-        case None => Configuration(None, Seq(), Seq(), Map(), None)
+        case None => Configuration(None, Seq(), Seq(), Map(), NoPrinting())
     }
 }

@@ -3,71 +3,71 @@ package de.schauderhaft.degraph.app
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuiteLike
-import de.schauderhaft.degraph.configuration.{UnnamedPattern, NamedPattern, Configuration}
+import de.schauderhaft.degraph.configuration._
 import org.scalatest.Matchers._
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationParserTest extends ConfigurationParser with FunSuiteLike {
   test("empty file creates empty configuration") {
-    parse("") should be(Configuration(None, Seq(), Seq(), Map(), None))
+    parse("") should be(Configuration(None, Seq(), Seq(), Map(), NoPrinting()))
   }
   test("file with just comments creates empty configuration") {
-    parse("# comment") should be(Configuration(None, Seq(), Seq(), Map(), None))
+    parse("# comment") should be(Configuration(None, Seq(), Seq(), Map(), NoPrinting()))
   }
 
   test("output configures outputfile configuration") {
-    parse("output=example.file") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
+    parse("output=example.file") should be(Configuration(None, Seq(), Seq(), Map(), Print("example.file")))
   }
   test("output configures outputfile configuration, leading newlines") {
     parse("""
-output=example.file""") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
+output=example.file""") should be(Configuration(None, Seq(), Seq(), Map(), Print("example.file")))
   }
 
   test("output configures outputfile configuration with trailing eol") {
     parse("""output=example.file
-""") should be(Configuration(None, Seq(), Seq(), Map(), Some("example.file")))
+""") should be(Configuration(None, Seq(), Seq(), Map(), Print("example.file")))
   }
 
   test("include configures include configuration") {
-    parse("include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    parse("include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), NoPrinting()))
   }
 
   test("leading whitespace gets ignored") {
-    parse("   include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    parse("   include=pattern") should be(Configuration(None, Seq("pattern"), Seq(), Map(), NoPrinting()))
   }
 
   test("trailing whitespace gets ignored") {
-    parse("include=pattern    ") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    parse("include=pattern    ") should be(Configuration(None, Seq("pattern"), Seq(), Map(), NoPrinting()))
   }
 
   test("trailing new line gets ignored") {
     parse("""include=pattern
-""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), NoPrinting()))
   }
 
   test("trailing new lines gets ignored") {
     parse("""include=pattern
     
     	
-    	""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), None))
+    	""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), NoPrinting()))
   }
 
   test("two part configuration example") {
     parse("""output=example.file
-include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Print("example.file")))
   }
 
   test("two part configuration example with whitespace") {
     parse("""
     			output=example.file
     			include=pattern
-    			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+    			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Print("example.file")))
   }
   test("two part configuration example with whitespace around =") {
     parse("""
     			output = example.file
     			include = pattern
-    			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Some("example.file")))
+    			""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), Print("example.file")))
   }
 
   test("full configuration example with whitespace") {
@@ -76,7 +76,7 @@ include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), 
     			output=example.file
     			include=pattern
     	        exclude=expattern
-    			""") should be(Configuration(Some("ap;x.jar"), Seq("pattern"), Seq("expattern"), Map(), Some("example.file")))
+    			""") should be(Configuration(Some("ap;x.jar"), Seq("pattern"), Seq("expattern"), Map(), Print("example.file")))
   }
   test("full configuration example with whitespace &  comments") {
     parse("""
@@ -87,7 +87,7 @@ include=pattern""") should be(Configuration(None, Seq("pattern"), Seq(), Map(), 
     			include=pattern
     	        exclude=expattern
                 # trailing comments
-    			""") should be(Configuration(Some("ap;x.jar"), Seq("pattern"), Seq("expattern"), Map(), Some("example.file")))
+    			""") should be(Configuration(Some("ap;x.jar"), Seq("pattern"), Seq("expattern"), Map(), Print("example.file")))
   }
 
   test("Named Pattern") {
