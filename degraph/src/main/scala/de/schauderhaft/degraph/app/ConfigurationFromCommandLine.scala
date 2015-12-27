@@ -35,9 +35,8 @@ object ConfigurationFromCommandLine {
         includes = commandLine.includeFilter(),
         excludes = commandLine.excludeFilter(),
         output = Some(commandLine.output()),
-        categories = Map(),
-        display = commandLine.display())))
-      case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString).copy(display = commandLine.display()))
+        categories = Map())))
+      case _ => Right(new ConfigurationParser().parse(Source.fromFile(commandLine.file()).mkString))
     }
   }
 }

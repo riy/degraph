@@ -22,8 +22,7 @@ case class Configuration(
   categories: Map[String, Seq[Pattern]] = Map(),
   output: Option[String] = None,
   constraint: Set[Constraint] = Set(CycleFree),
-  analyzer: AnalyzerLike = null,
-  display: Boolean = false) {
+  analyzer: AnalyzerLike = null) {
 
   lazy val slicing = buildCategorizer(categories)
 
