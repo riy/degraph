@@ -129,32 +129,32 @@ class SliceNodeFinder(slice: String, graph: SGraph[Node, LkDiEdge]) extends Part
 
     private def contains(pan: ParentAwareNode): Boolean =
         pan.vals.exists {
-            case n: SimpleNode if (n.nodeType == slice) => true
+            case n: SimpleNode if n.nodeType == slice => true
             case _ => false
         }
 
     private def findIn(pan: ParentAwareNode): SimpleNode =
-        pan.vals.collectFirst { case n: SimpleNode if (n.nodeType == slice) => n }.get
+        pan.vals.collectFirst { case n: SimpleNode if n.nodeType == slice => n }.get
 
     private def container(n: Node) = {
         val containers = for {
             in <- graph.find(n).toSeq
             ie <- in.incoming
-            if (ie.label == Graph.contains)
+            if ie.label == Graph.contains
         } yield ie._1.value
         containers.headOption
     }
 
     def isDefinedAt(n: Node): Boolean = n match {
-        case node: SimpleNode if (node.nodeType == slice) => true
-        case pan: ParentAwareNode if (contains(pan)) => true
+        case node: SimpleNode if node.nodeType == slice => true
+        case pan: ParentAwareNode if contains(pan) => true
         case _ => container(n) match {
             case Some(c) => isDefinedAt(c)
             case _ => false
         }
     }
     def apply(n: Node): SimpleNode = n match {
-        case node: SimpleNode if (node.nodeType == slice) => node
+        case node: SimpleNode if node.nodeType == slice => node
         case pan: ParentAwareNode => findIn(pan)
         case _ => apply(container(n).get)
     }

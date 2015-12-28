@@ -3,7 +3,7 @@ package de.schauderhaft.degraph.analysis
 import de.schauderhaft.degraph.model.Node
 
 /**
- * a filter that prevents dependencies from an entity to itself
+ * a filter that prevents dependencies from a node to itself or to one of its parent
  */
 class NoSelfReference(category: Node => Node = x => x) extends (((Node, Node)) => Boolean) {
     def apply(t: (Node, Node)): Boolean = {

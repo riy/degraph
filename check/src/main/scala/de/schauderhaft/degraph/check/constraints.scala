@@ -100,6 +100,10 @@ trait SlicedConstraint extends Constraint {
 
   protected val arrow: String
 
+  /**
+    * String representations of the constraint
+    * @return
+    */
   def shortString =
     (for {
       l <- slices
