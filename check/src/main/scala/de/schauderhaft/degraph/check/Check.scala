@@ -49,14 +49,14 @@ object Check {
       val g = conf.createGraph()
 
       def maybePrintGraph(vs: Set[ConstraintViolation]) {
-        if (!vs.isEmpty) {
+        if (vs.nonEmpty) {
           val styler = PredicateStyler.styler(
             new SlicePredicate(conf.slicing, vs.
               flatMap(_.dependencies)),
             EdgeStyle(RED, 2.0), DefaultEdgeStyle
           )
-          val xml = (new Writer(styler)).toXml(g)
-          conf.output.foreach(XML.save(_, xml, "UTF8", true, null))
+          val xml = new Writer(styler).toXml(g)
+          conf.output.foreach(XML.save(_, xml, "UTF8", xmlDecl = true, doctype = null))
         }
       }
 
