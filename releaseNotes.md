@@ -5,7 +5,11 @@
 
 ### New Features
 
-- **needs clarification** printTo reworked
+- NamedPattern warns, when the name looks like a pattern. Multiple users experienced confusing
+    results, due to providing the parameters in wrong order.
+
+- `printTo` in the ConstraintBuilder now always prints the analysis results. If you want the old behaviour back, use
+    `printOnFailure`
 
 - ConstraintBuilder got a new method `filterClasspath(pattern: String): ConstraintBuilder`
     for limiting the classpath to elements matching the pattern.
@@ -15,11 +19,7 @@
     for limiting the classpath to elements matching the pattern.
     This should be useful, if you want to analyze some, but not all jar-files.
 
-### Improvements
-
 - minor performance improvements
-
-- adding a little Scaladoc
 
 
 ## 0.1.3

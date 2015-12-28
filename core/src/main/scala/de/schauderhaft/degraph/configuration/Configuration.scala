@@ -81,5 +81,9 @@ sealed trait Pattern {
 
 case class UnnamedPattern(val pattern: String) extends Pattern
 
-case class NamedPattern(val pattern: String, name: String) extends Pattern
+case class NamedPattern(val pattern: String, name: String) extends Pattern {
+  if (name.contains("*") || name.contains(".")) {
+    println("You use '" + name + "' as the NAME of a NamedPattern. Please note that the NAME comes last in such a pattern.")
+  }
+}
 
