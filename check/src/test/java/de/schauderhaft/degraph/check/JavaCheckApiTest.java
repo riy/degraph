@@ -16,6 +16,12 @@ public class JavaCheckApiTest {
     public void canAccessClasspathConfigurationBuilder() {
         classpath();
     }
+    
+    @Test
+    public void canProvideCustomClasspath() {
+        customClasspath("foo:bar");
+    }
+
     @Test
     public void canAccessNoJars() {
         classpath().noJars();

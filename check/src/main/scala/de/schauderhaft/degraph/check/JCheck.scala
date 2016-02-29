@@ -10,5 +10,7 @@ import de.schauderhaft.degraph.check.hamcrest.HamcrestWrapper
 object JCheck {
   def classpath = Check.classpath
 
+  def customClasspath(path: String) = Check.customClasspath(path)
+
   val violationFree = new HamcrestWrapper[ConstraintBuilder](Check.violationFree)
 }
