@@ -35,8 +35,15 @@ object Check {
    * Note in a typical maven like setup it will also include the test classes as well as all libraries, which might not be desirable.
    * Manipulate the configuration to only contain the classpath elements required or use include and exclude filters for limiting the analyzed classes.
    */
-  val classpath = ConstraintBuilder(new Configuration(
-    classpath = Option(System.getProperty("java.class.path")),
+  val classpath = customClasspath(System.getProperty("java.class.path"))
+
+  /**
+   * a Configuration object containing a custom classpath.
+   *
+   * Intended as a starting point for analyzing the application that is currently running.
+   */
+  def customClasspath(path: String): ConstraintBuilder = ConstraintBuilder(new Configuration(
+    classpath = Option(path),
     analyzer = Analyzer), "package")
 
   /**

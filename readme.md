@@ -40,4 +40,4 @@ If you like Degraph just say so on twitter, facebook or wherever you like.
 
 ## Build Info ##
 
-[![Build Status](https://api.shippable.com/projects/55a4b660edd7f2c0526bb24c/badge?branchName=master)](https://app.shippable.com/projects/55a4b660edd7f2c0526bb24c/builds/latest)
+[![Build Status](https://api.shippable.com/projects/55a4b660edd7f2c0526bb24c/badge?branch=master)](https://app.shippable.com/projects/55a4b660edd7f2c0526bb24c)
