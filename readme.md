@@ -21,7 +21,8 @@ To create a directory that looks like you just installed Degraph:
 ## Roadmap ##
 
 Degraph allows to defined dependency constraints using tests written in Scala with ScalaTest or Java with JUnit. 
-This feature will need quite some tweaking in the future: 
+This feature will need quite some 
+tweaking in the future: 
 
 * Support for ignoring dependencies
 * Separating the decision to ignore dependencies not mentioned in a constraint and if one can skip steps in the chain of dependencies (i.e. splitting allow/allowDirect into multiple DSL artifacts
