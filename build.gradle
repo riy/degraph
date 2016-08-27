@@ -53,6 +53,17 @@ allprojects {
 
     group = 'de.schauderhaft.degraph'
 
+    // Following are workarounds to idea goal failing on:
+    // Cannot infer Scala class path because..
+    // - no repository is declared in root project
+    repositories { jcenter() }
+
+    // - no Scala library Jar was found
+//    apply from: "$rootDir/gradle/dependencies.gradle"
+    dependencies {
+        compile scalaLibraryDependency
+    }
+
 }
 
 subprojects {
@@ -165,13 +176,13 @@ project('jdk8tests') {
 }
 
 private def createBintrayTasks(project, String artefactType) {
-    
+
     if (hasProperty('bintrayApiKey')) {
         project.with {
             task pushToBintray(type: Exec) {
                 commandLine 'curl',
                         '-T',
-                        'build/' + artefactDir(artefactType)  + project.name + '-' + version + '.' + artefactType,
+                        'build/' + artefactDir(artefactType) + project.name + '-' + version + '.' + artefactType,
                         '-uschauder:' + bintrayApiKey,
                         'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.' + artefactType
             }
