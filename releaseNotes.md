@@ -11,6 +11,9 @@
 - `printTo` in the ConstraintBuilder now always prints the analysis results. If you want the old behaviour back, use
     `printOnFailure`
 
+- `Check` and `JCheck` got a new method `customClasspath`. You can use it in order to provide a classpath explicitly 
+    instead of using the classpath used by the current JVM.
+
 - ConstraintBuilder got a new method `filterClasspath(pattern: String): ConstraintBuilder`
     for limiting the classpath to elements matching the pattern.
     This should be useful, if you want to analyze some, but not all jar-files.
@@ -21,6 +24,10 @@
 
 - minor performance improvements
 
+### Known Issues
+
+- Due to a JDK or ASM bug analysis of class files which contain Type-Annotations might fail. Dependencies of such classes
+will be incomplete. A message saying so will be displayed. See 
 
 ## 0.1.3
 
