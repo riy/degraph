@@ -1,7 +1,6 @@
 # Release Notes
 
-## 0.1.4 (upcoming)
-
+## 0.1.4
 
 ### New Features
 
