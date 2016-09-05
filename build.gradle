@@ -38,7 +38,7 @@ try { // fails when there is no network available
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '3.0'
 }
 
 allprojects {
@@ -70,10 +70,6 @@ subprojects {
 
     targetCompatibility = 1.7
     sourceCompatibility = 1.7
-
-    tasks.withType(ScalaCompile) {
-        scalaCompileOptions.useAnt = false
-    }
 
     repositories {
         mavenCentral()
