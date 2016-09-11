@@ -32,7 +32,8 @@ def degraphDescription = 'Degraph is a library for producing jvm package depende
 createReleaseTag.dependsOn(':degraph:pushToBintray')
 createReleaseTag.dependsOn(':core:pushToBintray')
 createReleaseTag.dependsOn(':check:pushToBintray')
-
+createReleaseTag.dependsOn(':core:uploadArchives')
+createReleaseTag.dependsOn(':check:uploadArchives')
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
