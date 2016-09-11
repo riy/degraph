@@ -188,10 +188,10 @@ private def createBintrayTasks(project, String artefactType) {
             task pushToBintray(type: Exec) {
                 commandLine 'curl',
                         '-T',
-                        '--proxy', sbsMavenUser + ':' + sbsMavenPassword + '@https://www-le.dienste.telekom.de:8080',
                         'build/' + artefactDir(artefactType) + project.name + '-' + version + '.' + artefactType,
                         '-uschauder:' + bintrayApiKey,
-                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.' + artefactType
+                        'https://api.bintray.com/content/schauder/schauderhaft-de/Degraph/' + version + '/degraph-' + project.name + '-' + version + '.' + artefactType,
+                        '--proxy', sbsMavenUser + ':' + sbsMavenPassword + '@https://www-le.dienste.telekom.de:8080'
             }
             pushToBintray.dependsOn(dependsOn(artefactType))
         }
