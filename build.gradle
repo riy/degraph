@@ -233,6 +233,8 @@ private def prepareForMavenCentral(project, degraphDescription) {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
                     }
 
+                    proxy(sbsMavenUser + ':' + sbsMavenPassword + '@https://www-le.dienste.telekom.de:8080')
+
                     snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
                     }
