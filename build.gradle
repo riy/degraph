@@ -25,16 +25,14 @@ def degraphDescription = 'Degraph is a library for producing jvm package depende
         'as well as writing tests for checking properties of the dependencies. '
 
 
-try { // fails when there is no network available
-    apply from: 'http://tellurianring.com/projects/gradle-plugins/gradle-release/1.1/apply.groovy'
-
-    createReleaseTag.dependsOn(':degraph:pushToBintray')
-    createReleaseTag.dependsOn(':core:pushToBintray')
-    createReleaseTag.dependsOn(':check:pushToBintray')
-
-} catch (RuntimeException re) {
-    System.out.println('releasing not possible (probably no network)')
+plugins {
+    id 'net.researchgate.release' version '2.4.1'
 }
+
+createReleaseTag.dependsOn(':degraph:pushToBintray')
+createReleaseTag.dependsOn(':core:pushToBintray')
+createReleaseTag.dependsOn(':check:pushToBintray')
+
 
 
 task wrapper(type: Wrapper) {
@@ -46,6 +44,7 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'maven'
     apply plugin: 'versions'
+
 
     if (isRepositoryOwner)
         apply plugin: 'signing'
