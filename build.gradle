@@ -10,6 +10,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'net.researchgate.release' version '2.4.1'
+}
+
 def scalaLibraryDependency = 'org.scala-lang:scala-library:2.11.7'
 def scalaXmlDependency = 'org.scala-lang.modules:scala-xml_2.11:1.0.3'
 def scalaParsingDependency = 'org.scala-lang.modules:scala-parser-combinators_2.11:1.0.3'
@@ -25,14 +29,9 @@ def degraphDescription = 'Degraph is a library for producing jvm package depende
         'as well as writing tests for checking properties of the dependencies. '
 
 
-plugins {
-    id 'net.researchgate.release' version '2.4.1'
-}
-
 createReleaseTag.dependsOn(':degraph:pushToBintray')
 createReleaseTag.dependsOn(':core:pushToBintray')
 createReleaseTag.dependsOn(':check:pushToBintray')
-
 
 
 task wrapper(type: Wrapper) {
@@ -63,6 +62,21 @@ allprojects {
         compile scalaLibraryDependency
     }
 
+    release {
+        git {
+            requireBranch = 'release'
+            pushToRemote = 'origin'
+            pushToBranchPrefix = ''
+            commitVersionFileOnly = false
+        }
+
+        svn {
+            username = null
+            password = null
+            pinExternals = false   // allows to pin the externals when tagging, requires subversion client >= 1.9.0
+        }
+    }
+
 }
 
 subprojects {
@@ -76,7 +90,6 @@ subprojects {
 
     dependencies {
         testCompile junitDependency
-
         testCompile scalaTestDependency
     }
 
@@ -99,12 +112,10 @@ subprojects {
         prepareForMavenCentral(project, description)
 
     }
-
 }
 
 
 project('core') {
-
     description = degraphDescription + 'The core module makes up the main logic of Degraph independent of any UI.'
 
     archivesBaseName = 'degraph-core'
