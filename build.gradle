@@ -32,8 +32,6 @@ def degraphDescription = 'Degraph is a library for producing jvm package depende
 createReleaseTag.dependsOn(':degraph:pushToBintray')
 createReleaseTag.dependsOn(':core:pushToBintray')
 createReleaseTag.dependsOn(':check:pushToBintray')
-createReleaseTag.dependsOn(':core:uploadArchives')
-createReleaseTag.dependsOn(':check:uploadArchives')
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
@@ -231,9 +229,8 @@ private def prepareForMavenCentral(project, degraphDescription) {
 
                     repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
+                        proxy(host: 'https://www-le.dienste.telekom.de:8080', port: 8080, type: 'https', userName:sbsMavenUser, password:sbsMavenPassword)
                     }
-
-                    proxy(sbsMavenUser + ':' + sbsMavenPassword + '@https://www-le.dienste.telekom.de:8080')
 
                     snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
