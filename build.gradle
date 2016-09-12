@@ -231,7 +231,7 @@ private def prepareForMavenCentral(project, degraphDescription) {
 
                     repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
                         authentication(userName: ossrhUsername, password: ossrhPassword)
-                        proxy(host: 'https://www-le.dienste.telekom.de:8080', port: 8080, type: 'https', userName:sbsMavenUser, password:sbsMavenPassword)
+                        proxy(host: 'https://www-le.dienste.telekom.de', port: 8080, type: 'https', userName:sbsMavenUser, password:sbsMavenPassword)
                     }
 
                     snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
