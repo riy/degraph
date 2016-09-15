@@ -43,6 +43,8 @@ This is the main logic of Degraph. You need it if you want to use the graph mani
 ## Older Versions ##
 
 
+[Degraph Command Line Application, Version 0.1.2](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.2.zip)
+
 [Degraph Command Line Application, Version 0.1.1](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.1.zip)
 
 [Degraph Binary Distribution, Version 0.1.0](http://dl.bintray.com/schauder/schauderhaft-de/degraph-0.1.0.zip)
