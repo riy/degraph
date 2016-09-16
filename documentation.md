@@ -131,7 +131,7 @@ For this diagram I expanded all the nodes, to see the details of the cycle betwe
 
 As one might have guessed the helpers package contains all kinds of stuff. If we look at the dependencies between `spi` and `helpers` we note that all dependencies go from left to right, which is a good sign, because it makes it likely that it is rather easy to break this cycle. Note that we still have a cycle because the arrows are going up and down between the nodes. This is what I call the [Bypass Antipattern of Package Dependencies](http://blog.schauderhaft.de/2013/03/24/dependency-antipatterns-the-bypass/).
 
-If we extract the classes for `helpers` that `spi` depends on into a separate package we should be able to improve the situation. That would be the classes `LogLog` and `Loader`. But we have to take `OptionConverter` along for the ride, since it is entangled with the other two. Now we can immediatly see that `OptionConverter` depends  on `Configurator` which is again in the `spi` part, which would cause another cycle, so take it into the new package as well, and the result should have one cycle less. 
+If we extract the classes for `helpers` that `spi` depends on into a seperate package we should be able to improve the situation. That would be the classes `LogLog` and `Loader`. But we have to take `OptionConverter` along for the ride, since it is entangled with the other two. Now we can immediatly see that `OptionConverter` depends  on `Configurator` which is again in the `spi` part, which would cause another cycle, so take it into the new package as well, and the result should have one cycle less. 
 
 **This is the power of Degraph: that you can see all the dependencies of all classes in the packages you decided to look at. This enables you to easily identify classes that you can or should move.**
 
@@ -266,21 +266,19 @@ In the Overview (it's open by default) you can see a tiny version of the complet
 
 #### Neighborhood View ####
 
-Yed offers a couple of context views. For our purpose the most useful one is the Neighborhood View. It might be already docked on the side of the screen. If not, open it up using the menu Windows -> Context Views -> Neighborhood View. You might want to increase it in size.
+Yed offers a couple of context views. For our purpose the must useful one is the Neighborhood View. It might be already docked on the side of the screen. If not, open it up using the menu Windows -> Context Views -> Neighborhood View. You might want to increase it in size.
 
 If you now click on a node or an edge it shows you the predecessor and successor nodes of whatever you selected. Very helpful if you try to prune dependencies from a class.
 
 #### General Tips ####
 
-No matter how sophisticated a layout algorithm is. A graph with 1000s of nodes and even more edges will look messy. 
-In order to limit the size of graph you may use the following techniques:
+No matter how sophisticated a layout algorithm is. A graph with 1000s of nodes and even more edges will look messy. In order to limit the size of graph you have to deal with use the following techniques:
 
 * Collapse nodes which you don't care about in detail
 
 * Remove collapsed nodes which you don't care about at all, this will also delete all contained nodes.
 
-* When changing your code based on what you see in the graph, you'll probably want to look at the same nodes over 
-and over again. Use filters in your configuration file to limit the nodes generated.
+* When changing your code based on what you see in the graph, you'll probably want to look at the same nodes over and over again. Use filters in your configuration file to limit the nodes generated.
 
 ## Testing of Dependencies ##
 
@@ -341,9 +339,6 @@ and
 The import makes the Degraph DSL available. The second one is the actual test. 
 
 `classpath` is a predefined `ConstraintBuilder` containing the current classpath as the path to get analyzed. 
-Instead of `classpath` you can also use `customClasspath` in order to provide a handcrafted classpath.
-You can also use the `filterClasspath(pattern: String): ConstraintBuilder` method in order to filter the elements
-from the classpath that you want to analyze.
 
 `including` is a method which allows to define an include filter. Without specifying a filter, Degraph would analyze everything in your classpath. Since this most probably also includes all kinds of libraries, it is a really good idea to limit the result to your own stuff, as I did here.
 
@@ -390,15 +385,11 @@ If there is a group of slices for which you don't care about the order, you can 
 	    .withSlicing("module", "de.schauderhaft.degraph.(*).**")
 	        .allow("check", anyOf( "configuration", "graph"), "model")
 	
-The meaning of this constraint is very similar to [the simple constraint above](##simple_constraints_on_slicings), with 
-the exception that dependencies from 'configuration' to 'graph' are allowed just as the other way round. Of course 
-the 'no cycles' constraint still applies so both directions of dependencies must not be present at the same time.
+The meaning of this constraint is very similar to [the simple constraint above](##simple_constraints_on_slicings), with the exception that dependencies from 'configuration' to 'graph' are allowed just as the other way round. Of course the 'no cycles' constraint still applies so both directions of dependencies must not be present at the same time.
 
 #### One of Many Slices ####
 
-If you use for example a hexagonal architecture, you probably have something like a persistence and a gui layer 
-both may access the domain layer, but must not access each other. A constraint as that can be expressed using the
- `oneOf` method
+If you use for example a hexagonal architecture, you probably have something like a persistence and a gui layer both may access the domain layer, but must not access each other. A constraint as that can be expressed using the `oneOf` method
 
     classpath
 	    .withSlicing("layer", "de.schauderhaft.app.*.(*).**")
@@ -412,8 +403,10 @@ Include and exclude work on fully qualified class names. This means if you write
 
 #### Printing Graphml on Testfailures ####
 
-If you are like me you want to have a look at your dependency structure. 'printTo'
-with a path as parameter does just that. Like so
+If you have test failures you probably want to look at the problem using the visualization of Degraph. Until recently
+you had to start the commandline tool for this,
+including creating a configuration that matches you test. Beginning with release 0.1.1 you can add a call to 'printTo'
+with a path as parameter. Like so
 
 
     classpath
@@ -421,35 +414,26 @@ with a path as parameter does just that. Like so
 	    .withSlicing("layer", "de.schauderhaft.app.*.(*).**")
 	        .allow(oneOf( "persistence", "gui"), "domain")
 
-will create a degraphTestResult.graphml on every run, which you can open with yed as described above. 
-
-If you only want the updated diagram when the test actually failed, you can get that by using
- `printOnFailure` instead
-
 
 ### Java Constraints DSL ###
 
-If you haven't already, please go back and read the section about the Scala based DSL. It explains how the 
-DSL works and is mostly applicable to the Java DSL as well. I'll wait here and explain the differences in 
-the Java API when you are back.
+If you haven't already, please go back and read the section about the Scala based DSL. It explains how the DSL works and is mostly applicable to the Java DSL as well. I'll wait here and explain the differences in the Java API when you are back.
 
 *... time goes by ...*
 
 #### Importing the DSL ####
 
-The imports for the Java DSL look slightly different. On one hand you probably use Java, so the syntax is a 
-little different, and you also need a little extra stuff, in order to make the API work in Java. So please 
-add the following imports to your test class, apart from your usual JUnit imports:
+The imports for the Java DSL look slightly different. On one hand you probably use Java, so the syntax is a little different, and you also need a little extra stuff, in order to make the API work in Java. So please add the following imports to your test class, apart from your usual JUnit imports:
 
     import de.schauderhaft.degraph.configuration.NamedPattern;
     import static de.schauderhaft.degraph.check.JCheck.*;
+    import static de.schauderhaft.degraph.check.Check.classpath;
     import static de.schauderhaft.degraph.check.JLayer.*
     import static org.hamcrest.core.Is.*;
     
 #### Differences in the Java DSL compared to the Scala version ####
 
-`classpath` is a method (just as in Scala but there you can't tell the difference, at least not from its usage). 
-Therefore you have to provide an empty parameter list.
+`classpath` is a method (just as in Scala but there you can't tell the difference, at least not from its usage). Therefore you have to provide an empty parameter list.
 
     classpath().withSlicing("blah", "whatever");
 	
@@ -457,7 +441,7 @@ The same is true for `noJars`
 
     classpath().noJars().withSlicing("blah", "whatever");
 	
-In order to define a named slice pattern you have to actually instantiate a `NamedPattern`
+In order to define a named slice pattern you have to actuall instantiate a `NamedPattern`
 
     classpath().withSlicing(
 			"mainVsTest",
@@ -485,79 +469,58 @@ Done. You can now start Degraph by executing the degraph in the bin folder. If y
 
 #### The resulting Graph is empty ####
 
-Make sure you specify the correct path to the **class**-files. Source files don't work. Paths that don't contain 
-class-files (nor jar files, containing class files) will be silently ignored. 
-So a typo in the path specified easily results in a empty graphml file.
+Make sure you specify the correct path to the **class**-files. Source files don't work. Paths that don't contain class-files (nor jar files, containing class files) will be silently ignored. So a typo in the path specified easily results in a empty graphml file.
 
 #### Analyzing my classes takes for ever / yed takes for ever to load or display my graphml file ####
 
-Given a path Degraph analyzes everything that looks like a class file in that directory or in subdirectories, 
-including jar files. So if you use the root directory of a large multi module project in standard maven layout, 
-it will analyze all the class files of the project (test and main). If you have jars in there, those will get 
-analyzed as well.
+Given a path Degraph analyzes everything that looks like a class file in that directory or in subdirectories, including jar files. So if you use the root directory of a large multi module project in standard maven layout, it will analyze all the class files of the project (test and main). If have jars in there, those will get analyzed as well.
 
-Make sure you have only those classes / jars in the path given to Degraph, that you are really interested in. 
-Make use of the filter options to limit the classes that actually end up in the graph.
+Make sure you have only those classes / jars in the path given to Degraph, that you are really interested in. Make use of the filter options to limit the classes that actually end up in the graph.
 
 ### A little Theory ###
 
 ### Nomenclature ###
 
-Degraph abstracts over some things which most of the time don't get abstracted over. Therefore I had to come up 
-with some names. This of course is somewhat confusing for people until they understand these name, 
-so this page is here to help.
+Degraph abstracts over some things which most of the time don't get abstract over. Therefore I had to come up with some names. This of course is somewhat confusing for people until they understand these name, so this page is here to help.
 
 #### Node ####
 
-A node is something displayed as a box by yed. It might represent a class, package or the intersection of 
-slices of different slice type.
+A node is something displayed as a box by yed. It might represent a class, package or the intersection of slices of different slice type.
 
 #### Simple Node  ####
 
-A simple node is a node that doesn't have any further substructure. Currently simple nodes represent classes, 
-but one day there might be simple nodes representing a bean in a spring configuration or similar things. 
+A simple node is a node that doesn't have any further substructure. Currently simple nodes represent classes, but one day there might be simple nodes representing a bean in a spring configuration or similar things. 
 
 #### Complex Node ####
 
-A Complex Node is one which has content. There are two kinds of complex nodes: Slice Nodes (see below) and nodes 
-representing classes with inner classes.
+A Complex Node is one which has content. There are two kinds of complex nodes: Slice Nodes (see below) and nodes representing classes with inner classes.
 
 #### Slice ####
 
-A slice is a collection of simple nodes. A slice has a slice type. All the classes in the package 
-'de.schauderhaft.degraph' might be a slice, with the slice type 'package'. All the classes in the 
-package or subpackages of 'org.apache' might be part of the slice 'apache' of type 'lib'. What slices 
-exist depends on the slicings defined in the configuration file. Note: slices are not slice nodes these 
-are different things although the difference is maybe a little hard to grasp. See below for details
+A slice is a collection of simple nodes. A slice has a slice type. All the classes in the package 'de.schauderhaft.degraph' might be a slice, with the slice type 'package'. All the classes in the package or subpackages of 'org.apache' might be part of the slice 'apache' of type 'lib'. What slices exist depends on the slicings defined in the configuration file. Note: slices are not slice nodes these are different things although the difference is maybe a little hard to grasp. See below for details
 
 #### Slice Type ####
 
-A slice type is a categorization of slices. It can be considered the name of a slicing. All slices 
-with the same type are disjunct, i.e. no simple node is in more than one slice of the same slice type.
+A slice type is a categorization of slices. It can be considered the name of a slicing. All slices with the same type are disjunct, i.e. no simple node is in more than one slice of the same slice type.
 
 #### Slicing ####
 
-The way how all the simple nodes gets distributed into a set of slices which all have the same slice type. 
-This is what you define in a configuration file with something like 
+The way how all the simple nodes gets distributed into a set of slices which all have the same slice type. This is what you define in a configuration file with something like 
 
     lib {
         org.(*).**
         (*.*).**
     }
 
-This says: I define the slicing of type 'lib' such that everything starting with 'org.' ends up in the 
-slice given by the second part of the package name. Everything else ends up in the slice given by the 
-first two parts of the package name.
+This says: I define the slicing of type 'lib' such that everything starting with 'org.' ends up in the slice given by the second part of the package name. Everything else ends up in the slice given by the first two parts of the package name.
 
 There is one implicit slicing: the one defined by packages.
 
 #### Slice Node ####
 
-a slice node is a node representing a set of slices with mutual distinct type. Ok, take a deep breath. 
-This is going to be a little tricky. 
+a slice node is a node representing a set of slices with mutual distinct type. Ok, take a deep breath. This is going to be a little tricky. 
 
-You might think a Slice Node is the same as a Slice, or just the visual representation of a Slice. 
-But there is a little but important difference. Lets imagine a tiny project with two classes: 
+You might think a Slice Node is the same as a Slice, or just the visual representation of a Slice. But there is a little but important difference. Lets imagine a tiny project with two classes: 
 
 `de.schauderhaft.Example` and `de.schauderhaft.ExampleTest`
 
@@ -565,20 +528,15 @@ Lets work with two slicings:
 
 1. The default package slicing, which puts each class in its package. 
 
-2. A *deployUnit* slicing which puts everything containing the String 'Test' in the slice 'Test' and everything 
-else 
-in the slice 'Main'
+2. A *deployUnit* slicing which puts everything containing the String 'Test' in the slice 'Test' and everything else in the slice 'Main'
 
 So we have three slices: `deployUnit:Test`, `deployUnit:Main`, `package:de.schauderhaft`
 
 But if you look at it in yed you'll see:
 
-`Test`, `de.schauderhaft in Test`, `Main` and `de.schauderhaft in Main` these are *Slice Nodes*. 
-The important part is that the slice `de.schauderhaft` got duplicated because it contains classes 
-that according to another slicing belong to two different slices.
+`Test`, `de.schauderhaft in Test`, `Main` and `de.schauderhaft in Main` these are *Slice Nodes*. The important part is that the slice `de.schauderhaft` got duplicated because it contains classes that according to another slicing belong to two different slices.
 
-Note 1: For slicings other then the package slicing you can control the order by which they get 
-applied by the order in which they appear in the configuration file.
+Note 1: For slicings other then the package slicing you can control the order by which they get applied by the order in which they appear in the configuration file.
 
 Note 2: Conceptually 'a in b' is considered the same Slice Node as 'b in a'  
 
@@ -590,7 +548,7 @@ If you have a problem using Degraph, a question, a bug or an idea: Go ahead and 
 ### Sources ###
 You can find the source code to [Degraph at github](https://github.com/schauder/degraph).
 
-### Stay Up To Date ### 
+### Keep Up To Date ### 
 
 Want to be kept updated about news about Degraph? Consider subscribing to the [blog of the author](http://blog.schauderhaft.de), or keep an eye on the [homepage of Degraph](http://schauder.github.io/degraph/).
 
