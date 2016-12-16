@@ -359,13 +359,14 @@ The default slicing '`package`' isn't satisfying. You probably want to define ot
 
 #### Simple Constraints On Slicings ####
 
-Thes following specifies that with the slicing 'part' the slice 'check' may depend on any of the slices 'configuration', 'graph' or 'model'. The slice 'configuration' may depend on any of 'graph' and 'model' but not on 'check' and so on. Or to put it differently: Dependencies from left to right are ok, from right to left aren't. This kind of constraint is usefull for slicings specifying business modules, where you want to enforce some ordering.
+The following specifies that with the slicing 'module' the slice 'check' may depend on any of the slices 'configuration', 'graph' or 'model'. The slice 'configuration' may depend on any of 'graph' and 'model' but not on 'check' and so on. Or to put it differently: Dependencies from left to right are ok, from right to left aren't. This kind of constraint is useful for slicings specifying business modules, where you want to enforce some ordering.
 
-    classpath.withSlicing("module", "de.schauderhaft.degraph.(*).**") .allow("check", "configuration", "graph", "model")
+    classpath.withSlicing("module", "de.schauderhaft.degraph.(*).**") 
+        .allow("check", "configuration", "graph", "model")
 
 `allow` allows dependencies between the given slices from left to right, but not from right to left.
 
-Dependencies from and to classes not part of the specified slices ar not constraint.
+Dependencies from and to classes not part of the specified slices are not constrained.
 
 #### Strict Constraints ####
  
@@ -446,7 +447,7 @@ In order to define a named slice pattern you have to actuall instantiate a `Name
     classpath().withSlicing(
 			"mainVsTest",
 			"de.schauderhaft.**(Test)",
-			new NamedPattern("main", "de.schauderhaft.*.**"))
+			new NamedPattern("de.schauderhaft.*.**", "main"))
 
 Since you probably use JUnit to write your tests, you won't be able to use the ScalaTest matchers (which is a bummer). So we'll use Hamcrest instead.
 
