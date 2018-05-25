@@ -16,7 +16,7 @@ def scalaParsingDependency = 'org.scala-lang.modules:scala-parser-combinators_2.
 def junitDependency = 'junit:junit:4.12'
 def scalaTestDependency = 'org.scalatest:scalatest_2.11:2.2.4'
 def hamcrestAllDependency = 'org.hamcrest:hamcrest-all:1.3'
-def asmDependency = 'org.ow2.asm:asm:6.1.1'
+def asmDependency = 'org.ow2.asm:asm:6.2'
 def graphCoreDependency = 'com.assembla.scala-incubator:graph-core_2.11:1.9.1'
 def scallopDependency = 'org.rogach:scallop_2.11:0.9.5'
 
