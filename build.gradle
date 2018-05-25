@@ -1,11 +1,10 @@
 buildscript {
     repositories {
-        maven { url 'https://github.com/ben-manes/gradle-versions-plugin/raw/mvnrepo' }
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.5-beta-5'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
         classpath 'net.nisgits.gradle:gradle-executable-jar-plugin:1.7.0' // executable jar plugin
     }
 }
