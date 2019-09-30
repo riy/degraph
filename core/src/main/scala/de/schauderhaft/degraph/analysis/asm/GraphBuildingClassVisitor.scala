@@ -54,7 +54,7 @@ class GraphBuildingClassVisitor(g: Graph) extends ClassVisitor(Opcodes.ASM5) {
       this
     }
 
-    override def visitEnum(name: String, desc: String, value: String) {
+    override def visitEnum(name: String, desc: String, value: String) = {
       classNodeFromDescriptor(desc).foreach(g.connect(currentClass, _))
     }
 

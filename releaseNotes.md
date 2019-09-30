@@ -1,5 +1,11 @@
 # Release Notes
 
+## 0.1.5
+
+- Upgraded Gradle from `3.0` to `6.0` in order to make Degraph build with Java 11.
+- Specified Java `1.8` as `sourceCompatibility` and `targetCompatibility`.
+- Building on the latest Shippable image (v7.2.4) using the new `shippable.yml` format
+
 ## 0.1.4
 
 ### New Features

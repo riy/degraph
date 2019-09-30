@@ -1,19 +1,26 @@
-# language
-language: scala
+language: java
 
-scala:
-    - 2.11.7
+build:
+  pre_ci_boot:
+    image_name: drydock/u16javall
+    image_tag: v7.2.4
+    pull: true
 
-# version numbers
-jdk:
-    - oraclejdk8
+  ci:
+    # specify JDK version
+    - source shipctl jdk set oraclejdk11
 
-install:
-    - ./gradlew clean assemble
-before_script:
+    # preparation output folders
     - mkdir -p shippable/testresults
     - mkdir -p shippable/codecoverage
-script:
+
+    # build
+    - ./gradlew clean assemble
+
+  on_success:
+    # install
     - ./gradlew clean check install
-after_script:
+
+  always:
+    # prepare reports
     - cp -r */build/test-results/* shippable/testresults/
