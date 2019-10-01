@@ -1,3 +1,12 @@
+## I'm no longer maintaining this library
+
+Do you want to take over? I'd be happy to hand it over and give tips about what I would do if I'd still be able to find enough time to maintain it.
+
+Until that happens I can't recommend Degraph any more :-( 
+
+You might want to look into [ArchUnit](https://github.com/TNG/ArchUnit) and [JQAssistant](https://jqassistant.org/).
+
+
 **Degraph** is a tool for visualizing and testing class and package dependencies in JVM applications.
 
 You can [download](http://schauder.github.io/degraph/download.html) it, or read the [documentation](http://schauder.github.io/degraph/documentation.html).
