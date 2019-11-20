@@ -28,7 +28,7 @@ class JavaGraph(graph: Graph) extends JavaHierarchicGraph {
     def connectionsOf(node: Node): java.util.Set[Node] = graph.connectionsOf(node).asJava
 
     def connect(a: Node, b: Node): Unit = graph.connect(a, b)
-    def save(fileName: String) {
+    def save(fileName: String) = {
         XML.save(fileName, (new Writer()).toXml(graph), "UTF-8", true, null)
     }
     def contentsOf(node: Node): java.util.Set[Node] = graph.contentsOf(node).asJava

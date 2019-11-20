@@ -58,7 +58,7 @@ class Graph(category: Node => Node = (x) => x,
 
     def add(node: Node) = if (filter(node)) unfilteredAdd(node)
 
-    private def unfilteredAdd(node: Node) {
+    private def unfilteredAdd(node: Node) : Unit = {
         val cat = category(node)
         if (cat == node) {
             internalGraph += node
@@ -98,7 +98,7 @@ class Graph(category: Node => Node = (x) => x,
         sliceGraph
     }
 
-    private def addEdge(a: Node, b: Node) {
+    private def addEdge(a: Node, b: Node) = {
         implicit val factory = scalax.collection.edge.LkDiEdge
         if (filter(a) && filter(b) && edgeFilter(a, b))
             internalGraph.addLEdge(a, b)(references)
