@@ -9,7 +9,7 @@ You might want to look into [ArchUnit](https://github.com/TNG/ArchUnit) and [JQA
 
 **Degraph** is a tool for visualizing and testing class and package dependencies in JVM applications.
 
-You can [download](http://schauder.github.io/degraph/download.html) it, or read the [documentation](http://schauder.github.io/degraph/documentation.html).
+You can [download](http://riy.github.io/degraph/download.html) it, or read the [documentation](http://riy.github.io/degraph/documentation.html).
 
 ## How to build ##
 
@@ -39,12 +39,12 @@ tweaking in the future:
 
 Also while yed is a cool Graph editor it does way more then Degraph actually needs and misses some other features. So a standaloe (or IDE Plugin based) GUI would be nice. I'm experimenting with an HTML5 based solution.
 
-If you have more ideas what Degraph should be able to do, just open an [issue](https://github.com/schauder/degraph/issues).
+If you have more ideas what Degraph should be able to do, just open an [issue](https://github.com/riy/degraph/issues).
 
 
 ## Feedback ##
 
-Please use [the github issue feature](https://github.com/schauder/degraph/issues) for questions, bug reports or improvement requests. 
+Please use [the github issue feature](https://github.com/riy/degraph/issues) for questions, bug reports or improvement requests. 
 
 If you like Degraph just say so on twitter, facebook or wherever you like. 
 
