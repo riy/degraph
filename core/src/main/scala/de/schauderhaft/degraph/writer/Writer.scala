@@ -127,6 +127,7 @@ class EdgeWriter(
 
     def apply(source: GNode, target: GNode) =
         <edge id={ id(source) + "::" + id(target) } source={ id(source) } target={ id(target) }>
+            <data key="d9">{ scala.xml.Unparsed("<![CDATA[%s]]>".format(s"${source.name} -> ${target.name}")) }</data>
             <data key="d10">
                 <y:PolyLineEdge>
                     <y:LineStyle color={ styler(source, target).colorHexString } type="line" width={ styler(source, target).widthString }/>
